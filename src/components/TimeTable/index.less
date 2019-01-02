@@ -1,0 +1,138 @@
+@import "~antd/lib/style/themes/default.less";
+
+.loading {
+  text-align: center
+}
+
+.loadingText {
+  font-size: 18px;
+}
+
+.pageHeaderContent {
+  background: #fff;
+  padding: 16px 32px 0 32px;
+}
+
+.scheduler {
+  background-color: #fff;
+  :global {
+    
+    .ant-table-thead {
+      & > tr > th, .ant-table-tbody > tr > td {
+        padding: 10px;
+        background-color: #fff;
+      }
+    }
+  }
+}
+
+.hallBox {
+  width: 170px;
+  text-align: center;
+  font-size: 32px;
+}
+
+.sider {
+  background-color: #fff;
+}
+
+.innerTable {
+  ul {
+    padding: 0;
+    margin: 0;
+    li {
+      list-style: none;
+      display: flex;
+      flex-direction: row;
+      border-bottom: 1px solid #e8e9e8;
+      font-size: 11px;
+      height: 44px;
+
+      &:hover {
+        cursor: pointer;
+        background-color: @yellow-2;
+      }
+
+      &:last-child {
+        border-bottom: 0;
+      }
+
+      &.lecture { 
+        .partContent {
+          background-color: @blue-3;
+          border-color: @blue-6;
+        }
+      }
+      &.seminar { 
+        .partContent {
+          background-color: @green-3;
+          border-color: @green-6;
+        } 
+      }
+      &.lab { 
+        .partContent {
+          background-color: @cyan-3;
+          border-color: @cyan-6;
+        } 
+      }
+      &.referat { 
+        .partContent {
+          background-color: @yellow-3;
+          border-color: @yellow-6;
+        } 
+      }
+
+      .label {
+        display: flex;
+        align-items: center;
+        width: 26px;
+        justify-content: center;
+        border-right: 1px solid #e8e9e8;
+      }
+      .partContent {
+        display: flex;
+        flex-direction: row;
+        border-left: 5px solid transparent;
+        padding-left: 5px;
+        width: 100%;
+        align-items: center;
+      
+        .partTeacher {
+          padding-right: 5px;
+        }
+      }
+    }
+  }
+}
+
+td.partOfday {
+  padding: 0 !important;
+  border-bottom: 0 !important;
+  cursor: pointer;
+  &:hover {
+    background-color: @orange-2 !important;
+  }
+
+  .partOfInfo {
+    height: 70px;
+    width: 70px;
+    padding: 3px;
+  }
+}
+
+td.weekOfDay {
+  padding: 0 !important;
+}
+
+.select {
+  margin-right: 10px;
+}
+
+.search {
+  margin-bottom: 10px;
+  width: 250px;
+}
+
+.university {
+  font-size: 14px;
+}

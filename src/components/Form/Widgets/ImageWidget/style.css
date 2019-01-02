@@ -1,0 +1,25 @@
+.avatarUploader {
+  width: 155px;
+  height: 155px;
+}
+
+.avatarUploaderTrigger,
+.avatar {
+  width: 153px;
+  height: 153px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.avatarUploader {
+  display: block;
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.avatarUploaderTrigger {
+  display: table-cell;
+  vertical-align: middle;
+  font-size: 28px;
+  color: #999;
+}

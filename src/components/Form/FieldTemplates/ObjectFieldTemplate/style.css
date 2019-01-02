@@ -1,0 +1,10 @@
+.fieldset {
+  border: 1px solid #ebedf2;
+  margin-bottom: 15px;
+  padding: 30px 15px 15px 15px;
+  margin: 0 -15px 15px -15px;
+}
+
+.form {
+  padding: 0 15px;
+}

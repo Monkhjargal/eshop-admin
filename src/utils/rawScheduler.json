@@ -1,0 +1,2227 @@
+[
+  {
+    "id": "room_1",
+    "hall": {
+      "university": "Хүмүүнлэгийн сургууль",
+      "name": 7
+    },
+    "day": {
+      "title": "Мягмар",
+      "short": "Мяг",
+      "dataIndex": "tu"
+    },
+    "time": {
+      "title": "VII цаг",
+      "dataIndex": 7
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "HAJ003 Б.Болор-Эрдэнэ"
+      },
+      "lesson": {
+        "code": "AAA001 Англи хэл 1",
+        "type": "lecture"
+      }
+    }
+  },
+  {
+    "id": "room_2",
+    "hall": {
+      "university": "Хүмүүнлэгийн сургууль",
+      "name": 8
+    },
+    "day": {
+      "title": "Баасан",
+      "short": "Баа",
+      "dataIndex": "fr"
+    },
+    "time": {
+      "title": "VI цаг",
+      "dataIndex": 6
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "HAJ003"
+      },
+      "lesson": {
+        "code": "AAA001",
+        "type": "lecture"
+      }
+    }
+  },
+  {
+    "id": "room_3",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 2
+    },
+    "day": {
+      "title": "Даваа",
+      "short": "Дав",
+      "dataIndex": "mo"
+    },
+    "time": {
+      "title": "VI цаг",
+      "dataIndex": 6
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "FAA002"
+      },
+      "lesson": {
+        "code": "ABA002",
+        "type": "seminar"
+      }
+    }
+  },
+  {
+    "id": "room_4",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 5
+    },
+    "day": {
+      "title": "Пүрэв",
+      "short": "Пүр",
+      "dataIndex": "th"
+    },
+    "time": {
+      "title": "III цаг",
+      "dataIndex": 3
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "FAA002"
+      },
+      "lesson": {
+        "code": "AAA001",
+        "type": "lecture"
+      }
+    }
+  },
+  {
+    "id": "room_5",
+    "hall": {
+      "university": "Хууль зүйн сургууль",
+      "name": 5
+    },
+    "day": {
+      "title": "Мягмар",
+      "short": "Мяг",
+      "dataIndex": "tu"
+    },
+    "time": {
+      "title": "VI цаг",
+      "dataIndex": 6
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "HAJ003"
+      },
+      "lesson": {
+        "code": "TAA004",
+        "type": "referat"
+      }
+    }
+  },
+  {
+    "id": "room_6",
+    "hall": {
+      "university": "Хууль зүйн сургууль",
+      "name": 8
+    },
+    "day": {
+      "title": "Ням",
+      "short": "Ням",
+      "dataIndex": "su"
+    },
+    "time": {
+      "title": "IV цаг",
+      "dataIndex": 4
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "HAJ003"
+      },
+      "lesson": {
+        "code": "AAA001",
+        "type": "lecture"
+      }
+    }
+  },
+  {
+    "id": "room_7",
+    "hall": {
+      "university": "Хууль зүйн сургууль",
+      "name": 8
+    },
+    "day": {
+      "title": "Бямба",
+      "short": "Бям",
+      "dataIndex": "sa"
+    },
+    "time": {
+      "title": "VI цаг",
+      "dataIndex": 6
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "ACA001"
+      },
+      "lesson": {
+        "code": "ABA002",
+        "type": "seminar"
+      }
+    }
+  },
+  {
+    "id": "room_8",
+    "hall": {
+      "university": "Хууль зүйн сургууль",
+      "name": 8
+    },
+    "day": {
+      "title": "Пүрэв",
+      "short": "Пүр",
+      "dataIndex": "th"
+    },
+    "time": {
+      "title": "II цаг",
+      "dataIndex": 2
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "ACA001"
+      },
+      "lesson": {
+        "code": "ABA002",
+        "type": "seminar"
+      }
+    }
+  },
+  {
+    "id": "room_9",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 10
+    },
+    "day": {
+      "title": "Даваа",
+      "short": "Дав",
+      "dataIndex": "mo"
+    },
+    "time": {
+      "title": "III цаг",
+      "dataIndex": 3
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "ACA001"
+      },
+      "lesson": {
+        "code": "AAA001",
+        "type": "lecture"
+      }
+    }
+  },
+  {
+    "id": "room_10",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 8
+    },
+    "day": {
+      "title": "Пүрэв",
+      "short": "Пүр",
+      "dataIndex": "th"
+    },
+    "time": {
+      "title": "III цаг",
+      "dataIndex": 3
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "HAJ003"
+      },
+      "lesson": {
+        "code": "TAA004",
+        "type": "referat"
+      }
+    }
+  },
+  {
+    "id": "room_11",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 6
+    },
+    "day": {
+      "title": "Баасан",
+      "short": "Баа",
+      "dataIndex": "fr"
+    },
+    "time": {
+      "title": "V цаг",
+      "dataIndex": 5
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "HAJ003"
+      },
+      "lesson": {
+        "code": "AAC003",
+        "type": "lab"
+      }
+    }
+  },
+  {
+    "id": "room_12",
+    "hall": {
+      "university": "Хууль зүйн сургууль",
+      "name": 1
+    },
+    "day": {
+      "title": "Баасан",
+      "short": "Баа",
+      "dataIndex": "fr"
+    },
+    "time": {
+      "title": "VII цаг",
+      "dataIndex": 7
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "ACA001"
+      },
+      "lesson": {
+        "code": "AAA001",
+        "type": "lecture"
+      }
+    }
+  },
+  {
+    "id": "room_13",
+    "hall": {
+      "university": "Хүмүүнлэгийн сургууль",
+      "name": 6
+    },
+    "day": {
+      "title": "Пүрэв",
+      "short": "Пүр",
+      "dataIndex": "th"
+    },
+    "time": {
+      "title": "II цаг",
+      "dataIndex": 2
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "FAA002"
+      },
+      "lesson": {
+        "code": "AAA001",
+        "type": "lecture"
+      }
+    }
+  },
+  {
+    "id": "room_14",
+    "hall": {
+      "university": "Хууль зүйн сургууль",
+      "name": 9
+    },
+    "day": {
+      "title": "Лхагва",
+      "short": "Лха",
+      "dataIndex": "we"
+    },
+    "time": {
+      "title": "III цаг",
+      "dataIndex": 3
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "ACA001"
+      },
+      "lesson": {
+        "code": "AAA001",
+        "type": "lecture"
+      }
+    }
+  },
+  {
+    "id": "room_15",
+    "hall": {
+      "university": "Хууль зүйн сургууль",
+      "name": 7
+    },
+    "day": {
+      "title": "Пүрэв",
+      "short": "Пүр",
+      "dataIndex": "th"
+    },
+    "time": {
+      "title": "II цаг",
+      "dataIndex": 2
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "ACA001"
+      },
+      "lesson": {
+        "code": "ABA002",
+        "type": "seminar"
+      }
+    }
+  },
+  {
+    "id": "room_16",
+    "hall": {
+      "university": "Хүмүүнлэгийн сургууль",
+      "name": 10
+    },
+    "day": {
+      "title": "Баасан",
+      "short": "Баа",
+      "dataIndex": "fr"
+    },
+    "time": {
+      "title": "III цаг",
+      "dataIndex": 3
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "HAJ003"
+      },
+      "lesson": {
+        "code": "ABA002",
+        "type": "seminar"
+      }
+    }
+  },
+  {
+    "id": "room_17",
+    "hall": {
+      "university": "Хүмүүнлэгийн сургууль",
+      "name": 10
+    },
+    "day": {
+      "title": "Мягмар",
+      "short": "Мяг",
+      "dataIndex": "tu"
+    },
+    "time": {
+      "title": "V цаг",
+      "dataIndex": 5
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "ACA001"
+      },
+      "lesson": {
+        "code": "AAC003",
+        "type": "lab"
+      }
+    }
+  },
+  {
+    "id": "room_18",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 10
+    },
+    "day": {
+      "title": "Мягмар",
+      "short": "Мяг",
+      "dataIndex": "tu"
+    },
+    "time": {
+      "title": "III цаг",
+      "dataIndex": 3
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "FAA002"
+      },
+      "lesson": {
+        "code": "ABA002",
+        "type": "seminar"
+      }
+    }
+  },
+  {
+    "id": "room_19",
+    "hall": {
+      "university": "Хууль зүйн сургууль",
+      "name": 2
+    },
+    "day": {
+      "title": "Даваа",
+      "short": "Дав",
+      "dataIndex": "mo"
+    },
+    "time": {
+      "title": "VII цаг",
+      "dataIndex": 7
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "HAJ003"
+      },
+      "lesson": {
+        "code": "ABA002",
+        "type": "seminar"
+      }
+    }
+  },
+  {
+    "id": "room_20",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 5
+    },
+    "day": {
+      "title": "Баасан",
+      "short": "Баа",
+      "dataIndex": "fr"
+    },
+    "time": {
+      "title": "I цаг",
+      "dataIndex": 1
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "FAA002"
+      },
+      "lesson": {
+        "code": "AAA001",
+        "type": "lecture"
+      }
+    }
+  },
+  {
+    "id": "room_21",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 9
+    },
+    "day": {
+      "title": "Ням",
+      "short": "Ням",
+      "dataIndex": "su"
+    },
+    "time": {
+      "title": "I цаг",
+      "dataIndex": 1
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "FAA002"
+      },
+      "lesson": {
+        "code": "AAA001",
+        "type": "lecture"
+      }
+    }
+  },
+  {
+    "id": "room_22",
+    "hall": {
+      "university": "Хууль зүйн сургууль",
+      "name": 1
+    },
+    "day": {
+      "title": "Бямба",
+      "short": "Бям",
+      "dataIndex": "sa"
+    },
+    "time": {
+      "title": "VI цаг",
+      "dataIndex": 6
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "FAA002"
+      },
+      "lesson": {
+        "code": "TAA004",
+        "type": "referat"
+      }
+    }
+  },
+  {
+    "id": "room_23",
+    "hall": {
+      "university": "Хууль зүйн сургууль",
+      "name": 1
+    },
+    "day": {
+      "title": "Даваа",
+      "short": "Дав",
+      "dataIndex": "mo"
+    },
+    "time": {
+      "title": "IV цаг",
+      "dataIndex": 4
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "HAJ003"
+      },
+      "lesson": {
+        "code": "ABA002",
+        "type": "seminar"
+      }
+    }
+  },
+  {
+    "id": "room_24",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 7
+    },
+    "day": {
+      "title": "Бямба",
+      "short": "Бям",
+      "dataIndex": "sa"
+    },
+    "time": {
+      "title": "I цаг",
+      "dataIndex": 1
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "HAJ003"
+      },
+      "lesson": {
+        "code": "ABA002",
+        "type": "seminar"
+      }
+    }
+  },
+  {
+    "id": "room_25",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 1
+    },
+    "day": {
+      "title": "Лхагва",
+      "short": "Лха",
+      "dataIndex": "we"
+    },
+    "time": {
+      "title": "I цаг",
+      "dataIndex": 1
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "FAA002"
+      },
+      "lesson": {
+        "code": "AAA001",
+        "type": "lecture"
+      }
+    }
+  },
+  {
+    "id": "room_26",
+    "hall": {
+      "university": "Хууль зүйн сургууль",
+      "name": 8
+    },
+    "day": {
+      "title": "Лхагва",
+      "short": "Лха",
+      "dataIndex": "we"
+    },
+    "time": {
+      "title": "VII цаг",
+      "dataIndex": 7
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "HAJ003"
+      },
+      "lesson": {
+        "code": "TAA004",
+        "type": "referat"
+      }
+    }
+  },
+  {
+    "id": "room_27",
+    "hall": {
+      "university": "Хууль зүйн сургууль",
+      "name": 5
+    },
+    "day": {
+      "title": "Пүрэв",
+      "short": "Пүр",
+      "dataIndex": "th"
+    },
+    "time": {
+      "title": "VI цаг",
+      "dataIndex": 6
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "ACA001"
+      },
+      "lesson": {
+        "code": "TAA004",
+        "type": "referat"
+      }
+    }
+  },
+  {
+    "id": "room_28",
+    "hall": {
+      "university": "Хууль зүйн сургууль",
+      "name": 2
+    },
+    "day": {
+      "title": "Бямба",
+      "short": "Бям",
+      "dataIndex": "sa"
+    },
+    "time": {
+      "title": "V цаг",
+      "dataIndex": 5
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "ACA001"
+      },
+      "lesson": {
+        "code": "ABA002",
+        "type": "seminar"
+      }
+    }
+  },
+  {
+    "id": "room_29",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 7
+    },
+    "day": {
+      "title": "Бямба",
+      "short": "Бям",
+      "dataIndex": "sa"
+    },
+    "time": {
+      "title": "II цаг",
+      "dataIndex": 2
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "HAJ003"
+      },
+      "lesson": {
+        "code": "AAC003",
+        "type": "lab"
+      }
+    }
+  },
+  {
+    "id": "room_30",
+    "hall": {
+      "university": "Хүмүүнлэгийн сургууль",
+      "name": 4
+    },
+    "day": {
+      "title": "Лхагва",
+      "short": "Лха",
+      "dataIndex": "we"
+    },
+    "time": {
+      "title": "III цаг",
+      "dataIndex": 3
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "ACA001"
+      },
+      "lesson": {
+        "code": "ABA002",
+        "type": "seminar"
+      }
+    }
+  },
+  {
+    "id": "room_31",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 3
+    },
+    "day": {
+      "title": "Мягмар",
+      "short": "Мяг",
+      "dataIndex": "tu"
+    },
+    "time": {
+      "title": "II цаг",
+      "dataIndex": 2
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "FAA002"
+      },
+      "lesson": {
+        "code": "TAA004",
+        "type": "referat"
+      }
+    }
+  },
+  {
+    "id": "room_32",
+    "hall": {
+      "university": "Хууль зүйн сургууль",
+      "name": 7
+    },
+    "day": {
+      "title": "Пүрэв",
+      "short": "Пүр",
+      "dataIndex": "th"
+    },
+    "time": {
+      "title": "III цаг",
+      "dataIndex": 3
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "HAJ003"
+      },
+      "lesson": {
+        "code": "ABA002",
+        "type": "seminar"
+      }
+    }
+  },
+  {
+    "id": "room_33",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 10
+    },
+    "day": {
+      "title": "Ням",
+      "short": "Ням",
+      "dataIndex": "su"
+    },
+    "time": {
+      "title": "V цаг",
+      "dataIndex": 5
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "FAA002"
+      },
+      "lesson": {
+        "code": "ABA002",
+        "type": "seminar"
+      }
+    }
+  },
+  {
+    "id": "room_34",
+    "hall": {
+      "university": "Хууль зүйн сургууль",
+      "name": 8
+    },
+    "day": {
+      "title": "Ням",
+      "short": "Ням",
+      "dataIndex": "su"
+    },
+    "time": {
+      "title": "II цаг",
+      "dataIndex": 2
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "FAA002"
+      },
+      "lesson": {
+        "code": "AAA001",
+        "type": "lecture"
+      }
+    }
+  },
+  {
+    "id": "room_36",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 9
+    },
+    "day": {
+      "title": "Лхагва",
+      "short": "Лха",
+      "dataIndex": "we"
+    },
+    "time": {
+      "title": "IV цаг",
+      "dataIndex": 4
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "ACA001"
+      },
+      "lesson": {
+        "code": "AAC003",
+        "type": "lab"
+      }
+    }
+  },
+  {
+    "id": "room_37",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 10
+    },
+    "day": {
+      "title": "Ням",
+      "short": "Ням",
+      "dataIndex": "su"
+    },
+    "time": {
+      "title": "I цаг",
+      "dataIndex": 1
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "HAJ003"
+      },
+      "lesson": {
+        "code": "AAA001",
+        "type": "lecture"
+      }
+    }
+  },
+  {
+    "id": "room_38",
+    "hall": {
+      "university": "Хүмүүнлэгийн сургууль",
+      "name": 10
+    },
+    "day": {
+      "title": "Бямба",
+      "short": "Бям",
+      "dataIndex": "sa"
+    },
+    "time": {
+      "title": "V цаг",
+      "dataIndex": 5
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "FAA002"
+      },
+      "lesson": {
+        "code": "TAA004",
+        "type": "referat"
+      }
+    }
+  },
+  {
+    "id": "room_39",
+    "hall": {
+      "university": "Хууль зүйн сургууль",
+      "name": 2
+    },
+    "day": {
+      "title": "Лхагва",
+      "short": "Лха",
+      "dataIndex": "we"
+    },
+    "time": {
+      "title": "III цаг",
+      "dataIndex": 3
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "FAA002"
+      },
+      "lesson": {
+        "code": "ABA002",
+        "type": "seminar"
+      }
+    }
+  },
+  {
+    "id": "room_40",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 9
+    },
+    "day": {
+      "title": "Баасан",
+      "short": "Баа",
+      "dataIndex": "fr"
+    },
+    "time": {
+      "title": "VII цаг",
+      "dataIndex": 7
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "ACA001"
+      },
+      "lesson": {
+        "code": "ABA002",
+        "type": "seminar"
+      }
+    }
+  },
+  {
+    "id": "room_41",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 3
+    },
+    "day": {
+      "title": "Лхагва",
+      "short": "Лха",
+      "dataIndex": "we"
+    },
+    "time": {
+      "title": "V цаг",
+      "dataIndex": 5
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "FAA002"
+      },
+      "lesson": {
+        "code": "AAC003",
+        "type": "lab"
+      }
+    }
+  },
+  {
+    "id": "room_42",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 4
+    },
+    "day": {
+      "title": "Лхагва",
+      "short": "Лха",
+      "dataIndex": "we"
+    },
+    "time": {
+      "title": "II цаг",
+      "dataIndex": 2
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "ACA001"
+      },
+      "lesson": {
+        "code": "ABA002",
+        "type": "seminar"
+      }
+    }
+  },
+  {
+    "id": "room_43",
+    "hall": {
+      "university": "Хууль зүйн сургууль",
+      "name": 6
+    },
+    "day": {
+      "title": "Пүрэв",
+      "short": "Пүр",
+      "dataIndex": "th"
+    },
+    "time": {
+      "title": "V цаг",
+      "dataIndex": 5
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "ACA001"
+      },
+      "lesson": {
+        "code": "AAA001",
+        "type": "lecture"
+      }
+    }
+  },
+  {
+    "id": "room_45",
+    "hall": {
+      "university": "Хүмүүнлэгийн сургууль",
+      "name": 9
+    },
+    "day": {
+      "title": "Даваа",
+      "short": "Дав",
+      "dataIndex": "mo"
+    },
+    "time": {
+      "title": "I цаг",
+      "dataIndex": 1
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "FAA002"
+      },
+      "lesson": {
+        "code": "ABA002",
+        "type": "seminar"
+      }
+    }
+  },
+  {
+    "id": "room_46",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 8
+    },
+    "day": {
+      "title": "Ням",
+      "short": "Ням",
+      "dataIndex": "su"
+    },
+    "time": {
+      "title": "III цаг",
+      "dataIndex": 3
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "FAA002"
+      },
+      "lesson": {
+        "code": "ABA002",
+        "type": "seminar"
+      }
+    }
+  },
+  {
+    "id": "room_47",
+    "hall": {
+      "university": "Хүмүүнлэгийн сургууль",
+      "name": 10
+    },
+    "day": {
+      "title": "Пүрэв",
+      "short": "Пүр",
+      "dataIndex": "th"
+    },
+    "time": {
+      "title": "II цаг",
+      "dataIndex": 2
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "HAJ003"
+      },
+      "lesson": {
+        "code": "ABA002",
+        "type": "seminar"
+      }
+    }
+  },
+  {
+    "id": "room_48",
+    "hall": {
+      "university": "Хүмүүнлэгийн сургууль",
+      "name": 9
+    },
+    "day": {
+      "title": "Мягмар",
+      "short": "Мяг",
+      "dataIndex": "tu"
+    },
+    "time": {
+      "title": "IV цаг",
+      "dataIndex": 4
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "FAA002"
+      },
+      "lesson": {
+        "code": "TAA004",
+        "type": "referat"
+      }
+    }
+  },
+  {
+    "id": "room_49",
+    "hall": {
+      "university": "Хүмүүнлэгийн сургууль",
+      "name": 3
+    },
+    "day": {
+      "title": "Пүрэв",
+      "short": "Пүр",
+      "dataIndex": "th"
+    },
+    "time": {
+      "title": "III цаг",
+      "dataIndex": 3
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "ACA001"
+      },
+      "lesson": {
+        "code": "TAA004",
+        "type": "referat"
+      }
+    }
+  },
+  {
+    "id": "room_50",
+    "hall": {
+      "university": "Хууль зүйн сургууль",
+      "name": 5
+    },
+    "day": {
+      "title": "Ням",
+      "short": "Ням",
+      "dataIndex": "su"
+    },
+    "time": {
+      "title": "I цаг",
+      "dataIndex": 1
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "HAJ003"
+      },
+      "lesson": {
+        "code": "TAA004",
+        "type": "referat"
+      }
+    }
+  },
+  {
+    "id": "room_51",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 3
+    },
+    "day": {
+      "title": "Мягмар",
+      "short": "Мяг",
+      "dataIndex": "tu"
+    },
+    "time": {
+      "title": "I цаг",
+      "dataIndex": 1
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "HAJ003"
+      },
+      "lesson": {
+        "code": "TAA004",
+        "type": "referat"
+      }
+    }
+  },
+  {
+    "id": "room_52",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 3
+    },
+    "day": {
+      "title": "Мягмар",
+      "short": "Мяг",
+      "dataIndex": "tu"
+    },
+    "time": {
+      "title": "VI цаг",
+      "dataIndex": 6
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "ACA001"
+      },
+      "lesson": {
+        "code": "AAA001",
+        "type": "lecture"
+      }
+    }
+  },
+  {
+    "id": "room_53",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 7
+    },
+    "day": {
+      "title": "Даваа",
+      "short": "Дав",
+      "dataIndex": "mo"
+    },
+    "time": {
+      "title": "I цаг",
+      "dataIndex": 1
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "ACA001"
+      },
+      "lesson": {
+        "code": "AAC003",
+        "type": "lab"
+      }
+    }
+  },
+  {
+    "id": "room_54",
+    "hall": {
+      "university": "Хүмүүнлэгийн сургууль",
+      "name": 7
+    },
+    "day": {
+      "title": "Пүрэв",
+      "short": "Пүр",
+      "dataIndex": "th"
+    },
+    "time": {
+      "title": "I цаг",
+      "dataIndex": 1
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "ACA001"
+      },
+      "lesson": {
+        "code": "TAA004",
+        "type": "referat"
+      }
+    }
+  },
+  {
+    "id": "room_55",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 8
+    },
+    "day": {
+      "title": "Ням",
+      "short": "Ням",
+      "dataIndex": "su"
+    },
+    "time": {
+      "title": "I цаг",
+      "dataIndex": 1
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "FAA002"
+      },
+      "lesson": {
+        "code": "AAA001",
+        "type": "lecture"
+      }
+    }
+  },
+  {
+    "id": "room_56",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 6
+    },
+    "day": {
+      "title": "Баасан",
+      "short": "Баа",
+      "dataIndex": "fr"
+    },
+    "time": {
+      "title": "II цаг",
+      "dataIndex": 2
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "FAA002"
+      },
+      "lesson": {
+        "code": "AAC003",
+        "type": "lab"
+      }
+    }
+  },
+  {
+    "id": "room_57",
+    "hall": {
+      "university": "Хууль зүйн сургууль",
+      "name": 8
+    },
+    "day": {
+      "title": "Баасан",
+      "short": "Баа",
+      "dataIndex": "fr"
+    },
+    "time": {
+      "title": "III цаг",
+      "dataIndex": 3
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "HAJ003"
+      },
+      "lesson": {
+        "code": "TAA004",
+        "type": "referat"
+      }
+    }
+  },
+  {
+    "id": "room_59",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 5
+    },
+    "day": {
+      "title": "Бямба",
+      "short": "Бям",
+      "dataIndex": "sa"
+    },
+    "time": {
+      "title": "VI цаг",
+      "dataIndex": 6
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "ACA001"
+      },
+      "lesson": {
+        "code": "TAA004",
+        "type": "referat"
+      }
+    }
+  },
+  {
+    "id": "room_60",
+    "hall": {
+      "university": "Хууль зүйн сургууль",
+      "name": 2
+    },
+    "day": {
+      "title": "Бямба",
+      "short": "Бям",
+      "dataIndex": "sa"
+    },
+    "time": {
+      "title": "I цаг",
+      "dataIndex": 1
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "FAA002"
+      },
+      "lesson": {
+        "code": "AAA001",
+        "type": "lecture"
+      }
+    }
+  },
+  {
+    "id": "room_61",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 6
+    },
+    "day": {
+      "title": "Даваа",
+      "short": "Дав",
+      "dataIndex": "mo"
+    },
+    "time": {
+      "title": "IV цаг",
+      "dataIndex": 4
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "HAJ003"
+      },
+      "lesson": {
+        "code": "ABA002",
+        "type": "seminar"
+      }
+    }
+  },
+  {
+    "id": "room_62",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 7
+    },
+    "day": {
+      "title": "Мягмар",
+      "short": "Мяг",
+      "dataIndex": "tu"
+    },
+    "time": {
+      "title": "III цаг",
+      "dataIndex": 3
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "FAA002"
+      },
+      "lesson": {
+        "code": "ABA002",
+        "type": "seminar"
+      }
+    }
+  },
+  {
+    "id": "room_63",
+    "hall": {
+      "university": "Хууль зүйн сургууль",
+      "name": 5
+    },
+    "day": {
+      "title": "Баасан",
+      "short": "Баа",
+      "dataIndex": "fr"
+    },
+    "time": {
+      "title": "IV цаг",
+      "dataIndex": 4
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "ACA001"
+      },
+      "lesson": {
+        "code": "AAC003",
+        "type": "lab"
+      }
+    }
+  },
+  {
+    "id": "room_64",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 5
+    },
+    "day": {
+      "title": "Даваа",
+      "short": "Дав",
+      "dataIndex": "mo"
+    },
+    "time": {
+      "title": "IV цаг",
+      "dataIndex": 4
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "FAA002"
+      },
+      "lesson": {
+        "code": "AAA001",
+        "type": "lecture"
+      }
+    }
+  },
+  {
+    "id": "room_65",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 5
+    },
+    "day": {
+      "title": "Лхагва",
+      "short": "Лха",
+      "dataIndex": "we"
+    },
+    "time": {
+      "title": "II цаг",
+      "dataIndex": 2
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "FAA002"
+      },
+      "lesson": {
+        "code": "AAC003",
+        "type": "lab"
+      }
+    }
+  },
+  {
+    "id": "room_67",
+    "hall": {
+      "university": "Хүмүүнлэгийн сургууль",
+      "name": 7
+    },
+    "day": {
+      "title": "Мягмар",
+      "short": "Мяг",
+      "dataIndex": "tu"
+    },
+    "time": {
+      "title": "VI цаг",
+      "dataIndex": 6
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "ACA001"
+      },
+      "lesson": {
+        "code": "AAA001",
+        "type": "lecture"
+      }
+    }
+  },
+  {
+    "id": "room_69",
+    "hall": {
+      "university": "Хүмүүнлэгийн сургууль",
+      "name": 7
+    },
+    "day": {
+      "title": "Бямба",
+      "short": "Бям",
+      "dataIndex": "sa"
+    },
+    "time": {
+      "title": "IV цаг",
+      "dataIndex": 4
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "ACA001"
+      },
+      "lesson": {
+        "code": "TAA004",
+        "type": "referat"
+      }
+    }
+  },
+  {
+    "id": "room_70",
+    "hall": {
+      "university": "Хууль зүйн сургууль",
+      "name": 3
+    },
+    "day": {
+      "title": "Пүрэв",
+      "short": "Пүр",
+      "dataIndex": "th"
+    },
+    "time": {
+      "title": "VII цаг",
+      "dataIndex": 7
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "FAA002"
+      },
+      "lesson": {
+        "code": "TAA004",
+        "type": "referat"
+      }
+    }
+  },
+  {
+    "id": "room_72",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 1
+    },
+    "day": {
+      "title": "Ням",
+      "short": "Ням",
+      "dataIndex": "su"
+    },
+    "time": {
+      "title": "VII цаг",
+      "dataIndex": 7
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "HAJ003"
+      },
+      "lesson": {
+        "code": "AAC003",
+        "type": "lab"
+      }
+    }
+  },
+  {
+    "id": "room_73",
+    "hall": {
+      "university": "Хүмүүнлэгийн сургууль",
+      "name": 2
+    },
+    "day": {
+      "title": "Мягмар",
+      "short": "Мяг",
+      "dataIndex": "tu"
+    },
+    "time": {
+      "title": "VI цаг",
+      "dataIndex": 6
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "FAA002"
+      },
+      "lesson": {
+        "code": "AAC003",
+        "type": "lab"
+      }
+    }
+  },
+  {
+    "id": "room_75",
+    "hall": {
+      "university": "Хууль зүйн сургууль",
+      "name": 10
+    },
+    "day": {
+      "title": "Бямба",
+      "short": "Бям",
+      "dataIndex": "sa"
+    },
+    "time": {
+      "title": "III цаг",
+      "dataIndex": 3
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "FAA002"
+      },
+      "lesson": {
+        "code": "TAA004",
+        "type": "referat"
+      }
+    }
+  },
+  {
+    "id": "room_76",
+    "hall": {
+      "university": "Хүмүүнлэгийн сургууль",
+      "name": 5
+    },
+    "day": {
+      "title": "Даваа",
+      "short": "Дав",
+      "dataIndex": "mo"
+    },
+    "time": {
+      "title": "VI цаг",
+      "dataIndex": 6
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "HAJ003"
+      },
+      "lesson": {
+        "code": "TAA004",
+        "type": "referat"
+      }
+    }
+  },
+  {
+    "id": "room_77",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 6
+    },
+    "day": {
+      "title": "Мягмар",
+      "short": "Мяг",
+      "dataIndex": "tu"
+    },
+    "time": {
+      "title": "VII цаг",
+      "dataIndex": 7
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "ACA001"
+      },
+      "lesson": {
+        "code": "AAA001",
+        "type": "lecture"
+      }
+    }
+  },
+  {
+    "id": "room_78",
+    "hall": {
+      "university": "Хууль зүйн сургууль",
+      "name": 2
+    },
+    "day": {
+      "title": "Пүрэв",
+      "short": "Пүр",
+      "dataIndex": "th"
+    },
+    "time": {
+      "title": "II цаг",
+      "dataIndex": 2
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "ACA001"
+      },
+      "lesson": {
+        "code": "TAA004",
+        "type": "referat"
+      }
+    }
+  },
+  {
+    "id": "room_79",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 10
+    },
+    "day": {
+      "title": "Баасан",
+      "short": "Баа",
+      "dataIndex": "fr"
+    },
+    "time": {
+      "title": "VI цаг",
+      "dataIndex": 6
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "ACA001"
+      },
+      "lesson": {
+        "code": "AAC003",
+        "type": "lab"
+      }
+    }
+  },
+  {
+    "id": "room_80",
+    "hall": {
+      "university": "Хүмүүнлэгийн сургууль",
+      "name": 10
+    },
+    "day": {
+      "title": "Пүрэв",
+      "short": "Пүр",
+      "dataIndex": "th"
+    },
+    "time": {
+      "title": "VI цаг",
+      "dataIndex": 6
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "ACA001"
+      },
+      "lesson": {
+        "code": "AAC003",
+        "type": "lab"
+      }
+    }
+  },
+  {
+    "id": "room_81",
+    "hall": {
+      "university": "Хууль зүйн сургууль",
+      "name": 6
+    },
+    "day": {
+      "title": "Бямба",
+      "short": "Бям",
+      "dataIndex": "sa"
+    },
+    "time": {
+      "title": "VII цаг",
+      "dataIndex": 7
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "HAJ003"
+      },
+      "lesson": {
+        "code": "ABA002",
+        "type": "seminar"
+      }
+    }
+  },
+  {
+    "id": "room_83",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 7
+    },
+    "day": {
+      "title": "Мягмар",
+      "short": "Мяг",
+      "dataIndex": "tu"
+    },
+    "time": {
+      "title": "II цаг",
+      "dataIndex": 2
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "FAA002"
+      },
+      "lesson": {
+        "code": "TAA004",
+        "type": "referat"
+      }
+    }
+  },
+  {
+    "id": "room_84",
+    "hall": {
+      "university": "Хууль зүйн сургууль",
+      "name": 2
+    },
+    "day": {
+      "title": "Пүрэв",
+      "short": "Пүр",
+      "dataIndex": "th"
+    },
+    "time": {
+      "title": "III цаг",
+      "dataIndex": 3
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "FAA002"
+      },
+      "lesson": {
+        "code": "AAC003",
+        "type": "lab"
+      }
+    }
+  },
+  {
+    "id": "room_85",
+    "hall": {
+      "university": "Хууль зүйн сургууль",
+      "name": 5
+    },
+    "day": {
+      "title": "Баасан",
+      "short": "Баа",
+      "dataIndex": "fr"
+    },
+    "time": {
+      "title": "II цаг",
+      "dataIndex": 2
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "FAA002"
+      },
+      "lesson": {
+        "code": "AAA001",
+        "type": "lecture"
+      }
+    }
+  },
+  {
+    "id": "room_86",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 1
+    },
+    "day": {
+      "title": "Ням",
+      "short": "Ням",
+      "dataIndex": "su"
+    },
+    "time": {
+      "title": "IV цаг",
+      "dataIndex": 4
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "ACA001"
+      },
+      "lesson": {
+        "code": "TAA004",
+        "type": "referat"
+      }
+    }
+  },
+  {
+    "id": "room_87",
+    "hall": {
+      "university": "Хууль зүйн сургууль",
+      "name": 9
+    },
+    "day": {
+      "title": "Баасан",
+      "short": "Баа",
+      "dataIndex": "fr"
+    },
+    "time": {
+      "title": "III цаг",
+      "dataIndex": 3
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "HAJ003"
+      },
+      "lesson": {
+        "code": "ABA002",
+        "type": "seminar"
+      }
+    }
+  },
+  {
+    "id": "room_90",
+    "hall": {
+      "university": "Хүмүүнлэгийн сургууль",
+      "name": 9
+    },
+    "day": {
+      "title": "Лхагва",
+      "short": "Лха",
+      "dataIndex": "we"
+    },
+    "time": {
+      "title": "VI цаг",
+      "dataIndex": 6
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "ACA001"
+      },
+      "lesson": {
+        "code": "AAA001",
+        "type": "lecture"
+      }
+    }
+  },
+  {
+    "id": "room_91",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 5
+    },
+    "day": {
+      "title": "Лхагва",
+      "short": "Лха",
+      "dataIndex": "we"
+    },
+    "time": {
+      "title": "V цаг",
+      "dataIndex": 5
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "FAA002"
+      },
+      "lesson": {
+        "code": "TAA004",
+        "type": "referat"
+      }
+    }
+  },
+  {
+    "id": "room_92",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 3
+    },
+    "day": {
+      "title": "Лхагва",
+      "short": "Лха",
+      "dataIndex": "we"
+    },
+    "time": {
+      "title": "VII цаг",
+      "dataIndex": 7
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "HAJ003"
+      },
+      "lesson": {
+        "code": "ABA002",
+        "type": "seminar"
+      }
+    }
+  },
+  {
+    "id": "room_93",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 4
+    },
+    "day": {
+      "title": "Бямба",
+      "short": "Бям",
+      "dataIndex": "sa"
+    },
+    "time": {
+      "title": "VII цаг",
+      "dataIndex": 7
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "ACA001"
+      },
+      "lesson": {
+        "code": "TAA004",
+        "type": "referat"
+      }
+    }
+  },
+  {
+    "id": "room_95",
+    "hall": {
+      "university": "Хууль зүйн сургууль",
+      "name": 8
+    },
+    "day": {
+      "title": "Мягмар",
+      "short": "Мяг",
+      "dataIndex": "tu"
+    },
+    "time": {
+      "title": "VII цаг",
+      "dataIndex": 7
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "ACA001"
+      },
+      "lesson": {
+        "code": "TAA004",
+        "type": "referat"
+      }
+    }
+  },
+  {
+    "id": "room_96",
+    "hall": {
+      "university": "Хууль зүйн сургууль",
+      "name": 7
+    },
+    "day": {
+      "title": "Ням",
+      "short": "Ням",
+      "dataIndex": "su"
+    },
+    "time": {
+      "title": "II цаг",
+      "dataIndex": 2
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "ACA001"
+      },
+      "lesson": {
+        "code": "AAA001",
+        "type": "lecture"
+      }
+    }
+  },
+  {
+    "id": "room_98",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 7
+    },
+    "day": {
+      "title": "Бямба",
+      "short": "Бям",
+      "dataIndex": "sa"
+    },
+    "time": {
+      "title": "VI цаг",
+      "dataIndex": 6
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "FAA002"
+      },
+      "lesson": {
+        "code": "TAA004",
+        "type": "referat"
+      }
+    }
+  },
+  {
+    "id": "room_99",
+    "hall": {
+      "university": "Хүмүүнлэгийн сургууль",
+      "name": 2
+    },
+    "day": {
+      "title": "Лхагва",
+      "short": "Лха",
+      "dataIndex": "we"
+    },
+    "time": {
+      "title": "IV цаг",
+      "dataIndex": 4
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "HAJ003"
+      },
+      "lesson": {
+        "code": "AAC003",
+        "type": "lab"
+      }
+    }
+  },
+  {
+    "id": "room_100",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 3
+    },
+    "day": {
+      "title": "Баасан",
+      "short": "Баа",
+      "dataIndex": "fr"
+    },
+    "time": {
+      "title": "V цаг",
+      "dataIndex": 5
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "FAA002"
+      },
+      "lesson": {
+        "code": "TAA004",
+        "type": "referat"
+      }
+    }
+  },
+  {
+    "id": "room_101",
+    "hall": {
+      "university": "Эдийн засаг-Бизнесийн удирдлагын сургууль",
+      "name": 12
+    },
+    "day": {
+      "title": "Баасан",
+      "short": "Баа",
+      "dataIndex": "fr"
+    },
+    "time": {
+      "title": "V цаг",
+      "dataIndex": 5
+    },
+    "plan_lesson_teacher": {
+      "teacher": {
+        "code": "FAA002"
+      },
+      "lesson": {
+        "code": "TAA004",
+        "type": "referat"
+      }
+    }
+  }
+]

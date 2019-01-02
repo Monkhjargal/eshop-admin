@@ -1,0 +1,55 @@
+@import "~antd/lib/style/themes/default.less";
+
+.standardTable {
+  :global {
+    .ant-table-pagination {
+      margin-top: 24px;
+    }
+    .ant-table-thead > tr > th {
+      white-space: nowrap;
+    }
+    .ant-table-tbody > tr > td {
+      cursor: pointer;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      padding: 6px;
+      font-size: 13px;
+      padding-left: 20px;
+    }
+  }
+
+  .tableFooter {
+    display: flex;
+    .footerInfo {
+      font-size: 16px;
+      -o-text-overflow: ellipsis;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      color: rgba(0, 0, 0, 0.85);
+      font-weight: 500;
+      display: inline-block;
+      -webkit-box-flex: 1;
+      -ms-flex: 1;
+      flex: 1;
+    }
+    :global {
+      .ant-pagination {
+        float: right;
+        text-align: right;
+        margin-left: auto;
+        transition: right .3s;
+      }
+    }
+  }
+
+  .tableAlert {
+    margin-bottom: 16px;
+  }
+}
+
+.selected > td {
+  background-color: @geekblue-5 !important;
+  color: #fff;
+}

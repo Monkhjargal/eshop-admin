@@ -1,0 +1,515 @@
+@import "~antd/lib/style/themes/default.less";
+@import "../../utils/utils.less";
+
+// Base styles
+.list {
+  width: 400px;
+  height: 600px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid #999;
+}
+
+.item {
+  position: relative;
+  border-bottom: 1px solid #999;
+}
+
+.action {
+  margin-bottom: 16px;
+}
+
+// Stylized
+.stylizedList {
+  position: relative;
+  z-index: 0;
+  background-color: #F3F3F3;
+  border: 1px solid #EFEFEF;
+  border-radius: 3px;
+  outline: none;
+
+  overflow: auto;
+}
+.stylizedItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background-color: #FFF;
+  border-bottom: 1px solid #EFEFEF;
+  box-sizing: border-box;
+  user-select: none;
+
+  color: #333;
+  font-weight: 400;
+
+  background-size: 80px;
+  background-repeat: no-repeat;
+  background-position: right;
+  &.active {
+    // background-color: #ffec3d;
+    background-color: #e6f7ff;
+  }
+
+  .catItem {
+    display: flex;
+    flex: 1;
+    height: 60px;
+    align-items: center;
+    cursor: pointer;
+  }
+  .catAction {
+    display: flex;
+    margin-right: 10px;
+    & > * {
+      margin-left: 10px;
+      line-height: 28px;
+      font-size: 20px;
+    }
+  }
+}
+
+.contentWrapper {
+  flex: 1;
+  padding: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.rowContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.rLabel {
+  display: flex;
+  flex: 1;
+  font-weight: 500;
+}
+
+.rValue {
+  display: flex;
+  flex: 1;
+}
+
+.rValue1 {
+  display: flex;
+  flex: 1;
+  font-weight: 500;
+}
+
+// Drag handle
+.handle {
+  position: relative;
+  top: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: row-resize;
+}
+
+// Horizontal list
+.horizontalList {
+  display: flex;
+  width: 600px;
+  height: 300px;
+  white-space: nowrap;
+}
+
+.horizontalItem {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  border-right: 1px solid #EFEFEF;
+  border-bottom: 0;
+}
+
+// Divider
+.divider {
+  padding: 10px 20px;
+  background: #F9F9F9;
+  border-bottom: 1px solid #EFEFEF;
+  text-transform: uppercase;
+  font-size: 14px;
+  color: #333;
+}
+
+// Helper styles
+.helper {
+  box-shadow: 0 5px 5px -5px rgba(0,0,0,0.2), 0 -5px 5px -5px rgba(0,0,0,0.2);
+}
+.stylizedHelper {
+  box-shadow: 0 5px 5px -5px rgba(0,0,0,0.2), 0 -5px 5px -5px rgba(0,0,0,0.2);
+  background-color: rgba(255,255,255,0.8);
+  cursor: row-resize;
+
+  &.horizontalItem {
+      cursor: col-resize;
+  }
+  &.gridItem {
+      background-color: transparent;
+      white-space: nowrap;
+      box-shadow: none;
+
+      .wrapper {
+          background-color: rgba(255,255,255,0.8);
+          box-shadow: 0 0 7px rgba(0,0,0,0.15)
+      }
+  }
+}
+
+
+// Grid
+.grid {
+  display: block;
+  width: 130 * 4px;
+  height: 350px;
+  white-space: nowrap;
+  border: 0;
+  background-color: transparent;
+
+  @media (max-width: 530px) {
+      width: 100%;
+  }
+}
+
+.gridItem {
+  float: left;
+  width: 130px;
+  padding: 8px;
+  background: transparent;
+  border: 0;
+
+  .wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 100%;
+      height: 100%;
+      background: #FFF;
+      border: 1px solid #EFEFEF;
+
+      font-size: 28px;
+
+      span {
+          display: none;
+      }
+  }
+}
+
+//+++++++++===========================++++++++++=
+
+.orderTable tr:hover {
+  background-color: none;
+}
+
+.Topbread {
+  clear: both;
+  margin-top: 4px;
+  display: inline-block;
+}
+
+.Topbread a {
+  font-size: 13px;
+}
+
+.createBtn {
+  float: right!important;
+}
+
+.pageTop {
+  background-color: #ffffff;
+  padding: 0;
+}
+
+.tableHeading {
+  font-size: 16px;
+  color: #666666;
+  font-weight: 400;
+  line-height: 25px;
+}
+
+.dataTable {
+  border-top: 1px solid #eceeef;
+  border-right: 1px solid #eceeef;
+  border-left: 1px solid #eceeef;
+  border-bottom: none;
+}
+
+.dataTable thead {
+  border: 1px solid #eceeef;
+}
+
+.dataTable tr td {
+  padding: 5px 16px;
+  border-bottom: none;
+  font-size: 14px;
+  font-family: Arial, Helvetica, sans-serif;
+  border-bottom: 1px solid #eceeef;
+}
+
+.dataTable tr:hover > td {
+  background-color: #fbfbfb;
+}
+
+.productImage {
+  display: block;
+  width: 80px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.productTitle {
+  font-size: 15px;
+  text-transform: lowercase;
+}
+
+.pageTitle {
+  font-size: 20px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.85);
+  line-height: 45px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.cardContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin-right: 10px;
+}
+
+.cardItem {
+  display: flex;
+  height: 80px;
+  align-items: center;
+  position: relative;
+}
+
+.popOverContainer {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.popoverContentContainier {
+  display: flex;
+  flex-direction: column;
+}
+
+.cardImageContainer {
+  display: flex;
+  width: 80px;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100%;
+  overflow: hidden;
+  margin-right: 16px;
+
+  .placeholder {
+    height: 50px;
+    margin-left: 10px;
+  }
+  
+}
+
+.cardQuantityContainer {
+  display: flex;
+  width: 80px;
+  justify-content: center;
+  align-items: center;
+}
+
+.cardLabelContainer {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.standardList {
+  :global {
+    .ant-card-head {
+      border-bottom: none;
+    }
+    .ant-card-head-title {
+      line-height: 32px;
+      padding: 24px 0;
+    }
+    .ant-card-extra {
+      padding: 24px 0;
+    }
+    .ant-list-pagination {
+      text-align: right;
+    }
+    .ant-avatar-lg {
+      width: 48px;
+      height: 48px;
+      line-height: 48px;
+    }
+    .ant-list-pagination {
+      margin-top: 24px;
+    }
+  }
+  .headerInfo {
+    position: relative;
+    text-align: center;
+    & > span {
+      color: @text-color-secondary;
+      display: inline-block;
+      font-size: @font-size-base;
+      line-height: 22px;
+      margin-bottom: 4px;
+    }
+    & > p {
+      color: @heading-color;
+      font-size: 24px;
+      line-height: 32px;
+    }
+    & > em {
+      background-color: @border-color-split;
+      position: absolute;
+      height: 56px;
+      width: 1px;
+      top: 0;
+      right: 0;
+    }
+  }
+  .listContent {
+    font-size: 0;
+    & > div {
+      color: @text-color-secondary;
+      display: inline-block;
+      font-size: @font-size-base;
+      margin-left: 40px;
+      & > span {
+        line-height: 20px;
+      }
+      & > p {
+        margin-top: 4px;
+        margin-bottom: 0;
+        line-height: 22px;
+      }
+    }
+    & > div:last-child {
+      position: relative;
+      top: -16px;
+      width: 188px;
+    }
+  }
+  .extraContentSearch {
+    margin-left: 16px;
+    width: 272px;
+  }
+}
+
+@media screen and (max-width: @screen-xs) {
+  .standardList {
+    :global {
+      .ant-list-item-content {
+        display: block;
+        flex: none;
+        width: 100%;
+      }
+      .ant-list-item-action {
+        margin-left: 0;
+      }
+    }
+    .listContent {
+      margin-left: 0;
+      & > div {
+        margin-left: 0;
+      }
+    }
+    .listCard {
+      :global {
+        .ant-card-head-title {
+          overflow: visible;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: @screen-sm) {
+  .standardList {
+    .extraContentSearch {
+      margin-left: 0;
+      width: 100%;
+    }
+    .headerInfo {
+      margin-bottom: 16px;
+      & > em {
+        display: none;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: @screen-md) {
+  .standardList {
+    .listContent {
+      & > div {
+        display: block;
+      }
+      & > div:last-child {
+        top: 0;
+        width: 100%;
+      }
+    }
+  }
+  .listCard {
+    :global {
+      .ant-radio-group {
+        display: block;
+        margin-bottom: 8px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: @screen-lg) and (min-width: @screen-md) {
+  .standardList {
+    .listContent {
+      & > div {
+        display: block;
+      }
+      & > div:last-child {
+        top: 0;
+        width: 100%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: @screen-xl) {
+  .standardList {
+    .listContent {
+      & > div {
+        margin-left: 24px;
+      }
+      & > div:last-child {
+        top: 0;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .standardList {
+    .listContent {
+      text-align: right;
+      & > div:last-child {
+        top: 0;
+      }
+    }
+  }
+}
