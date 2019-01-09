@@ -11,7 +11,6 @@ String.prototype.unCapitalize = function unCapitalize() {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(ownProps.model.unCapitalize());
   const {
     [ownProps.model.unCapitalize()]: {
       all: {
@@ -57,7 +56,6 @@ const mapStateToProps = (state, ownProps) => {
   };
 
   if (ownProps.addons && ownProps.addons.length) {
-    // console.log(ownProps);
     let addonsArray = [];
     ownProps.addons.forEach((entry, index) => {
       addonsArray[index] = {};
@@ -76,7 +74,6 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  // console.log(Models[ownProps.model]);
   let actionCreators = {
     fetchForm: Models.Form.get,
     fetchFilter: Models.Filter.get,
@@ -99,10 +96,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   });
 };
 
-const List = props => (props.list ?
-  props.list(props) :
-  <ListComponent {...props} />);
-
+const List = props => (
+  props.list
+    ? props.list(props)
+    : <ListComponent {...props} />
+);
 
 List.propTypes = {
   list: PropTypes.func,

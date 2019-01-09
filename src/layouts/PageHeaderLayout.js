@@ -1,22 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Affix } from "antd";
-import { PageHeader } from '../components';
 import styles from './PageHeaderLayout.less';
 
 const PageHeaderLayout = ({
   children, wrapperClassName, top, offsetTop, ...restProps
 }) => (
   <div className={wrapperClassName}>
-    {/* {offsetTop !== undefined ?
-      <Affix offsetTop={offsetTop}>
-        <PageHeader {...restProps} linkElement={Link} />
-      </Affix>
-        :
-      <PageHeader {...restProps} linkElement={Link} />
-      } */}
-    {children ? <div className={styles.content}>{children}</div> : null}
+    {children ? <div className={styles.content}><h1>{restProps.title}</h1>{children}</div> : null}
   </div>
 );
 

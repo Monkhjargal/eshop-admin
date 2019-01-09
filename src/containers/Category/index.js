@@ -2,17 +2,12 @@ import React from 'react';
 import { List } from '../../components';
 import PageHeaderLayout from "../../layouts/PageHeaderLayout";
 
-const divStyle = {
-  width: '90%',
-  overflow: 'hidden',
-};
-
 export default () => (
-  <PageHeaderLayout title="Category information" style={divStyle}>
+  <PageHeaderLayout title="Категорын мэдээлэл" style={{ width: '100%', overflow: 'hidden' }}>
     <List
       actions={['create', 'update', 'delete']}
       model={'Category'}
-      name={'Category'}
+      name={'Категори'}
     />
   </PageHeaderLayout>
 );

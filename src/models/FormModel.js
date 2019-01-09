@@ -1,5 +1,4 @@
 import BaseModel from './BaseModel';
-import { asyncFn } from './utils';
 
 const asyncFromDataFn = ({
   model, name, data,
@@ -44,7 +43,6 @@ class FormModel extends BaseModel {
       case this.model.response:
         let uiSchema = {};
         const recursive = (object, toObject) => {
-          // console.log(toObject);
           if (object.type === 'id') {
             object.type = 'string';
           }
@@ -97,6 +95,7 @@ class FormModel extends BaseModel {
             toObject[key] = {};
             recursive(object.properties[key], toObject[key]);
           });
+
           return true;
         };
         let tempData = action.payload;

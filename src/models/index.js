@@ -2,6 +2,7 @@ import AuthModel from './AuthModel';
 import CrudModel from './CrudModel';
 import FormModel from './FormModel';
 import FilterModel from './FilterModel';
+import EhowModel from './EhowModel';
 
 const Auth = new AuthModel({
   model: 'auth',
@@ -88,6 +89,11 @@ const StaticPage = new CrudModel({
   model: 'staticpage',
 });
 
+const Ehow = new EhowModel({
+  url: '/mn/api/ehow',
+  model: 'ehow',
+});
+
 
 export {
   Auth,
@@ -106,4 +112,5 @@ export {
   Menulist,
   Language,
   StaticPage,
+  Ehow,
 };

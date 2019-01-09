@@ -4,7 +4,6 @@ const HOST = 'http://202.55.180.200:8881';
 // const HOST = 'http://10.0.10.30:8881';
 
 const request = ({ url, method, body }) => {
-  // console.log(body);
   let bearerHeader = 'Bearer ';
   const localData = JSON.parse(localStorage.getItem('persist:root'));
   if (JSON.parse(localData.auth).data.value !== undefined) {

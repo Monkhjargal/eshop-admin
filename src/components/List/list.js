@@ -45,7 +45,6 @@ class List extends Component {
   }
 
   showModal = (modal) => {
-    // console.log(this.props);
     this.setState({
       visible: modal,
     });
@@ -71,7 +70,6 @@ class List extends Component {
   }
 
   refresh = () => {
-    // console.log(this.props);
     this.props.getAllData({ body: this.state.body, url: this.props.url });
   }
 
@@ -98,10 +96,6 @@ class List extends Component {
   }
 
   render() {
-    // console.log(this.props.headers);
-    // console.log(this.props.data);
-    // console.log(this.props);
-
     this.props.headers.forEach((entry, index) => {
       if (entry.dataIndex === 'imgnm') {
         const picserver = 'http://202.55.180.200:8877/';
@@ -109,17 +103,9 @@ class List extends Component {
       }
       if (entry.dataIndex === 'isenable' || entry.dataIndex === 'isemart') {
         const { isenable } = this.state;
-        // console.log(isenable);
-        entry.render = isenable => <div> { isenable ? <Switch defaultChecked disabled /> : <Switch disabled /> } </div>;
-        // console.log(row);
-        // children: <Switch />,
-        // children: <div>{row}</div>,
+        entry.render = isenable => <div>{ isenable ? <Switch defaultChecked disabled /> : <Switch disabled /> }</div>;
       }
     });
-
-    // this.props.data.forEach((entry, index) => {
-    //   entry.
-    // });
 
     return (
       <Card bordered={false}>
@@ -176,7 +162,6 @@ class List extends Component {
                   {`${this.props.name} устгах`}
                 </Button>
               </Popconfirm>
-
             }
             {this.props.addonsArray.map(entry => (
               <Button

@@ -80,7 +80,6 @@ class ModalFormComponent extends Component {
               error={error}
               errorMessage={errorMessage}
             />
-
           }
         </ModalLayout>
       </Modal>
