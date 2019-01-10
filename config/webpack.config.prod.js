@@ -11,8 +11,12 @@ const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
-const getClientEnvironment = require('./env');
 const fs = require('fs-extra');
+const getClientEnvironment = require('./env');
+
+const lessToJs = require('less-vars-to-js');
+
+const themeVariables = lessToJs(fs.readFileSync(path.join(__dirname, '../ant-theme-vars.less'), 'utf8'));
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -47,11 +51,6 @@ const extractTextPluginOptions = shouldUseRelativeAssetPaths
   { publicPath: Array(cssFilename.split('/').length).join('../') }
   : {};
 
-
-const lessToJs = require('less-vars-to-js');
-
-const themeVariables = lessToJs(fs.readFileSync(path.join(__dirname, '../ant-theme-vars.less'), 'utf8'));
-
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
 // The development configuration is different and lives in a separate file.
@@ -84,9 +83,7 @@ module.exports = {
     // We placed these paths second because we want `node_modules` to "win"
     // if there are any conflicts. This matches Node resolution mechanism.
     // https://github.com/facebookincubator/create-react-app/issues/253
-    modules: ['node_modules', paths.appNodeModules].concat(
-      // It is guaranteed to exist because we tweak it in `env.js`
-      process.env.NODE_PATH.split(path.delimiter).filter(Boolean)),
+    modules: ['node_modules', paths.appNodeModules].concat(process.env.NODE_PATH.split(path.delimiter).filter(Boolean)),
     // These are the reasonable defaults supported by the Node ecosystem.
     // We also include JSX as a common component filename extension to support
     // some tools, although we do not recommend using it, see:
@@ -152,7 +149,6 @@ module.exports = {
           {
             test: /\.(js|jsx)$/,
             include: paths.appSrc,
-            exclude: /node_modules/,
             loader: require.resolve('babel-loader'),
             options: {
               plugins: [
@@ -173,6 +169,109 @@ module.exports = {
           // tags. If you use code splitting, however, any async bundles will still
           // use the "style" loader inside the async code so CSS from them won't be
           // in the main CSS file.
+          // {
+          //   test: /\.less$/,
+          //   loader: 'style-loader!css-loader!less-loader',
+          // },
+          {
+            test: /\.less$/,
+            exclude: /node_modules/,
+            loader: ExtractTextPlugin.extract(Object.assign({
+              fallback: require.resolve('style-loader'),
+              use: [{
+                loader: require.resolve('css-loader'),
+                options: {
+                  importLoaders: 2,
+                  minimize: true,
+                  modules: true,
+                  sourceMap: shouldUseSourceMap,
+                  localIdentName: '[name]__[local]__[hash:base64:5]',
+                },
+              }, {
+                loader: require.resolve('postcss-loader'),
+                options: {
+                  ident: 'postcss',
+                  plugins: () => [
+                    require('postcss-flexbugs-fixes'),
+                    autoprefixer({
+                      browsers: [
+                        '>1%',
+                        'last 4 versions',
+                        'Firefox ESR',
+                        'not ie < 9', // React doesn't support IE8 anyway
+                      ],
+                      flexbox: 'no-2009',
+                    }),
+                  ],
+                },
+              }, {
+                loader: require.resolve('less-loader'),
+                options: {
+                  modifyVars: themeVariables,
+                  strictMath: true,
+                },
+              }],
+            })),
+          },
+          {
+            test: /\.less$/,
+            include: /node_modules/,
+            loader: ExtractTextPlugin.extract(Object.assign({
+              fallback: require.resolve('style-loader'),
+              use: [{
+                loader: require.resolve('css-loader'),
+                options: {
+                  importLoaders: 2,
+                  minimize: true,
+                  sourceMap: shouldUseSourceMap,
+                },
+              }, {
+                loader: require.resolve('postcss-loader'),
+                options: {
+                  ident: 'postcss',
+                  plugins: () => [
+                    require('postcss-flexbugs-fixes'),
+                    autoprefixer({
+                      browsers: [
+                        '>1%',
+                        'last 4 versions',
+                        'Firefox ESR',
+                        'not ie < 9', // React doesn't support IE8 anyway
+                      ],
+                      flexbox: 'no-2009',
+                    }),
+                  ],
+                },
+              }, {
+                loader: require.resolve('less-loader'),
+                options: {
+                  modifyVars: themeVariables,
+                },
+              }],
+            })),
+          },
+          // {
+          //   test: /\.less$/,
+          //   use: [
+          //     require.resolve('style-loader'),
+          //     {
+          //       loader: require.resolve('css-loader'),
+          //       options: {
+          //         importLoaders: 1,
+          //         modules: true,
+          //         minimize: true,
+          //         sourceMap: true,
+          //         localIdentName: '[name]__[local]__[hash:base64:5]',
+          //       },
+          //     }, {
+          //       loader: 'less-loader',
+          //       options: {
+          //         minimize: true,
+          //         sourceMap: shouldUseSourceMap,
+          //       },
+          //     },
+          //   ],
+          // },
           {
             test: /\.css$/,
             exclude: /node_modules/,

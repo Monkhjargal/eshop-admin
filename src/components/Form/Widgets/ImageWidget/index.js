@@ -5,12 +5,9 @@ import { Upload, Icon, message } from 'antd';
 import styles from './style.css';
 
 const mapStateToProps = (state) => {
-  const { auth, global: { collapsed, fetchingNotices, notices } } = state;
+  const { auth } = state;
   return {
     auth,
-    collapsed,
-    fetchingNotices,
-    notices,
   };
 };
 
