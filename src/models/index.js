@@ -40,6 +40,7 @@ const Category = new CrudModel({
 });
 
 const Attribute = new CrudModel({
+  url: '/api/mn/attr',
   model: 'attribute',
 });
 
@@ -88,6 +89,11 @@ const StaticPage = new CrudModel({
   model: 'staticpage',
 });
 
+const LabelList = new CrudModel({
+  url: '/mn/api/tag',
+  model: 'labelList',
+});
+
 
 export {
   Auth,
@@ -106,4 +112,5 @@ export {
   Menulist,
   Language,
   StaticPage,
+  LabelList,
 };

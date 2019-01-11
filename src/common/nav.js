@@ -2,27 +2,28 @@
 import {
   BannerList,
   CategoryList,
-  AttributeList,
+  Attribute,
   ProductList,
   BrandList,
   InfoList,
   CollectionList,
-  Recipe,
+  EhowList,
   Home,
   GeneralInfoList,
   WidgetsList,
   MenuList,
   Language,
   StaticPage,
+  LabelList,
 } from "../containers";
 
 export const getNavData = [
-  // {
-  //   name: 'Dashboard',
-  //   icon: 'line-chart',
-  //   path: 'dashboard',
-  //   component: Home,
-  // },
+  /* {
+    name: 'Dashboard',
+    icon: 'line-chart',
+    path: 'dashboard',
+    component: Home,
+  }, */
   {
     name: 'Бараа',
     icon: 'switcher',
@@ -35,18 +36,23 @@ export const getNavData = [
       },
       {
         name: 'Аттрибут',
-        path: 'attribute',
-        component: AttributeList,
-      },
-      {
-        name: 'Бренд',
-        path: 'brands',
-        component: BrandList,
+        path: 'Attribute',
+        component: Attribute,
       },
       {
         name: 'Барааны жагсаалт',
         path: 'list',
         component: ProductList,
+      },
+      {
+        name: 'Брэнд',
+        path: 'brands',
+        component: BrandList,
+      },
+      {
+        name: 'Info',
+        path: 'info-transfer',
+        component: InfoList,
       },
       {
         name: 'Багцын бараа',
@@ -56,7 +62,7 @@ export const getNavData = [
       {
         name: 'Хоолны жор',
         path: 'e-how',
-        component: Recipe,
+        component: EhowList,
       },
     ],
   }, {
@@ -70,7 +76,7 @@ export const getNavData = [
         component: GeneralInfoList,
       },
       {
-        name: 'Нүүр хуудасны виджет',
+        name: 'Нүүрний виджет',
         path: 'widgets',
         component: WidgetsList,
       },
@@ -89,11 +95,16 @@ export const getNavData = [
         path: 'banner',
         component: BannerList,
       },
-      // {
-      //   name: 'Статик хуудас',
-      //   path: 'static-pages',
-      //   component: StaticPage,
-      // },
+      {
+        name: 'Шошго',
+        path: 'label',
+        component: LabelList,
+      },
+      {
+        name: 'Статик хуудас',
+        path: 'static-pages',
+        component: StaticPage,
+      },
     ],
   },
 ];

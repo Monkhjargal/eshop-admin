@@ -255,7 +255,7 @@ class FormComponent extends Component {
       }
       await this.props.fetchData(sendObject);
       this.setState({ formData: {} }, () => {
-        console.log(this.props.data.value);
+        /* console.log(this.props.data.value); */
         this.setState({ formData: this.props.data });
       });
     }

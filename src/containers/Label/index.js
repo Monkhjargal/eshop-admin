@@ -3,16 +3,15 @@ import PageHeaderLayout from "../../layouts/PageHeaderLayout";
 import { List } from '../../components';
 
 const divStyle = {
-  width: '90%',
+  width: '100%',
 };
 
 export default () => (
-  <PageHeaderLayout title="Attribute information" style={divStyle} >
+  <PageHeaderLayout title="Label information" style={divStyle} >
     <List
-      actions={['create', 'update', 'delete']}
-      model={'Attribute'}
-      name={'Аттрибут'}
+      actions={['update']}
+      model={'LabelList'}
+      name={'Label'}
     />
   </PageHeaderLayout>
-
 );

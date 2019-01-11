@@ -5,7 +5,7 @@ import Main from './Main';
 
 import BannerList from './Banner';
 import CategoryList from './Category';
-import AttributeList from './Attribute';
+import Attribute from './Attribute';
 import ProductList from './List';
 import BrandList from './Brands';
 import InfoList from './Info';
@@ -16,6 +16,7 @@ import WidgetsList from './Widgets';
 import MenuList from './Menus';
 import Language from './Language';
 import StaticPage from './StaticPage';
+import LabelList from './Label';
 
 import Exception500 from './Exception/500';
 
@@ -26,7 +27,7 @@ export {
   Main,
   BannerList,
   CategoryList,
-  AttributeList,
+  Attribute,
   ProductList,
   BrandList,
   InfoList,
@@ -37,4 +38,5 @@ export {
   MenuList,
   Language,
   StaticPage,
+  LabelList,
 };
