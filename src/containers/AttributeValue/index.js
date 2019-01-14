@@ -1,19 +1,18 @@
 import React from 'react';
-import { List } from '../../components';
 import PageHeaderLayout from "../../layouts/PageHeaderLayout";
+import { List } from '../../components';
 
 const divStyle = {
   width: '90%',
-  overflow: 'hidden',
 };
 
 export default () => (
-  <PageHeaderLayout title="Language information" style={divStyle}>
+  <PageHeaderLayout title="AttributeValue information" style={divStyle} >
     <List
       actions={['create', 'update', 'delete']}
-      model={'Language'}
-      name={'Орчуулга'}
+      model={'AttributeValue'}
+      name={'Аттрибутын утга'}
     />
   </PageHeaderLayout>
-);
 
+);
