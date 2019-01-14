@@ -2,7 +2,7 @@ import AuthModel from './AuthModel';
 import CrudModel from './CrudModel';
 import FormModel from './FormModel';
 import FilterModel from './FilterModel';
-import EhowModel from './EhowModel';
+import RecipeModel from './RecipeModel';
 
 const Auth = new AuthModel({
   model: 'auth',
@@ -62,10 +62,6 @@ const CollectionList = new CrudModel({
   model: 'collectoinlist',
 });
 
-const EhowList = new CrudModel({
-  model: 'ehowlist',
-});
-
 const GeneralInfoList = new CrudModel({
   model: 'generalinfolist',
 });
@@ -89,9 +85,9 @@ const StaticPage = new CrudModel({
   model: 'staticpage',
 });
 
-const Ehow = new EhowModel({
-  url: '/mn/api/ehow',
-  model: 'ehow',
+const Recipe = new RecipeModel({
+  url: '/mn/api/recipe',
+  model: 'recipe',
 });
 
 
@@ -106,11 +102,10 @@ export {
   Brandlist,
   Infolist,
   CollectionList,
-  EhowList,
   GeneralInfoList,
   Widgetslist,
   Menulist,
   Language,
   StaticPage,
-  Ehow,
+  Recipe,
 };

@@ -10,7 +10,7 @@ const divStyle = {
 export default () => (
   <PageHeaderLayout title="Language information" style={divStyle}>
     <List
-      actions={['update']}
+      actions={['create', 'update', 'delete']}
       model={'Language'}
       name={'Language'}
     />

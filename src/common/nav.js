@@ -7,7 +7,7 @@ import {
   BrandList,
   InfoList,
   CollectionList,
-  EhowList,
+  Recipe,
   Home,
   GeneralInfoList,
   WidgetsList,
@@ -17,88 +17,83 @@ import {
 } from "../containers";
 
 export const getNavData = [
+  // {
+  //   name: 'Dashboard',
+  //   icon: 'line-chart',
+  //   path: 'dashboard',
+  //   component: Home,
+  // },
   {
-    name: 'Dashboard',
-    icon: 'line-chart',
-    path: 'dashboard',
-    component: Home,
-  },
-  {
-    name: 'Products',
+    name: 'Бараа',
     icon: 'switcher',
     path: 'products',
     children: [
       {
-        name: 'Category',
+        name: 'Категори',
         path: 'category',
         component: CategoryList,
       },
       {
-        name: 'Attribute',
+        name: 'Аттрибут',
         path: 'attribute',
         component: AttributeList,
       },
       {
-        name: 'List',
-        path: 'list',
-        component: ProductList,
-      },
-      {
-        name: 'Brands',
+        name: 'Бренд',
         path: 'brands',
         component: BrandList,
       },
       {
-        name: 'Info',
-        path: 'info-transfer',
-        component: InfoList,
+        name: 'Барааны жагсаалт',
+        path: 'list',
+        component: ProductList,
       },
       {
-        name: 'Collection',
+        name: 'Багцын бараа',
         path: 'collection',
         component: CollectionList,
       },
       {
-        name: 'E-How',
-        path: 'e-how',
-        component: EhowList,
+        name: 'Хоолны жор',
+        path: 'recipe',
+        component: Recipe,
       },
     ],
   }, {
-    name: 'Settings',
+    name: 'Тохиргоо',
     icon: 'setting',
     path: 'settings',
     children: [
       {
-        name: 'General info',
+        name: 'Ерөнхий мэдээлэл',
         path: 'general-info',
         component: GeneralInfoList,
       },
       {
-        name: 'Widgets',
+        name: 'Нүүр хуудасны виджет',
         path: 'widgets',
         component: WidgetsList,
       },
       {
-        name: 'Menus',
+        name: 'Цэс',
         path: 'menus',
         component: MenuList,
       },
       {
-        name: 'Languages',
+        name: 'Орчуулга',
         path: 'languages',
         component: Language,
       },
       {
-        name: 'Banner',
+        name: 'Баннер',
         path: 'banner',
         component: BannerList,
       },
-      {
-        name: 'Static pages',
-        path: 'static-pages',
-        component: StaticPage,
-      },
+      // {
+      //   name: 'Статик хуудас',
+      //   path: 'static-pages',
+      //   component: StaticPage,
+      // },
     ],
   },
 ];

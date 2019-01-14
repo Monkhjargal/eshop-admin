@@ -10,14 +10,12 @@ import ProductList from './List';
 import BrandList from './Brands';
 import InfoList from './Info';
 import CollectionList from './Collection';
-import EhowList from './Ehow';
+import Recipe from './Recipe';
 import GeneralInfoList from './GeneralInfo';
 import WidgetsList from './Widgets';
 import MenuList from './Menus';
 import Language from './Language';
 import StaticPage from './StaticPage';
-
-import Exception500 from './Exception/500';
 
 export {
   App,
@@ -31,7 +29,7 @@ export {
   BrandList,
   InfoList,
   CollectionList,
-  EhowList,
+  Recipe,
   GeneralInfoList,
   WidgetsList,
   MenuList,

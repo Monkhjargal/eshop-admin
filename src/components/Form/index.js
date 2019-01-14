@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import Form from 'react-jsonschema-form';
 import { Button } from "antd";
 import style from "./style.less";
-import * as Models from '../../models';
 
 import {
   InputWidget,
@@ -101,8 +100,6 @@ class FormComponent extends Component {
           }
 
           if (before !== after) {
-            console.log({ after, before });
-
             arrayOfChanges.push(entry.route);
 
             const recursiveFn = (array, route) => {
@@ -118,7 +115,6 @@ class FormComponent extends Component {
         });
 
         let tempFormData = nextState.formData;
-        console.log(tempFormData);
 
         let t = JSON.parse(JSON.stringify(tempFormData));
 
@@ -136,8 +132,6 @@ class FormComponent extends Component {
           recursive(t, e);
         });
 
-        console.log('ssssssss', arrayOfChanges);
-
         if (arrayOfChanges.length && t && Object.keys(t).length) {
           this.setState({
             formData: t,
@@ -148,7 +142,6 @@ class FormComponent extends Component {
   }
 
   onChangeHandler = (formObject) => {
-    console.log('data', formObject);
     this.setState({
       formData: formObject.formData,
     });
@@ -165,14 +158,11 @@ class FormComponent extends Component {
     if (this.props.url) {
       submitObject = { ...submitObject, ...{ url: this.props.url } };
     }
-    console.log(submitObject);
-    // const submitResult = this.props.submitAction(submitObject);
     await this.props.submitAction(submitObject);
     if (this.props.error) {
       this.setState({
         isSubmitted: true,
       });
-      console.log(this.props.error, this.props.errorMessage);
     } else if (this.props.afterSubmit) {
       this.props.afterSubmit();
     }
@@ -190,7 +180,6 @@ class FormComponent extends Component {
   }
 
   onErrorHandler = (formObject, a, b, c) => {
-    console.log('!!!!', formObject, a, b, c);
     this.setState({
       isSubmitted: true,
     });
@@ -199,7 +188,6 @@ class FormComponent extends Component {
   setParents = (formData) => {
     let tempParentList = [];
     const recursive = (object, route) => {
-      // console.log(object);
       if (object.parent && object.parent.length) {
         if (typeof object.parent[0] === 'string') {
           tempParentList.push({
@@ -234,7 +222,6 @@ class FormComponent extends Component {
 
   fetchForm = async () => {
     if (!this.props.form || !Object.keys(this.props.form).length) {
-      // console.log(this.props.createFormData);
       await this.props.fetchForm({ model: [this.props.modelName], data: this.props.createFormData });
     }
 
@@ -249,13 +236,11 @@ class FormComponent extends Component {
   fetchData = async () => {
     if (this.props.fetchData) {
       let sendObject = this.props.dataParams || {};
-      // console.log(sendObject);
       if (this.props.url) {
         sendObject = { ...sendObject, url: this.props.url };
       }
       await this.props.fetchData(sendObject);
       this.setState({ formData: {} }, () => {
-        console.log(this.props.data.value);
         this.setState({ formData: this.props.data });
       });
     }
@@ -308,8 +293,6 @@ class FormComponent extends Component {
     const onError = this.props.onError ? this.props.onError : this.onErrorHandler;
     const onSubmit = this.props.onSubmit ? this.props.onSubmit : this.onSubmitHandler;
     const liveValidate = this.props.liveValidate ? this.props.liveValidate : this.state.isSubmitted;
-    // console.log(this.props.form.uiSchema);
-    // console.log(this.state.formData);
     return (
       <Form
         schema={(this.props.form && Object.keys(this.props.form).length) ? this.props.form.schema : {}}

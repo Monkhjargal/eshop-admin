@@ -1,8 +1,6 @@
 import React from 'react';
 import { List } from '../../components';
 import PageHeaderLayout from "../../layouts/PageHeaderLayout";
-// import { StylesManager } from 'survey-react';
-import { styles } from './style.less';
 
 const divStyle = {
   width: '90%',

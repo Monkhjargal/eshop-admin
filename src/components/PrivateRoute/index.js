@@ -76,7 +76,7 @@ PrivateRoute.defaultProps = {
 
 PrivateRoute.propTypes = {
   component: PropTypes.func,
-  children: PropTypes.object,
+  children: PropTypes.func,
   auth: PropTypes.shape({
     isLogged: PropTypes.bool.isRequired,
     modules: PropTypes.array,

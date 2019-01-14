@@ -11,6 +11,8 @@ String.prototype.unCapitalize = function unCapitalize() {
 };
 
 const mapStateToProps = (state, ownProps) => {
+  console.log('Crud=>state', state);
+  console.log('Crud=>ownProps', ownProps);
   const {
     [ownProps.model.unCapitalize()]: {
       all: {

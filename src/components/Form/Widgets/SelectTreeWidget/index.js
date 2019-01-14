@@ -18,7 +18,6 @@ class SelectTreeWidget extends Component {
   }
 
   onChange = (value) => {
-    console.log(value);
     this.setState({ value });
   }
 
@@ -35,7 +34,6 @@ class SelectTreeWidget extends Component {
 
   render() {
     const root = [];
-    // console.log(this.props.schema);
     this.props.schema.options.forEach((entry, index) => {
       const keyIndex = 0;
       if (entry.parentid === 0) {
@@ -50,7 +48,6 @@ class SelectTreeWidget extends Component {
         }
       });
     });
-    console.log(root);
     return (
       <TreeSelect
         value={this.state.value}

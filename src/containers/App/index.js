@@ -105,10 +105,7 @@ class App extends Component {
                       <div className={styles.topmenus}>
                         <span style={{ marginRight: 24 }}>
                           <a onClick={() => this.props.logout()} className={styles.logoutbutton}>
-                            {/* <Badge className={styles.logout}>
-                              <Avatar shape="square" icon="logout" />
-                            </Badge> */}
-                            <span> Гарах <Icon type="logout" /> </span>
+                            <span>Гарах <Icon type="logout" /></span>
                           </a>
                         </span>
                       </div>

@@ -10,8 +10,6 @@ import styles from './index.less';
 
 const { SubMenu } = Menu;
 
-const mapStateToProps = (state) => {};
-
 class SideNav extends PureComponent {
   static defaultProps = {
   };
@@ -101,8 +99,6 @@ class SideNav extends PureComponent {
   }
 
   handleOpenChange = (openKeys) => {
-    // console.log('openKeys: ', openKeys);
-    // const lastOpenKey = openKeys[openKeys.length - 1];
     this.setState({
       openKeys: [...openKeys],
     });
@@ -133,4 +129,4 @@ class SideNav extends PureComponent {
   }
 }
 
-export default withRouter(connect(mapStateToProps)(SideNav));
+export default withRouter(connect(null)(SideNav));

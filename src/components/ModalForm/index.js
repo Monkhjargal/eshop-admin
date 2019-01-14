@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {
-  Modal,
-  Spin,
-} from 'antd';
+import { Modal } from 'antd';
 import { Form } from '../../components';
 import ModalLayout from "../../layouts/ModalLayout";
 import style from "./style.less";
@@ -60,7 +57,7 @@ class ModalFormComponent extends Component {
         {...restProps}
       >
         <ModalLayout>
-          {
+          <div>
             <Form
               modelName={modelName}
               isLoading={this.state.isLoading}
@@ -80,7 +77,7 @@ class ModalFormComponent extends Component {
               error={error}
               errorMessage={errorMessage}
             />
-          }
+          </div>
         </ModalLayout>
       </Modal>
     );

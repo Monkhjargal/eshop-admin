@@ -5,12 +5,10 @@ import { Upload, Icon, message } from 'antd';
 import styles from './style.css';
 
 const mapStateToProps = (state) => {
-  const { auth, global: { collapsed, fetchingNotices, notices } } = state;
+  console.log('ImageWidget=>state', state);
+  const { auth } = state;
   return {
     auth,
-    collapsed,
-    fetchingNotices,
-    notices,
   };
 };
 
@@ -22,11 +20,9 @@ const beforeUpload = (file) => {
   return isLt10M;
 };
 
-
 const ImageWidget = (props) => {
   const handleChange = (info) => {
     if (info.file.status === 'done') {
-      console.log('sss', info);
       props.onChange(info.file.response.value);
     }
   };
@@ -46,7 +42,6 @@ const ImageWidget = (props) => {
       beforeUpload={beforeUpload}
       onChange={handleChange}
     >
-      {/* {console.log(props)} */}
       {
         props.value ?
           // <div style={{ backgroundImage: `url(${props.value})` }} className={`avatar ${styles.avatar}`} />

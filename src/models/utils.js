@@ -20,16 +20,14 @@ const request = ({ url, method, body }) => {
       },
     }).then((response) => {
       if (response.status === 401 || response.status === 403) {
-        // history.push('/');
+        // 401 || 403
       }
       if (!response.ok) {
         throw new Error(response.statusText);
-        // props.history.push('/');
       }
       return response.json();
     });
   }
-  // console.log(JSON.stringify(body));
   return fetch(HOST + url, {
     credentials: 'include',
     method,
@@ -40,7 +38,6 @@ const request = ({ url, method, body }) => {
     },
     body: JSON.stringify(body),
   }).then((response) => {
-    console.log(response);
     if (!response.ok) {
       throw new Error(response.statusText);
     }
@@ -51,7 +48,6 @@ const request = ({ url, method, body }) => {
 const asyncFn = ({
   body, url, method = 'GET', model, name,
 }) => async (dispatch) => {
-  // console.log(body);
   const payload = {};
   dispatch({
     type: model.request,
@@ -59,16 +55,14 @@ const asyncFn = ({
     name,
   });
   try {
-    // console.log(model.request);
     if (model.request === 'REQUEST_LOGOUT') {
       dispatch({
         type: model.response,
         name,
       });
     } else {
-      // console.log(body);
       const data = await request({ url, method, body });
-      // console.log(data);
+
       if (!data) {
         throw new Error('no data provided');
       }
