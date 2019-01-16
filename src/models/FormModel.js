@@ -44,7 +44,7 @@ class FormModel extends BaseModel {
       case this.model.response:
         let uiSchema = {};
         const recursive = (object, toObject) => {
-          // console.log(toObject);
+          console.log(object);
           if (object.type === 'id') {
             object.type = 'string';
           }
@@ -103,6 +103,8 @@ class FormModel extends BaseModel {
         // let tempData = formData;
         recursive(tempData, uiSchema);
         tempData.type = 'object';
+
+        console.log(tempData);
 
         return {
           ...state,

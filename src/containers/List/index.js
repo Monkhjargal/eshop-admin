@@ -1,48 +1,26 @@
 import React from 'react';
-import { List } from '../../components';
-import PageHeaderLayout from "../../layouts/PageHeaderLayout";
-// import { StylesManager } from 'survey-react';
-import { styles } from './style.less';
+import { connect } from 'react-redux';
+import { Button, List, Select } from 'antd';
+import Page from '../Exception/500';
 
-const divStyle = {
-  width: '90%',
+const mapStateToProps = (state) => {
+  const { brands } = state;
+  return {
+    brands,
+  };
 };
 
-export default () => (
-  <PageHeaderLayout title="Product information" style={divStyle}>
-    <List
-      actions={['update']}
-      model={'Productlist'}
-      name={'Product Transfer'}
-    />
-  </PageHeaderLayout>
-);
+class CollectionList extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  componentDidMount() {
+  }
+  render() {
+    return (
+      <Page />
+    );
+  }
+}
 
-// import React from 'react';
-// import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
-// import { Button, List } from 'antd';
-
-// const mapStateToProps = (state) => {
-//   const { attribute } = state;
-//   return {
-//     attribute,
-//   };
-// };
-
-// class ProductList extends React.Component {
-//   constructor(props) {
-//     super(props);
-//   }
-//   componentDidMount() {
-//   }
-//   render() {
-//     return (
-//       <div>
-//         ProductList
-//       </div>
-//     );
-//   }
-// }
-
-// export default connect(mapStateToProps)(ProductList);
+export default connect(mapStateToProps)(CollectionList);

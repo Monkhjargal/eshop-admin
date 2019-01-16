@@ -17,7 +17,7 @@ import MenuList from './Menus';
 import Language from './Language';
 import StaticPage from './StaticPage';
 import LabelList from './Label';
-import AttributeValue from './AttributeValue';
+import AttrValue from './AttributeValue';
 
 import Exception500 from './Exception/500';
 
@@ -40,5 +40,5 @@ export {
   Language,
   StaticPage,
   LabelList,
-  AttributeValue,
+  AttrValue,
 };

@@ -15,7 +15,7 @@ import {
   Language,
   StaticPage,
   LabelList,
-  AttributeValue,
+  AttrValue,
 } from "../containers";
 
 export const getNavData = [
@@ -28,12 +28,12 @@ export const getNavData = [
   {
     name: 'Категори',
     icon: 'switcher',
-    path: 'attribute',
+    path: 'Category-nav',
     children: [
       {
         name: 'Аттрибутын утга',
-        path: 'AttributeValue',
-        component: AttributeValue,
+        path: 'AttrValue',
+        component: AttrValue,
       },
       {
         name: 'Аттрибут мастер',

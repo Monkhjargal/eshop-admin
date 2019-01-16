@@ -7,10 +7,10 @@ const divStyle = {
 };
 
 export default () => (
-  <PageHeaderLayout title="AttributeValue information" style={divStyle} >
+  <PageHeaderLayout title="Attribute information" style={divStyle} >
     <List
       actions={['create', 'update', 'delete']}
-      model={'AttributeValue'}
+      model={'AttrValue'}
       name={'Аттрибутын утга'}
     />
   </PageHeaderLayout>

@@ -25,6 +25,7 @@ import {
   ImageWidget,
   CkEditorWidget,
   SelectTreeWidget,
+  MultiSelect,
 } from './Widgets';
 
 import {
@@ -297,6 +298,7 @@ class FormComponent extends Component {
     range: RangeWidget,
     ckeditor: CkEditorWidget,
     selecttree: SelectTreeWidget,
+    multiselect: MultiSelect,
   }
 
   FieldTemplate = FieldTemplate

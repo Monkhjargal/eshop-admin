@@ -15,6 +15,7 @@ import ImageWidget from './ImageWidget';
 import RangeWidget from './RangeWidget';
 import CkEditorWidget from './CkEditorWidget';
 import SelectTreeWidget from './SelectTreeWidget';
+import MultiSelect from './MultiSelect';
 
 export {
   InputWidget,
@@ -34,4 +35,5 @@ export {
   ExtraSelectWidget,
   CkEditorWidget,
   SelectTreeWidget,
+  MultiSelect,
 };

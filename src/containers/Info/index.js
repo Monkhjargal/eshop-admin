@@ -1,17 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { Button, List } from 'antd';
-import PageHeaderLayout from "../../layouts/PageHeaderLayout";
+import { Button, List, Select } from 'antd';
+import Page from '../Exception/500';
 
 const mapStateToProps = (state) => {
-  const { infos } = state;
+  const { brands } = state;
   return {
-    infos,
+    brands,
   };
 };
 
-class InfoList extends React.Component {
+class CollectionList extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -19,11 +18,9 @@ class InfoList extends React.Component {
   }
   render() {
     return (
-      <div style={{ padding: '100px', textAlign: 'center' }}>
-        InfoList
-      </div>
+      <Page />
     );
   }
 }
 
-export default connect(mapStateToProps)(InfoList);
+export default connect(mapStateToProps)(CollectionList);

@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { Button, List } from 'antd';
-import PageHeaderLayout from "../../layouts/PageHeaderLayout";
+import { Button, List, Select } from 'antd';
+import Page from '../Exception/500';
 
 const mapStateToProps = (state) => {
   const { brands } = state;
@@ -19,9 +18,7 @@ class CollectionList extends React.Component {
   }
   render() {
     return (
-      <div style={{ padding: '100px', textAlign: 'center' }}>
-        CollectionList
-      </div>
+      <Page />
     );
   }
 }

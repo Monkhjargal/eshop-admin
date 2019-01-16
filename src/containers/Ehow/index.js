@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { Button, List } from 'antd';
-import PageHeaderLayout from "../../layouts/PageHeaderLayout";
+import { Button, List, Select } from 'antd';
+import Page from '../Exception/500';
 
 const mapStateToProps = (state) => {
   const { brands } = state;
@@ -11,7 +10,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-class EhowList extends React.Component {
+class CollectionList extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -19,11 +18,9 @@ class EhowList extends React.Component {
   }
   render() {
     return (
-      <div style={{ padding: '100px', textAlign: 'center' }}>
-        EhowList
-      </div>
+      <Page />
     );
   }
 }
 
-export default connect(mapStateToProps)(EhowList);
+export default connect(mapStateToProps)(CollectionList);
