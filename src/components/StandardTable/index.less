@@ -1,4 +1,7 @@
 @import "~antd/lib/style/themes/default.less";
+.ant-table-body {
+  overflow: hidden;
+}
 
 .standardTable {
   :global {
@@ -17,12 +20,16 @@
       font-size: 13px;
       padding-left: 20px;
     }
+    .ant-table-body {
+      overflow: hidden;
+      overflow-x: auto;
+    }
   }
 
   .tableFooter {
     display: flex;
     .footerInfo {
-      font-size: 16px;
+      font-size: 14px;
       -o-text-overflow: ellipsis;
       text-overflow: ellipsis;
       overflow: hidden;
@@ -49,7 +56,13 @@
   }
 }
 
-.selected > td {
-  background-color: @geekblue-5 !important;
-  color: #fff;
+.selected td{
+  border-top: solid 3px #feb434 !important;
+  border-bottom: solid 3px #feb434 !important;
+  // border-right: solid 1px #feb434 !important;
+  // border-left: solid 1px #feb434 !important;
+  // border-top: solid 1px #feb434 !important;
+  // background-color: @geekblue-5 !important;
+  // background-color: #ffb434 !important;
+  // color: #fff;
 }

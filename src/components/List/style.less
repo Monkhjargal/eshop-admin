@@ -1,4 +1,17 @@
 @import "~antd/lib/style/themes/default.less";
+// @primary-color: red;                         // primary color for all components
+// @link-color: red;                            // link color
+// @success-color: red;                         // success state color
+// @warning-color: red;                         // warning state color
+// @error-color: red;                           // error state color
+// @font-size-base: 34px;                           // major text font size
+// @heading-color: rgba(0, 0, 0, .85);              // heading text color
+// @text-color: rgba(0, 0, 0, .65);                 // major text color
+// @text-color-secondary : rgba(0, 0, 0, .45);      // secondary text color
+// @disabled-color : rgba(0, 0, 0, .25);            // disable state color
+// @border-radius-base: 4px;                        // major border radius
+// @border-color-base: #d9d9d9;                     // major border color
+// @box-shadow-base: 0 2px 8px rgba(0, 0, 0, .15);  // major shadow for layers
 @import "../../utils/utils.less";
 @default-color: #edb920;
 .tableList {
@@ -6,11 +19,18 @@
         margin-bottom: 16px;
         button {
             margin-right: 16px;
-            line-height: 40px;
+            line-height: 30px;
             border-radius: 3px;
             height: inherit;
-            .primary {
-              background: #edb920;
+            &.primary {
+                background: #ffb434 !important;
+                border: solid 1px #ffb434;
+            }
+            &.delete {
+                border: dashed 1px #f5222d;
+            }
+            &.delete[disabled] {
+                border: dashed 1px #d9d9d9;
             }
         }
     }
@@ -40,6 +60,14 @@
 
 .mb25 {
     margin-bottom: 25px;
+}
+
+
+
+.ant-btn-primary {
+    color: #fff;
+    background-color: #556B2F !important;
+    border-color: #556B2F !important;
 }
 
 @media screen and (max-width: @screen-lg) {

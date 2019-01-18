@@ -75,6 +75,7 @@ class StandardTable extends PureComponent {
           onRow={record => ({
             onClick: () => this.handleRowClick(record),
           })}
+          size="small"
           bordered
           rowKey={record => record.id}
           dataSource={filteredData}

@@ -8,49 +8,66 @@ class SelectTreeWidget extends Component {
   constructor(props) {
     super(props);
   }
-  componentWillReceiveProps(nextProps) {
-    if (typeof nextProps.value === 'number') {
-      nextProps.onChange(nextProps.value.toString());
-    }
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   if (typeof nextProps.value === 'number') {
+  //     nextProps.onChange(nextProps.value.toString());
+  //   }
+  // }
+
   state = {
     value: undefined,
   }
 
   onChange = (value) => {
-    console.log(value);
+    // console.log('click');
     this.setState({ value });
   }
 
   renderTreeNodes = data => data.map((item) => {
     if (item.children) {
+      console.log(item.id);
       return (
-        <TreeNode title={item.catnm} dataRef={item} key={item.id + 1} selectable={false}>
+        <TreeNode title={item.catnm} dataRef={item} key={item.id + 1} selectable={false} value={`${item.id}`}>
           {this.renderTreeNodes(item.children)}
         </TreeNode>
       );
     }
-    return <TreeNode dataRef={item} title={item.catnm} key={item.id + 1000000} selectable={false} {...item} />;
+    return <TreeNode dataRef={item} title={item.catnm} key={item.id + 1000000} selectable={false} value={`${item.id}`} {...item} />;
   });
 
   render() {
+    const treeData1 = [{
+      title: 'Node1',
+      value: '0-0',
+      key: '0-0',
+      children: [{
+        title: 'Child Node1',
+        value: '0-0-1',
+        key: '0-0-1',
+      }, {
+        title: 'Child Node2',
+        value: '0-0-2',
+        key: '0-0-2',
+      }],
+    }, {
+      title: 'Node2',
+      value: '0-1',
+      key: '0-1',
+    }];
+
     const root = [];
-    // console.log(this.props.schema);
     this.props.schema.options.forEach((entry, index) => {
-      const keyIndex = 0;
       if (entry.parentid === 0) {
         entry.children = [];
-        // entry.key = `${keyIndex}-${index}`;
         root.push(entry);
       }
       root.forEach((ent, ind) => {
         if (ent.id === entry.parentid) {
-          // ent.key = `1-${keyIndex}-${ind}`;
           ent.children.push(entry);
         }
       });
     });
-    console.log(root);
+    // console.log(root);
     return (
       <TreeSelect
         value={this.state.value}
@@ -59,8 +76,9 @@ class SelectTreeWidget extends Component {
         dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
         treeDefaultExpandAll
         onChange={this.onChange}
+        treeData={treeData1}
       >
-        {this.renderTreeNodes(root)}
+        {/* {this.renderTreeNodes(root)} */}
       </TreeSelect>
     );
   }

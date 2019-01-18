@@ -12,6 +12,8 @@ import styles from './style.less';
 import { getNavData } from '../../common/nav';
 import otLogo from "../../assets/images/emart-logo.png";
 
+const { SubMenu } = Menu;
+
 const {
   Header,
   Content,
@@ -63,19 +65,6 @@ class App extends Component {
   }
 
   render() {
-    const menu = (
-      <Menu className={styles.menu} selectedKeys={[]}>
-        <Menu.Item disabled><Icon type="user" />Профайл</Menu.Item>
-        <Menu.Item disabled><Icon type="setting" />Тохиргоо</Menu.Item>
-        <Menu.Divider />
-        <Menu.Item key="logout">
-          <a onClick={() => this.props.logout()}>
-            <Icon type="logout" />Гарах
-          </a>
-        </Menu.Item>
-      </Menu>
-    );
-
     return this.state.isLoaded &&
       <Switch>
         <Route exact path="/login" component={Login} />
@@ -90,28 +79,39 @@ class App extends Component {
                         <img src={otLogo} alt=' "emart" logo' />
                       </Link>
                     </div>
-                    <div>
+                    {/* <div>
                       <Badge className={styles.logout}>
                         <Avatar shape="square" icon="user" />
                       </Badge>
                       <span> {this.props.auth.data.value.userInfo.lastname}</span>
-                    </div>
+                    </div> */}
                     <SideNav menus={this.menus} />
                   </Header>
                 </Sider>
                 <Layout style={{ height: '100%' }}>
                   <Content style={{ height: 'calc(100% - 21px)' }} className="main-content">
                     <div style={{ minHeight: '100%' }}>
-                      <div className={styles.topmenus}>
+                      <Menu mode="horizontal" style={{ textAlign: 'right', display: 'flex', justifyContent: 'flex-end' }}>
+                        <SubMenu title={<span className="submenu-title-wrapper"><Icon type="user" />{this.props.auth && this.props.auth.data.value.userInfo.lastname} </span>}>
+                          <Menu.Item key="profile">
+                            <a className={styles.logoutbutton}>
+                              <span> <Icon type="home" />  Профайл </span>
+                            </a>
+                          </Menu.Item>
+                          <Menu.Item key="logout">
+                            <a onClick={() => this.props.logout()} className={styles.logoutbutton}>
+                              <span> <Icon type="logout" />  Гарах </span>
+                            </a>
+                          </Menu.Item>
+                        </SubMenu>
+                      </Menu>
+                      {/* <div className={styles.topmenus}>
                         <span style={{ marginRight: 24 }}>
                           <a onClick={() => this.props.logout()} className={styles.logoutbutton}>
-                            {/* <Badge className={styles.logout}>
-                              <Avatar shape="square" icon="logout" />
-                            </Badge> */}
                             <span> Гарах <Icon type="logout" /> </span>
                           </a>
                         </span>
-                      </div>
+                      </div> */}
                       <Main getRouteData={this.routes} />
                     </div>
                     <GlobalFooter
@@ -126,7 +126,6 @@ class App extends Component {
               </Layout>
             </div>
           )}
-          {/* </ContainerQuery> */}
         </PrivateRoute>
       </Switch>;
   }
@@ -134,7 +133,6 @@ class App extends Component {
 
 App.propTypes = {
   auth: PropTypes.object.isRequired,
-  // menus: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,

@@ -58,6 +58,7 @@ class FormComponent extends Component {
         let clonedParentList = JSON.parse(JSON.stringify(this.state.parentList));
 
         clonedParentList.forEach((entry) => {
+          // console.log(entry);
           let before;
           let after;
           if (entry.parentRoute.length === 1) {

@@ -6,15 +6,16 @@ import {
   Menu,
   Icon,
 } from 'antd';
-import styles from './index.less';
+// import styles from './index.less';
 
 const { SubMenu } = Menu;
 
-const mapStateToProps = (state) => {};
+const mapStateToProps = (state) => { };
 
 class SideNav extends PureComponent {
   static defaultProps = {
   };
+
   static propTypes = {
     location: PropTypes.object.isRequired,
     menus: PropTypes.array.isRequired,
@@ -73,17 +74,22 @@ class SideNav extends PureComponent {
             }
             key={item.key || item.path}
           >
-            {this.getNavMenuItems(item.children, itemPath)}
+            {this.getNavMenuItems(item && item.children, itemPath)}
           </SubMenu>
         );
       }
       const icon = item.icon && <Icon type={item.icon} />;
+
+      // console.log(item.id);
       return (
         <Menu.Item key={item.key || item.path}>
           {
             /^https?:\/\//.test(itemPath) ? (
               <a href={itemPath} target={item.target}>
-                {icon}<span>{item.name}</span>
+                {icon}
+                <span>
+                  {item.name}
+                </span>
               </a>
             ) : (
               <Link
@@ -91,7 +97,10 @@ class SideNav extends PureComponent {
                 target={item.target}
                 replace={itemPath === this.props.location.pathname}
               >
-                {icon}<span>{item.name}</span>
+                {icon}
+                <span>
+                  {item.name}
+                </span>
               </Link>
               )
           }
@@ -100,27 +109,33 @@ class SideNav extends PureComponent {
     });
   }
 
+  rootSubmenuKeys = ['category', 'settings', 'products'];
+  state = {
+    openKeys: ['category'],
+  };
+
   handleOpenChange = (openKeys) => {
-    // console.log('openKeys: ', openKeys);
-    // const lastOpenKey = openKeys[openKeys.length - 1];
-    this.setState({
-      openKeys: [...openKeys],
-    });
+    const latestOpenKey = openKeys.find(key => this.state.openKeys.indexOf(key) === -1);
+    if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+      this.setState({ openKeys });
+    } else {
+      this.setState({
+        openKeys: latestOpenKey ? [latestOpenKey] : [],
+      });
+    }
   }
 
   render() {
     const {
       collapsed,
     } = this.props;
-
-    // Don't show popup menu when it is been collapsed
     const menuProps = collapsed ? {} : {
       openKeys: this.state.openKeys,
     };
     return (
       <Menu
         defaultSelectedKeys={this.getCurrentMenuSelectedKeys()}
-        // defaultOpenKeys={['sub1']}
+        defaultOpenKeys={['category']}
         onOpenChange={this.handleOpenChange}
         mode="inline"
         theme="light"

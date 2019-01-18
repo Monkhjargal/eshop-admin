@@ -27,7 +27,6 @@ class List extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // console.log(this.props.nextProps);
   }
 
   handleTableChange = ({ current, pageSize }, filters, sorter) => {
@@ -45,7 +44,6 @@ class List extends Component {
   }
 
   showModal = (modal) => {
-    // console.log(this.props);
     this.setState({
       visible: modal,
     });
@@ -71,7 +69,6 @@ class List extends Component {
   }
 
   refresh = () => {
-    // console.log(this.props);
     this.props.getAllData({ body: this.state.body, url: this.props.url });
   }
 
@@ -98,28 +95,33 @@ class List extends Component {
   }
 
   render() {
-    // console.log(this.props.headers);
-    // console.log(this.props.data);
-    // console.log(this.props);
-
-    this.props.headers.forEach((entry, index) => {
-      if (entry.dataIndex === 'imgnm') {
-        const picserver = 'http://202.55.180.200:8877/';
-        entry.render = url => <img src={picserver + url} alt={url} width="100px" />;
-      }
-      if (entry.dataIndex === 'isenable' || entry.dataIndex === 'isemart') {
-        const { isenable } = this.state;
-        // console.log(isenable);
-        entry.render = isenable => <div> { isenable ? <Switch defaultChecked disabled /> : <Switch disabled /> } </div>;
-        // console.log(row);
-        // children: <Switch />,
-        // children: <div>{row}</div>,
-      }
-    });
-
-    // this.props.data.forEach((entry, index) => {
-    //   entry.
-    // });
+    if (this.props.headers) {
+      this.props.headers.forEach((entry, index) => {
+        if (entry.dataIndex === 'imgnm') {
+          const picserver = 'http://202.55.180.200:8877/';
+          entry.render = url => <img src={picserver + url} alt={url} height="20px" />;
+        }
+        if (entry.dataIndex === 'color') {
+          entry.render = col => (
+            <div>
+              <span
+                style={{
+                  display: 'block',
+                  backgroundColor: `${col}`,
+                  width: '50px',
+                  height: '10px',
+                  marginRight: '20px',
+                }}
+              />
+              <span>{col}</span>
+            </div>);
+        }
+        if (entry.dataIndex === 'isenable' || entry.dataIndex === 'isemart') {
+          const { isenable } = this.state;
+          entry.render = isenable => <div> { isenable ? <Switch defaultChecked disabled /> : <Switch disabled /> } </div>;
+        }
+      });
+    }
 
     return (
       <Card bordered={false}>
@@ -142,7 +144,7 @@ class List extends Component {
                 size="small"
                 icon="plus"
                 type="primary"
-                className={styles.formbutton}
+                className={`${styles.formbutton} ${styles.primary}`}
               >
                 {`${this.props.name} бүртгэх`}
               </Button>
@@ -152,9 +154,9 @@ class List extends Component {
                 onClick={() => this.showModal(`${this.props.model}Update`)}
                 icon="edit"
                 size="small"
-                type="primary"
+                type="dashed"
                 disabled={!this.state.selectedId}
-                className={styles.formbutton}
+                className={`${styles.formbutton} ${styles.update}`}
               >
                 {`${this.props.name} засах`}
               </Button>
@@ -167,7 +169,7 @@ class List extends Component {
                 cancelText="Үгүй"
               >
                 <Button
-                  className={styles.formbutton}
+                  className={[styles.formbutton, styles.delete]}
                   icon="delete"
                   type="danger"
                   size="small"
@@ -203,7 +205,7 @@ class List extends Component {
               total: this.props.total,
               current: this.state.body.page,
               pageSize: this.state.body.limit,
-              showSizeChanger: true,
+              showSizeChanger: false,
             }}
             scroll={{ x: this.props.scroll }}
           />

@@ -19,35 +19,35 @@ import {
 } from "../containers";
 
 export const getNavData = [
-  /* {
+  {
     name: 'Dashboard',
     icon: 'line-chart',
     path: 'dashboard',
     component: Home,
-  }, */
+  },
   {
     name: 'Категори',
     icon: 'switcher',
-    path: 'Category-nav',
+    path: 'category',
     children: [
       {
         name: 'Аттрибутын утга',
-        path: 'AttrValue',
+        path: 'attr-value',
         component: AttrValue,
       },
       {
         name: 'Аттрибут мастер',
-        path: 'Attribute',
+        path: 'attribute-master',
         component: Attribute,
       },
       {
         name: 'Үндсэн ангилал',
-        path: 'category',
+        path: 'main-category',
         component: CategoryList,
       },
       {
         name: 'Сурталчилгааны ангилал',
-        path: 'category',
+        path: 'ads-category',
         component: CategoryList,
       },
     ],
