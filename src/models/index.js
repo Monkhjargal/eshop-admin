@@ -2,6 +2,8 @@ import AuthModel from './AuthModel';
 import CrudModel from './CrudModel';
 import FormModel from './FormModel';
 import FilterModel from './FilterModel';
+import PromotionModel from './PromotionModel';
+import ProductModel from './ProductModel';
 
 const Auth = new AuthModel({
   model: 'auth',
@@ -27,6 +29,16 @@ const Filter = new FilterModel({
     isError: false,
     errorMessage: '',
   },
+});
+
+const Promotion = new PromotionModel({
+  url: '/mn/api/promotioncategory',
+  model: 'promotion',
+});
+
+const Product = new ProductModel({
+  url: '/mn/api/productfilter/all',
+  model: 'productfilter',
 });
 
 const Banner = new CrudModel({
@@ -119,4 +131,6 @@ export {
   StaticPage,
   LabelList,
   AttrValue,
+  Promotion,
+  Product,
 };

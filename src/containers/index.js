@@ -18,6 +18,7 @@ import Language from './Language';
 import StaticPage from './StaticPage';
 import LabelList from './Label';
 import AttrValue from './AttributeValue';
+import Promotion from './Promotion';
 
 import Exception500 from './Exception/500';
 
@@ -41,4 +42,5 @@ export {
   StaticPage,
   LabelList,
   AttrValue,
+  Promotion,
 };
