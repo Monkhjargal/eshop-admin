@@ -16,6 +16,7 @@ import {
   StaticPage,
   LabelList,
   AttrValue,
+  Promotion,
 } from "../containers";
 
 export const getNavData = [
@@ -49,6 +50,11 @@ export const getNavData = [
         name: 'Сурталчилгааны ангилал',
         path: 'ads-category',
         component: CategoryList,
+      },
+      {
+        name: 'Сурталчилгааны ангилал',
+        path: 'promotion',
+        component: Promotion,
       },
     ],
   }, {
