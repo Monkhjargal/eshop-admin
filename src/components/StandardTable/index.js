@@ -15,7 +15,7 @@ class StandardTable extends PureComponent {
   handleRowClass = record => (record.id === this.state.selectedId ? styles.selected : '');
 
   handleRowClick = (record) => {
-    console.log(record.id);
+    // console.log(record.id);
     this.setState({ selectedId: record.id });
     this.props.onSelect(record.id);
   }

@@ -6,7 +6,7 @@ import {
   Menu,
   Icon,
 } from 'antd';
-// import styles from './index.less';
+import styles from './index.less';
 
 const { SubMenu } = Menu;
 
@@ -82,7 +82,7 @@ class SideNav extends PureComponent {
 
       // console.log(item.id);
       return (
-        <Menu.Item key={item.key || item.path}>
+        <Menu.Item key={item.key || item.path} className={styles.menuItem}>
           {
             /^https?:\/\//.test(itemPath) ? (
               <a href={itemPath} target={item.target}>

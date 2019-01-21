@@ -1,16 +1,16 @@
 const config = {
   403: {
-    img: 'https://gw.alipayobjects.com/zos/rmsportal/wZcnGqRDyhPOEYFcZDnb.svg',
+    img: 'https://image.flaticon.com/icons/svg/1385/1385424.svg',
     title: '403',
     desc: 'Та энэ хуудсанд хандах эрхгүй байна',
   },
   404: {
-    img: 'https://gw.alipayobjects.com/zos/rmsportal/KpnpchXsobRgLElEozzI.svg',
+    img: 'https://image.flaticon.com/icons/svg/1385/1385421.svg',
     title: '404',
     desc: 'Таны хайсан хуудас олдсонгүй',
   },
   500: {
-    img: 'https://gw.alipayobjects.com/zos/rmsportal/RVRUAYdCGeYNBWoKiIwB.svg',
+    img: 'https://image.flaticon.com/icons/svg/1385/1385450.svg',
     title: '500',
     desc: 'Хѳгжүүлэлт хийгдэж байна',
   },
