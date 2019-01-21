@@ -7,7 +7,6 @@ import GlobalFooter from './GlobalFooter';
 import PrivateRoute from './PrivateRoute';
 import Form from './Form';
 import ModalForm from './ModalForm';
-import ModalSteps from './ModalSteps';
 import List from './List';
 import ListComponent from './List/list';
 import Ellipsis from './Ellipsis';
@@ -25,7 +24,6 @@ export {
   PrivateRoute,
   Form,
   ModalForm,
-  ModalSteps,
   RoleBasedAccess,
   List,
   ListComponent,

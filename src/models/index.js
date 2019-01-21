@@ -3,6 +3,7 @@ import CrudModel from './CrudModel';
 import FormModel from './FormModel';
 import FilterModel from './FilterModel';
 import RecipeModel from './RecipeModel';
+import ProductModel from './ProductModel';
 
 const Auth = new AuthModel({
   model: 'auth',
@@ -90,6 +91,10 @@ const Recipe = new RecipeModel({
   model: 'recipe',
 });
 
+const Product = new ProductModel({
+  url: '/mn/api/product/filter',
+  model: 'product',
+});
 
 export {
   Auth,
@@ -108,4 +113,5 @@ export {
   Language,
   StaticPage,
   Recipe,
+  Product,
 };
