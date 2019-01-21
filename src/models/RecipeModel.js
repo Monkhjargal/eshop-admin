@@ -3,6 +3,7 @@ import { asyncFn } from './utils';
 
 class RecipeModel extends BaseModel {
   constructor(data = {}) {
+    console.log('RecipeModel=>data', data);
     super(data);
 
     if (data.model) {

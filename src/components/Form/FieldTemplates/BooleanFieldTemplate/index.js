@@ -5,6 +5,7 @@ const BooleanFieldTemplate = (props) => {
   const {
     children, description, properties,
   } = props;
+  console.log('BooleanFieldTemplate: ', props);
   return (
     <div>
       {children}

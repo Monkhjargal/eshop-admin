@@ -1,23 +1,87 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { Card, Modal, Button, Icon, Steps, Transfer, message } from "antd";
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import PropTypes from "prop-types";
+import { Card, Button, Popconfirm, Switch, Steps } from "antd";
 
-import ModalLayout from "../../layouts/ModalLayout";
-import { StandardTable } from '../../components';
-import { Recipe as RecipeModel } from "../../models";
-import MultiUploadWidget from '../../components/Form/Widgets/MultiUploadWidget';
+import { Recipe as RecipeModel, Form } from "../../models";
+import { StandardTable, ModalSteps } from '../../components';
 
-import style from './style.less';
+import styles from './style.less';
 
-const RecipeColumns = [
+const mapStateToProps = (state, ownProps) => {
+  console.log('Recipe=>state', state);
+  console.log('Recipe=>ownProps', ownProps);
+  const {
+    recipe: {
+      all: {
+        data, isLoading, pages, total, formcreateByServer,
+      },
+      current: {
+        data: currentData, isLoading: currentIsLoading, error, errorMessage,
+      },
+    },
+    form: {
+      forms: {
+        'recipe/post': createForm,
+        'recipe/put': updateForm,
+      },
+      isLoading: formIsLoading,
+    },
+    // filter: {
+    //   filters: {
+    //     [ownProps.model]: filterForm,
+    //   },
+    //   isLoading: filterIsLoading,
+    // },
+  } = state;
+
+  let returnObject = {
+    data,
+    isLoading,
+    pages,
+    formcreateByServer,
+    total,
+    currentData,
+    currentIsLoading,
+    // default props
+
+    createForm,
+    updateForm,
+    formIsLoading,
+    // form props
+
+    // filterForm,
+    // filterIsLoading,
+
+    error,
+    errorMessage,
+  };
+
+  return returnObject;
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  let actionCreators = {
+    fetchForm: Form.get,
+    // fetchFilter: Models.Filter.get,
+    getAllData: RecipeModel.all,
+    getData: RecipeModel.get,
+    createData: RecipeModel.create,
+    updateData: RecipeModel.update,
+    deleteData: RecipeModel.delete,
+  };
+
+  return ({
+    ...bindActionCreators(actionCreators, dispatch),
+  });
+};
+
+const columns = [
   {
     title: "ID",
     dataIndex: "id",
-    defaultSortOrder: "ascend",
+    defaultSortOrder: ["ascend"],
     sorter: (a, b) => a > b,
     sortDirections: ["descend", "ascend"],
   },
@@ -35,74 +99,34 @@ const RecipeColumns = [
     sorter: (a, b) => a.description.length - b.description.length,
     sortDirections: ["descend", "ascend"],
   },
-  // {
-  //   title: "Зураг",
-  //   dataIndex: "imgnm",
-  // },
 ];
 
-class Recipe extends React.Component {
-  state = {
-    currentStep: 0,
-    recipeContent: '',
-    recipeModalVisible: false,
-    recipeSelectedId: null,
-    body: {
-      limit: 20,
-      page: 1,
-      filtered: {},
-      sorted: [],
-    },
-    productModalVisible: false,
-    transferMockData: [],
-    transferTargetKeys: [],
-  };
+class Recipe extends Component {
+  constructor(props) {
+    super(props);
 
-  getTransferMock = () => {
-    const targetKeys = [];
-    const mockData = [];
-    for (let i = 0; i < 20; i++) {
-      const data = {
-        key: i.toString(),
-        title: `content${i + 1}`,
-        description: `description of content${i + 1}`,
-        chosen: Math.random() * 2 > 1,
-      };
-      if (data.chosen) {
-        targetKeys.push(data.key);
-      }
-      mockData.push(data);
-    }
-    this.setState({
-      transferMockData: mockData,
-      transferTargetKeys: targetKeys,
-    });
+    this.state = {
+      visible: false,
+      selectedId: null,
+      isenable: false,
+      body: {
+        limit: 20,
+        page: 1,
+        filtered: {},
+        sorted: [],
+      },
+    };
   }
-
-  handleTransferChange = (targetKeys) => {
-    this.setState({ transferTargetKeys: targetKeys });
-  }
-
-  renderTransferFooter = () => (
-    <Button
-      size="small"
-      style={{ float: 'right', margin: 5 }}
-      onClick={this.getTransferMock}
-    >
-        Сэргээх
-    </Button>
-  )
 
   componentDidMount() {
-    this.getTransferMock();
     this.refresh();
   }
 
-  handleTableChange = ({ currentStep, pageSize }, filters, sorter) => {
+  handleTableChange = ({ current, pageSize }, filters, sorter) => {
     this.setState({
       body: {
         ...this.state.body,
-        page: currentStep,
+        page: current,
         limit: pageSize,
         sorted: [{
           id: sorter.field,
@@ -112,27 +136,27 @@ class Recipe extends React.Component {
     }, () => this.refresh());
   }
 
-  showRecipeModal = (modal) => {
+  showModal = (modal) => {
     this.setState({
-      recipeModalVisible: modal,
+      visible: modal,
     });
   }
 
-  handleRecipeModalCancel = (callback) => {
+  handleCancel = (callback) => {
     const cb = typeof callback === 'function' ? callback : null;
     this.setState({
-      recipeModalVisible: true,
+      visible: true,
     }, cb);
   }
 
-  handleRecipeSelect = (recipeSelectedId) => {
+  handleOnSelect = (selectedId) => {
     this.setState({
-      recipeSelectedId,
+      selectedId,
     });
   }
 
-  afterRecipeSubmit = () => {
-    this.handleRecipeModalCancel(() => {
+  afterSubmit = () => {
+    this.handleCancel(() => {
       this.refresh();
     });
   }
@@ -141,9 +165,19 @@ class Recipe extends React.Component {
     this.props.getAllData({ body: this.state.body, url: this.props.url });
   }
 
+  filterHandler = (data) => {
+    this.setState({
+      body: {
+        ...this.state.body,
+        page: 1,
+        filtered: data.formData,
+      },
+    }, () => this.refresh());
+  }
+
   deleteData = () => {
-    if (this.state.recipeSelectedId) {
-      let requestObject = { _id: this.state.recipeSelectedId };
+    if (this.state.selectedId) {
+      let requestObject = { _id: this.state.selectedId };
       if (this.props.url) {
         requestObject = { ...requestObject, url: this.props.url };
       }
@@ -153,215 +187,149 @@ class Recipe extends React.Component {
     }
   }
 
-  next() {
-    const currentStep = this.state.currentStep + 1;
-    this.setState({ currentStep });
-  }
-
-  prev() {
-    const currentStep = this.state.currentStep - 1;
-    this.setState({ currentStep });
-  }
-
-  handleStepsFinish = () => {
-    message.success('Амжилттай дууслаа!');
-  };
-
-  handleRecipeContentChange = (value) => {
-    this.setState({ recipeContent: value });
-  }
-
-  handleProductModalVisibilityToggle = () => {
-    this.setState({ productModalVisible: !this.state.productModalVisible });
-  };
-
-  modules = {
-    toolbar: [
-      [{ header: [1, 2, false] }],
-      ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-      [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
-      ['link', 'image'],
-      ['clean'],
-    ],
-  };
-
-  formats = [
-    'header',
-    'bold', 'italic', 'underline', 'strike', 'blockquote',
-    'list', 'bullet', 'indent',
-    'link', 'image',
-  ];
-
   render() {
-    // this.props.data.forEach((entry, index) => {
-    //   if (entry.imgnm && entry.imgnm.length > 0) {
-    //     const imgServer = 'http://202.55.180.200:8877/';
-    //     entry.render = (url = entry.imgnm[0]) => <img src={imgServer + url} alt={url} width="100px" />;
+    console.log('Recipe=>render', this.props);
+
+    // this.props.headers.forEach((entry, index) => {
+    //   if (entry.dataIndex === 'imgnm') {
+    //     const picserver = 'http://202.55.180.200:8877/';
+    //     entry.render = url => <img src={picserver + url} alt={url} width="100px" />;
+    //   }
+    //   if (entry.dataIndex === 'isenable' || entry.dataIndex === 'isemart') {
+    //     const { isenable } = this.state;
+    //     entry.render = isenable => <div>{ isenable ? <Switch defaultChecked disabled /> : <Switch disabled /> }</div>;
     //   }
     // });
 
-    console.log('in render', this.props);
-
-    const steps = [{
-      title: 'Алхам 1',
-      content: (
-        <div style={{ padding: '20px 0' }}>
-          <div className="images-upload">
-            <h4>Зураг</h4>
-            <MultiUploadWidget />
-          </div>
-
-          <h4>Агуулга</h4>
-          <div style={{ paddingTop: '10px' }}>
-            <ReactQuill
-              theme="snow"
-              value={this.state.recipeContent}
-              modules={this.modules}
-              formats={this.formats}
-              onChange={this.handleRecipeContentChange}
-            />
-          </div>
-        </div>
-      ),
-    }, {
-      title: 'Алхам 2',
-      content: (
-        <div style={{ margin: "20px 0" }}>
-          <Button
-            icon="plus"
-            type="primary"
-            onClick={this.handleProductModalVisibilityToggle}
-          >
-            {'Бараа нэмэх'}
-          </Button>
-          <StandardTable
-            bordered
-            onSelect={this.handleRecipeSelect}
-            onChange={this.handleTableChange}
-            columns={[{
-              title: "Зураг",
-            }, {
-              title: "Барааны код",
-            }, {
-              title: "Барааны нэр",
-            }]}
-            data={[]}
-            loading={this.props.isLoading}
-            pagination={{
-              total: this.props.total,
-              step: this.state.body.page,
-              pageSize: this.state.body.limit,
-              showSizeChanger: true,
-            }}
-            scroll={{ x: this.props.scroll }}
-            style={{ marginTop: "20px" }}
-          />
-          <Modal
-            title={'Бараа сонгох цонх'}
-            width={'70%'}
-            visible={this.state.productModalVisible}
-            footer={false}
-            className={style.otModalSteps}
-            maskClosable={false}
-            onCancel={this.handleProductModalVisibilityToggle}
-          >
-            <ModalLayout>
-              <Transfer
-                dataSource={this.state.transferMockData}
-                titles={['Бүх бараа', 'Сонгосон бараа']}
-                showSearch
-                listStyle={{
-                  width: '40%',
-                  height: 300,
-                }}
-                operations={['Бараа сонгох', 'Бараа буцаах']}
-                targetKeys={this.state.transferTargetKeys}
-                onChange={this.handleTransferChange}
-                render={item => `${item.title}-${item.description}`}
-                footer={this.renderTransferFooter}
-                style={{ marginBottom: '20px' }}
-              />
-              <Button
-                icon="double-left"
-                onClick={this.handleProductModalVisibilityToggle}
-              >
-                {'Цуцлах'}
-              </Button>
-              <Button
-                icon="save"
-                type="primary"
-                style={{ marginLeft: 8 }}
-                // onClick={() => this.showRecipeModal('RecipeCreate')}
-              >
-                {'Хадгалах'}
-              </Button>
-            </ModalLayout>
-          </Modal>
-        </div>
-      ),
-    }];
-
-    const { Step } = Steps;
-    const { currentStep } = this.state;
-
     return (
-      <Card>
-        <div className={style.tableList} style={{ overflow: 'hidden', overflowX: 'auto' }}>
-          <div className={style.tableListOperator}>
+      <Card bordered={false}>
+        <div className={styles.tableList} style={{ overflow: 'hidden', overflowX: 'auto' }}>
+          <div className={styles.tableListOperator}>
             <Button
+              onClick={() => this.showModal('RecipeCreate')}
+              size="small"
               icon="plus"
               type="primary"
-              onClick={() => this.showRecipeModal('RecipeCreate')}
+              className={styles.formbutton}
             >
               {'Хоолны жор бүртгэх'}
             </Button>
+            {/* {this.props.actions.indexOf('update') !== -1 &&
+              <Button
+                onClick={() => this.showModal(`${this.props.model}Update`)}
+                icon="edit"
+                size="small"
+                type="primary"
+                disabled={!this.state.selectedId}
+                className={styles.formbutton}
+              >
+                {`${this.props.name} засах`}
+              </Button>
+            }
+            {this.props.actions.indexOf('delete') !== -1 &&
+              <Popconfirm
+                title="Та устгахдаа итгэлтэй байна уу?"
+                onConfirm={e => this.deleteData(e)}
+                okText="Тийм"
+                cancelText="Үгүй"
+              >
+                <Button
+                  className={styles.formbutton}
+                  icon="delete"
+                  type="danger"
+                  size="small"
+                  disabled={!this.state.selectedId}
+                >
+                  {`${this.props.name} устгах`}
+                </Button>
+              </Popconfirm>
+            }
+            {this.props.addonsArray.map(entry => (
+              <Button
+                onClick={() => this.showModal(`${entry.model}AddOnUpdate`)}
+                icon="edit"
+                size="small"
+                type="primary"
+                key={entry.model}
+                disabled={!this.state.selectedId}
+              >
+                {`${entry.name} засах`}
+              </Button>
+            ))}
+            {this.customAddons && this.customAddons.map(entry => entry())} */}
           </div>
           <StandardTable
             bordered
-            onSelect={this.handleRecipeSelect}
+            onSelect={this.handleOnSelect}
             onChange={this.handleTableChange}
-            columns={RecipeColumns}
+            columns={columns}
             data={this.props.data}
             loading={this.props.isLoading}
             pagination={{
               total: this.props.total,
-              step: this.state.body.page,
+              current: this.state.body.page,
               pageSize: this.state.body.limit,
               showSizeChanger: true,
             }}
             scroll={{ x: this.props.scroll }}
           />
         </div>
-        <Modal
-          title={'Жор сонгох цонх'}
-          width={'70%'}
-          visible={this.state.recipeModalVisible === 'RecipeCreate'}
-          footer={false}
-          className={style.otModalSteps}
-          maskClosable={false}
-          onCancel={this.handleRecipeModalCancel}
-        >
-          <ModalLayout>
-            <Steps current={currentStep}>
-              {steps.map(item => <Step key={item.title} title={item.title} />)}
-            </Steps>
-            <div className={style.stepsContent}>{steps[currentStep].content}</div>
-            <div className={style.stepsAction}>
-              {
-                currentStep < steps.length - 1
-                && <Button onClick={() => this.next()}>Цааш <Icon type="double-right" /></Button>
-              }
-              {
-                currentStep > 0
-                && <Button onClick={() => this.prev()}><Icon type="double-left" /> Өмнөх</Button>
-              }
-              {
-                currentStep === steps.length - 1
-                && <Button style={{ marginLeft: 8 }} icon="save" type="primary" onClick={this.handleStepsFinish}>Хадгалах</Button>
-              }
-            </div>
-          </ModalLayout>
-        </Modal>
+        <ModalSteps
+          hasSteps
+          visible={this.state.visible === 'RecipeCreate'}
+          modelName={'recipe/post'}
+          submitAction={this.props.createData}
+          onCancel={this.handleCancel}
+          afterSubmit={this.afterSubmit}
+          fetchForm={this.props.fetchForm}
+          createFormData={this.props.formcreateByServer}
+          form={this.props.createForm}
+          formIsLoading={this.props.formIsLoading}
+          title={'Хоолны жор бүртгэх'}
+          url={this.props.url}
+          error={this.props.error}
+          errorMessage={this.props.errorMessage}
+        />
+        {/* <ModalSteps
+          visible={this.state.visible === `${this.props.model}Update`}
+          modelName={`${this.props.model}/put`}
+          submitAction={this.props.updateData}
+          onCancel={this.handleCancel}
+          afterSubmit={this.afterSubmit}
+          fetchForm={this.props.fetchForm}
+          form={this.props.updateForm}
+          createFormData={this.props.formcreateByServer}
+          formIsLoading={this.props.formIsLoading}
+          fetchData={this.props.getData}
+          dataParams={{ _id: this.state.selectedId }}
+          dataIsLoading={this.props.dataIsLoading}
+          data={this.props.currentData}
+          title={`${this.props.name} засах`}
+          url={this.props.url}
+          error={this.props.error}
+          errorMessage={this.props.errorMessage}
+        />
+        {this.props.addonsArray.map((entry, index) => (
+          <ModalSteps
+            key={entry.model}
+            visible={this.state.visible === `${entry.model}AddOnUpdate`}
+            onCancel={this.handleCancel}
+            form={entry.form}
+            formIsLoading={this.props.formIsLoading}
+            fetchForm={this.props.fetchForm}
+            data={entry.data}
+            afterSubmit={this.afterSubmit}
+            dataParams={{ _id: this.state.selectedId }}
+            dataIsLoading={entry.isLoading}
+            fetchData={this.props[`addons${index}get`]}
+            modelName={`${entry.model}/put`}
+            submitAction={this.props[`addons${index}update`]}
+            title={`${entry.name} засах`}
+            url={this.props.url}
+            error={entry.error}
+            errorMessage={entry.errorMessage}
+          />
+        ))} */}
       </Card>
     );
   }
@@ -374,7 +342,7 @@ Recipe.propTypes = {
   total: PropTypes.number,
   // end of list props
 
-  // filter: PropTypes.bool,
+  filter: PropTypes.bool,
   scroll: PropTypes.number,
   addonsArray: PropTypes.array,
   name: PropTypes.string,
@@ -383,7 +351,7 @@ Recipe.propTypes = {
   // customAddons: PropTypes.array,
   // end of component props
 
-  // fetchForm: PropTypes.func.isRequired,
+  fetchForm: PropTypes.func.isRequired,
   formIsLoading: PropTypes.bool,
   // end of form props
 
@@ -404,7 +372,6 @@ Recipe.propTypes = {
 
   error: PropTypes.bool,
   errorMessage: PropTypes.string,
-  steps: PropTypes.array,
 };
 
 Recipe.defaultProps = {
@@ -413,7 +380,7 @@ Recipe.defaultProps = {
   total: 0,
   // end of list props
 
-  // filter: false,
+  filter: false,
   scroll: undefined,
   addonsArray: [],
   name: '',
@@ -436,63 +403,6 @@ Recipe.defaultProps = {
 
   error: false,
   errorMessage: '',
-  steps: [],
-};
-
-const mapStateToProps = (state, ownProps) => {
-  console.log('Recipe => mapStateToProps', state);
-
-  const {
-    recipe: {
-      all: {
-        data, isLoading, pages, total, formcreateByServer,
-      },
-      current: {
-        data: currentData, isLoading: currentIsLoading, error, errorMessage,
-      },
-    },
-    form: {
-      forms: {
-        'recipe/post': createForm,
-        'recipe/put': updateForm,
-      },
-      isLoading: formIsLoading,
-    },
-    // productData: {
-    //   product: { data },
-    // },
-  } = state;
-
-  let returnObject = {
-    data,
-    isLoading,
-    pages,
-    formcreateByServer,
-    total,
-    currentData,
-    currentIsLoading,
-    createForm,
-    updateForm,
-    formIsLoading,
-    error,
-    errorMessage,
-  };
-
-  return returnObject;
-};
-
-const mapDispatchToProps = (dispatch) => {
-  let actionCreators = {
-    getAllData: RecipeModel.all,
-    getData: RecipeModel.get,
-    createData: RecipeModel.create,
-    updateData: RecipeModel.update,
-    deleteData: RecipeModel.delete,
-  };
-
-  return ({
-    ...bindActionCreators(actionCreators, dispatch),
-  });
 };
 
 export default connect(
