@@ -48,6 +48,8 @@ class ModalFormComponent extends Component {
       ...restProps
     } = this.props;
 
+    // console.log('fetchData', dataParams);
+
     return (
       <Modal
         title={title}
@@ -61,25 +63,28 @@ class ModalFormComponent extends Component {
       >
         <ModalLayout>
           {
-            <Form
-              modelName={modelName}
-              isLoading={this.state.isLoading}
-              setLoading={this.setLoading}
-              form={form}
-              fetchForm={fetchForm}
-              formIsLoading={formIsLoading}
-              data={data}
-              createFormData={createFormData}
-              dataParams={dataParams}
-              fetchData={fetchData}
-              dataIsLoading={dataIsLoading}
-              submitAction={submitAction}
-              onCancel={onCancel}
-              afterSubmit={afterSubmit}
-              url={url}
-              error={error}
-              errorMessage={errorMessage}
-            />
+       visible ?
+         <Spin spinning={formIsLoading || dataIsLoading || this.state.isLoading}>
+           <Form
+             modelName={modelName}
+             isLoading={this.state.isLoading}
+             setLoading={this.setLoading}
+             form={form}
+             fetchForm={fetchForm}
+             formIsLoading={formIsLoading}
+             data={data}
+             createFormData={createFormData}
+             dataParams={dataParams}
+             fetchData={fetchData}
+             dataIsLoading={dataIsLoading}
+             submitAction={submitAction}
+             onCancel={onCancel}
+             afterSubmit={afterSubmit}
+             url={url}
+             error={error}
+             errorMessage={errorMessage}
+           />
+         </Spin> : null
 
           }
         </ModalLayout>

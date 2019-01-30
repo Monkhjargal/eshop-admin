@@ -12,7 +12,6 @@ class List extends Component {
     this.state = {
       visible: false,
       selectedId: null,
-      isenable: false,
       body: {
         limit: 20,
         page: 1,
@@ -33,12 +32,14 @@ class List extends Component {
     this.setState({
       body: {
         ...this.state.body,
-        page: current,
-        limit: pageSize,
-        sorted: [{
-          id: sorter.field,
-          desc: sorter.order !== 'ascend',
-        }],
+        // page: current,
+        // limit: pageSize,
+        // sorted: [{
+        //   id: sorter.field,
+        //   desc: sorter.order !== 'ascend',
+        // }],
+        sorted: sorter.field,
+        desc: sorter.order !== 'ascend',
       },
     }, () => this.refresh());
   }
@@ -73,10 +74,14 @@ class List extends Component {
   }
 
   filterHandler = (data) => {
+    console.log(data.formData);
     this.setState({
       body: {
         ...this.state.body,
-        page: 1,
+        // ...data.formData,
+        // test: data.formData,
+        // ...this.state.body,
+        // page: 1,
         filtered: data.formData,
       },
     }, () => this.refresh());
@@ -96,10 +101,18 @@ class List extends Component {
 
   render() {
     if (this.props.headers) {
+      // let a = this.props.headers;
+      // tempCols.push({
+      //   Header: 'Дд', accessor: 'tindex', dataIndex: 'tindex', key: 'tindex', title: 'Д/д', order: 2,
+      // });
+      // console.log(tempCols);
       this.props.headers.forEach((entry, index) => {
         if (entry.dataIndex === 'imgnm') {
           const picserver = 'http://202.55.180.200:8877/';
           entry.render = url => <img src={picserver + url} alt={url} height="20px" />;
+        }
+        if (entry.dataIndex === 'tindex') {
+          entry.render = (text, record, index) => <span>{index}</span>;
         }
         if (entry.dataIndex === 'color') {
           entry.render = col => (
@@ -116,9 +129,8 @@ class List extends Component {
               <span>{col}</span>
             </div>);
         }
-        if (entry.dataIndex === 'isenable' || entry.dataIndex === 'isemart') {
-          const { isenable } = this.state;
-          entry.render = isenable => <div> { isenable ? <Switch defaultChecked disabled /> : <Switch disabled /> } </div>;
+        if (entry.dataIndex === 'isenable' || entry.dataIndex === 'isemart' || entry.dataIndex === 'isshownm') {
+          entry.render = (text, record) => <Switch checked={record.isenable || record.isemart || record.isshownm} disabled />;
         }
       });
     }
@@ -169,7 +181,7 @@ class List extends Component {
                 cancelText="Үгүй"
               >
                 <Button
-                  className={[styles.formbutton, styles.delete]}
+                  className={`${styles.formbutton}, ${styles.delete}`}
                   icon="delete"
                   type="danger"
                   size="small"

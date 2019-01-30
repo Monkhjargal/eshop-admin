@@ -1,4 +1,5 @@
 import BaseModel from './BaseModel';
+import FilterModel from './FilterModel';
 import { asyncFn } from './utils';
 
 class CrudModel extends BaseModel {
@@ -90,6 +91,7 @@ class CrudModel extends BaseModel {
             data: action.payload.value,
             total: action.payload.rowCount,
             headers: action.payload.headers,
+            filter: action.payload.data.properties,
             formcreateByServer: action.payload.data,
           },
         };

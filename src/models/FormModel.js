@@ -5,7 +5,6 @@ const asyncFromDataFn = ({
   model, name, data,
 }) => async (dispatch) => {
   const payload = {};
-
   dispatch({
     type: model.request,
     payload,
@@ -44,7 +43,7 @@ class FormModel extends BaseModel {
       case this.model.response:
         let uiSchema = {};
         const recursive = (object, toObject) => {
-          console.log(object);
+          // console.log(object);
           if (object.type === 'id') {
             object.type = 'string';
           }
@@ -95,17 +94,15 @@ class FormModel extends BaseModel {
 
           Object.keys(object.properties).forEach((key) => {
             toObject[key] = {};
+            // console.log(object.properties[key]);
             recursive(object.properties[key], toObject[key]);
           });
           return true;
         };
+
         let tempData = action.payload;
-        // let tempData = formData;
         recursive(tempData, uiSchema);
         tempData.type = 'object';
-
-        console.log(tempData);
-
         return {
           ...state,
           isLoading: false,

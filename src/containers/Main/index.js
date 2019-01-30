@@ -9,10 +9,10 @@ import { PrivateRoute } from '../../components';
 
 const mapStateToProps = (state) => {
   const { auth } = state;
-  const { generic } = state;
+  // const { generic } = state;
   return {
     auth,
-    generic,
+    // generic,
   };
 };
 

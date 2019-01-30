@@ -18,31 +18,24 @@ class FilterModel extends BaseModel {
           if (object.type === 'id') {
             object.type = 'string';
           }
-
           if (object.widget) {
             toObject['ui:widget'] = object.widget;
           }
-
           if (object.type === 'number' && object.widget === 'input') {
             toObject['ui:widget'] = 'number';
           }
-
           if (object.disabled) {
             toObject['ui:disabled'] = object.disabled;
           }
-
           if (object.readonly) {
             toObject['ui:readonly'] = object.readonly;
           }
-
           if (object.placeholder) {
             toObject['ui:placeholder'] = object.placeholder;
           }
-
           if (!object.properties) {
             return true;
           }
-
           Object.keys(object.properties).forEach((key) => {
             toObject[key] = {};
             recursive(object.properties[key], toObject[key]);
@@ -50,8 +43,8 @@ class FilterModel extends BaseModel {
           return true;
         };
 
-        let tempData = action.payload;
-
+        let tempData = action.payload.data;
+        // console.log(tempData);
         recursive(tempData, uiSchema);
 
         return {

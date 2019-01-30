@@ -21,7 +21,7 @@ const request = ({ url, method, body }) => {
       },
     }).then((response) => {
       if (response.status === 401 || response.status === 403) {
-        // history.push('/');
+        // props.history.push('/');
       }
       if (!response.ok) {
         throw new Error(response.statusText);

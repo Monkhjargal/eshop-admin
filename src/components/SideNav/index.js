@@ -10,7 +10,7 @@ import styles from './index.less';
 
 const { SubMenu } = Menu;
 
-const mapStateToProps = (state) => { };
+const mapStateToProps = state => ({ state });
 
 class SideNav extends PureComponent {
   static defaultProps = {

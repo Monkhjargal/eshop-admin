@@ -13,6 +13,7 @@ export default () => (
       actions={['create', 'update', 'delete']}
       model={'Category'}
       name={'Category'}
+      filter
     />
   </PageHeaderLayout>
 );

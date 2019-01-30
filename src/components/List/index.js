@@ -11,7 +11,7 @@ String.prototype.unCapitalize = function unCapitalize() {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(ownProps.model.unCapitalize());
+  // console.log(createForm);
   const {
     [ownProps.model.unCapitalize()]: {
       all: {

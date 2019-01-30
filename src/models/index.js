@@ -21,7 +21,7 @@ const Form = new FormModel({
 });
 
 const Filter = new FilterModel({
-  url: '/api/core/filter',
+  url: '/mn/api/filter',
   model: 'filter',
   initialState: {
     filters: {},

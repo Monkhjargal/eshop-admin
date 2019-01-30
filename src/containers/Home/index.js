@@ -1,135 +1,78 @@
 // @flow
-import { Chart, Axis, Tooltip, Geom, Coord, Legend, Label } from "bizcharts";
+import { Chart, Geom, Axis, Tooltip, Guide } from 'bizcharts';
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { DataSet } from '@antv/data-set';
-import { Tabs } from 'antd';
+import { Tabs, Card, Icon, Avatar, Col, Row } from 'antd';
 import { connect } from 'react-redux';
-import { ChartModule } from "../../models";
+import PageHeaderLayout from "../../layouts/PageHeaderLayout";
+// import { Chart, Axis, Tooltip, Geom, Coord, Legend, Label } from "bizcharts";
+// import PropTypes from 'prop-types';
+// import { DataSet } from '@antv/data-set';
+// import { ChartModule } from "../../models";
 
 const mapStateToProps = (state) => {
   const {
     chart,
   } = state;
-  return {
-    // professionsArray: chart.professions,
-    // awardsArray: chart.awards,
-    // sectionsArray: chart.sections,
-    // gendersArray: chart.genders,
-    // apartmentsArray: chart.apartments,
-    // workdatesArray: chart.workdates,
-    // companysArray: chart.companys,
-  };
+  return {};
 };
-const { TabPane } = Tabs;
+const { Meta } = Card;
+const divStyle = {
+  width: '90%',
+  overflow: 'hidden',
+};
 
 class Home extends Component {
   componentDidMount() {
-    // this.props.professions();
-    // this.props.sections();
-    // this.props.genders();
-    // this.props.apartments();
-    // this.props.workdates();
-    // this.props.companys();
   }
   render() {
-    // const { DataView } = DataSet;
-    // if (this.props.professionsArray
-    //   && this.props.sectionsArray
-    //   && this.props.gendersArray
-    //   && this.props.apartmentsArray
-    //   && this.props.workdatesArray
-    //   && this.props.companysArray) {
-    //   const professionDv = new DataView();
-    //   const sectionDv = new DataView();
-    //   const genderDv = new DataView();
-    //   const apartmentDv = new DataView();
-    //   const workdateDv = new DataView();
-    //   const companyDv = new DataView();
-    //   companyDv.source(this.props.companysArray || []).transform({
-    //     type: 'percent',
-    //     field: 'count',
-    //     dimension: 'name',
-    //     as: 'percent',
-    //   });
-    //   workdateDv.source(this.props.workdatesArray || []).transform({
-    //     type: 'percent',
-    //     field: 'count',
-    //     dimension: 'name',
-    //     as: 'percent',
-    //   });
-    //   genderDv.source(this.props.gendersArray || []).transform({
-    //     type: 'percent',
-    //     field: 'count',
-    //     dimension: 'name',
-    //     as: 'percent',
-    //   });
-    //   apartmentDv.source(this.props.apartmentsArray || []).transform({
-    //     type: 'percent',
-    //     field: 'count',
-    //     dimension: 'name',
-    //     as: 'percent',
-    //   });
-    //   professionDv.source(this.props.professionsArray || []).transform({
-    //     type: 'percent',
-    //     field: 'count',
-    //     dimension: 'name',
-    //     as: 'percent',
-    //   });
-    //   sectionDv.source(this.props.sectionsArray || []).transform({
-    //     type: 'percent',
-    //     field: 'count',
-    //     dimension: 'name',
-    //     as: 'percent',
-    //   });
-    //   const cols = {
-    //     percent: {
-    //       formatter: (val) => {
-    //         val = `${(val * 100).toFixed(2)}%`;
-    //         return val;
-    //       },
-    //     },
-    //   };
     return (
-      <div style={{ padding: '100px', textAlign: 'center' }}>
-          Dashboard
-      </div>
+      <PageHeaderLayout title="Category information" style={divStyle}>
+        <div style={{ textAlign: 'center' }}>
+          <Row gutter={16}>
+            <Col span={8}>
+              <Card
+                style={{ width: 300 }}
+                cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
+                actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
+              >
+                <Meta
+                  avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                  title="Card title"
+                  description="This is the description"
+                />
+              </Card>
+            </Col>
+            <Col span={8}>
+              <Card
+                style={{ width: 300 }}
+                cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
+                actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
+              >
+                <Meta
+                  avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                  title="Card title"
+                  description="This is the description"
+                />
+              </Card>
+            </Col>
+            <Col span={8}>
+              <Card
+                style={{ width: 300 }}
+                cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
+                actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
+              >
+                <Meta
+                  avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                  title="Card title"
+                  description="This is the description"
+                />
+              </Card>
+            </Col>
+          </Row>
+        </div>
+      </PageHeaderLayout>
     );
-    // }
-    // return (<div>Loading...</div>);
   }
 }
-
-// Home.defaultProps = {
-//   professionsArray: [],
-//   sectionsArray: [],
-//   gendersArray: [],
-//   apartmentsArray: [],
-//   workdatesArray: [],
-//   companysArray: [],
-// };
-
-// Home.propTypes = {
-//   professionsArray: PropTypes.array,
-//   sectionsArray: PropTypes.array,
-//   gendersArray: PropTypes.array,
-//   apartmentsArray: PropTypes.array,
-//   workdatesArray: PropTypes.array,
-//   companysArray: PropTypes.array,
-//   professions: PropTypes.func.isRequired,
-//   sections: PropTypes.func.isRequired,
-//   awards: PropTypes.func.isRequired,
-//   genders: PropTypes.func.isRequired,
-//   apartments: PropTypes.func.isRequired,
-//   workdates: PropTypes.func.isRequired,
-//   companys: PropTypes.func.isRequired,
-// };
-export default connect(mapStateToProps, {
-  // professions: ChartModule.professions,
-  // sections: ChartModule.sections,
-  // genders: ChartModule.genders,
-  // apartments: ChartModule.apartments,
-  // workdates: ChartModule.workdates,
-  // companys: ChartModule.companys,
-})(Home);
+export default connect(mapStateToProps, {})(Home);
 

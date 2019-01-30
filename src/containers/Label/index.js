@@ -12,6 +12,7 @@ export default () => (
       actions={['update']}
       model={'LabelList'}
       name={'Label'}
+      // filter
     />
   </PageHeaderLayout>
 );

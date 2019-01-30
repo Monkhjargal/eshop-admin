@@ -51,13 +51,12 @@ class SelectTreeWidget extends Component {
     // console.log(root);
     return (
       <TreeSelect
-        value={this.props.value}
+        value={this.props.value ? (typeof this.props.value === 'number') ? this.props.value.toString() : this.props.value : this.props.value}
         showSearch
         size="small"
         dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
         treeDefaultExpandAll
-        onChange={this.onChange}
-        // treeData={treeData1}
+        onChange={value => this.props.onChange(value)}
       >
         {this.renderTreeNodes(root)}
       </TreeSelect>
@@ -66,11 +65,11 @@ class SelectTreeWidget extends Component {
 }
 
 SelectTreeWidget.defaultProps = {
-  value: [],
+  value: undefined,
 };
 
 SelectTreeWidget.propTypes = {
-  value: PropTypes.array,
+  value: PropTypes.any,
   onChange: PropTypes.func.isRequired,
   schema: PropTypes.shape({
     options: PropTypes.array,

@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Table, Pagination } from 'antd';
+import { Table, Pagination, Switch } from 'antd';
 import styles from './index.less';
 
 class StandardTable extends PureComponent {
@@ -15,7 +15,6 @@ class StandardTable extends PureComponent {
   handleRowClass = record => (record.id === this.state.selectedId ? styles.selected : '');
 
   handleRowClick = (record) => {
-    // console.log(record.id);
     this.setState({ selectedId: record.id });
     this.props.onSelect(record.id);
   }

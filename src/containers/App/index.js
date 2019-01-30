@@ -32,7 +32,7 @@ class App extends Component {
     super(props);
     this.menus = getNavData;
     this.routes = getNavData.reduce((arr, current) => {
-      if (current.children) {
+      if (current.children && current.children) {
         current.children.forEach((entry) => {
           entry.realPath = `/${current.path}/${entry.path}`;
         });
@@ -41,6 +41,8 @@ class App extends Component {
         current.realPath = `/${current.path}`;
         arr = [...arr, current];
       }
+      // console.log(current);
+      // console.log(arr);
       return arr;
     }, []);
 
@@ -69,7 +71,7 @@ class App extends Component {
       <Switch>
         <Route exact path="/login" component={Login} />
         <PrivateRoute>
-          {params => (
+          { params => (
             <div className={classNames(params)} style={{ height: '100%' }}>
               <Layout style={{ height: '100%' }}>
                 <Sider className={styles.sider}>
@@ -105,13 +107,6 @@ class App extends Component {
                           </Menu.Item>
                         </SubMenu>
                       </Menu>
-                      {/* <div className={styles.topmenus}>
-                        <span style={{ marginRight: 24 }}>
-                          <a onClick={() => this.props.logout()} className={styles.logoutbutton}>
-                            <span> Гарах <Icon type="logout" /> </span>
-                          </a>
-                        </span>
-                      </div> */}
                       <Main getRouteData={this.routes} />
                     </div>
                     <GlobalFooter

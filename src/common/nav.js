@@ -25,6 +25,7 @@ export const getNavData = [
     icon: 'line-chart',
     path: 'dashboard',
     component: Home,
+    // children: [],
   },
   {
     name: 'Категори',
@@ -48,18 +49,13 @@ export const getNavData = [
       },
       {
         name: 'Сурталчилгааны ангилал',
-        path: 'ads-category',
-        component: CategoryList,
-      },
-      {
-        name: 'Сурталчилгааны ангилал',
         path: 'promotion',
         component: Promotion,
       },
     ],
   }, {
     name: 'Бараа',
-    icon: 'switcher',
+    icon: 'appstore',
     path: 'products',
     children: [
       {
