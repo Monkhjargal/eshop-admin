@@ -59,7 +59,7 @@ class FormComponent extends Component {
         let clonedParentList = JSON.parse(JSON.stringify(this.state.parentList));
 
         clonedParentList.forEach((entry) => {
-          // console.log(entry);
+          console.log(entry);
           let before;
           let after;
           if (entry.parentRoute.length === 1) {
@@ -115,6 +115,8 @@ class FormComponent extends Component {
             };
             recursiveFn(clonedParentList, entry.route);
           }
+
+          console.log(clonedParentList);
         });
 
         let tempFormData = nextState.formData;
@@ -315,14 +317,14 @@ class FormComponent extends Component {
         uiSchema={(this.props.form && Object.keys(this.props.form).length) ? this.props.form.uiSchema : {}}
         formData={this.state.formData}
         formContext={this.state.formData}
-        noHtml5Validate
+        // noHtml5Validate
         fields={this.fields}
         FieldTemplate={this.FieldTemplate}
         ObjectFieldTemplate={this.ObjectFieldTemplate}
         ErrorList={this.ErrorList}
         widgets={this.widgets}
         transformErrors={this.transformErrors}
-        liveValidate={liveValidate}
+        // liveValidate={liveValidate}
         className={`${style.otForm} ant-row`}
         onChange={(formObject) => { onChange(formObject); }}
         onSubmit={(formObject) => { onSubmit(formObject); }}

@@ -1,26 +1,48 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Button, List, Select } from 'antd';
-import Page from '../Exception/500';
+import { List } from '../../components';
+import PageHeaderLayout from "../../layouts/PageHeaderLayout";
 
-const mapStateToProps = (state) => {
-  const { brands } = state;
-  return {
-    brands,
-  };
+const divStyle = {
+  width: '90%',
+  overflow: 'hidden',
 };
 
-class CollectionList extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  componentDidMount() {
-  }
-  render() {
-    return (
-      <Page />
-    );
-  }
-}
+export default () => (
+  <PageHeaderLayout title="GeneralInfo" style={divStyle}>
+    <List
+      actions={['update']}
+      model={'General'}
+      name={'GeneralInfo'}
+      // filter
+    />
+  </PageHeaderLayout>
+);
+// import React from 'react';
+// import { connect } from 'react-redux';
+// import PropTypes from 'prop-types';
+// import { Button, List } from 'antd';
+// import PageHeaderLayout from "../../layouts/PageHeaderLayout";
 
-export default connect(mapStateToProps)(CollectionList);
+// const mapStateToProps = (state) => {
+//   const { brands } = state;
+//   return {
+//     brands,
+//   };
+// };
+
+// class BrandList extends React.Component {
+//   constructor(props) {
+//     super(props);
+//   }
+//   componentDidMount() {
+//   }
+//   render() {
+//     return (
+//       <div>
+//         BrandList
+//       </div>
+//     );
+//   }
+// }
+
+// export default connect(mapStateToProps)(BrandList);

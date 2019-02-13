@@ -28,47 +28,7 @@ class Home extends Component {
     return (
       <PageHeaderLayout title="Category information" style={divStyle}>
         <div style={{ textAlign: 'center' }}>
-          <Row gutter={16}>
-            <Col span={8}>
-              <Card
-                style={{ width: 300 }}
-                cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
-                actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
-              >
-                <Meta
-                  avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                  title="Card title"
-                  description="This is the description"
-                />
-              </Card>
-            </Col>
-            <Col span={8}>
-              <Card
-                style={{ width: 300 }}
-                cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
-                actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
-              >
-                <Meta
-                  avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                  title="Card title"
-                  description="This is the description"
-                />
-              </Card>
-            </Col>
-            <Col span={8}>
-              <Card
-                style={{ width: 300 }}
-                cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
-                actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
-              >
-                <Meta
-                  avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                  title="Card title"
-                  description="This is the description"
-                />
-              </Card>
-            </Col>
-          </Row>
+          Welcome to Dashboard
         </div>
       </PageHeaderLayout>
     );

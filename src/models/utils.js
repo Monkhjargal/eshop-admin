@@ -1,4 +1,5 @@
 import withQuery from 'with-query';
+import { message } from 'antd';
 
 const HOST = 'http://202.55.180.200:8881';
 // const HOST = 'http://10.0.10.30:8881';
@@ -30,7 +31,6 @@ const request = ({ url, method, body }) => {
       return response.json();
     });
   }
-  // console.log(JSON.stringify(body));
   return fetch(HOST + url, {
     credentials: 'include',
     method,
@@ -41,7 +41,7 @@ const request = ({ url, method, body }) => {
     },
     body: JSON.stringify(body),
   }).then((response) => {
-    console.log(response);
+    // console.log(response);
     if (!response.ok) {
       throw new Error(response.statusText);
     }
@@ -69,7 +69,7 @@ const asyncFn = ({
     } else {
       // console.log(body);
       const data = await request({ url, method, body });
-      // console.log(data);
+      console.log(data);
       if (!data) {
         throw new Error('no data provided');
       }

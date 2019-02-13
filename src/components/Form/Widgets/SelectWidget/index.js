@@ -23,7 +23,7 @@ class SelectWidget extends Component {
         disabled={this.props.disabled}
         onChange={value => this.props.onChange(value)}
       >
-        {this.props.schema.options.map(({ id, catnm, parent }, i) => {
+        {this.props.schema.options.map(({ id, name, parent }, i) => {
           let returnObject;
           if (this.props.schema.parent && this.props.schema.parent.length) {
             let parentValue;
@@ -37,13 +37,13 @@ class SelectWidget extends Component {
             }
             returnObject = (parent === parentValue) ? (
               <Option key={i} value={id}>
-                {catnm}
+                {name}
               </Option>
             ) : undefined;
           } else {
             returnObject = (
               <Option key={i} value={id}>
-                {catnm}
+                {name}
               </Option>
             );
           }

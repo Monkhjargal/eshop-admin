@@ -12,6 +12,7 @@ export default () => (
       actions={['create', 'update', 'delete']}
       model={'AttrValue'}
       name={'Аттрибутын утга'}
+      filter
     />
   </PageHeaderLayout>
 

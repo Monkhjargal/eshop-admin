@@ -12,6 +12,7 @@ export default () => (
       actions={['create', 'update', 'delete']}
       model={'Banner'}
       name={'Banner'}
+      filter
     />
   </PageHeaderLayout>
 );

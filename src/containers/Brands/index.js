@@ -13,6 +13,7 @@ export default () => (
       actions={['create', 'update', 'delete']}
       model={'Brandlist'}
       name={'Brand'}
+      filter
     />
   </PageHeaderLayout>
 );

@@ -78,8 +78,9 @@ const EhowList = new CrudModel({
   model: 'ehowlist',
 });
 
-const GeneralInfoList = new CrudModel({
-  model: 'generalinfolist',
+const General = new CrudModel({
+  url: '/mn/api/generalinfo',
+  model: 'general',
 });
 
 const Widgetslist = new CrudModel({
@@ -124,7 +125,7 @@ export {
   Infolist,
   CollectionList,
   EhowList,
-  GeneralInfoList,
+  General,
   Widgetslist,
   Menulist,
   Language,

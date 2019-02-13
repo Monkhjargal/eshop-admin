@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import Moment from 'react-moment';
 import PropTypes from 'prop-types';
-import { Card, Button, Popconfirm, Switch } from 'antd';
+import { Card, Button, Popconfirm, Switch, message } from 'antd';
 import { StandardTable, ModalForm, Form } from '../../components';
+
 
 import styles from './style.less';
 
@@ -32,8 +34,8 @@ class List extends Component {
     this.setState({
       body: {
         ...this.state.body,
-        // page: current,
-        // limit: pageSize,
+        page: current,
+        limit: pageSize,
         // sorted: [{
         //   id: sorter.field,
         //   desc: sorter.order !== 'ascend',
@@ -93,6 +95,7 @@ class List extends Component {
       if (this.props.url) {
         requestObject = { ...requestObject, url: this.props.url };
       }
+      console.log(requestObject);
       this.props.deleteData(requestObject).then(() => {
         this.refresh();
       });
@@ -101,36 +104,43 @@ class List extends Component {
 
   render() {
     if (this.props.headers) {
-      // let a = this.props.headers;
-      // tempCols.push({
-      //   Header: 'Дд', accessor: 'tindex', dataIndex: 'tindex', key: 'tindex', title: 'Д/д', order: 2,
-      // });
-      // console.log(tempCols);
       this.props.headers.forEach((entry, index) => {
-        if (entry.dataIndex === 'imgnm') {
-          const picserver = 'http://202.55.180.200:8877/';
-          entry.render = url => <img src={picserver + url} alt={url} height="20px" />;
-        }
-        if (entry.dataIndex === 'tindex') {
-          entry.render = (text, record, index) => <span>{index}</span>;
-        }
-        if (entry.dataIndex === 'color') {
-          entry.render = col => (
-            <div>
-              <span
-                style={{
-                  display: 'block',
-                  backgroundColor: `${col}`,
-                  width: '50px',
-                  height: '10px',
-                  marginRight: '20px',
-                }}
-              />
-              <span>{col}</span>
-            </div>);
-        }
-        if (entry.dataIndex === 'isenable' || entry.dataIndex === 'isemart' || entry.dataIndex === 'isshownm') {
-          entry.render = (text, record) => <Switch checked={record.isenable || record.isemart || record.isshownm} disabled />;
+        const picserver = 'http://202.55.180.200:8877/';
+        switch (entry.dataIndex) {
+          case 'insymd':
+            return entry.render = (text, record) => <span><Moment format="YYYY-MM-DD">{record.insymd}</Moment></span>;
+          case 'updymd':
+            return entry.render = (text, record) => <span><Moment format="YYYY-MM-DD">{record.updymd}</Moment></span>;
+          case 'sdate':
+            return entry.render = (text, record) => <span><Moment format="YYYY-MM-DD">{record.sdate}</Moment></span>;
+          case 'edate':
+            return entry.render = (text, record) => <span><Moment format="YYYY-MM-DD">{record.edate}</Moment></span>;
+          case 'isenable':
+            return entry.render = (text, record) => <Switch checked={record.isenable} disabled />;
+          case 'isemart':
+            return entry.render = (text, record) => <Switch checked={record.isemart} disabled />;
+          case 'isshownm':
+            return entry.render = (text, record) => <Switch checked={record.isshownm} disabled />;
+          case 'color':
+            return entry.render = col => (
+              <div>
+                <span
+                  style={{
+                    display: 'block',
+                    backgroundColor: `${col}`,
+                    width: '50px',
+                    height: '10px',
+                    marginRight: '20px',
+                  }}
+                />
+                <span>{col}</span>
+              </div>);
+          case 'imgnm':
+            return entry.render = url => <img src={picserver + url} alt={url} height="20px" />;
+          case 'imgnmtwo':
+            return entry.render = url => <img src={picserver + url} alt={url} height="20px" />;
+          default:
+            return '---';
         }
       });
     }
