@@ -10,6 +10,8 @@ const TextareaWidget = props => (<TextArea
   autosize={{ minRows: 3, maxRows: 10 }}
   required={props.required}
   onChange={event => props.onChange(event.target.value)}
+// value="ssss............."
+// defaultValue="ssss"
 />);
 
 TextareaWidget.defaultProps = {

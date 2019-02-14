@@ -21,11 +21,12 @@ class MultiSelect extends Component {
   render() {
     const { options } = this.props.schema;
     this.props.value.map(i => this.state.defValue.push(parseInt(i, 10)));
+    console.log('>>>>>>', this.props);
     return (
       <Select
         mode="multiple"
         placeholder={this.props.placeholder}
-        // defaultValue={this.state.defValue}
+        defaultValue={(typeof this.props.value === "undefined") ? [] : this.props.value}
         style={{ width: '100%' }}
         onChange={value => this.props.onChange(value)}
       >

@@ -2,15 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Input } from 'antd';
 
-const NumberWidget = props => (<Input
-  type="number"
-  size="small"
-  placeholder={props.placeholder}
-  value={props.value}
-  required={props.required}
-  disabled={props.disabled}
-  onChange={event => props.onChange(event.target.value)}
-/>);
+const NumberWidget = props =>
+  (<Input
+    type="number"
+    size="small"
+    placeholder={props.placeholder}
+    value={typeof props.value === "undefined" ? 0 : props.value}
+    required={props.required}
+    disabled={props.disabled}
+    onChange={event => props.onChange(event.target.value)}
+  />);
 
 NumberWidget.defaultProps = {
   value: undefined,

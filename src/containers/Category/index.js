@@ -31,6 +31,7 @@ class CategoryList extends React.Component {
     this.setState({ val: view });
   }
   componentDidMount() {
+    console.log(this.props);
     this.props.all();
   }
   render() {

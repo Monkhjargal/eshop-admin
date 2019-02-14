@@ -11,6 +11,7 @@ const CheckboxWidget = props => (
     disabled={props.disabled}
   >
     {props.schema.label}
+    {console.log(props.schema)}
   </Checkbox>);
 
 CheckboxWidget.defaultProps = {

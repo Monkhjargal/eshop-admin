@@ -311,20 +311,23 @@ class FormComponent extends Component {
     const onError = this.props.onError ? this.props.onError : this.onErrorHandler;
     const onSubmit = this.props.onSubmit ? this.props.onSubmit : this.onSubmitHandler;
     const liveValidate = this.props.liveValidate ? this.props.liveValidate : this.state.isSubmitted;
+    // console.log('live', liveValidate);
+    // console.log('live', onError);
+    // console.log('live', onSubmit);
     return (
       <Form
         schema={(this.props.form && Object.keys(this.props.form).length) ? this.props.form.schema : {}}
         uiSchema={(this.props.form && Object.keys(this.props.form).length) ? this.props.form.uiSchema : {}}
         formData={this.state.formData}
         formContext={this.state.formData}
-        // noHtml5Validate
+        noHtml5Validate
         fields={this.fields}
         FieldTemplate={this.FieldTemplate}
         ObjectFieldTemplate={this.ObjectFieldTemplate}
         ErrorList={this.ErrorList}
         widgets={this.widgets}
         transformErrors={this.transformErrors}
-        // liveValidate={liveValidate}
+        liveValidate={liveValidate}
         className={`${style.otForm} ant-row`}
         onChange={(formObject) => { onChange(formObject); }}
         onSubmit={(formObject) => { onSubmit(formObject); }}

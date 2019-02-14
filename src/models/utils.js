@@ -1,8 +1,8 @@
 import withQuery from 'with-query';
 import { message } from 'antd';
 
-const HOST = 'http://202.55.180.200:8881';
-// const HOST = 'http://10.0.10.30:8881';
+// const HOST = 'http://202.55.180.200:8881';
+const HOST = 'http://10.0.10.30:8881';
 
 const request = ({ url, method, body }) => {
   // console.log(body);

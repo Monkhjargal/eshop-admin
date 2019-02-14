@@ -159,6 +159,7 @@ class List extends Component {
               submitAction={this.filterHandler}
             />
           }
+          <br />
           <div className={styles.tableListOperator}>
             {this.props.actions.indexOf('create') !== -1 &&
               <Button

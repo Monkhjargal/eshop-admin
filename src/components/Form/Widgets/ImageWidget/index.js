@@ -36,6 +36,7 @@ const ImageWidget = (props) => {
       accept="image/*"
       name="image"
       // listType="picture-card"
+      // fileList={fileList}
       showUploadList={false}
       // action="/api/core/images"
       headers={{ Authorization: `Bearer ${props.auth.data.value.access_token}` }}
@@ -44,6 +45,7 @@ const ImageWidget = (props) => {
       onChange={handleChange}
     >
       {/* {console.log(props)} */}
+      {/* {fileList.length >= 3 ? null : uploadButton} */}
       {
         props.value ?
           // <div style={{ backgroundImage: `url(${props.value})` }} className={`avatar ${styles.avatar}`} />
