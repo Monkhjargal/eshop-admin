@@ -33,7 +33,6 @@ import {
   FieldTemplate,
   ObjectFieldTemplate,
 } from './FieldTemplates';
-
 // import { studentData } from './mockjs';
 
 class FormComponent extends Component {
@@ -59,7 +58,7 @@ class FormComponent extends Component {
         let clonedParentList = JSON.parse(JSON.stringify(this.state.parentList));
 
         clonedParentList.forEach((entry) => {
-          console.log(entry);
+          // console.log(entry);
           let before;
           let after;
           if (entry.parentRoute.length === 1) {
@@ -120,7 +119,7 @@ class FormComponent extends Component {
         });
 
         let tempFormData = nextState.formData;
-        console.log(tempFormData);
+        // console.log(tempFormData);
         let t = JSON.parse(JSON.stringify(tempFormData));
 
         arrayOfChanges.forEach((entry) => {
@@ -137,7 +136,7 @@ class FormComponent extends Component {
           recursive(t, e);
         });
 
-        console.log('ssssssss', arrayOfChanges);
+        // console.log('ssssssss', arrayOfChanges);
 
         if (arrayOfChanges.length && t && Object.keys(t).length) {
           this.setState({
@@ -149,7 +148,7 @@ class FormComponent extends Component {
   }
 
   onChangeHandler = (formObject) => {
-    console.log('data', formObject);
+    // console.log('data', formObject);
     this.setState({
       formData: formObject.formData,
     });
@@ -166,14 +165,14 @@ class FormComponent extends Component {
     if (this.props.url) {
       submitObject = { ...submitObject, ...{ url: this.props.url } };
     }
-    console.log(submitObject);
+    // console.log(submitObject);
     // const submitResult = this.props.submitAction(submitObject);
     await this.props.submitAction(submitObject);
     if (this.props.error) {
       this.setState({
         isSubmitted: true,
       });
-      console.log(this.props.error, this.props.errorMessage);
+      // console.log(this.props.error, this.props.errorMessage);
     } else if (this.props.afterSubmit) {
       this.props.afterSubmit();
     }
@@ -235,97 +234,9 @@ class FormComponent extends Component {
 
   fetchForm = async () => {
     if (!this.props.form || !Object.keys(this.props.form).length) {
-      // var lalar = {
-      //   payload: {
-      //     label: 'CATALOG_ATTRIBUTE',
-      //     type: 'object',
-      //     root: true,
-      //     properties: {
-      //       attrnm: {
-      //         label: 'Аттрибут нэр111111',
-      //         placeholder: 'Аттрибут нэр',
-      //         type: 'string',
-      //         widget: 'input',
-      //         column: 12,
-      //         key: 'attrnm',
-      //         name: 'attrnm',
-      //         disabled: false,
-      //       },
-      //       isenable: {
-      //         label: 'Идэвхтэй эсэх111',
-      //         placeholder: 'Идэвхтэй эсэх',
-      //         type: 'boolean',
-      //         widget: 'checkbox',
-      //         column: 12,
-      //         key: 'isenable',
-      //         name: 'isenable',
-      //         disabled: false,
-      //       },
-      //       description: {
-      //         label: 'Тайлбар',
-      //         placeholder: 'Тайлбар',
-      //         type: 'string',
-      //         widget: 'textarea',
-      //         column: 12,
-      //         key: 'description',
-      //         name: 'description',
-      //         disabled: false,
-      //       },
-      //       attrvalues: {
-      //         label: 'Аттрибутын утга',
-      //         placeholder: 'Аттрибутын утга',
-      //         type: ["string", "array"],
-      //         widget: 'multiselect',
-      //         column: 12,
-      //         key: 'attrvalues',
-      //         name: 'attrvalues',
-      //         options: [
-      //           {
-      //             id: 47,
-      //             name: '128GB',
-      //           },
-      //           {
-      //             id: 46,
-      //             name: '256GB',
-      //           },
-      //           {
-      //             id: 61,
-      //             name: '512GB',
-      //           },
-      //           {
-      //             id: 48,
-      //             name: '64GB',
-      //           },
-      //           {
-      //             id: 81,
-      //             name: 'dd',
-      //           },
-      //           {
-      //             id: 202,
-      //             name: 'Эмэгтэй',
-      //           },
-      //           {
-      //             id: 201,
-      //             name: 'Эрэгтэй',
-      //           },
-      //           {
-      //             id: 224,
-      //             name: 'шар',
-      //           },
-      //         ],
-      //       },
-      //     },
-      //     required: [
-      //       'attrnm',
-      //     ],
-      //   },
-      // };
       await this.props.fetchForm({ model: [this.props.modelName], data: this.props.createFormData });
-      // data: this.props.createFormData
-      // console.log('this form', this.props.form);
     }
     this.setParents(this.props.form);
-
     if (this.props.setLoading) {
       this.props.setLoading(false);
     }
@@ -334,8 +245,6 @@ class FormComponent extends Component {
 
   fetchData = async () => {
     if (this.props.fetchData) {
-      // console.log(this.props.fetchData);
-      // console.log(sendObject);
       let sendObject = this.props.dataParams || {};
       if (this.props.url) {
         sendObject = { ...sendObject, url: this.props.url };
@@ -345,8 +254,17 @@ class FormComponent extends Component {
         if (this.props.data && !this.props.data.description) {
           this.props.data.description = "";
         }
-        if (this.props.data && this.props.data.isenable) {
+        if (this.props.data && !this.props.data.isenable) {
           this.props.data.isenable = Boolean(this.props.data.isenable);
+        }
+        if (this.props.data && !this.props.data.twitter) {
+          this.props.data.twitter = "";
+        }
+        if (this.props.data && !this.props.data.facebook) {
+          this.props.data.facebook = "";
+        }
+        if (this.props.data && !this.props.data.gmail) {
+          this.props.data.gmail = "";
         }
         this.setState({ formData: this.props.data });
       });
@@ -404,7 +322,7 @@ class FormComponent extends Component {
     const liveValidate = this.props.liveValidate ? this.props.liveValidate : this.state.isSubmitted;
     // console.log('live', liveValidate);
     // console.log('live', onError);
-    // console.log('live', onSubmit);
+    console.log('live', this.props.form);
     return (
       <Form
         schema={(this.props.form && Object.keys(this.props.form).length) ? this.props.form.schema : {}}

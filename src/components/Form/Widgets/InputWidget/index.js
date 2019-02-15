@@ -6,7 +6,7 @@ const InputWidget = props => (<Input
   type="text"
   size="small"
   placeholder={props.placeholder}
-  value={typeof props.value === "undefined" ? "" : props.value}
+  value={(typeof props.value === "undefined" || props.value === null) ? "" : props.value}
   required={props.required}
   disabled={props.disabled}
   onChange={event => props.onChange(event.target.value)}

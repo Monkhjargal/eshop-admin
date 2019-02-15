@@ -1,62 +1,55 @@
-import { Select } from 'antd';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Select } from 'antd';
+
+const { Option } = Select;
 
 class MultiSelect extends Component {
-  componentWillReceiveProps(nextProps) {
-    if (typeof nextProps.value === 'number') {
-      nextProps.onChange(nextProps.value.toString());
-    }
-  }
-
-
-  handleChange = (selectedItems) => {
-    console.log(selectedItems);
-    this.props.onChange(selectedItems.join(','));
-    // this.setState({ selectedItems });
-  };
-
   render() {
-    const { options } = this.props.schema;
-    // this.props.value.map(i => this.state.defValue.push(parseInt(i, 10)));
-    // console.log('>>>>>>', this.props);
-    // if (this.props.value) {
-    // console.log(this.props.value);
-    // let defualtValues=[];
-    // options.map(item => (
-    //   {
-    //     defaultIdValues.forEach(element => {
-    //       if(item.id==element){
-    //         defualtValues.push(item.name);
-    //       }
-    //     })
-    //   }
-    // ));
-    // }
     return (
       <Select
         mode="multiple"
-        placeholder={this.props.placeholder}
-        defaultValue={(typeof this.props.value === "undefined") ? [] : this.props.value}
-        style={{ width: '100%' }}
-        onChange={this.handleChange}
-      // onChange={value => this.props.onChange(value)}
+        size="small"
+        placeholder={`${this.props.schema.label} сонгох`}
+        defaultValue={this.props.value ? (typeof this.props.value === 'number') ? this.props.value.toString() : this.props.value : this.props.value}
+        onChange={value => this.props.onChange(value)}
       >
-        {options.map(item => (
-          <Select.Option key={item.id} value={item.id}>
-            {item.name}
-          </Select.Option>
-        ))}
+        {this.props.schema.options.map(({ id, name, parent }, i) => {
+          let returnObject;
+          if (this.props.schema.parent && this.props.schema.parent.length) {
+            let parentValue;
+            try {
+              parentValue = this.props.schema.parent.reduce((result, key) => {
+                if (result) return result[key];
+                throw new Error('Object not found');
+              }, this.props.formContext);
+            } catch (error) {
+              parentValue = false;
+            }
+            returnObject = (parent === parentValue) ? (
+              <Option key={i}>
+                {name}
+              </Option>
+            ) : undefined;
+          } else {
+            returnObject = (
+              <Option key={i}>
+                {name}
+              </Option>
+            );
+          }
+          return returnObject;
+        })}
       </Select>
     );
   }
 }
 
 MultiSelect.defaultProps = {
+  value: undefined,
   placeholder: '',
-  value: [],
-  options: [],
-  formContext: [],
+  options: {},
+  formContext: {},
   disabled: false,
 };
 
@@ -70,6 +63,5 @@ MultiSelect.propTypes = {
   formContext: PropTypes.object,
   disabled: PropTypes.bool,
 };
-
 
 export default MultiSelect;

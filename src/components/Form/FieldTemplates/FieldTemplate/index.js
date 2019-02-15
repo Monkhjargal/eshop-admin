@@ -78,16 +78,16 @@ const tailFormItemLayout = {
 const FieldTemplate = (props) => {
   const {
     classNames,
-    // label,
-    // id,
     description,
     rawErrors,
     children,
     errors,
-    // help,
     required,
     schema,
     type,
+    // label,
+    // id,
+    // help,
   } = props;
   // console.log('errors: ', rawErrors);
   // console.log('errors: ', props);
