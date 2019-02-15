@@ -235,10 +235,95 @@ class FormComponent extends Component {
 
   fetchForm = async () => {
     if (!this.props.form || !Object.keys(this.props.form).length) {
+      // var lalar = {
+      //   payload: {
+      //     label: 'CATALOG_ATTRIBUTE',
+      //     type: 'object',
+      //     root: true,
+      //     properties: {
+      //       attrnm: {
+      //         label: 'Аттрибут нэр111111',
+      //         placeholder: 'Аттрибут нэр',
+      //         type: 'string',
+      //         widget: 'input',
+      //         column: 12,
+      //         key: 'attrnm',
+      //         name: 'attrnm',
+      //         disabled: false,
+      //       },
+      //       isenable: {
+      //         label: 'Идэвхтэй эсэх111',
+      //         placeholder: 'Идэвхтэй эсэх',
+      //         type: 'boolean',
+      //         widget: 'checkbox',
+      //         column: 12,
+      //         key: 'isenable',
+      //         name: 'isenable',
+      //         disabled: false,
+      //       },
+      //       description: {
+      //         label: 'Тайлбар',
+      //         placeholder: 'Тайлбар',
+      //         type: 'string',
+      //         widget: 'textarea',
+      //         column: 12,
+      //         key: 'description',
+      //         name: 'description',
+      //         disabled: false,
+      //       },
+      //       attrvalues: {
+      //         label: 'Аттрибутын утга',
+      //         placeholder: 'Аттрибутын утга',
+      //         type: ["string", "array"],
+      //         widget: 'multiselect',
+      //         column: 12,
+      //         key: 'attrvalues',
+      //         name: 'attrvalues',
+      //         options: [
+      //           {
+      //             id: 47,
+      //             name: '128GB',
+      //           },
+      //           {
+      //             id: 46,
+      //             name: '256GB',
+      //           },
+      //           {
+      //             id: 61,
+      //             name: '512GB',
+      //           },
+      //           {
+      //             id: 48,
+      //             name: '64GB',
+      //           },
+      //           {
+      //             id: 81,
+      //             name: 'dd',
+      //           },
+      //           {
+      //             id: 202,
+      //             name: 'Эмэгтэй',
+      //           },
+      //           {
+      //             id: 201,
+      //             name: 'Эрэгтэй',
+      //           },
+      //           {
+      //             id: 224,
+      //             name: 'шар',
+      //           },
+      //         ],
+      //       },
+      //     },
+      //     required: [
+      //       'attrnm',
+      //     ],
+      //   },
+      // };
       await this.props.fetchForm({ model: [this.props.modelName], data: this.props.createFormData });
+      // data: this.props.createFormData
       // console.log('this form', this.props.form);
     }
-
     this.setParents(this.props.form);
 
     if (this.props.setLoading) {
@@ -257,6 +342,12 @@ class FormComponent extends Component {
       }
       await this.props.fetchData(sendObject);
       this.setState({ formData: {} }, () => {
+        if (this.props.data && !this.props.data.description) {
+          this.props.data.description = "";
+        }
+        if (this.props.data && this.props.data.isenable) {
+          this.props.data.isenable = Boolean(this.props.data.isenable);
+        }
         this.setState({ formData: this.props.data });
       });
       // console.log(this.props.data.value);

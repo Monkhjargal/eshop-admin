@@ -48,7 +48,6 @@ class ModalFormComponent extends Component {
       ...restProps
     } = this.props;
 
-    // console.log('fetchData', dataParams);
 
     return (
       <Modal

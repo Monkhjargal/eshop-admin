@@ -67,7 +67,9 @@ class FormModel extends BaseModel {
           if (object.widget === 'range') {
             object.widget = 'date';
           }
-
+          if (object.widget === 'array') {
+            object.widget = 'multiselect';
+          }
           if (object.widget) {
             toObject['ui:widget'] = object.widget;
           }
@@ -101,6 +103,75 @@ class FormModel extends BaseModel {
         };
 
         let tempData = action.payload;
+        // const tempData = {
+        //   label: 'CATALOG_ATTRIBUTE',
+        //   type: 'object',
+        //   root: true,
+        //   properties: {
+        //     attrnm: {
+        //       label: 'Аттрибут нэр111111',
+        //       placeholder: 'Аттрибут нэр',
+        //       type: 'string',
+        //       widget: 'input',
+        //       column: 12,
+        //       key: 'attrnm',
+        //       name: 'attrnm',
+        //       disabled: false,
+        //     },
+        //     isenable: {
+        //       label: 'Идэвхтэй эсэх111',
+        //       placeholder: 'Идэвхтэй эсэх',
+        //       type: 'boolean',
+        //       widget: 'checkbox',
+        //       column: 12,
+        //       key: 'isenable',
+        //       name: 'isenable',
+        //       disabled: false,
+        //     },
+        //     description: {
+        //       label: 'Тайлбар',
+        //       placeholder: 'Тайлбар',
+        //       type: 'string',
+        //       widget: 'textarea',
+        //       column: 12,
+        //       key: 'description',
+        //       name: 'description',
+        //       disabled: false,
+        //     },
+        //     attrvalues: {
+        //       label: 'Аттрибутын утга',
+        //       placeholder: 'Аттрибутын утга',
+        //       type: "array",
+        //       widget: 'multiselect',
+        //       column: 12,
+        //       key: 'attrvalues',
+        //       name: 'attrvalues',
+        //       items: [
+        //         {
+        //           widget: 'select',
+        //           type: 'integer',
+        //           id: 47,
+        //           name: '128GB',
+        //         },
+        //         {
+        //           widget: 'select',
+        //           type: 'integer',
+        //           id: 46,
+        //           name: '256GB',
+        //         },
+        //         {
+        //           widget: 'select',
+        //           type: 'integer',
+        //           id: 61,
+        //           name: '512GB',
+        //         },
+        //       ],
+        //     },
+        //   },
+        //   required: [
+        //     'attrnm',
+        //   ],
+        // };
         recursive(tempData, uiSchema);
         tempData.type = 'object';
         return {

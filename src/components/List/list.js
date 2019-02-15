@@ -116,7 +116,7 @@ class List extends Component {
           case 'edate':
             return entry.render = (text, record) => <span><Moment format="YYYY-MM-DD">{record.edate}</Moment></span>;
           case 'isenable':
-            return entry.render = (text, record) => <Switch checked={record.isenable} disabled />;
+            return entry.render = (text, record) => <Switch checked={Boolean(record.isenable)} disabled />;
           case 'isemart':
             return entry.render = (text, record) => <Switch checked={record.isemart} disabled />;
           case 'isshownm':

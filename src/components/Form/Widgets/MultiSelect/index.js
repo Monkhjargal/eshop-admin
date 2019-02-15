@@ -8,27 +8,39 @@ class MultiSelect extends Component {
       nextProps.onChange(nextProps.value.toString());
     }
   }
-  state = {
-    selectedItems: [],
-    defValue: [],
-  };
+
 
   handleChange = (selectedItems) => {
-    // console.log(selectedItems);
-    this.setState({ selectedItems });
+    console.log(selectedItems);
+    this.props.onChange(selectedItems.join(','));
+    // this.setState({ selectedItems });
   };
 
   render() {
     const { options } = this.props.schema;
-    this.props.value.map(i => this.state.defValue.push(parseInt(i, 10)));
-    console.log('>>>>>>', this.props);
+    // this.props.value.map(i => this.state.defValue.push(parseInt(i, 10)));
+    // console.log('>>>>>>', this.props);
+    // if (this.props.value) {
+    // console.log(this.props.value);
+    // let defualtValues=[];
+    // options.map(item => (
+    //   {
+    //     defaultIdValues.forEach(element => {
+    //       if(item.id==element){
+    //         defualtValues.push(item.name);
+    //       }
+    //     })
+    //   }
+    // ));
+    // }
     return (
       <Select
         mode="multiple"
         placeholder={this.props.placeholder}
         defaultValue={(typeof this.props.value === "undefined") ? [] : this.props.value}
         style={{ width: '100%' }}
-        onChange={value => this.props.onChange(value)}
+        onChange={this.handleChange}
+      // onChange={value => this.props.onChange(value)}
       >
         {options.map(item => (
           <Select.Option key={item.id} value={item.id}>

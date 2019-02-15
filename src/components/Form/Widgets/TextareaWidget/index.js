@@ -5,7 +5,7 @@ import { Input } from 'antd';
 const { TextArea } = Input;
 
 const TextareaWidget = props => (<TextArea
-  value={props.value}
+  value={(typeof props.value === "undefined" || !props.value) ? "" : props.value}
   size="small"
   autosize={{ minRows: 3, maxRows: 10 }}
   required={props.required}

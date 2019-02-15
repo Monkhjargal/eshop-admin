@@ -13,12 +13,7 @@ const divStyle = {
 };
 const val = 'table';
 
-const mapStateToProps = (state) => {
-  const { cat } = state;
-  return {
-    cat,
-  };
-};
+const mapStateToProps = state => state.category;
 
 class CategoryList extends React.Component {
   constructor(props) {
@@ -31,11 +26,15 @@ class CategoryList extends React.Component {
     this.setState({ val: view });
   }
   componentDidMount() {
-    console.log(this.props);
-    this.props.all();
+    // console.log(this.props);
+    // this.props.all();
   }
   render() {
-    console.log(this.props);
+    console.log('>>>>>>>>>', this.state);
+
+    if (this.props.category && this.props.category.all && this.props.category.all.data) {
+      console.log(this.props.category.all.data);
+    }
     return (
       <PageHeaderLayout title="Category information" style={divStyle}>
         <div>
@@ -74,13 +73,13 @@ class CategoryList extends React.Component {
                   </TreeNode>
                 </Tree>
               </div>
-            )
+              )
           }
         </div>
       </PageHeaderLayout>
     );
   }
 }
-export default connect(mapStateToProps, { all: Category.all })(CategoryList);
+export default connect(mapStateToProps)(CategoryList);
 
 // export default () => ();
