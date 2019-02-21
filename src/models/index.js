@@ -98,8 +98,9 @@ const Language = new CrudModel({
   model: 'language',
 });
 
-const StaticPage = new CrudModel({
-  model: 'staticpage',
+const Static = new CrudModel({
+  url: '/mn/api/staticpage',
+  model: 'static',
 });
 
 const LabelList = new CrudModel({
@@ -129,7 +130,7 @@ export {
   Widgetslist,
   Menulist,
   Language,
-  StaticPage,
+  Static,
   LabelList,
   AttrValue,
   Promotion,
