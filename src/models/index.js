@@ -108,6 +108,11 @@ const LabelList = new CrudModel({
   model: 'labelList',
 });
 
+const Color = new CrudModel({
+  url: '/mn/api/color',
+  model: 'color',
+});
+
 const AttrValue = new CrudModel({
   url: '/mn/api/attrvalue',
   model: 'attrValue',
@@ -128,6 +133,7 @@ export {
   EhowList,
   General,
   Widgetslist,
+  Color,
   Menulist,
   Language,
   Static,
