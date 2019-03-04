@@ -95,17 +95,19 @@ const FieldTemplate = (props) => {
     children
     : (schema.widget === 'checkbox' ?
       <FormItem
-        {...tailFormItemLayout[schema.column]}
-        className={`${classNames} ant-form-item-sm ant-col-xl-${schema.column * 2}`}
+        formItemLayout={null}
+        className={`${classNames} ant-form-item-sm ant-col-xl-${schema.column * 2} floating-label`}
         help={errors}
         required={required}
       >
-        {children}
+        <div style={{ width: '95%' }}>
+          {children}
+        </div>
       </FormItem>
       :
       <FormItem
-        {...formItemLayout[[schema.column]]}
-        className={`${classNames} ant-form-item-sm ant-col-xl-${schema.column * 2}`}
+        formItemLayout={null}
+        className={`${classNames} ant-form-item-sm ant-col-xl-${schema.column * 2} floating-label`}
         hasFeedback
         label={schema.label}
         help={rawErrors}
@@ -113,7 +115,9 @@ const FieldTemplate = (props) => {
         validateStatus={rawErrors.length ? 'error' : ''}
         required={required}
       >
-        {children}
+        <div style={{ width: '95%' }}>
+          {children}
+        </div>
       </FormItem>
     );
 };
