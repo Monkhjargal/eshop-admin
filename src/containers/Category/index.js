@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Button, Icon, Tree } from 'antd';
 import { connect } from 'react-redux';
 import { Category } from '../../models';
@@ -12,74 +13,50 @@ const divStyle = {
   overflow: 'hidden',
 };
 const val = 'table';
-
-const mapStateToProps = state => state.category;
+const mapStateToProps = (state) => {
+  const { category } = state;
+  return {
+    category,
+  };
+};
+// const mapStateToProps = state => state.category;
 
 class CategoryList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       val: 'table',
+      cat: [],
     };
   }
   changeView = (view) => {
     this.setState({ val: view });
   }
   componentDidMount() {
-    // console.log(this.props);
-    // this.props.all();
-  }
-  render() {
-    console.log('>>>>>>>>>', this.state);
-
+    // console.log('>>>>>>>>>', this.state);
     if (this.props.category && this.props.category.all && this.props.category.all.data) {
-      console.log(this.props.category.all.data);
+      // console.log(this.props.category.all.data);
+      this.setState({
+        cat: this.props.category.all.data,
+      });
     }
+  }
+  renderTree() { }
+  render() {
     return (
       <PageHeaderLayout title="Category information" style={divStyle}>
-        <div>
-          <ButtonGroup>
-            <Button type="primary" icon="bars" onClick={() => this.changeView('table')} />
-            <Button type="primary" icon="appstore" onClick={() => this.changeView('tree')} />
-          </ButtonGroup>
-          {
-            this.state.val === 'table' ? (
-              <List
-                actions={['create', 'update', 'delete']}
-                model={'Category'}
-                name={'Category'}
-                filter
-              />
-            ) : (
-              <div>
-                <Tree
-                  showLine
-                  defaultExpandedKeys={['0-0-0']}
-                  onSelect={this.onSelect}
-                >
-                  <TreeNode title="parent 1" key="0-0">
-                    <TreeNode title="parent 1-0" key="0-0-0">
-                      <TreeNode title="leaf" key="0-0-0-0" />
-                      <TreeNode title="leaf" key="0-0-0-1" />
-                      <TreeNode title="leaf" key="0-0-0-2" />
-                    </TreeNode>
-                    <TreeNode title="parent 1-1" key="0-0-1">
-                      <TreeNode title="leaf" key="0-0-1-0" />
-                    </TreeNode>
-                    <TreeNode title="parent 1-2" key="0-0-2">
-                      <TreeNode title="leaf" key="0-0-2-0" />
-                      <TreeNode title="leaf" key="0-0-2-1" />
-                    </TreeNode>
-                  </TreeNode>
-                </Tree>
-              </div>
-              )
-          }
-        </div>
+        <List
+          actions={['create', 'update', 'delete']}
+          model={'Category'}
+          name={'Category'}
+          filter
+        />
       </PageHeaderLayout>
     );
   }
 }
-export default connect(mapStateToProps)(CategoryList);
-
-// export default () => ();
+// export default connect(mapStateToProps)(CategoryList);
+CategoryList.propTypes = {
+  categorylist: PropTypes.func.isRequired,
+};
+export default connect(mapStateToProps, { categorylist: Category.all })(CategoryList);

@@ -8,11 +8,11 @@ const divStyle = {
 };
 
 export default () => (
-  <PageHeaderLayout title="Productlist information" style={divStyle}>
+  <PageHeaderLayout title="Infotrans information" style={divStyle}>
     <List
-      actions={['create', 'update', 'delete']}
-      model={'Productlist'}
-      name={'Productlist'}
+      actions={[]}
+      model={'Infotrans'}
+      name={'Infotrans'}
     />
   </PageHeaderLayout>
 );

@@ -113,6 +113,16 @@ const AttrValue = new CrudModel({
   model: 'attrValue',
 });
 
+const Infotrans = new CrudModel({
+  url: '/api/dataexchange',
+  model: 'infotrans',
+});
+
+const Color = new CrudModel({
+  url: '/mn/api/color',
+  model: 'color',
+});
+
 
 export {
   Auth,
@@ -135,4 +145,6 @@ export {
   AttrValue,
   Promotion,
   Product,
+  Infotrans,
+  Color,
 };

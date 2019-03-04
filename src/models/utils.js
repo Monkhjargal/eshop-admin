@@ -19,12 +19,14 @@ const request = ({ url, method, body }) => {
         Accept: 'application/json, text/plain, */*',
         'Content-Type': 'application/json',
         Authorization: bearerHeader,
+        'Access-Control-Allow-Headers': '*',
       },
     }).then((response) => {
       if (response.status === 401 || response.status === 403) {
         // props.history.push('/');
       }
       if (!response.ok) {
+        // console.log(response.statusText);
         throw new Error(response.statusText);
         // props.history.push('/');
       }
@@ -38,6 +40,7 @@ const request = ({ url, method, body }) => {
       Accept: 'application/json, text/plain, */*',
       'Content-Type': 'application/json',
       Authorization: bearerHeader,
+
     },
     body: JSON.stringify(body),
   }).then((response) => {
@@ -67,9 +70,19 @@ const asyncFn = ({
         name,
       });
     } else {
-      // console.log(body);
+      console.log(body);
       const data = await request({ url, method, body });
-      // console.log(data);
+      console.log(data);
+      if (data && data.success !== false) {
+        // message.success(data.message);
+        // console.log('success');
+      } else {
+        message.warning(data.message);
+        // message.config({
+        //   top: '50%',
+        // });
+        // console.log(data.message);
+      }
       if (!data) {
         throw new Error('no data provided');
       }

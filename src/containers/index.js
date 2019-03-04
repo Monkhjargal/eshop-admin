@@ -19,6 +19,8 @@ import StaticPage from './StaticPage';
 import LabelList from './Label';
 import AttrValue from './AttributeValue';
 import Promotion from './Promotion';
+import Infotrans from './Infotransfer';
+import ColorList from './Color';
 
 import Exception500 from './Exception/500';
 
@@ -43,4 +45,6 @@ export {
   LabelList,
   AttrValue,
   Promotion,
+  Infotrans,
+  ColorList,
 };

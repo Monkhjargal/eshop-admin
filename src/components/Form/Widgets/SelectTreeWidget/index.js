@@ -37,6 +37,7 @@ class SelectTreeWidget extends Component {
 
   render() {
     const root = [];
+    // console.log(this.props.schema.options);
     this.props.schema.options.forEach((entry, index) => {
       if (entry.parentid === 0) {
         entry.children = [];
@@ -51,7 +52,7 @@ class SelectTreeWidget extends Component {
     // console.log(root);
     return (
       <TreeSelect
-        value={this.props.value ? (typeof this.props.value === 'number') ? this.props.value.toString() : this.props.value : this.props.value}
+        value={this.props.value}
         showSearch
         size="small"
         dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}

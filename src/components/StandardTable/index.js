@@ -34,6 +34,7 @@ class StandardTable extends PureComponent {
       return (
         <Pagination
           size="small"
+          style={{ display: 'none' }}
           showQuickJumper
           onChange={(current, pageSize) => onChange({ current, pageSize }, {}, {})}
           total={data.length}
@@ -75,12 +76,12 @@ class StandardTable extends PureComponent {
             onClick: () => this.handleRowClick(record),
           })}
           size="small"
-          bordered
+          bordered={false}
           rowKey={record => record.id}
           dataSource={filteredData}
-          pagination={false}
+          pagination
           footer={renderFooter}
-          onChange={(p, f, sorted) => onChange({ current: 1, pageSize: pagination.pageSize || 10 }, {}, sorted)}
+          onChange={(p, f, sorted) => onChange({ current: 1, pageSize: pagination.pageSize || 20 }, {}, sorted)}
           {...rest}
         />
       </div>

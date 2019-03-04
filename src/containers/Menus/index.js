@@ -10,7 +10,7 @@ const divStyle = {
 export default () => (
   <PageHeaderLayout title="Menu information" style={divStyle}>
     <List
-      actions={['create', 'update', 'delete']}
+      actions={['create', 'update']}
       model={'Menulist'}
       name={'Menu'}
       filter

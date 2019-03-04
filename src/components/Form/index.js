@@ -26,6 +26,7 @@ import {
   CkEditorWidget,
   SelectTreeWidget,
   MultiSelect,
+  SketchPickerWidget,
 } from './Widgets';
 
 import {
@@ -51,12 +52,11 @@ class FormComponent extends Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
+    // console.log(this.state.parentList);
     if (this.state.parentList && this.state.parentList.length) {
       try {
         let arrayOfChanges = [];
-
         let clonedParentList = JSON.parse(JSON.stringify(this.state.parentList));
-
         clonedParentList.forEach((entry) => {
           // console.log(entry);
           let before;
@@ -148,7 +148,14 @@ class FormComponent extends Component {
   }
 
   onChangeHandler = (formObject) => {
-    // console.log('data', formObject);
+    // Object.keys(formObject.formData).forEach((item) => {
+    //   if (item === 'attrvalues') {
+    //     if (formObject.formData.attrvalues) {
+    //       formObject.formData.attrvalues = (formObject.formData.attrvalues).toString();
+    //     }
+    //   }
+    // });
+    console.log(formObject);
     this.setState({
       formData: formObject.formData,
     });
@@ -165,6 +172,14 @@ class FormComponent extends Component {
     if (this.props.url) {
       submitObject = { ...submitObject, ...{ url: this.props.url } };
     }
+    console.log(submitObject);
+    // Object.keys(submitObject.formData).forEach((item) => {
+    //   if (item === 'attrvalues') {
+    //     if (submitObject.formData.attrvalues) {
+    //       submitObject.formData.attrvalues = (submitObject.formData.attrvalues).toString();
+    //     }
+    //   }
+    // });
     // console.log(submitObject);
     // const submitResult = this.props.submitAction(submitObject);
     await this.props.submitAction(submitObject);
@@ -251,21 +266,45 @@ class FormComponent extends Component {
       }
       await this.props.fetchData(sendObject);
       this.setState({ formData: {} }, () => {
-        if (this.props.data && !this.props.data.description) {
-          this.props.data.description = "";
-        }
-        if (this.props.data && !this.props.data.isenable) {
-          this.props.data.isenable = Boolean(this.props.data.isenable);
-        }
-        if (this.props.data && !this.props.data.twitter) {
-          this.props.data.twitter = "";
-        }
-        if (this.props.data && !this.props.data.facebook) {
-          this.props.data.facebook = "";
-        }
-        if (this.props.data && !this.props.data.gmail) {
-          this.props.data.gmail = "";
-        }
+        // console.log(this.props.data);
+        // Object.keys(this.props.data).map((i) => {
+        //   console.log(i);
+        //   return '';
+        // });
+        Object.keys(this.props.data).forEach((key) => {
+          // console.log(key);
+          if (key === 'description' && !this.props.data.description) {
+            this.props.data.description = "";
+          }
+          if (key === 'isenable' && !this.props.data.isenable) {
+            this.props.data.isenable = Boolean(this.props.data.isenable);
+          }
+          if (key === 'btntext' && !this.props.data.btntext) {
+            this.props.data.btntext = "";
+          }
+          if (key === 'parentid' && !this.props.data.parentid) {
+            this.props.data.parentid = 0;
+          }
+          if (key === 'link' && !this.props.data.link) {
+            this.props.data.link = "";
+          }
+          if (key === 'imgnm' && !this.props.data.imgnm) {
+            this.props.data.imgnm = "";
+          }
+          // if (key === 'link' && !this.props.data.link) {
+          //   this.props.data.link = "";
+          // }
+          if (key === 'twitter' && !this.props.data.twitter) {
+            this.props.data.twitter = "";
+          }
+          if (key === 'facebook' && !this.props.data.facebook) {
+            this.props.data.facebook = "";
+          }
+          if (key === 'gmail' && !this.props.data.gmail) {
+            this.props.data.gmail = "";
+          }
+        });
+
         this.setState({ formData: this.props.data });
       });
       // console.log(this.props.data.value);
@@ -309,6 +348,7 @@ class FormComponent extends Component {
     ckeditor: CkEditorWidget,
     selecttree: SelectTreeWidget,
     multiselect: MultiSelect,
+    sketchpicker: SketchPickerWidget,
   }
 
   FieldTemplate = FieldTemplate
@@ -322,7 +362,7 @@ class FormComponent extends Component {
     const liveValidate = this.props.liveValidate ? this.props.liveValidate : this.state.isSubmitted;
     // console.log('live', liveValidate);
     // console.log('live', onError);
-    console.log('live', this.props.form);
+    // console.log('live', this.props.liveValidate);
     return (
       <Form
         schema={(this.props.form && Object.keys(this.props.form).length) ? this.props.form.schema : {}}
@@ -330,7 +370,7 @@ class FormComponent extends Component {
         formData={this.state.formData}
         formContext={this.state.formData}
         noHtml5Validate
-        fields={this.fields}
+        // fields={this.fields}
         FieldTemplate={this.FieldTemplate}
         ObjectFieldTemplate={this.ObjectFieldTemplate}
         ErrorList={this.ErrorList}
@@ -347,7 +387,7 @@ class FormComponent extends Component {
             <Button size="small" type="button" onClick={() => this.clear()}>{this.props.cancelButtonName || 'Цэвэрлэх'}</Button> :
             <Button size="small" type="button" onClick={() => this.props.onCancel()}>{this.props.cancelButtonName || 'Болих'}</Button>
           }
-          <Button size="small" htmlType="submit" loading={this.props.dataIsLoading} type="primary">{this.props.submitButtonName || 'Бүртгэх'}</Button>
+          <Button size="small" htmlType="submit" loading={this.props.dataIsLoading} type="primary">{this.props.submitButtonName || 'Хадгалах'}</Button>
         </div>
       </Form>
     );

@@ -15,7 +15,7 @@ class List extends Component {
       visible: false,
       selectedId: null,
       body: {
-        limit: 20,
+        limit: 20000,
         page: 1,
         filtered: {},
         sorted: [],
@@ -76,15 +76,15 @@ class List extends Component {
   }
 
   filterHandler = (data) => {
-    console.log(data.formData);
+    // console.log(data.formData);
     this.setState({
       body: {
         ...this.state.body,
+        filtered: data.formData,
         // ...data.formData,
         // test: data.formData,
         // ...this.state.body,
         // page: 1,
-        filtered: data.formData,
       },
     }, () => this.refresh());
   }
@@ -94,9 +94,10 @@ class List extends Component {
       let requestObject = { _id: this.state.selectedId };
       if (this.props.url) {
         requestObject = { ...requestObject, url: this.props.url };
+        // console.log(requestObject);
       }
-      console.log(requestObject);
       this.props.deleteData(requestObject).then(() => {
+        console.log(this.state);
         this.refresh();
       });
     }
@@ -107,10 +108,18 @@ class List extends Component {
       this.props.headers.forEach((entry, index) => {
         const picserver = 'http://202.55.180.200:8877/';
         switch (entry.dataIndex) {
+          case 'aid':
+            return entry.render = (text, record, index) => <span>{index + 1}</span>;
+          case 'isusefilter':
+            return entry.render = (text, record) => <Switch checked={Boolean(record.isusefilter)} disabled />;
+          case 'isnew':
+            return entry.render = (text, record) => <Switch checked={Boolean(record.isnew)} disabled />;
           case 'insymd':
-            return entry.render = (text, record) => <span><Moment format="YYYY-MM-DD">{record.insymd}</Moment></span>;
+            return entry.render = (text, record) => <span>{record.insymd ? (<Moment format="YYYY-MM-DD">{record.insymd}</Moment>) : ''}</span>;
+          case 'attributes':
+            return entry.render = (text, record) => { console.log(record); };
           case 'updymd':
-            return entry.render = (text, record) => <span><Moment format="YYYY-MM-DD">{record.updymd}</Moment></span>;
+            return entry.render = (text, record) => <span>{record.updymd ? (<Moment format="YYYY-MM-DD">{record.updymd}</Moment>) : ''}</span>;
           case 'sdate':
             return entry.render = (text, record) => <span><Moment format="YYYY-MM-DD">{record.sdate}</Moment></span>;
           case 'edate':
@@ -121,6 +130,20 @@ class List extends Component {
             return entry.render = (text, record) => <Switch checked={record.isemart} disabled />;
           case 'isshownm':
             return entry.render = (text, record) => <Switch checked={record.isshownm} disabled />;
+          case 'colorcd':
+            return entry.render = col => (
+              <div>
+                <span
+                  style={{
+                    display: 'block',
+                    backgroundColor: `${col}`,
+                    width: '50px',
+                    height: '10px',
+                    marginRight: '20px',
+                  }}
+                />
+                <span>{col}</span>
+              </div>);
           case 'color':
             return entry.render = col => (
               <div>

@@ -9,6 +9,7 @@ import {
   CollectionList,
   EhowList,
   Home,
+  ColorList,
   GeneralInfoList,
   WidgetsList,
   MenuList,
@@ -17,6 +18,7 @@ import {
   LabelList,
   AttrValue,
   Promotion,
+  Infotrans,
 } from "../containers";
 
 export const getNavData = [
@@ -123,6 +125,16 @@ export const getNavData = [
         name: 'Статик хуудас',
         path: 'static-pages',
         component: StaticPage,
+      },
+      {
+        name: 'Мэдээлэл солилцоо',
+        path: 'info-transfer',
+        component: Infotrans,
+      },
+      {
+        name: 'Өнгө',
+        path: 'color',
+        component: ColorList,
       },
     ],
   },
