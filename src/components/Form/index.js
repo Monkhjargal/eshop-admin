@@ -27,7 +27,6 @@ import {
   CkEditorWidget,
   SelectTreeWidget,
   MultiSelect,
-  SketchPickerWidget,
 } from './Widgets';
 
 import {
@@ -350,7 +349,6 @@ class FormComponent extends Component {
     ckeditor: CkEditorWidget,
     selecttree: SelectTreeWidget,
     multiselect: MultiSelect,
-    sketchpicker: SketchPickerWidget,
   }
 
   FieldTemplate = FieldTemplate

@@ -158,20 +158,6 @@ class List extends Component {
                 />
                 <span>{col}</span>
               </div>);
-          case 'colorcd':
-            return entry.render = col => (
-              <div>
-                <span
-                  style={{
-                    display: 'block',
-                    backgroundColor: `${col}`,
-                    width: '50px',
-                    height: '10px',
-                    marginRight: '20px',
-                  }}
-                />
-                <span>{col}</span>
-              </div>);
           case 'imgnm':
             return entry.render = url => <img src={picserver + url} alt={url} height="20px" />;
           case 'imgnmtwo':

@@ -17,7 +17,6 @@ import SketchPickerWidget from './SketchPickerWidget';
 import CkEditorWidget from './CkEditorWidget';
 import SelectTreeWidget from './SelectTreeWidget';
 import MultiSelect from './MultiSelect';
-import SketchPickerWidget from './SketchPickerWidget';
 
 export {
   InputWidget,
@@ -39,5 +38,4 @@ export {
   CkEditorWidget,
   SelectTreeWidget,
   MultiSelect,
-  SketchPickerWidget,
 };

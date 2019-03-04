@@ -123,12 +123,6 @@ const Infotrans = new CrudModel({
   model: 'infotrans',
 });
 
-const Color = new CrudModel({
-  url: '/mn/api/color',
-  model: 'color',
-});
-
-
 export {
   Auth,
   Filter,
@@ -152,5 +146,4 @@ export {
   Promotion,
   Product,
   Infotrans,
-  Color,
 };

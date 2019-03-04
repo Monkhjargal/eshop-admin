@@ -12,7 +12,6 @@ import {
   ColorList,
   GeneralInfoList,
   WidgetsList,
-  ColorList,
   MenuList,
   Language,
   StaticPage,

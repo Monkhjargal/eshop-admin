@@ -13,7 +13,7 @@ import CollectionList from './Collection';
 import EhowList from './Ehow';
 import GeneralInfoList from './GeneralInfo';
 import WidgetsList from './Widgets';
-import ColorList from './Color';
+// import ColorList from './Color';
 import MenuList from './Menus';
 import Language from './Language';
 import StaticPage from './StaticPage';
@@ -48,5 +48,4 @@ export {
   AttrValue,
   Promotion,
   Infotrans,
-  ColorList,
 };
