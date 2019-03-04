@@ -13,6 +13,7 @@ import EmailWidget from './EmailWidget';
 import NumberWidget from './NumberWidget';
 import ImageWidget from './ImageWidget';
 import RangeWidget from './RangeWidget';
+import SketchPickerWidget from './SketchPickerWidget';
 import CkEditorWidget from './CkEditorWidget';
 import SelectTreeWidget from './SelectTreeWidget';
 import MultiSelect from './MultiSelect';
@@ -34,6 +35,7 @@ export {
   RangeWidget,
   NumberWidget,
   ExtraSelectWidget,
+  SketchPickerWidget,
   CkEditorWidget,
   SelectTreeWidget,
   MultiSelect,

@@ -12,6 +12,7 @@ import {
   ColorList,
   GeneralInfoList,
   WidgetsList,
+  ColorList,
   MenuList,
   Language,
   StaticPage,
@@ -120,6 +121,11 @@ export const getNavData = [
         name: 'Шошго',
         path: 'label',
         component: LabelList,
+      },
+      {
+        name: 'Өнгө',
+        path: 'color',
+        component: ColorList,
       },
       {
         name: 'Статик хуудас',
