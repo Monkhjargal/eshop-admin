@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Moment from 'react-moment';
 import PropTypes from 'prop-types';
+import Rate from 'react-stars';
 import { Card, Button, Popconfirm, Switch, message } from 'antd';
 import { StandardTable, ModalForm, Form } from '../../components';
 
@@ -162,11 +163,14 @@ class List extends Component {
             return entry.render = url => <img src={picserver + url} alt={url} height="20px" />;
           case 'imgnmtwo':
             return entry.render = url => <img src={picserver + url} alt={url} height="20px" />;
+          case 'rate':
+            return entry.render = (text, record) => <Rate className="align-baseline" count={5} size={22} color2={'#ffd700'} value={record.rate} edit={false}>4.5 </Rate>;
           default:
             return '---';
         }
       });
     }
+    console.log(this.props, 'list');
 
     return (
       <Card bordered={false}>

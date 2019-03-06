@@ -100,7 +100,7 @@ const FieldTemplate = (props) => {
         help={errors}
         required={required}
       >
-        <div style={{ width: '95%' }}>
+        <div className="justify-content-center" style={{ width: '95%' }}>
           {children}
         </div>
       </FormItem>
@@ -115,7 +115,7 @@ const FieldTemplate = (props) => {
         validateStatus={rawErrors.length ? 'error' : ''}
         required={required}
       >
-        <div style={{ width: '95%' }}>
+        <div className="justify-content-center" style={{ width: '95%' }}>
           {children}
         </div>
       </FormItem>
