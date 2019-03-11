@@ -14,22 +14,27 @@
 // @box-shadow-base: 0 2px 8px rgba(0, 0, 0, .15);  // major shadow for layers
 @import "../../utils/utils.less";
 @default-color: #edb920;
+
 .tableList {
     .tableListOperator {
         margin-bottom: 16px;
         text-align: right;
+
         button {
             margin-right: 16px;
             line-height: 30px;
             border-radius: 3px;
             height: inherit;
+
             &.primary {
                 background: #ffb434 !important;
                 border: solid 1px #ffb434;
             }
+
             &.delete {
                 border: dashed 1px #f5222d;
             }
+
             &.delete[disabled] {
                 border: dashed 1px #d9d9d9;
             }
@@ -40,19 +45,22 @@
 .tableListForm {
     :global {
         .ant-form-item {
-            margin-bottom: 24px;
+            margin-bottom: 0px !important;
             margin-right: 0;
             display: flex;
+
             >.ant-form-item-label {
                 width: auto;
                 line-height: 0px !important;
                 padding-right: 8px;
             }
         }
+
         .ant-form-item-control-wrapper {
             flex: 1;
         }
     }
+
     .submitButtons {
         white-space: nowrap;
         margin-bottom: 24px;
@@ -62,8 +70,6 @@
 .mb25 {
     margin-bottom: 25px;
 }
-
-
 
 .ant-btn-primary {
     color: #fff;
@@ -80,5 +86,11 @@
 @media screen and (max-width: @screen-md) {
     .tableListForm :global(.ant-form-item) {
         margin-right: 8px;
+    }
+}
+
+form {
+    .floating-label {
+        background: #ffb434 !important;
     }
 }

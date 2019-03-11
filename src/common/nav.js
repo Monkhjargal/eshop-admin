@@ -19,6 +19,7 @@ import {
   AttrValue,
   Promotion,
   Infotrans,
+  Product,
 } from "../containers";
 
 export const getNavData = [
@@ -63,7 +64,7 @@ export const getNavData = [
       {
         name: 'Барааны жагсаалт',
         path: 'list',
-        component: ProductList,
+        component: Product,
       },
       {
         name: 'Брэнд',

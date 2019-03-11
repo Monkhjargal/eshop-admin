@@ -12,11 +12,6 @@ class ProductModel extends BaseModel {
           response: this.buildActionName('response', data.model, 'all'),
           error: this.buildActionName('error', data.model, 'all'),
         },
-        brand: {
-          request: this.buildActionName('request', data.model, 'category'),
-          response: this.buildActionName('response', data.model, 'category'),
-          error: this.buildActionName('error', data.model, 'category'),
-        },
         filter: {
           request: this.buildActionName('request', data.model, 'filter'),
           response: this.buildActionName('response', data.model, 'filter'),
@@ -47,13 +42,10 @@ class ProductModel extends BaseModel {
   }
 
   all = ({ body, url } = {}) => asyncFn({
-    body, url: `${url || this.url}`, method: 'POST', model: this.model.all,
+    body, url: `${url || this.url}/all`, method: 'GET', model: this.model.all,
   });
-  brand = ({ body } = {}) => asyncFn({
-    body, url: '/mn/api/brand/all', method: 'GET', model: this.model.brand,
-  });
-  filter = ({ body } = {}) => asyncFn({
-    body, url: '/mn/api/productfilter/filter', method: 'POST', model: this.model.filter,
+  filter = ({ body, url } = {}) => asyncFn({
+    body, url: `/mn/api/filter/product`, method: 'GET', model: this.model.filter,
   });
 
   reducer = (state = this.initialState, action) => {
@@ -75,28 +67,6 @@ class ProductModel extends BaseModel {
             ...state.all,
             isLoading: false,
             data: action.payload.value,
-            total: action.payload.rowCount,
-            headers: action.payload.headers,
-            formcreateByServer: action.payload.data,
-          },
-        };
-      case this.model.brand.request:
-        return {
-          ...state,
-          all: this.requestCase(state.all, action),
-        };
-      case this.model.brand.error:
-        return {
-          ...state,
-          all: this.errorCase(state.category, action),
-        };
-      case this.model.brand.response:
-        return {
-          ...state,
-          all: {
-            ...state.all,
-            isLoading: false,
-            brand: action.payload.value,
             total: action.payload.rowCount,
             headers: action.payload.headers,
             formcreateByServer: action.payload.data,

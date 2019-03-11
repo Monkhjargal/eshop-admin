@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Form from 'react-jsonschema-form';
 import { Button } from "antd";
-import style from "./style.less";
+import styles from "./style.less";
 import * as Models from '../../models';
 
 import {
@@ -377,7 +377,7 @@ class FormComponent extends Component {
         widgets={this.widgets}
         transformErrors={this.transformErrors}
         liveValidate={liveValidate}
-        className={`${style.otForm} ant-row`}
+        className={`${styles.otform} ant-row`}
         onChange={(formObject) => { onChange(formObject); }}
         onSubmit={(formObject) => { onSubmit(formObject); }}
         onError={(formObject) => { onError(formObject); }}

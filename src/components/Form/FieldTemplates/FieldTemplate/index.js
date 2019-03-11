@@ -96,7 +96,7 @@ const FieldTemplate = (props) => {
     : (schema.widget === 'checkbox' ?
       <FormItem
         formItemLayout={null}
-        className={`${classNames} ant-form-item-sm ant-col-xl-${schema.column * 2} floating-label`}
+        className={`${classNames} ant-form-item-sm ant-col-xl-${schema.column * 2} floating-label customz`}
         help={errors}
         required={required}
       >
@@ -107,7 +107,7 @@ const FieldTemplate = (props) => {
       :
       <FormItem
         formItemLayout={null}
-        className={`${classNames} ant-form-item-sm ant-col-xl-${schema.column * 2} floating-label`}
+        className={`${classNames} ant-form-item-sm ant-col-xl-${schema.column * 2} floating-label customz`}
         hasFeedback
         label={schema.label}
         help={rawErrors}

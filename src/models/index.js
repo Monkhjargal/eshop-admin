@@ -56,7 +56,7 @@ const Attribute = new CrudModel({
   model: 'attribute',
 });
 
-const Productlist = new CrudModel({
+const Productlist = new ProductModel({
   url: '/mn/api/product',
   model: 'productlist',
 });
