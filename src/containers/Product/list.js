@@ -8,27 +8,21 @@ import style from "./styles.less";
 
 class Product extends React.Component {
   state = {
-    name: 'Product',
+    name: 'Барааны',
     selectedId: null,
-    filter: {
+    filtered: {
       skunm: '',
+      catids: [],
       attributeids: [],
       attrvalueids: [],
-      catids: [],
       brandids: [],
-      isnewproduct: [],
-      isevnnormal: [],
+      isnewproduct: 0,
+      isevnnormal: 0,
       evnnormalids: [],
       productstatus: [],
-      isproductchanged: [],
-      ispricechanged: [],
+      isproductchanged: 0,
+      ispricechanged: 0,
       updemps: [],
-    },
-    body: {
-      limit: 20,
-      page: 1,
-      filtered: {},
-      sorted: [],
     },
   }
 
@@ -45,34 +39,50 @@ class Product extends React.Component {
   );
 
   handleFilterInput = (e) => {
-    const { filter } = this.state;
-    filter.skunm = e.target.value;
-    this.setState(filter);
+    const { filtered } = this.state;
+    filtered.skunm = e.target.value;
+    this.setState(filtered);
   }
 
   handleChange = (e) => {
-    const { filter } = this.state;
-    filter[e.name] = e.value;
-    this.setState(filter);
+    const { filtered } = this.state;
+    filtered[e.name] = e.value;
+    this.setState(filtered);
   }
 
   handleSearch = () => {
-    const { filter } = this.state;
-    const { body } = this.state;
-    body.filtered = filter;
-    this.props.getDataSource({ body });
-    console.log(body);
+    const { filtered } = this.state;
+    this.props.getDataSource({ body: filtered });
+  }
+
+  handleClearFilter = () => {
+    const clear = {
+      skunm: '',
+      catids: [],
+      attributeids: [],
+      attrvalueids: [],
+      brandids: [],
+      isnewproduct: 0,
+      isevnnormal: 0,
+      evnnormalids: [],
+      productstatus: [],
+      isproductchanged: 0,
+      ispricechanged: 0,
+      updemps: [],
+    };
+    this.setState({ filtered: clear });
   }
 
   renderFilterFields = () => {
-    const filter = this.props.dataSource.filter[0];
+    const filter = this.props.dataSource.filter[0] === undefined ? [] : this.props.dataSource.filter[0];
+    const { filtered } = this.state;
     return (
       <div>
         <Form className={style.otform}>
           <Row>
             <Col span={6}>
               <Form.Item label="Барааны нэр" className={style.formItem}>
-                <Input size={'small'} placeholder="Барааны нэр хайх" style={{ width: '96%' }} onChange={this.handleFilterInput} />
+                <Input size={'small'} placeholder="Барааны нэр хайх" style={{ width: '96%' }} onChange={this.handleFilterInput} value={filtered.skunm} />
               </Form.Item>
             </Col>
             <Col span={6}>
@@ -82,6 +92,7 @@ class Product extends React.Component {
                   size={'small'}
                   placeholder="Аттрибут хайх"
                   style={{ width: '96%' }}
+                  value={filtered.attributeids}
                   onChange={(val) => { this.handleChange({ name: 'attributeids', value: val }); }}
                 >
                   { filter.attributeids.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>) }
@@ -95,6 +106,7 @@ class Product extends React.Component {
                   size={'small'}
                   placeholder="Ангилал хайх"
                   style={{ width: '96%' }}
+                  value={filtered.catids}
                   onChange={(val) => { this.handleChange({ name: 'catids', value: val }); }}
                 >
                   { filter.catids.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>) }
@@ -108,6 +120,7 @@ class Product extends React.Component {
                   size={'small'}
                   placeholder="Аттрибутын утга хайх"
                   style={{ width: '96%' }}
+                  value={filtered.attrvalueids}
                   onChange={(val) => { this.handleChange({ name: 'attrvalueids', value: val }); }}
                 >
                   { filter.attrvalueids.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>) }
@@ -123,6 +136,7 @@ class Product extends React.Component {
                   size={'small'}
                   placeholder="Бренд хайх"
                   style={{ width: '96%' }}
+                  value={filtered.brandids}
                   onChange={(val) => { this.handleChange({ name: 'brandids', value: val }); }}
                 >
                   { filter.brandids.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>) }
@@ -135,6 +149,7 @@ class Product extends React.Component {
                   size={'small'}
                   placeholder="Шинэ бараа эсэх хайх"
                   style={{ width: '96%' }}
+                  value={filtered.isnewproduct === 0 ? undefined : filtered.isnewproduct}
                   onChange={(val) => { this.handleChange({ name: 'isnewproduct', value: val }); }}
                 >
                   { filter.isnewproduct.map(i => <Select.Option key={i.id === '' ? 0 : i.id}>{i.name}</Select.Option>) }
@@ -147,6 +162,7 @@ class Product extends React.Component {
                   size={'small'}
                   placeholder="Хямдралтай эсэх хайх"
                   style={{ width: '96%' }}
+                  value={filtered.isevnnormal === 0 ? undefined : filtered.isevnnormal}
                   onChange={(val) => { this.handleChange({ name: 'isevnnormal', value: val }); }}
                 >
                   { filter.isevnnormal.map(i => <Select.Option key={i.id === '' ? 0 : i.id}>{i.name}</Select.Option>) }
@@ -160,9 +176,10 @@ class Product extends React.Component {
                   size={'small'}
                   placeholder="Онлайн төлөв хайх"
                   style={{ width: '96%' }}
+                  value={filtered.productstatus}
                   onChange={(val) => { this.handleChange({ name: 'productstatus', value: val }); }}
                 >
-                  { filter.productstatus.map(i => <Select.Option key={i.id === '' ? 'all' : i.id}>{i.name}</Select.Option>) }
+                  { filter.productstatus.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>) }
                 </Select>
               </Form.Item>
             </Col>
@@ -175,6 +192,7 @@ class Product extends React.Component {
                   size={'small'}
                   placeholder="Хямдрал хайх"
                   style={{ width: '96%' }}
+                  value={filtered.evnnormalids}
                   onChange={(val) => { this.handleChange({ name: 'evnnormalids', value: val }); }}
                 >
                   {filter.evnnormalids.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>) }
@@ -187,6 +205,7 @@ class Product extends React.Component {
                   size={'small'}
                   placeholder="Мэдээлэл шинэчлэлт хайх"
                   style={{ width: '96%' }}
+                  value={filtered.isproductchanged === 0 ? undefined : filtered.isproductchanged}
                   onChange={(val) => { this.handleChange({ name: 'isproductchanged', value: val }); }}
                 >
                   {filter.isproductchanged.map(i => <Select.Option key={i.id === '' ? 0 : i.id}>{i.name}</Select.Option>) }
@@ -196,10 +215,10 @@ class Product extends React.Component {
             <Col span={6}>
               <Form.Item label="Үнийн өөрчлөлт орсон бараа">
                 <Select
-                  mode="multiple"
                   size={'small'}
                   placeholder="Үнийн өөрчлөлт орсон бараа хайх"
                   style={{ width: '96%' }}
+                  value={filtered.ispricechanged === 0 ? undefined : filtered.ispricechanged}
                   onChange={(val) => { this.handleChange({ name: 'ispricechanged', value: val }); }}
                 >
                   {filter.ispricechanged.map(i => <Select.Option key={i.id === '' ? 0 : i.id}>{i.name}</Select.Option>) }
@@ -213,13 +232,16 @@ class Product extends React.Component {
                   size={'small'}
                   placeholder="Зассан хэрэглэгч хайх"
                   style={{ width: '96%' }}
+                  value={filtered.updemps}
                   onChange={(val) => { this.handleChange({ name: 'updemps', value: val }); }}
-                />
+                >
+                  {filter.updemps.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>) }
+                </Select>
               </Form.Item>
             </Col>
           </Row>
           <div className="ant-modal-footer" style={{ marginBottom: 15 }}>
-            <Button size="small" type="button" >{'Цэвэрлэх'}</Button>
+            <Button size="small" type="button" onClick={this.handleClearFilter} >{'Цэвэрлэх'}</Button>
             <Button size="small" htmlType="submit" loading={this.props.dataIsLoading} type="primary" onClick={this.handleSearch} >{'Хайх'}</Button>
           </div>
         </Form>
@@ -232,11 +254,21 @@ class Product extends React.Component {
       <Button
         icon="edit"
         size="small"
+        type="primary"
+        // disabled={!this.state.selectedId}
+        className={`${styles.formbutton} ${styles.update}`}
+      >
+        {`${this.state.name} төлөв өөрчлөх`}
+      </Button>
+
+      <Button
+        icon="edit"
+        size="small"
         type="dashed"
         // disabled={!this.state.selectedId}
         className={`${styles.formbutton} ${styles.update}`}
       >
-        {`${this.state.name} засах`}
+        {`${this.state.name} дэлгэрэнгүй засах`}
       </Button>
     </div>
   )
@@ -263,7 +295,7 @@ class Product extends React.Component {
     return (
       <PageHeaderLayout>
         <Card bordered={false}>
-          <div >
+          <div>
             {
               this.props.dataSource.data === undefined ? <div style={{ marginLeft: '49%', paddingTop: '15%', paddingBottom: '15%' }}><Spin /></div> : (
                 <div className={styles.tableList} style={{ overflow: 'hidden', overflowX: 'auto' }}>

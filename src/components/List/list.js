@@ -107,7 +107,7 @@ class List extends Component {
   render() {
     if (this.props.headers) {
       this.props.headers.forEach((entry, index) => {
-        const picserver = 'http://202.55.180.200:8877/';
+        const picserver = 'http://202.55.180.199:8877/';
         switch (entry.dataIndex) {
           case 'aid':
             return entry.render = (text, record, index) => <span>{index + 1}</span>;

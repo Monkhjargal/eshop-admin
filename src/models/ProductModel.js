@@ -41,8 +41,8 @@ class ProductModel extends BaseModel {
     };
   }
 
-  all = ({ body, url } = {}) => asyncFn({
-    body, url: `${url || this.url}/all`, method: 'GET', model: this.model.all,
+  all = ({ body, url }) => asyncFn({
+    body, url: `${url || this.url}/all`, method: 'POST', model: this.model.all,
   });
   filter = ({ body, url } = {}) => asyncFn({
     body, url: `/mn/api/filter/product`, method: 'GET', model: this.model.filter,

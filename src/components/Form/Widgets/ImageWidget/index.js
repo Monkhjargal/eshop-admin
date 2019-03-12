@@ -28,8 +28,8 @@ const ImageWidget = (props) => {
     }
   };
   // const imghost = 'http://10.0.10.30:8881/api/image/banner';
-  const imghost = 'http://202.55.180.200:8881/api/image/banner';
-  const imgfetch = 'http://202.55.180.200:8877';
+  const imghost = 'http://202.55.180.199:8881/api/image/banner';
+  const imgfetch = 'http://202.55.180.199:8877';
   return (
     <Upload
       className={`avatar-uploader ${styles.avatarUploader}`}
