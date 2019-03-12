@@ -12,15 +12,23 @@ class Product extends React.Component {
     selectedId: null,
     filter: {
       skunm: '',
-      attribute: [],
-      category: [],
-      brand: [],
-      newproduct: [],
-      status: [],
-      discount: [],
-      update: [],
-      scproduct: [],
-      upuser: [],
+      attributeids: [],
+      attrvalueids: [],
+      catids: [],
+      brandids: [],
+      isnewproduct: [],
+      isevnnormal: [],
+      evnnormalids: [],
+      productstatus: [],
+      isproductchanged: [],
+      ispricechanged: [],
+      updemps: [],
+    },
+    body: {
+      limit: 20,
+      page: 1,
+      filtered: {},
+      sorted: [],
     },
   }
 
@@ -43,149 +51,176 @@ class Product extends React.Component {
   }
 
   handleChange = (e) => {
-    console.log(e);
+    const { filter } = this.state;
+    filter[e.name] = e.value;
+    this.setState(filter);
+  }
+
+  handleSearch = () => {
+    const { filter } = this.state;
+    const { body } = this.state;
+    body.filtered = filter;
+    this.props.getDataSource({ body });
+    console.log(body);
   }
 
   renderFilterFields = () => {
     const filter = this.props.dataSource.filter[0];
-    console.log(filter);
     return (
       <div>
         <Form className={style.otform}>
           <Row>
-            <Col span={12}>
+            <Col span={6}>
               <Form.Item label="Барааны нэр" className={style.formItem}>
-                <Input size={'small'} placeholder="SKU код" style={{ width: '95%' }} onChange={this.handleFilterInput} />
+                <Input size={'small'} placeholder="Барааны нэр хайх" style={{ width: '96%' }} onChange={this.handleFilterInput} />
               </Form.Item>
             </Col>
-            <Col span={12}>
+            <Col span={6}>
               <Form.Item label="Аттрибут">
                 <Select
                   mode="multiple"
                   size={'small'}
-                  placeholder="Please select"
-                  style={{ width: '95%' }}
-                  onChange={this.handleChange}
+                  placeholder="Аттрибут хайх"
+                  style={{ width: '96%' }}
+                  onChange={(val) => { this.handleChange({ name: 'attributeids', value: val }); }}
                 >
-                  { filter.attribute.map((i, key) => <Select.Option key={key}>{i}</Select.Option>) }
+                  { filter.attributeids.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>) }
                 </Select>
               </Form.Item>
             </Col>
-          </Row>
-          <Row>
-            <Col span={12}>
+            <Col span={6}>
               <Form.Item label="Ангилал">
                 <Select
                   mode="multiple"
                   size={'small'}
-                  placeholder="Please select"
-                  style={{ width: '95%' }}
+                  placeholder="Ангилал хайх"
+                  style={{ width: '96%' }}
+                  onChange={(val) => { this.handleChange({ name: 'catids', value: val }); }}
                 >
-                  { filter.catid.map((i, key) => <Select.Option key={key}>{i.name}</Select.Option>) }
+                  { filter.catids.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>) }
                 </Select>
               </Form.Item>
             </Col>
-            <Col span={12}>
+            <Col span={6}>
               <Form.Item label="Аттрибутын утга">
                 <Select
                   mode="multiple"
                   size={'small'}
-                  placeholder="Please select"
-                  style={{ width: '95%' }}
+                  placeholder="Аттрибутын утга хайх"
+                  style={{ width: '96%' }}
+                  onChange={(val) => { this.handleChange({ name: 'attrvalueids', value: val }); }}
                 >
-                  { filter.attrvalue.map((i, key) => <Select.Option key={key}>{i}</Select.Option>) }
+                  { filter.attrvalueids.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>) }
                 </Select>
               </Form.Item>
             </Col>
           </Row>
           <Row>
-            <Col span={12}>
+            <Col span={6}>
               <Form.Item label="Бренд">
                 <Select
                   mode="multiple"
                   size={'small'}
-                  placeholder="Please select"
-                  style={{ width: '95%' }}
+                  placeholder="Бренд хайх"
+                  style={{ width: '96%' }}
+                  onChange={(val) => { this.handleChange({ name: 'brandids', value: val }); }}
                 >
-                  { filter.brandid.map((i, key) => <Select.Option key={key}>{i.name}</Select.Option>) }
+                  { filter.brandids.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>) }
                 </Select>
               </Form.Item>
             </Col>
-            <Col span={12}>
+            <Col span={6}>
               <Form.Item label="Шинэ бараа эсэх">
                 <Select
                   size={'small'}
-                  placeholder="Please select"
-                  style={{ width: '95%' }}
-                />
+                  placeholder="Шинэ бараа эсэх хайх"
+                  style={{ width: '96%' }}
+                  onChange={(val) => { this.handleChange({ name: 'isnewproduct', value: val }); }}
+                >
+                  { filter.isnewproduct.map(i => <Select.Option key={i.id === '' ? 0 : i.id}>{i.name}</Select.Option>) }
+                </Select>
               </Form.Item>
             </Col>
-          </Row>
-          <Row>
-            <Col span={12}>
+            <Col span={6}>
               <Form.Item label="Хямдралтай эсэх" className={style.formItem}>
-                <Input size={'small'} placeholder="Хямдралтай эсэх" style={{ width: '95%' }} />
+                <Select
+                  size={'small'}
+                  placeholder="Хямдралтай эсэх хайх"
+                  style={{ width: '96%' }}
+                  onChange={(val) => { this.handleChange({ name: 'isevnnormal', value: val }); }}
+                >
+                  { filter.isevnnormal.map(i => <Select.Option key={i.id === '' ? 0 : i.id}>{i.name}</Select.Option>) }
+                </Select>
               </Form.Item>
             </Col>
-            <Col span={12}>
+            <Col span={6}>
               <Form.Item label="Онлайн төлөв">
                 <Select
                   mode="multiple"
                   size={'small'}
-                  placeholder="Please select"
-                  style={{ width: '95%' }}
+                  placeholder="Онлайн төлөв хайх"
+                  style={{ width: '96%' }}
+                  onChange={(val) => { this.handleChange({ name: 'productstatus', value: val }); }}
                 >
-                  { filter.isenable.map((i, key) => <Select.Option key={key}>{i.name}</Select.Option>) }
+                  { filter.productstatus.map(i => <Select.Option key={i.id === '' ? 'all' : i.id}>{i.name}</Select.Option>) }
                 </Select>
               </Form.Item>
             </Col>
           </Row>
           <Row>
-            <Col span={12}>
+            <Col span={6}>
               <Form.Item label="Хямдрал">
                 <Select
                   mode="multiple"
                   size={'small'}
-                  placeholder="Please select"
-                  style={{ width: '95%' }}
-                />
+                  placeholder="Хямдрал хайх"
+                  style={{ width: '96%' }}
+                  onChange={(val) => { this.handleChange({ name: 'evnnormalids', value: val }); }}
+                >
+                  {filter.evnnormalids.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>) }
+                </Select>
               </Form.Item>
             </Col>
-            <Col span={12}>
+            <Col span={6}>
               <Form.Item label="Мэдээлэл шинэчлэлт">
                 <Select
                   size={'small'}
-                  placeholder="Please select"
-                  style={{ width: '95%' }}
-                />
+                  placeholder="Мэдээлэл шинэчлэлт хайх"
+                  style={{ width: '96%' }}
+                  onChange={(val) => { this.handleChange({ name: 'isproductchanged', value: val }); }}
+                >
+                  {filter.isproductchanged.map(i => <Select.Option key={i.id === '' ? 0 : i.id}>{i.name}</Select.Option>) }
+                </Select>
               </Form.Item>
             </Col>
-          </Row>
-          <Row>
-            <Col span={12}>
+            <Col span={6}>
               <Form.Item label="Үнийн өөрчлөлт орсон бараа">
                 <Select
                   mode="multiple"
                   size={'small'}
-                  placeholder="Please select"
-                  style={{ width: '95%' }}
-                />
+                  placeholder="Үнийн өөрчлөлт орсон бараа хайх"
+                  style={{ width: '96%' }}
+                  onChange={(val) => { this.handleChange({ name: 'ispricechanged', value: val }); }}
+                >
+                  {filter.ispricechanged.map(i => <Select.Option key={i.id === '' ? 0 : i.id}>{i.name}</Select.Option>) }
+                </Select>
               </Form.Item>
             </Col>
-            <Col span={12}>
+            <Col span={6}>
               <Form.Item label="Зассан хэрэглэгч">
                 <Select
                   mode="multiple"
                   size={'small'}
-                  placeholder="Please select"
-                  style={{ width: '95%' }}
+                  placeholder="Зассан хэрэглэгч хайх"
+                  style={{ width: '96%' }}
+                  onChange={(val) => { this.handleChange({ name: 'updemps', value: val }); }}
                 />
               </Form.Item>
             </Col>
           </Row>
           <div className="ant-modal-footer" style={{ marginBottom: 15 }}>
             <Button size="small" type="button" >{'Цэвэрлэх'}</Button>
-            <Button size="small" htmlType="submit" loading={this.props.dataIsLoading} type="primary">{'Хайх'}</Button>
+            <Button size="small" htmlType="submit" loading={this.props.dataIsLoading} type="primary" onClick={this.handleSearch} >{'Хайх'}</Button>
           </div>
         </Form>
       </div>
@@ -214,7 +249,7 @@ class Product extends React.Component {
         size="small"
         bordered={false}
         rowKey={record => record.id}
-        pagination={{ defaultPageSize: 15 }}
+        pagination={{ defaultPageSize: 11 }}
         footer={this.renderFooter}
         onRow={record => ({
           onClick: () => this.handleRowClick(record),
@@ -224,6 +259,7 @@ class Product extends React.Component {
   )
 
   render() {
+    // console.log(this.props.dataSource);
     return (
       <PageHeaderLayout>
         <Card bordered={false}>

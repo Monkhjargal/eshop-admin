@@ -60,7 +60,7 @@ class Product extends React.Component {
     // console.log(this.state);
     const { dataSource } = this.state;
     return (
-      <ProductList dataSource={dataSource} />
+      <ProductList dataSource={dataSource} getDataSource={this.props.getDataSource} />
     );
   }
 }
