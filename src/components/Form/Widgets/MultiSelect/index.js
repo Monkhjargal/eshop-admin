@@ -53,6 +53,7 @@ class MultiSelect extends Component {
     // console.log(this.state.val);
     return (
       <Select
+        size="small"
         mode="multiple"
         placeholder={this.props.placeholder}
         value={this.state.val}

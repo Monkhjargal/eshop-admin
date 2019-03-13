@@ -213,9 +213,7 @@ class FormComponent extends Component {
   setParents = (formData) => {
     let tempParentList = [];
     const recursive = (object, route) => {
-      // console.log(object);
       if (object && object.parent && object.parent.length) {
-        // console.log(typeof object.parent[0]);
         if (typeof object.parent[0] === 'string') {
           tempParentList.push({
             route,
@@ -266,13 +264,7 @@ class FormComponent extends Component {
       }
       await this.props.fetchData(sendObject);
       this.setState({ formData: {} }, () => {
-        // console.log(this.props.data);
-        // Object.keys(this.props.data).map((i) => {
-        //   console.log(i);
-        //   return '';
-        // });
         Object.keys(this.props.data).forEach((key) => {
-          // console.log(key);
           if (key === 'description' && !this.props.data.description) {
             this.props.data.description = "";
           }
@@ -307,7 +299,6 @@ class FormComponent extends Component {
 
         this.setState({ formData: this.props.data });
       });
-      // console.log(this.props.data.value);
     }
     return true;
   }
@@ -377,7 +368,7 @@ class FormComponent extends Component {
         widgets={this.widgets}
         transformErrors={this.transformErrors}
         liveValidate={liveValidate}
-        className={`${styles.otform} ant-row`}
+        className={`ant-row ${styles.filterform}`}
         onChange={(formObject) => { onChange(formObject); }}
         onSubmit={(formObject) => { onSubmit(formObject); }}
         onError={(formObject) => { onError(formObject); }}

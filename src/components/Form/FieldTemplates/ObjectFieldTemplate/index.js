@@ -1,17 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import s from './style.css';
+import React from "react";
+import { Row } from 'antd';
+import PropTypes from "prop-types";
+import s from "./style.css";
 
 const ObjectFieldTemplate = (props) => {
-  const {
-    description, properties, schema,
-  } = props;
+  const { description, properties, schema } = props;
   // console.log('ObjectFieldTemplate: ', props);
   if (schema.root) {
     return (
-      <div className={`${s.form} ant-row`}>
-        {description}
-        {properties.map(prop => prop.content)}
+      <div className={`${s.form} ant-row aaaaaa`}>
+        <Row gutter={10}>
+          {description}
+          {properties.map(prop => prop.content)}
+        </Row>
       </div>
     );
   }
@@ -29,7 +30,7 @@ const ObjectFieldTemplate = (props) => {
 };
 
 ObjectFieldTemplate.defaultProps = {
-  description: '',
+  description: "",
   properties: [],
 };
 
@@ -40,4 +41,3 @@ ObjectFieldTemplate.propTypes = {
 };
 
 export default ObjectFieldTemplate;
-

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form } from 'antd';
+import { Form, Col } from 'antd';
 
 const FormItem = Form.Item;
 
@@ -91,34 +91,39 @@ const FieldTemplate = (props) => {
   } = props;
   // console.log('errors: ', rawErrors);
   // console.log('errors: ', props);
+  // ant-col-xl-${schema.column * 2};
   return ((type === 'object') || (type === undefined && schema.type === 'object')) ?
     children
     : (schema.widget === 'checkbox' ?
-      <FormItem
-        formItemLayout={null}
-        className={`${classNames} ant-form-item-sm ant-col-xl-${schema.column * 2} floating-label customz`}
-        help={errors}
-        required={required}
-      >
-        <div className="justify-content-center" style={{ width: '95%' }}>
-          {children}
-        </div>
-      </FormItem>
+      <Col span={schema.column * 2}>
+        <FormItem
+          formItemLayout={null}
+          className={`${classNames} ant-form-item-sm ant-col-xl-24 floating-label customz`}
+          help={errors}
+          required={required}
+        >
+          <div className="justify-content-center" style={{ width: '100%' }}>
+            {children}
+          </div>
+        </FormItem>
+      </Col>
       :
-      <FormItem
-        formItemLayout={null}
-        className={`${classNames} ant-form-item-sm ant-col-xl-${schema.column * 2} floating-label customz`}
-        hasFeedback
-        label={schema.label}
-        help={rawErrors}
-        extra={description}
-        validateStatus={rawErrors.length ? 'error' : ''}
-        required={required}
-      >
-        <div className="justify-content-center" style={{ width: '95%' }}>
-          {children}
-        </div>
-      </FormItem>
+      <Col span={schema.column * 2} >
+        <FormItem
+          formItemLayout={null}
+          className={`${classNames} ant-form-item-sm ant-col-xl-24 floating-label customz`}
+          hasFeedback
+          label={schema.label}
+          help={rawErrors}
+          extra={description}
+          validateStatus={rawErrors.length ? 'error' : ''}
+          required={required}
+        >
+          <div className="justify-content-center" style={{ width: '100%' }}>
+            {children}
+          </div>
+        </FormItem>
+      </Col>
     );
 };
 

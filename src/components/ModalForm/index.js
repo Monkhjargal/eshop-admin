@@ -65,6 +65,7 @@ class ModalFormComponent extends Component {
        visible ?
          <Spin spinning={formIsLoading || dataIsLoading || this.state.isLoading}>
            <Form
+             className={style.modalform}
              modelName={modelName}
              isLoading={this.state.isLoading}
              setLoading={this.setLoading}
