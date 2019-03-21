@@ -63,7 +63,7 @@ const asyncFn = ({
     name,
   });
   try {
-    // console.log(model.request);
+    // console.log(model.request, model.response);
     if (model.request === 'REQUEST_LOGOUT') {
       dispatch({
         type: model.response,
@@ -74,6 +74,8 @@ const asyncFn = ({
       const data = await request({ url, method, body });
       console.log(data);
       if (data && data.success !== false) {
+        if (model.response === 'RESPONSE_PRODUCTLIST_UPDATE') { message.success(data.message); }
+        if (model.response === 'RESPONSE_PRODUCTLIST_UPATTRIBUTE') { message.success(data.message); }
         // message.success(data.message);
         // console.log('success');
       } else {

@@ -13,7 +13,16 @@ class Component extends React.Component {
         onOk={this.props.onCancel}
         width={'60%'}
       >
-        <MainStep dataSource={this.props.dataSource} filter={this.props.filter} />
+        <MainStep
+          dataSource={this.props.dataSource}
+          filter={this.props.filter}
+          updateProduct={this.props.updateProduct}
+          detail={this.props.detail}
+          getAttribute={this.props.getAttribute}
+          attribute={this.props.attribute}
+          updateAttr={this.props.updateAttr}
+          product={this.props.product}
+        />
       </Modal>
     );
   }

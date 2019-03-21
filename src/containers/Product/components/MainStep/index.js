@@ -2,7 +2,7 @@ import React from "react";
 import { Steps } from "antd";
 
 import styles from "../../styles.less";
-import { StepOne } from "../";
+import { StepOne, StepTwo, StepThree } from "../";
 
 // eslint-disable-next-line prefer-destructuring
 const Step = Steps.Step;
@@ -17,6 +17,7 @@ class Component extends React.Component {
 
   render() {
     const { step } = this.state;
+    // console.log('Main step', this.props);
     return (
       <div>
         <Steps current={step}>
@@ -26,8 +27,23 @@ class Component extends React.Component {
         </Steps>
         <div className={styles.stepContent}>
           {
-            step === 0 ? <StepOne dataSource={this.props.dataSource} filter={this.props.filter} />
-              : (step === 1 ? <h1>1</h1> : <h1>2</h1>)
+            step === 0 ? <StepOne
+              dataSource={this.props.dataSource}
+              filter={this.props.filter}
+              updateProduct={this.props.updateProduct}
+              detail={this.props.detail}
+            />
+              :
+              step === 1 ? <StepTwo
+                getAttribute={this.props.getAttribute}
+                skucd={this.props.dataSource.skucd}
+                attribute={this.props.attribute}
+                updateAttr={this.props.updateAttr}
+              />
+                :
+              <StepThree
+                product={this.props.product}
+              />
           }
         </div>
       </div>

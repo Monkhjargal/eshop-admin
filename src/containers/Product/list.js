@@ -4,14 +4,15 @@ import PageHeaderLayout from "../../layouts/PageHeaderLayout";
 
 import styles from '../../components/List/style.less';
 import tableStyle from "../../components/StandardTable/index.less";
+// import formStyle from '../../components/Form/style.less';
 import style from "./styles.less";
-import { UpdateModal } from "./components";
+import { UpdateModal, StatusModal, Excel } from "./components";
 
 class Product extends React.Component {
   state = {
     name: 'Барааны',
-    selectedId: null,
     selectedRow: [],
+    checkedRow: [],
     filtered: {
       skunm: '',
       catids: [],
@@ -27,6 +28,9 @@ class Product extends React.Component {
       updemps: [],
     },
     isupdate: false,
+    isstatus: false,
+    dataSource: {},
+    detail: {},
   }
 
   handleRowClick = (record) => {
@@ -38,12 +42,16 @@ class Product extends React.Component {
   renderFooter = () => (
     <div className={tableStyle.tableFooter}>
       <div className={tableStyle.footerInfo}>
-        Нийт: {this.props.dataSource.data.length}
+        Нийт: {this.props.dataSource.data === undefined ? 0 : this.props.dataSource.data.length}
       </div>
     </div>
   );
 
-  handleUpdateModal = () => { this.setState({ isupdate: !this.state.isupdate }); }
+  handleUpdateModal = () => {
+    this.setState({ isupdate: !this.state.isupdate });
+    this.props.getDetail({ skucd: this.state.selectedRow.skucd });
+  }
+  handleStatusModal = () => { this.setState({ isstatus: !this.state.isstatus }); }
 
   handleFilterInput = (e) => {
     const { filtered } = this.state;
@@ -82,7 +90,8 @@ class Product extends React.Component {
 
   renderFilterFields = () => {
     try {
-      const filter = this.props.dataSource.filter[0];
+      // console.log(this.props.dataSource.filter);
+      const { filter } = this.props.dataSource;
       const { filtered } = this.state;
 
       return (
@@ -96,7 +105,7 @@ class Product extends React.Component {
                   </Form.Item>
                 </Col>
                 <Col span={6}>
-                  <Form.Item label="Аттрибут">
+                  <Form.Item label="Аттрибут" className={style.formItem}>
                     <Select
                       mode="multiple"
                       size={'small'}
@@ -110,7 +119,7 @@ class Product extends React.Component {
                   </Form.Item>
                 </Col>
                 <Col span={6}>
-                  <Form.Item label="Ангилал">
+                  <Form.Item label="Ангилал" className={style.formItem}>
                     <Select
                       mode="multiple"
                       size={'small'}
@@ -124,7 +133,7 @@ class Product extends React.Component {
                   </Form.Item>
                 </Col>
                 <Col span={6}>
-                  <Form.Item label="Аттрибутын утга">
+                  <Form.Item label="Аттрибутын утга" className={style.formItem}>
                     <Select
                       mode="multiple"
                       size={'small'}
@@ -140,7 +149,7 @@ class Product extends React.Component {
               </Row>
               <Row>
                 <Col span={6}>
-                  <Form.Item label="Бренд">
+                  <Form.Item label="Бренд" className={style.formItem}>
                     <Select
                       mode="multiple"
                       size={'small'}
@@ -154,7 +163,7 @@ class Product extends React.Component {
                   </Form.Item>
                 </Col>
                 <Col span={6}>
-                  <Form.Item label="Шинэ бараа эсэх">
+                  <Form.Item label="Шинэ бараа эсэх" className={style.formItem}>
                     <Select
                       size={'small'}
                       placeholder="Шинэ бараа эсэх хайх"
@@ -180,7 +189,7 @@ class Product extends React.Component {
                   </Form.Item>
                 </Col>
                 <Col span={6}>
-                  <Form.Item label="Онлайн төлөв">
+                  <Form.Item label="Онлайн төлөв" className={style.formItem}>
                     <Select
                       mode="multiple"
                       size={'small'}
@@ -196,7 +205,7 @@ class Product extends React.Component {
               </Row>
               <Row>
                 <Col span={6}>
-                  <Form.Item label="Хямдрал">
+                  <Form.Item label="Хямдрал" className={style.formItem}>
                     <Select
                       mode="multiple"
                       size={'small'}
@@ -210,7 +219,7 @@ class Product extends React.Component {
                   </Form.Item>
                 </Col>
                 <Col span={6}>
-                  <Form.Item label="Мэдээлэл шинэчлэлт">
+                  <Form.Item label="Мэдээлэл шинэчлэлт" className={style.formItem}>
                     <Select
                       size={'small'}
                       placeholder="Мэдээлэл шинэчлэлт хайх"
@@ -223,7 +232,7 @@ class Product extends React.Component {
                   </Form.Item>
                 </Col>
                 <Col span={6}>
-                  <Form.Item label="Үнийн өөрчлөлт орсон бараа">
+                  <Form.Item label="Үнийн өөрчлөлт орсон бараа" className={style.formItem}>
                     <Select
                       size={'small'}
                       placeholder="Үнийн өөрчлөлт орсон бараа хайх"
@@ -236,7 +245,7 @@ class Product extends React.Component {
                   </Form.Item>
                 </Col>
                 <Col span={6}>
-                  <Form.Item label="Зассан хэрэглэгч">
+                  <Form.Item label="Зассан хэрэглэгч" className={style.formItem}>
                     <Select
                       mode="multiple"
                       size={'small'}
@@ -259,78 +268,111 @@ class Product extends React.Component {
         </div>
       );
     } catch (error) {
+      return console.log('хүснэгт зурах үед алдаа гарлаа\n', error);
+    }
+  }
+
+  renderEditButton = () => {
+    try {
+      const { data, headers } = this.props.dataSource;
+      return (
+        <div className={styles.tableListOperator} style={{ marginTop: 20 }}>
+          <Excel data={data} headers={headers} filename={'Барааны жагсаалт'} />
+          <Button
+            icon="edit"
+            size="small"
+            type="primary"
+            onClick={this.handleStatusModal}
+            className={`${styles.formbutton} ${styles.update}`}
+          >
+            {`${this.state.name} төлөв өөрчлөх`}
+          </Button>
+
+          <Button
+            icon="edit"
+            size="small"
+            type="dashed"
+            disabled={this.state.selectedRow.length === 0}
+            className={`${styles.formbutton} ${styles.update}`}
+            onClick={this.handleUpdateModal}
+          >
+            {`${this.state.name} дэлгэрэнгүй засах`}
+          </Button>
+        </div>
+      );
+    } catch (err) {
+      return console.log(err);
+    }
+  }
+
+  renderTable = () => {
+    try {
+      // console.log('rendering table product');
+      return (
+        <div className={tableStyle.standardTable}>
+          <Table
+            rowClassName={this.handleRowClass}
+            dataSource={this.state.dataSource.data}
+            columns={this.state.dataSource.headers}
+            size="small"
+            bordered={false}
+            rowKey={record => record.id}
+            pagination={{ defaultPageSize: 11 }}
+            footer={this.renderFooter}
+            onRow={record => ({
+            onClick: () => this.handleRowClick(record),
+        })}
+          />
+        </div>
+      );
+    } catch (error) {
       return console.log(error);
     }
   }
 
-  renderEditButton = () => (
-    <div className={styles.tableListOperator}>
-      {/* <Button
-        icon="edit"
-        size="small"
-        type="primary"
-        // disabled={!this.state.selectedId}
-        className={`${styles.formbutton} ${styles.update}`}
-      >
-        {`${this.state.name} төлөв өөрчлөх`}
-      </Button> */}
-
-      <Button
-        icon="edit"
-        size="small"
-        type="dashed"
-        // disabled={!this.state.selectedId}
-        className={`${styles.formbutton} ${styles.update}`}
-        onClick={this.handleUpdateModal}
-      >
-        {`${this.state.name} дэлгэрэнгүй засах`}
-      </Button>
-    </div>
-  )
-
-  renderTable = () => (
-    <div className={tableStyle.standardTable}>
-      <Table
-        rowClassName={this.handleRowClass}
-        dataSource={this.props.dataSource.data}
-        columns={this.props.dataSource.headers}
-        size="small"
-        bordered={false}
-        rowKey={record => record.id}
-        pagination={{ defaultPageSize: 11 }}
-        footer={this.renderFooter}
-        onRow={record => ({
-          onClick: () => this.handleRowClick(record),
-        })}
-      />
-    </div>
-  )
-
   render() {
-    // console.log(this.props.dataSource);
-    return (
-      <PageHeaderLayout>
-        <Card bordered={false}>
-          <div>
-            {
-              this.props.dataSource.data === undefined ? <div style={{ marginLeft: '49%', paddingTop: '15%', paddingBottom: '15%' }}><Spin /></div> : (
-                <div className={styles.tableList} style={{ overflow: 'hidden', overflowX: 'auto' }}>
-                  {this.renderFilterFields()}
-                  {this.renderEditButton()}
-                  {this.renderTable()}
-                  <UpdateModal
-                    visible={this.state.isupdate}
-                    onCancel={this.handleUpdateModal}
-                    dataSource={this.state.selectedRow}
-                    filter={this.props.dataSource.filter[0]}
-                  />
-                </div>
-              )
-            }
-          </div>
-        </Card>
-      </PageHeaderLayout>
-    );
+    try {
+      // console.log(this.props.dataSource);
+      // const { filter } = this.props.filter[0] === undefined ? [] : this.props.filter[0];
+      if (this.state.dataSource !== this.props.dataSource) {
+        this.setState({ dataSource: this.props.dataSource });
+      }
+      return (
+        <PageHeaderLayout>
+          <Card bordered={false}>
+            <div>
+              {
+                (!this.props.dataSource.data) ? <div style={{ marginLeft: '49%', paddingTop: '15%', paddingBottom: '15%' }}><Spin /></div> : (
+                  <div className={styles.tableList} style={{ overflow: 'hidden', overflowX: 'auto' }}>
+                    {this.renderFilterFields()}
+                    {this.renderEditButton()}
+                    {this.renderTable()}
+                    <UpdateModal
+                      visible={this.state.isupdate}
+                      onCancel={this.handleUpdateModal}
+                      dataSource={this.state.selectedRow} // selected roe step one data
+                      filter={this.props.dataSource.filter}
+                      detail={this.props.dataSource.detail}
+                      updateProduct={this.props.updateProduct}
+                      getAttribute={this.props.getAttribute}
+                      attribute={this.props.dataSource.attribute} // attribute step 2
+                      updateAttr={this.props.updateAttr}
+                      product={this.props.dataSource.data} // product list
+                    />
+                    <StatusModal
+                      visible={this.state.isstatus}
+                      onCancel={this.handleStatusModal}
+                    />
+                  </div>
+                )
+              }
+            </div>
+          </Card>
+        </PageHeaderLayout>
+      );
+    } catch (error) {
+      return console.log(error);
+    }
   }
 }
 
