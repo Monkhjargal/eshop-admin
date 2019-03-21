@@ -230,7 +230,7 @@ class CollectionList extends React.Component {
                   centered
                   width={800}
                 >
-                  <Steps current={current}>
+                  <Steps progressDot current={current}>
                     {steps.map(item => <Step key={item.title} title={item.title} />)}
                   </Steps>
                   <div className="steps-content">
