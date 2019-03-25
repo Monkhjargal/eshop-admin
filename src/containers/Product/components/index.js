@@ -5,6 +5,9 @@ import Excel from "./Excel";
 import StepOne from "./StepOne";
 import StepTwo from "./StepTwo";
 import StepThree from "./StepThree";
+import StatusStepOne from "./StatusStepOne";
+import StatusStepTwo from "./StatusStepTwo";
+import StatusSteps from "./StatusSteps";
 
 export {
   UpdateModal,
@@ -14,5 +17,8 @@ export {
   Excel,
   StepThree,
   StepTwo,
+  StatusStepOne,
+  StatusStepTwo,
+  StatusSteps,
 };
 

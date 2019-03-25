@@ -8,7 +8,9 @@ import ProductList from "./list";
 const mapStateToProps = (state) => {
   // console.log('Admin main props', state);
   const { data, filter, headers } = state.productlist.all;
-  const { detail, attribute, relational } = state.productlist;
+  const {
+    detail, attribute, relational, status,
+  } = state.productlist;
 
   let returnObject = {
     data,
@@ -17,13 +19,13 @@ const mapStateToProps = (state) => {
     detail,
     attribute,
     relational,
+    status,
   };
 
   return returnObject;
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  console.log();
   let actionCreators = {
     getAll: ProductModel.all, // product-iin husnegtiin data avah huselt filter deer mun adil hereglej bgaa para-g oorchilood
     getFilter: ProductModel.filter, // filter hesegiin input bolon select, multi select-iin value-g avah huselt
@@ -33,6 +35,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     updateAttr: ProductModel.upattribute, // attribute-iig update hiih huselt
     getRelational: ProductModel.relational, // Step 3 -iin product-iig avah huselt
     updateRelational: ProductModel.uprelational, // step 3 update relational product
+    getStatusProduct: ProductModel.status, // Baraanii tolov oorchiloh hesgiin tuluv ni oorchilogdoh baraanuud avah husel
+    changeProductStatus: ProductModel.changestatus, // Baraanii tuluv oorchiloh huselt
   };
 
   return ({
@@ -70,6 +74,7 @@ class Product extends React.Component {
     // this.props.getDetail({ skucd: '5000267024004' });
     // this.props.getAttribute({ skucd: '5000267024004' });
     this.props.getRelational({ skucd: '0081128007874' });
+    // this.props.getStatusProduct({ status:  });
   }
 
   render() {
@@ -85,6 +90,8 @@ class Product extends React.Component {
         updateAttr={this.props.updateAttr}
         getRelational={this.props.getRelational}
         updateRelational={this.props.updateRelational}
+        getStatusProduct={this.props.getStatusProduct}
+        changeProductStatus={this.props.changeProductStatus}
       />
     );
   }

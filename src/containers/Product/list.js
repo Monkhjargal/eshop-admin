@@ -269,7 +269,7 @@ class Product extends React.Component {
         </div>
       );
     } catch (error) {
-      return console.log('хайх хэсгийг зурах үед алдаа гарлаа\n', error);
+      return '';
     }
   }
 
@@ -316,7 +316,7 @@ class Product extends React.Component {
           case 'sprice':
             return i.render = text => <span>{formatter.format(text)}</span>;
           case 'isnew':
-            return i.render = (text, record) => <Switch checked={record.isnew} disabled />;
+            return i.render = (text, record) => <Switch checked={!!record.isnew} disabled />;
           // case 'rate':
           //   return i.render = (text, record) => <span style={{ display: 'inline-flex', alignItems: 'center' }}><Rate className="align-baseline" count={5} size={22} color2={'#ffd700'} value={record.rate} edit={false} />{text}</span>;
 
@@ -342,7 +342,7 @@ class Product extends React.Component {
         </div>
       );
     } catch (error) {
-      return console.log('Хүснэгт зурах үед алдаа гарлаа\n', error);
+      return '';
     }
   }
 
@@ -382,6 +382,9 @@ class Product extends React.Component {
                     <StatusModal
                       visible={this.state.isstatus}
                       onCancel={this.handleStatusModal}
+                      getStatusProduct={this.props.getStatusProduct}
+                      product={this.props.dataSource.status}
+                      changeProductStatus={this.props.changeProductStatus}
                     />
                   </div>
                 )

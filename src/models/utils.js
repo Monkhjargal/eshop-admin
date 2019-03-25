@@ -77,6 +77,7 @@ const asyncFn = ({
         if (model.response === 'RESPONSE_PRODUCTLIST_UPDATE') { message.success(data.message); }
         if (model.response === 'RESPONSE_PRODUCTLIST_UPATTRIBUTE') { message.success(data.message); }
         if (model.response === 'RESPONSE_PRODUCTLIST_UPRELATIONAL') { message.success(data.message); }
+        if (model.response === 'RESPONSE_PRODUCTLIST_CHANGESTATUS') { message.success(data.message); }
         // message.success(data.message);
         // console.log('success');
       } else {

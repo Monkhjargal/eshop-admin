@@ -47,6 +47,16 @@ class ProductModel extends BaseModel {
           response: this.buildActionName('response', data.model, 'uprelational'),
           error: this.buildActionName('error', data.model, 'uprelational'),
         },
+        status: {
+          request: this.buildActionName('request', data.model, 'status'),
+          response: this.buildActionName('response', data.model, 'status'),
+          error: this.buildActionName('error', data.model, 'status'),
+        },
+        changestatus: {
+          request: this.buildActionName('request', data.model, 'changestatus'),
+          response: this.buildActionName('response', data.model, 'changestatus'),
+          error: this.buildActionName('error', data.model, 'changestatus'),
+        },
       };
     }
 
@@ -94,6 +104,12 @@ class ProductModel extends BaseModel {
   });
   uprelational = ({ body, parentskucd } = {}) => asyncFn({
     body, url: `/mn/api/product/relational/${parentskucd}`, method: 'POST', model: this.model.uprelational,
+  });
+  status = ({ status } = {}) => asyncFn({
+    url: `/mn/api/product/productstatus/${status}`, method: 'GET', model: this.model.status,
+  });
+  changestatus = ({ body } = {}) => asyncFn({
+    body, url: `/mn/api/product/status/`, method: 'POST', model: this.model.changestatus,
   });
 
   reducer = (state = this.initialState, action) => {
@@ -249,6 +265,39 @@ class ProductModel extends BaseModel {
           ...state,
           uprelational: action.payload.value,
         };
+      // STATUS
+      case this.model.status.request:
+        return {
+          ...state,
+          status: this.requestCase(state.all, action),
+        };
+      case this.model.status.error:
+        return {
+          ...state,
+          status: this.errorCase(state.category, action),
+        };
+      case this.model.status.response:
+        return {
+          ...state,
+          status: action.payload.value,
+        };
+      // CHANEGE PRODUCT STATUS
+      case this.model.changestatus.request:
+        return {
+          ...state,
+          status: this.requestCase(state.all, action),
+        };
+      case this.model.changestatus.error:
+        return {
+          ...state,
+          status: this.errorCase(state.category, action),
+        };
+      case this.model.changestatus.response:
+        return {
+          ...state,
+          status: action.payload.value,
+        };
+
       // DEFUALT
       default:
         return state;
