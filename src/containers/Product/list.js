@@ -1,12 +1,14 @@
 import React from 'react';
-import { Card, Button, Table, Spin, Form, Input, Col, Row, Select } from "antd";
-import PageHeaderLayout from "../../layouts/PageHeaderLayout";
+import { Card, Button, Table, Spin, Form, Input, Col, Row, Select, Switch } from "antd";
+import Rate from 'react-stars';
 
+import PageHeaderLayout from "../../layouts/PageHeaderLayout";
 import styles from '../../components/List/style.less';
 import tableStyle from "../../components/StandardTable/index.less";
-// import formStyle from '../../components/Form/style.less';
 import style from "./styles.less";
 import { UpdateModal, StatusModal, Excel } from "./components";
+
+const formatter = new Intl.NumberFormat("en-US");
 
 class Product extends React.Component {
   state = {
@@ -49,7 +51,6 @@ class Product extends React.Component {
 
   handleUpdateModal = () => {
     this.setState({ isupdate: !this.state.isupdate });
-    this.props.getDetail({ skucd: this.state.selectedRow.skucd });
   }
   handleStatusModal = () => { this.setState({ isstatus: !this.state.isstatus }); }
 
@@ -111,7 +112,7 @@ class Product extends React.Component {
                       size={'small'}
                       placeholder="Аттрибут хайх"
                       style={{ width: '96%' }}
-                      value={filtered.attributeids}
+                      value={filtered.attributeids === undefined ? '' : filtered.attributeids}
                       onChange={(val) => { this.handleChange({ name: 'attributeids', value: val }); }}
                     >
                       { filter.attributeids.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>) }
@@ -268,7 +269,7 @@ class Product extends React.Component {
         </div>
       );
     } catch (error) {
-      return console.log('хүснэгт зурах үед алдаа гарлаа\n', error);
+      return console.log('хайх хэсгийг зурах үед алдаа гарлаа\n', error);
     }
   }
 
@@ -307,7 +308,22 @@ class Product extends React.Component {
 
   renderTable = () => {
     try {
-      // console.log('rendering table product');
+      const { headers } = this.state.dataSource;
+      headers.map((i) => {
+        switch (i.dataIndex) {
+          case 'newprice':
+            return i.render = text => <span>{formatter.format(text)}</span>;
+          case 'sprice':
+            return i.render = text => <span>{formatter.format(text)}</span>;
+          case 'isnew':
+            return i.render = (text, record) => <Switch checked={record.isnew} disabled />;
+          // case 'rate':
+          //   return i.render = (text, record) => <span style={{ display: 'inline-flex', alignItems: 'center' }}><Rate className="align-baseline" count={5} size={22} color2={'#ffd700'} value={record.rate} edit={false} />{text}</span>;
+
+          default:
+            return '';
+        }
+      });
       return (
         <div className={tableStyle.standardTable}>
           <Table
@@ -326,7 +342,7 @@ class Product extends React.Component {
         </div>
       );
     } catch (error) {
-      return console.log(error);
+      return console.log('Хүснэгт зурах үед алдаа гарлаа\n', error);
     }
   }
 
@@ -353,11 +369,15 @@ class Product extends React.Component {
                       dataSource={this.state.selectedRow} // selected roe step one data
                       filter={this.props.dataSource.filter}
                       detail={this.props.dataSource.detail}
+                      getDetail={this.props.getDetail}
                       updateProduct={this.props.updateProduct}
                       getAttribute={this.props.getAttribute}
                       attribute={this.props.dataSource.attribute} // attribute step 2
                       updateAttr={this.props.updateAttr}
                       product={this.props.dataSource.data} // product list
+                      relational={this.props.dataSource.relational} // step-3 relational
+                      getRelational={this.props.getRelational} // get getRelational={this.props.getRelational}
+                      updateRelational={this.props.updateRelational}
                     />
                     <StatusModal
                       visible={this.state.isstatus}

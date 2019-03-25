@@ -37,6 +37,16 @@ class ProductModel extends BaseModel {
           response: this.buildActionName('response', data.model, 'upattribute'),
           error: this.buildActionName('error', data.model, 'upattribute'),
         },
+        relational: {
+          request: this.buildActionName('request', data.model, 'relational'),
+          response: this.buildActionName('response', data.model, 'relational'),
+          error: this.buildActionName('error', data.model, 'relational'),
+        },
+        uprelational: {
+          request: this.buildActionName('request', data.model, 'uprelational'),
+          response: this.buildActionName('response', data.model, 'uprelational'),
+          error: this.buildActionName('error', data.model, 'uprelational'),
+        },
       };
     }
 
@@ -79,9 +89,16 @@ class ProductModel extends BaseModel {
   upattribute = ({ body, skucd } = {}) => asyncFn({
     body, url: `/mn/api/product/attr/${skucd}`, method: 'POST', model: this.model.upattribute,
   });
+  relational = ({ skucd } = {}) => asyncFn({
+    url: `/mn/api/product/relational/${skucd}`, method: 'GET', model: this.model.relational,
+  });
+  uprelational = ({ body, parentskucd } = {}) => asyncFn({
+    body, url: `/mn/api/product/relational/${parentskucd}`, method: 'POST', model: this.model.uprelational,
+  });
 
   reducer = (state = this.initialState, action) => {
     switch (action.type) {
+      // ALL
       case this.model.all.request:
         return {
           ...state,
@@ -104,6 +121,8 @@ class ProductModel extends BaseModel {
             formcreateByServer: action.payload.data,
           },
         };
+
+      // FILTER
       case this.model.filter.request:
         return {
           ...state,
@@ -126,6 +145,8 @@ class ProductModel extends BaseModel {
             formcreateByServer: action.payload.data,
           },
         };
+
+      // UPDATE
       case this.model.update.request:
         return {
           ...state,
@@ -144,6 +165,8 @@ class ProductModel extends BaseModel {
             filter: action.payload.value,
           },
         };
+
+      // DETAIL
       case this.model.detail.request:
         return {
           ...state,
@@ -159,6 +182,8 @@ class ProductModel extends BaseModel {
           ...state,
           detail: { ...action.payload.value },
         };
+
+      // ATTRIBUTE
       case this.model.attribute.request:
         return {
           ...state,
@@ -174,6 +199,8 @@ class ProductModel extends BaseModel {
           ...state,
           attribute: { ...action.payload.value },
         };
+
+      // UPDATE ATTRIBUTE
       case this.model.upattribute.request:
         return {
           ...state,
@@ -189,6 +216,40 @@ class ProductModel extends BaseModel {
           ...state,
           upattribute: { ...action.payload.value },
         };
+      // RELATIONAL
+      case this.model.relational.request:
+        return {
+          ...state,
+          relational: this.requestCase(state.all, action),
+        };
+      case this.model.relational.error:
+        return {
+          ...state,
+          relational: this.errorCase(state.category, action),
+        };
+      case this.model.relational.response:
+        // console.log(action.payload.value);
+        return {
+          ...state,
+          relational: action.payload.value,
+        };
+      // UPDATE RELATIONAL
+      case this.model.uprelational.request:
+        return {
+          ...state,
+          uprelational: this.requestCase(state.all, action),
+        };
+      case this.model.uprelational.error:
+        return {
+          ...state,
+          uprelational: this.errorCase(state.category, action),
+        };
+      case this.model.uprelational.response:
+        return {
+          ...state,
+          uprelational: action.payload.value,
+        };
+      // DEFUALT
       default:
         return state;
     }

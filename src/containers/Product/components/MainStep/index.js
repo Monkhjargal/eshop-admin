@@ -11,13 +11,14 @@ class Component extends React.Component {
   state = {
     step: 0,
   }
-  handleClickstep = (e) => {
-    if (this.state.step !== e.value) { this.setState({ step: e.value }); }
-  }
+
+  handleClickstep = (e) => { if (this.state.step !== e.value) { this.setState({ step: e.value }); } }
+
+  handleNextStep = () => { this.setState({ step: this.state.step + 1 }); }
 
   render() {
-    const { step } = this.state;
     // console.log('Main step', this.props);
+    const { step } = this.state;
     return (
       <div>
         <Steps current={step}>
@@ -28,10 +29,12 @@ class Component extends React.Component {
         <div className={styles.stepContent}>
           {
             step === 0 ? <StepOne
-              dataSource={this.props.dataSource}
+              skucd={this.props.dataSource.skucd}
               filter={this.props.filter}
               updateProduct={this.props.updateProduct}
               detail={this.props.detail}
+              getDetail={this.props.getDetail}
+              nextStep={this.handleNextStep}
             />
               :
               step === 1 ? <StepTwo
@@ -39,10 +42,15 @@ class Component extends React.Component {
                 skucd={this.props.dataSource.skucd}
                 attribute={this.props.attribute}
                 updateAttr={this.props.updateAttr}
+                nextStep={this.handleNextStep}
               />
                 :
               <StepThree
                 product={this.props.product}
+                relational={this.props.relational}
+                skucd={this.props.dataSource.skucd}
+                getRelational={this.props.getRelational}
+                updateRelational={this.props.updateRelational}
               />
           }
         </div>

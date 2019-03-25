@@ -8,7 +8,7 @@ import ProductList from "./list";
 const mapStateToProps = (state) => {
   // console.log('Admin main props', state);
   const { data, filter, headers } = state.productlist.all;
-  const { detail, attribute } = state.productlist;
+  const { detail, attribute, relational } = state.productlist;
 
   let returnObject = {
     data,
@@ -16,12 +16,14 @@ const mapStateToProps = (state) => {
     headers,
     detail,
     attribute,
+    relational,
   };
 
   return returnObject;
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
+  console.log();
   let actionCreators = {
     getAll: ProductModel.all, // product-iin husnegtiin data avah huselt filter deer mun adil hereglej bgaa para-g oorchilood
     getFilter: ProductModel.filter, // filter hesegiin input bolon select, multi select-iin value-g avah huselt
@@ -29,6 +31,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     getDetail: ProductModel.detail, // selected hiigdsen sku cd-iin medeelel avah ZURAG
     getAttribute: ProductModel.attribute, // update hiij bga product-iin attribute-iin burtgeliig avah huselt
     updateAttr: ProductModel.upattribute, // attribute-iig update hiih huselt
+    getRelational: ProductModel.relational, // Step 3 -iin product-iig avah huselt
+    updateRelational: ProductModel.uprelational, // step 3 update relational product
   };
 
   return ({
@@ -50,6 +54,10 @@ class Product extends React.Component {
 
   componentDidMount() { this.refresh(); }
 
+  componentWillReceiveProps(prevProps) {
+    // console.log('prevProps', prevProps.relational);
+  }
+
   componentWillUpdate(prevProps, prevState) {
     if (prevProps !== prevState.dataSource) {
       this.setState({ dataSource: prevProps });
@@ -61,6 +69,7 @@ class Product extends React.Component {
     this.props.getFilter();
     // this.props.getDetail({ skucd: '5000267024004' });
     // this.props.getAttribute({ skucd: '5000267024004' });
+    this.props.getRelational({ skucd: '0081128007874' });
   }
 
   render() {
@@ -74,6 +83,8 @@ class Product extends React.Component {
         getDataSource={this.props.getAll}
         getAttribute={this.props.getAttribute}
         updateAttr={this.props.updateAttr}
+        getRelational={this.props.getRelational}
+        updateRelational={this.props.updateRelational}
       />
     );
   }

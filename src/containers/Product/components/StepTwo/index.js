@@ -11,12 +11,16 @@ const formItemLayout = {
 class Component extends React.Component {
     state = {
       attribute: null,
-      value: 201,
+      loading: true,
     }
 
-    componentDidMount() {
-    //   this.setState({ attribute: null });
-      this.props.getAttribute({ skucd: this.props.skucd });
+    componentWillMount() {
+      this.props.getAttribute({ skucd: this.props.skucd }).then((res) => {
+        this.setState({
+          loading: false,
+          attribute: this.props.attribute,
+        });
+      });
     }
 
     handleSubmit = (e) => {
@@ -29,15 +33,9 @@ class Component extends React.Component {
 
     render() {
       const { getFieldDecorator } = this.props.form;
-      const { attribute } = this.state;
+      const { attribute, loading } = this.state;
 
-      if (this.props.attribute !== this.state.attribute) {
-        this.setState({ attribute: this.props.attribute });
-      }
-
-      // console.log(attribute);
-
-      if (attribute !== null && attribute.categoryattributes !== undefined) {
+      if (!loading) {
         return (
           <div style={{ width: '100%' }} className={styles.otModalForm}>
             <Form onSubmit={this.handleSubmit}>
@@ -46,7 +44,7 @@ class Component extends React.Component {
                   <Col span={12} key={i.key}>
                     <Form.Item {...formItemLayout} label={i.label} >
                       {getFieldDecorator(`${i.name}`, {
-                                initialValue: `${attribute.productattributes.find(k => k.attrid === i.key).attrvalueid}`,
+                                initialValue: `${attribute.productattributes.find(k => k.attrid === i.key) === undefined ? '' : attribute.productattributes.find(k => k.attrid === i.key).attrvalueid}`,
                                 rules: [{ required: false }],
                             })(
                               <Select
