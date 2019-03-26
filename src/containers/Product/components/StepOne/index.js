@@ -141,8 +141,7 @@ class Component extends React.Component {
     // const formData = new FormData();
     // formData.append("files", images[0].originFileObj, images[0].name);
     // console.log(formData);
-    this.props.updateProduct({ body: { ...update }, skucd: update.skucd })
-      .then(res => this.props.nextStep());
+    this.props.updateProduct({ body: { ...update }, skucd: update.skucd }).then(res => this.props.nextStep());
     // console.log(this.state.update.skucd);
 
 

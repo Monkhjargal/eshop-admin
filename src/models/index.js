@@ -61,6 +61,11 @@ const Productlist = new ProductModel({
   model: 'productlist',
 });
 
+const Package = new ProductModel({
+  url: '/mn/api/package',
+  model: 'package',
+});
+
 const Brandlist = new CrudModel({
   url: '/mn/api/brand',
   model: 'brandlist',
@@ -146,4 +151,5 @@ export {
   Promotion,
   Product,
   Infotrans,
+  Package,
 };

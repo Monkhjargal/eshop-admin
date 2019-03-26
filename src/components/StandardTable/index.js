@@ -67,7 +67,7 @@ class StandardTable extends PureComponent {
         return false;
       });
     }
-
+    console.log(rest);
     return (
       <div className={styles.standardTable}>
         <Table
