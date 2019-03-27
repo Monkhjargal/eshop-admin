@@ -38,17 +38,17 @@ class SelectTreeWidget extends Component {
   render() {
     const root = [];
     // console.log(this.props.schema.options);
-    this.props.schema.options.forEach((entry, index) => {
-      if (entry.parentid === 0) {
-        entry.children = [];
-        root.push(entry);
-      }
-      root.forEach((ent, ind) => {
-        if (ent.id === entry.parentid) {
-          ent.children.push(entry);
-        }
-      });
-    });
+    // this.props.schema.options.forEach((entry, index) => {
+    //   if (entry.parentid === 0) {
+    //     entry.children = [];
+    //     root.push(entry);
+    //   }
+    //   root.forEach((ent, ind) => {
+    //     if (ent.id === entry.parentid) {
+    //       ent.children.push(entry);
+    //     }
+    //   });
+    // });
     // console.log(root);
     return (
       <TreeSelect
@@ -59,7 +59,7 @@ class SelectTreeWidget extends Component {
         treeDefaultExpandAll
         onChange={value => this.props.onChange(value)}
       >
-        {this.renderTreeNodes(root)}
+        {this.renderTreeNodes(this.props.schema.options)}
       </TreeSelect>
     );
   }

@@ -111,6 +111,8 @@ class List extends Component {
         switch (entry.dataIndex) {
           case 'aid':
             return entry.render = (text, record, index) => <span>{index + 1}</span>;
+          case 'description':
+            return entry.render = (text, record, index) => <div className="description">{record.description}</div>;
           case 'isusefilter':
             return entry.render = (text, record) => <Switch checked={Boolean(record.isusefilter)} disabled />;
           case 'isnew':

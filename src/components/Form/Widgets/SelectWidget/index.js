@@ -18,7 +18,7 @@ class SelectWidget extends Component {
         size="small"
         allowClear
         placeholder={`${this.props.schema.label} сонгох`}
-        value={this.props.value ? (typeof this.props.value === 'number') ? this.props.value.toString() : this.props.value : this.props.value}
+        value={this.props.value}
         required={this.props.required}
         disabled={this.props.disabled}
         onChange={value => this.props.onChange(value)}

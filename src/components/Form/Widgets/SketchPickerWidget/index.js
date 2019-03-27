@@ -19,6 +19,7 @@ class SketchPickerWidget extends Component {
   render() {
     return (
       <SketchPicker
+        key={this.props.id}
         color={this.props.value}
         onChange={this.handleChange}
         onChangeComplete={this.handleChangeComplete}
