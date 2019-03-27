@@ -12,9 +12,10 @@ class Component extends React.Component {
     step: 0,
   }
 
-  handleClickstep = (e) => { if (this.state.step !== e.value) { this.setState({ step: e.value }); } }
+  handleClickstep = (e) => { } // if (this.state.step !== e.value) { this.setState({ step: e.value }); }
 
   handleNextStep = () => { this.setState({ step: this.state.step + 1 }); }
+  handlePrevStep = () => { this.setState({ step: this.state.step - 1 }); }
 
   render() {
     // console.log('Main step', this.props);
@@ -43,6 +44,7 @@ class Component extends React.Component {
                 attribute={this.props.attribute}
                 updateAttr={this.props.updateAttr}
                 nextStep={this.handleNextStep}
+                prevStep={this.handlePrevStep}
               />
                 :
               <StepThree
@@ -51,6 +53,7 @@ class Component extends React.Component {
                 skucd={this.props.dataSource.skucd}
                 getRelational={this.props.getRelational}
                 updateRelational={this.props.updateRelational}
+                prevStep={this.handlePrevStep}
               />
           }
         </div>

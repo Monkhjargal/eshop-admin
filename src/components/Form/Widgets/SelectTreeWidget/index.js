@@ -54,7 +54,7 @@ class SelectTreeWidget extends Component {
       <TreeSelect
         value={this.props.value}
         showSearch
-        size="small"
+        size={this.props.size === undefined ? 'small' : this.props.size}
         dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
         treeDefaultExpandAll
         onChange={value => this.props.onChange(value)}

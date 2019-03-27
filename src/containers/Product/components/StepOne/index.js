@@ -19,6 +19,7 @@ import Rate from "react-stars";
 import moment from "moment";
 import CKEditor from "react-ckeditor-component";
 
+import { SelectTreeWidget } from "../../../../components/Form/Widgets";
 import { StatusChangeHistory } from "../";
 import styles from "../../styles.less";
 
@@ -28,6 +29,7 @@ const Panel = Collapse.Panel;
 const formatter = new Intl.NumberFormat("en-US");
 const { RangePicker } = DatePicker;
 const dateFormat = 'YYYY-MM-DD';
+const picserver = 'http://202.55.180.199:8877/';
 
 const formItemLayout = {
   labelCol: { span: 6 },
@@ -60,8 +62,8 @@ const historyLayout = {
 };
 
 const cartLayout = {
-  labelCol: { span: 19 },
-  wrapperCol: { span: 5 },
+  labelCol: { span: 10 },
+  wrapperCol: { span: 13 },
 };
 
 const searchKeyLayout = {
@@ -110,10 +112,13 @@ class Component extends React.Component {
 
   refresh = () => {
     this.props.getDetail({ skucd: this.props.skucd }).then((res) => {
+      const files = [];
+      this.props.detail.files.map((i, index) => files.push({ url: picserver + i, name: i, uid: index }));
       this.setState({
         loading: false,
         update: { ...this.props.detail },
         skucd: this.props.skucd,
+        images: files,
       });
     });
   }
@@ -142,10 +147,13 @@ class Component extends React.Component {
     const { update, images } = this.state;
     let data = new FormData();
     images.map(i => data.append("files", i.originFileObj, i.name));
+    images.map(i => (i.originFileObj === undefined ? data.append("imgnm", i.name) : ''));
     Object.keys(update).map(keyname => data.append(keyname, update[keyname]));
 
     const isfiles = true;
-    this.props.updateProduct({ body: data, skucd: update.skucd, isfiles });
+    this.props.updateProduct({ body: data, skucd: update.skucd, isfiles }).then((res) => {
+      if (update.catid !== null) { this.props.nextStep(); }
+    });
   }
 
   handleCke = (evt) => {
@@ -172,6 +180,22 @@ class Component extends React.Component {
     });
   }
 
+  handleChangeCat = (e) => {
+    const { update } = this.state;
+    update.catid = e;
+    this.setState(update);
+  }
+
+  handleRemove = (e) => {
+    const { images } = this.state;
+    images.map((i, index) => {
+      if (i.name === e.name) { images.splice(index, 1); }
+      return '';
+    });
+
+    this.setState(images);
+  }
+
   render() {
     const { detail, filter } = this.props;
     const {
@@ -193,7 +217,7 @@ class Component extends React.Component {
         <div style={{ width: '100%' }}>
           <Collapse defaultActiveKey={['1', '2', '3', '4', '5', '6', '7', '8']} className={styles.stepCollapse}>
             <Panel header="Ерөнхий мэдээлэл" key="1" >
-              <Form style={{ width: '100%' }} onsubmit={this.handleSubmit}>
+              <Form style={{ width: '100%' }}>
                 <Col span={12}>
                   <Form.Item {...formItemLayout} className={styles.formItem} label="Барааны код">
                     <Input placeholder="Барааны нэр" value={detail.skucd} disabled />
@@ -208,9 +232,13 @@ class Component extends React.Component {
                     <Input placeholder="Хаалт дахь нэр" defaultValue={detail.backtxt} onChange={(val) => { this.handleChange({ name: 'backtxt', value: val }); }} />
                   </Form.Item>
                   <Form.Item {...formItemLayout} className={styles.formItem} label="Ангилал">
-                    <Select placeholder="Ангилал" style={{ width: '100%' }} defaultValue={detail.catnm} onChange={val => this.handleChange({ name: 'catid', value: val })}>
-                      {filter.catids && filter.catids.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>)}
-                    </Select>
+                    <SelectTreeWidget
+                      style={{ width: '100%' }}
+                      value={update.catid}
+                      schema={{ options: filter.catids }}
+                      onChange={this.handleChangeCat}
+                      placeholder="Ангилал"
+                    />
                   </Form.Item>
                   <Col span={12}>
                     <Form.Item {...statusLayout} className={styles.formItem} label="Бренд">
@@ -294,9 +322,10 @@ class Component extends React.Component {
                 listType="picture-card"
                 fileList={images}
                 onPreview={this.handlePreview}
+                onRemove={this.handleRemove}
                 onChange={this.handleChangeImg}
               >
-                {uploadButton}
+                {images.length >= 5 ? null : uploadButton}
               </Upload>
               <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
                 <img alt="example" style={{ width: '100%' }} src={previewImage} />
@@ -315,10 +344,10 @@ class Component extends React.Component {
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Form.Item {...cartLayout} className={styles.formItem} label="Сагсанд хэдээр нэмэгдэх тоо">
+                <Form.Item {...halfItemLayout} className={styles.formItem} label="Сагсанд хэдээр нэмэгдэх тоо">
                   <InputNumber min={0} defaultValue={detail.addminqty} onChange={(val) => { this.handleChange({ name: 'addminqty', value: val }); }} />
                 </Form.Item>
-                <Form.Item {...cartLayout} className={styles.formItem} label="Гр-ын зарах хамгийн доод нэгж">
+                <Form.Item {...halfItemLayout} className={styles.formItem} label="Гр-ын зарах хамгийн доод нэгж">
                   <InputNumber min={0} defaultValue={detail.saleweight} onChange={(val) => { this.handleChange({ name: 'saleweight', value: val }); }} />
                 </Form.Item>
               </Col>
@@ -332,7 +361,7 @@ class Component extends React.Component {
               <Col span={12}>
                 <Form.Item {...halfItemLayout} className={styles.formItem} label="Хугацаа">
                   <RangePicker
-                    defaultValue={[moment(detail.sdate, dateFormat), moment(detail.edate, dateFormat)]}
+                    defaultValue={[moment(detail.sdate, dateFormat), moment(detail.edate + 30, dateFormat)]}
                     format={dateFormat}
                     onChange={this.handleChangeDate}
                   />

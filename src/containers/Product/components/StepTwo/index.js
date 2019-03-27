@@ -27,7 +27,9 @@ class Component extends React.Component {
       e.preventDefault();
       this.props.form.validateFields((err, values) => {
         // console.log('Received values of form: ', values);
-        this.props.updateAttr({ body: values, skucd: this.props.skucd });
+        this.props.updateAttr({ body: values, skucd: this.props.skucd }).then((res) => {
+          this.props.nextStep();
+        });
       });
     }
 
@@ -59,6 +61,7 @@ class Component extends React.Component {
                 ))}
               </Row>
               <Form.Item className={styles.stepSaveBtn}>
+                <Button onClick={this.props.prevStep} style={{ marginRight: 5 }}>Болих</Button>
                 <Button type="primary" htmlType="submit">Хадгалах</Button>
               </Form.Item>
             </Form>

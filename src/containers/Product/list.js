@@ -18,7 +18,7 @@ class Product extends React.Component {
     checkedRow: [],
     filtered: {
       skunm: '',
-      catids: [],
+      catids: null,
       attributeids: [],
       attrvalueids: [],
       brandids: [],
@@ -90,8 +90,10 @@ class Product extends React.Component {
     this.setState({ filtered: clear });
   }
 
-  handleChangeCat = () => {
-    console.log('hello');
+  handleChangeCat = (e) => {
+    const { filtered } = this.state;
+    filtered.catids = e;
+    this.setState(filtered);
   }
 
   renderFilterFields = () => {
@@ -126,16 +128,14 @@ class Product extends React.Component {
                 </Col>
                 <Col span={6}>
                   <Form.Item label="Ангилал" className={style.formItem}>
-                    <Select
-                      mode="multiple"
-                      size={'small'}
-                      placeholder="Ангилал хайх"
-                      style={{ width: '96%' }}
-                      value={filtered.catids}
-                      onChange={(val) => { this.handleChange({ name: 'catids', value: val }); }}
-                    >
-                      { filter.catids.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>) }
-                    </Select>
+                    <div style={{ width: '96%' }} >
+                      <SelectTreeWidget
+                        value={filtered.catids}
+                        schema={{ options: filter.catids }}
+                        onChange={this.handleChangeCat}
+                        placeholder="Ангилалаар хайх"
+                      />
+                    </div>
                   </Form.Item>
                 </Col>
                 <Col span={6}>
@@ -311,6 +311,8 @@ class Product extends React.Component {
     }
   }
 
+  handleName = (e) => { this.handleUpdateModal(); }
+
   renderTable = () => {
     try {
       const { headers } = this.state.dataSource;
@@ -318,6 +320,7 @@ class Product extends React.Component {
         switch (i.dataIndex) {
           case 'titlenm':
             return (
+              i.render = text => <span onClick={this.handleName}><a style={{ color: '#1890ff' }}>{text}</a></span>,
               i.sorter = (a, b) => a.titlenm.localeCompare(b.titlenm),
               i.sortDirections = ['descend', 'ascend']
             );
@@ -377,7 +380,7 @@ class Product extends React.Component {
             size="small"
             bordered={false}
             rowKey={record => record.id}
-            pagination={{ defaultPageSize: 8 }}
+            pagination={{ defaultPageSize: 10, showSizeChanger: true }}
             footer={this.renderFooter}
             onRow={record => ({
               onClick: () => this.handleRowClick(record),
