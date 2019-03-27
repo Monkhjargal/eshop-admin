@@ -8,6 +8,7 @@ import StepThree from "./StepThree";
 import StatusStepOne from "./StatusStepOne";
 import StatusStepTwo from "./StatusStepTwo";
 import StatusSteps from "./StatusSteps";
+import StatusChangeHistory from "./StatusChangeHistory";
 
 export {
   UpdateModal,
@@ -20,5 +21,6 @@ export {
   StatusStepOne,
   StatusStepTwo,
   StatusSteps,
+  StatusChangeHistory,
 };
 

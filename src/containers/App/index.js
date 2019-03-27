@@ -92,7 +92,7 @@ class App extends Component {
                 </Sider>
                 <Layout style={{ height: '100%' }}>
                   <Content style={{ height: 'calc(100% - 21px)' }} className="main-content">
-                    <div style={{ minHeight: '100%' }}>
+                    <div style={{ minHeight: '95%' }}>
                       <Menu mode="horizontal" style={{ textAlign: 'right', display: 'flex', justifyContent: 'flex-end' }}>
                         <SubMenu title={<span className="submenu-title-wrapper"><Icon type="user" />{this.props.auth && this.props.auth.data.value.userInfo.lastname} </span>}>
                           <Menu.Item key="profile">

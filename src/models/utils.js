@@ -4,7 +4,9 @@ import { message } from 'antd';
 const HOST = 'http://202.55.180.199:8881';
 // const HOST = 'http://10.0.10.30:8881';
 
-const request = ({ url, method, body }) => {
+const request = ({
+  url, method, body, isfiles,
+}) => {
   // console.log(body);
   let bearerHeader = 'Bearer ';
   const localData = JSON.parse(localStorage.getItem('persist:root'));
@@ -33,6 +35,19 @@ const request = ({ url, method, body }) => {
       return response.json();
     });
   }
+
+  if (isfiles) {
+    const request = new Request(HOST + url, {
+      method,
+      headers: new Headers({ Authorization: bearerHeader }),
+      body,
+    });
+    return fetch(request).then((response) => {
+      if (!response.ok) { throw new Error(response.statusText); }
+      return response.json();
+    });
+  }
+
   return fetch(HOST + url, {
     credentials: 'include',
     method,
@@ -53,7 +68,7 @@ const request = ({ url, method, body }) => {
 };
 
 const asyncFn = ({
-  body, url, method = 'GET', model, name,
+  body, url, method = 'GET', model, name, isfiles = false,
 }) => async (dispatch) => {
   // console.log(body);
   const payload = {};
@@ -71,7 +86,9 @@ const asyncFn = ({
       });
     } else {
       console.log(body);
-      const data = await request({ url, method, body });
+      const data = await request({
+        url, method, body, isfiles,
+      });
       console.log(data);
       if (data && data.success !== false) {
         if (model.response === 'RESPONSE_PRODUCTLIST_UPDATE') { message.success(data.message); }

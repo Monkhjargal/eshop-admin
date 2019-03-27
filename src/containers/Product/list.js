@@ -7,6 +7,7 @@ import styles from '../../components/List/style.less';
 import tableStyle from "../../components/StandardTable/index.less";
 import style from "./styles.less";
 import { UpdateModal, StatusModal, Excel } from "./components";
+import { SelectTreeWidget } from "../../components/Form/Widgets";
 
 const formatter = new Intl.NumberFormat("en-US");
 
@@ -87,6 +88,10 @@ class Product extends React.Component {
       updemps: [],
     };
     this.setState({ filtered: clear });
+  }
+
+  handleChangeCat = () => {
+    console.log('hello');
   }
 
   renderFilterFields = () => {
@@ -311,14 +316,53 @@ class Product extends React.Component {
       const { headers } = this.state.dataSource;
       headers.map((i) => {
         switch (i.dataIndex) {
+          case 'titlenm':
+            return (
+              i.sorter = (a, b) => a.titlenm.localeCompare(b.titlenm),
+              i.sortDirections = ['descend', 'ascend']
+            );
+          case 'catnm':
+            return (
+              i.sorter = (a, b) => (a.catnm == null ? "" : a.catnm).localeCompare(b.catnm === null ? "" : b.catnm),
+              i.sortDirections = ['descend', 'ascend']
+            );
+          case 'brandnm':
+            return (
+              i.sorter = (a, b) => (a.brandnm == null ? "" : a.brandnm).localeCompare(b.brandnm === null ? "" : b.brandnm),
+              i.sortDirections = ['descend', 'ascend']
+            );
           case 'newprice':
-            return i.render = text => <span>{formatter.format(text)}</span>;
+            return (
+              i.render = text => <span>{formatter.format(text)}</span>,
+              i.sorter = (a, b) => a.newprice - b.newprice,
+              i.sortDirections = ['descend', 'ascend']
+            );
           case 'sprice':
-            return i.render = text => <span>{formatter.format(text)}</span>;
+            return (
+              i.render = text => <span>{formatter.format(text)}</span>,
+              i.sorter = (a, b) => a.sprice - b.sprice,
+              i.sortDirections = ['descend', 'ascend']
+            );
+          case 'spercent':
+            return (
+              i.render = text => <span>{text}%</span>,
+              i.sorter = (a, b) => a.spercent - b.spercent,
+              i.sortDirections = ['descend', 'ascend']
+            );
+          case 'status':
+            return (
+              i.sorter = (a, b) => a.status - b.status,
+              i.sortDirections = ['descend', 'ascend']
+            );
+          case 'availableqty':
+            return (
+              i.sorter = (a, b) => a.availableqty - b.availableqty,
+              i.sortDirections = ['descend', 'ascend']
+            );
           case 'isnew':
             return i.render = (text, record) => <Switch checked={!!record.isnew} disabled />;
-          // case 'rate':
-          //   return i.render = (text, record) => <span style={{ display: 'inline-flex', alignItems: 'center' }}><Rate className="align-baseline" count={5} size={22} color2={'#ffd700'} value={record.rate} edit={false} />{text}</span>;
+          case 'rate':
+            return (i.sorter = (a, b) => a.rate - b.rate);
 
           default:
             return '';
@@ -333,11 +377,11 @@ class Product extends React.Component {
             size="small"
             bordered={false}
             rowKey={record => record.id}
-            pagination={{ defaultPageSize: 11 }}
+            pagination={{ defaultPageSize: 8 }}
             footer={this.renderFooter}
             onRow={record => ({
-            onClick: () => this.handleRowClick(record),
-        })}
+              onClick: () => this.handleRowClick(record),
+            })}
           />
         </div>
       );
@@ -379,6 +423,8 @@ class Product extends React.Component {
                       getRelational={this.props.getRelational} // get getRelational={this.props.getRelational}
                       updateRelational={this.props.updateRelational}
                     />
+
+                    {/** Baraanii tuluv oorchiloh modal */}
                     <StatusModal
                       visible={this.state.isstatus}
                       onCancel={this.handleStatusModal}

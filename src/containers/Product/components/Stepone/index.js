@@ -19,6 +19,7 @@ import Rate from "react-stars";
 import moment from "moment";
 import CKEditor from "react-ckeditor-component";
 
+import { StatusChangeHistory } from "../";
 import styles from "../../styles.less";
 
 
@@ -54,8 +55,8 @@ const statusLayout = {
 };
 
 const historyLayout = {
-  labelCol: { span: 4 },
-  wrapperCol: { span: 20 },
+  labelCol: { span: 7 },
+  wrapperCol: { span: 17 },
 };
 
 const cartLayout = {
@@ -101,6 +102,7 @@ class Component extends React.Component {
       previewImage: '',
       loading: true,
       skucd: null,
+      ishistory: false,
     };
   }
 
@@ -138,28 +140,12 @@ class Component extends React.Component {
 
   handleSave = () => {
     const { update, images } = this.state;
-    // const formData = new FormData();
-    // formData.append("files", images[0].originFileObj, images[0].name);
-    // console.log(formData);
-    this.props.updateProduct({ body: { ...update }, skucd: update.skucd })
-      .then(res => this.props.nextStep());
-    // console.log(this.state.update.skucd);
+    let data = new FormData();
+    images.map(i => data.append("files", i.originFileObj, i.name));
+    Object.keys(update).map(keyname => data.append(keyname, update[keyname]));
 
-
-    // let data = new FormData();
-    // data.append("files", images[0].originFileObj, images[0].name);
-
-    // const request = new Request(`http://10.0.10.30:8881/mn/api/product/5010327000404`, {
-    //   method: 'PUT',
-    //   headers: new Headers({
-    //     Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJZVWd1RyttVFJsejN1ME83RWswSDIyWW5pMlJMR2I0THBNMEtOYjBvcjZpQkJNMkJla3B0OHNBbXU4L2t0VlE5Y2VuMml6K2VhLzhCeVdZek5HcDZOR094T1FDWm85Y3FCWVhXR1RqNzR3R1VhSE5aRy9UR3hwZE5wemRKK2l4WCIsImp0aSI6IjEyMTM4OWYwLWUwNGYtNDA2OC04ZmI2LWJiODI2YzlhODYxMyIsImlhdCI6MTU1MzE2MjYzMCwiQWRtaW5DaGFyYWN0ZXIiOiJJQW1NYXBpIiwibmJmIjoxNTUzMTYyNjMwLCJleHAiOjE1NTMyNDkwMzAsImlzcyI6Ik9ubGluZUFQSSIsImF1ZCI6Imh0dHBzOi8vMTAuMC4xMC4zMjo4ODgxLyJ9._Dcac-pwrzOl8t_ZQ_ELgB4eTYzoSM_DFr-EU6iXyA0`,
-    //     'Content-Type': 'application/json',
-    //   }),
-    //   body: data,
-    // });
-    // fetch(request).then((response) => {
-    //   console.log("gkernjk", response);
-    // }).catch(error => console.log("fsafasfas"));
+    const isfiles = true;
+    this.props.updateProduct({ body: data, skucd: update.skucd, isfiles });
   }
 
   handleCke = (evt) => {
@@ -176,12 +162,21 @@ class Component extends React.Component {
     this.setState(update);
   }
 
+  handleHistoryModal = () => { this.setState({ ishistory: !this.state.ishistory }); }
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        console.log('Received values of form: ', values);
+      }
+    });
+  }
+
   render() {
     const { detail, filter } = this.props;
     const {
-      previewVisible, previewImage, update, skucd,
+      previewVisible, previewImage, update, skucd, images,
     } = this.state;
-    const { images } = this.state;
     const uploadButton = (
       <div>
         <Icon type="plus" />
@@ -197,98 +192,104 @@ class Component extends React.Component {
       return (
         <div style={{ width: '100%' }}>
           <Collapse defaultActiveKey={['1', '2', '3', '4', '5', '6', '7', '8']} className={styles.stepCollapse}>
-            {/* <Form onSubmit={this.handleSubmit}> */}
             <Panel header="Ерөнхий мэдээлэл" key="1" >
-              <Col span={12}>
-                <Form.Item {...formItemLayout} className={styles.formItem} label="Барааны нэр">
-                  <Input placeholder="Барааны нэр" value={detail.skucd} disabled />
-                </Form.Item>
-                <Form.Item {...formItemLayout} className={styles.formItem} label="Онлайн нэр">
-                  <Input placeholder="Онлайн нэр" defaultValue={detail.titlenm} onChange={(val) => { this.handleChange({ name: 'titlenm', value: val }); }} />
-                </Form.Item>
-                <Form.Item {...formItemLayout} className={styles.formItem} label="Богино тайлбар">
-                  <Input placeholder="Богино тайлбар" defaultValue={detail.featuretxt} onChange={(val) => { this.handleChange({ name: 'featuretxt', value: val }); }} />
-                </Form.Item>
-                <Form.Item {...formItemLayout} className={styles.formItem} label="Хаалтанд дахь нэр" >
-                  <Input placeholder="Хаалтанд дахь нэр" defaultValue={detail.backtxt} onChange={(val) => { this.handleChange({ name: 'backtxt', value: val }); }} />
-                </Form.Item>
-                <Form.Item {...formItemLayout} className={styles.formItem} label="Ангилал">
-                  <Select placeholder="Ангилал" style={{ width: '100%' }} defaultValue={detail.catnm} onChange={val => this.handleChange({ name: 'catid', value: val })}>
-                    {filter.catids && filter.catids.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>)}
-                  </Select>
-                </Form.Item>
+              <Form style={{ width: '100%' }} onsubmit={this.handleSubmit}>
                 <Col span={12}>
-                  <Form.Item {...statusLayout} className={styles.formItem} label="Бренд">
-                    <Select placeholder="Бренд" style={{ width: '100%' }} defaultValue={detail.brandnm} onChange={val => this.handleChange({ name: 'brandid', value: val })}>
-                      {filter.brandids && filter.brandids.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>)}
+                  <Form.Item {...formItemLayout} className={styles.formItem} label="Барааны код">
+                    <Input placeholder="Барааны нэр" value={detail.skucd} disabled />
+                  </Form.Item>
+                  <Form.Item {...formItemLayout} className={styles.formItem} label="Онлайн нэр">
+                    <Input placeholder="Онлайн нэр" defaultValue={detail.titlenm} onChange={(val) => { this.handleChange({ name: 'titlenm', value: val }); }} />
+                  </Form.Item>
+                  <Form.Item {...formItemLayout} className={styles.formItem} label="Богино тайлбар">
+                    <Input placeholder="Богино тайлбар" defaultValue={detail.featuretxt} onChange={(val) => { this.handleChange({ name: 'featuretxt', value: val }); }} />
+                  </Form.Item>
+                  <Form.Item {...formItemLayout} className={styles.formItem} label="Хаалтанд дахь нэр" >
+                    <Input placeholder="Хаалт дахь нэр" defaultValue={detail.backtxt} onChange={(val) => { this.handleChange({ name: 'backtxt', value: val }); }} />
+                  </Form.Item>
+                  <Form.Item {...formItemLayout} className={styles.formItem} label="Ангилал">
+                    <Select placeholder="Ангилал" style={{ width: '100%' }} defaultValue={detail.catnm} onChange={val => this.handleChange({ name: 'catid', value: val })}>
+                      {filter.catids && filter.catids.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>)}
                     </Select>
                   </Form.Item>
+                  <Col span={12}>
+                    <Form.Item {...statusLayout} className={styles.formItem} label="Бренд">
+                      <Select placeholder="Бренд" style={{ width: '100%' }} defaultValue={detail.brandnm} onChange={val => this.handleChange({ name: 'brandid', value: val })}>
+                        {filter.brandids && filter.brandids.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>)}
+                      </Select>
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item {...halfItemLayout} className={styles.formItem} label="ХНС бренд">
+                      <Input placeholder="ХНС бренд" value={detail.bibrandnm} disabled />
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item {...statusLayout} className={styles.formItem} label="Төлөв">
+                      <Input
+                        disabled
+                        value={filter.productstatus.find(i => (i.id === detail.status)) === undefined ? '' : filter.productstatus.find(i => (i.id === detail.status)).name}
+                        className={detail.status === 1 ? styles.statusOne : detail.status === 2 ? styles.statusTwo : styles.statusThree}
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item {...historyLayout} className={styles.formItemhistory} label=""> <a onClick={this.handleHistoryModal} >Төлөв өөрчлөлтийн түүх</a> </Form.Item>
+                  </Col>
                 </Col>
                 <Col span={12}>
-                  <Form.Item {...halfItemLayout} className={styles.formItem} label="ХНС бренд">
-                    <Input placeholder="ХНС бренд" value={detail.bibrandnm} disabled />
+                  <Form.Item {...formItemLayout} className={styles.formItem} label="ХНС-ийн нэр" >
+                    <Input placeholder="ХНС-ийн нэр" value={detail.titlenm} disabled />
                   </Form.Item>
-                </Col>
-                <Col span={12}>
-                  <Form.Item {...statusLayout} className={styles.formItem} label="Төлөв">
-                    <Input disabled value={filter.productstatus.find(i => (i.id === detail.status)) === undefined ? '' : filter.productstatus.find(i => (i.id === detail.status)).name} className={styles.statusIn} />
+                  <Form.Item {...formItemLayout} className={styles.formItem} label="Гарал үүсэл">
+                    <Input placeholder="Гарал үүсэл" value={detail.countrynm} disabled />
                   </Form.Item>
-                </Col>
-                <Col span={12}>
-                  <Form.Item {...historyLayout} className={styles.formItemhistory} label=""> <a>Төлөв өөрчлөлтийн түүх</a> </Form.Item>
-                </Col>
-              </Col>
-              <Col span={12}>
-                <Form.Item {...formItemLayout} className={styles.formItem} label="ХНС-ийн нэр" >
-                  <Input placeholder="ХНС-ийн нэр" value={detail.titlenm} disabled />
-                </Form.Item>
-                <Form.Item {...formItemLayout} className={styles.formItem} label="Гарал үүсэл">
-                  <Input placeholder="Гарал үүсэл" value={detail.countrynm} disabled />
-                </Form.Item>
-                <Form.Item {...formItemLayout} className={styles.formItem} label="Хэмжих нэгж">
-                  <Input placeholder="Хэмжих нэгж" value={detail.measurenm} disabled />
-                </Form.Item>
-                <Col span={12}>
-                  <Form.Item {...halfItemLayout} className={styles.formItem} label="Худалдах үнэ">
-                    <Input placeholder="Худалдах үнэ" value={`${formatter.format(detail.sprice)}₮`} disabled />
+                  <Form.Item {...formItemLayout} className={styles.formItem} label="Хэмжих нэгж">
+                    <Input placeholder="Хэмжих нэгж" value={detail.measurenm} disabled />
                   </Form.Item>
-                </Col>
-                <Col span={12}>
-                  <Form.Item {...halfItemLayout} className={styles.formItem} label="Хямдралтай үнэ">
-                    <Input placeholder="" value={`${formatter.format(detail.newprice)}₮`} disabled />
+                  <Col span={12}>
+                    <Form.Item {...halfItemLayout} className={styles.formItem} label="Худалдах үнэ">
+                      <Input placeholder="Худалдах үнэ" value={`${formatter.format(detail.sprice)}₮`} disabled />
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item {...halfItemLayout} className={styles.formItem} label="Хямдралтай үнэ">
+                      <Input placeholder="" value={`${formatter.format(detail.newprice)}₮`} disabled />
+                    </Form.Item>
+                  </Col>
+                  <Form.Item {...formItemLayout} className={styles.formItem} label="Хямдрал нэр">
+                    <Input value={detail.norevnnm} disabled />
                   </Form.Item>
+                  <Col span={8}>
+                    <Form.Item {...discountLayout} className={styles.formItem} label="Хямдрал хувь">
+                      <Input className={styles.discountPercnt} value={`${detail.spercent}%`} disabled />
+                    </Form.Item>
+                  </Col>
+                  <Col span={15}>
+                    <Form.Item {...dateLayout} className={styles.formItem} label="Хугацаа">
+                      <Row className={styles.dateformItem}>
+                        <Input disabled value={detail.esdate ? moment(detail.esdate).format('YYYY-MM-DD') : ''} /> {` - `}
+                        <Input disabled value={detail.eedate ? moment(detail.eedate).format('YYYY-MM-DD') : ''} />
+                      </Row>
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item {...halfItemLayout} className={styles.formItem} label="Дундаж үнэлгээ">
+                      <Rate className="align-baseline" count={5} size={22} color2={'#ffb200'} value={detail.rate} edit={false} />
+                      {/* <t>{detail.rate}</t> */}
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item {...halfItemLayout} className={styles.formItem} label="Хэрэглэгч тоо">
+                      <Input placeholder="" value={detail.ratecnt} disabled />
+                    </Form.Item>
+                  </Col>
                 </Col>
-                <Form.Item {...formItemLayout} className={styles.formItem} label="Хямдрал нэр">
-                  <Input value={detail.norevnnm} disabled />
-                </Form.Item>
-                <Col span={8}>
-                  <Form.Item {...discountLayout} className={styles.formItem} label="Хямдрал хувь">
-                    <Input className={styles.discountPercnt} value={`${detail.spercent}%`} disabled />
-                  </Form.Item>
-                </Col>
-                <Col span={15}>
-                  <Form.Item {...dateLayout} className={styles.formItem} label="Хугацаа">
-                    <Row className={styles.dateformItem}>
-                      <Input disabled value={detail.esdate ? moment(detail.esdate).format('YYYY-MM-DD') : ''} /> {` - `}
-                      <Input disabled value={detail.eedate ? moment(detail.eedate).format('YYYY-MM-DD') : ''} />
-                    </Row>
-                  </Form.Item>
-                </Col>
-                <Col span={12}>
-                  <Form.Item {...halfItemLayout} className={styles.formItem} label="Дундаж үнэлгээ">
-                    <Rate className="align-baseline" count={5} size={22} color2={'#ffb200'} value={detail.rate} edit={false} />
-                    {/* <t>{detail.rate}</t> */}
-                  </Form.Item>
-                </Col>
-                <Col span={12}>
-                  <Form.Item {...halfItemLayout} className={styles.formItem} label="Хэрэглэгч тоо">
-                    <Input placeholder="" value={detail.ratecnt} disabled />
-                  </Form.Item>
-                </Col>
-              </Col>
+              </Form>
             </Panel>
             <Panel header="Зургийн тохиргоо" key="2">
               <Upload
+                accept={".jpg,.png,.jpeg,.gif"}
                 action="//jsonplaceholder.typicode.com/posts/"
                 listType="picture-card"
                 fileList={images}
@@ -301,12 +302,12 @@ class Component extends React.Component {
                 <img alt="example" style={{ width: '100%' }} src={previewImage} />
               </Modal>
             </Panel>
-            <Panel header="Сагсны тохиргоо" key="4">
+            <Panel header="Сагсны тохиргоо (Нэг худалдан авалтад)" key="4">
               <Col span={12}>
-                <Form.Item {...cartLayout} className={styles.formItem} label="Нэг худалдан авалтанд хамгийн багадаа хэдэн нэгжээр зарах">
+                <Form.Item {...cartLayout} className={styles.formItem} label="Хамгийн багадаа хэдэн нэгжээр зарах">
                   <InputNumber min={0} defaultValue={detail.saleminqty} onChange={(val) => { this.handleChange({ name: 'saleminqty', value: val }); }} />
                 </Form.Item>
-                <Form.Item {...cartLayout} className={styles.formItem} label="Нэг худалдан авалтад авч болох боломжит тоо">
+                <Form.Item {...cartLayout} className={styles.formItem} label="Худалдан авч болох боломжит тоо">
                   <InputNumber min={0} defaultValue={detail.salemaxqty} onChange={(val) => { this.handleChange({ name: 'salemaxqty', value: val }); }} />
                 </Form.Item>
                 <Form.Item {...cartLayout} className={styles.formItem} label="Кг-ын барааг гр-аар зарах бол тэмдэглэ">
@@ -390,6 +391,11 @@ class Component extends React.Component {
           <div className={styles.stepSaveBtn}>
             <Button type="primary" onClick={this.handleSave}>Хадгалах</Button>
           </div>
+
+          <StatusChangeHistory
+            visible={this.state.ishistory}
+            onCancel={this.handleHistoryModal}
+          />
         </div>
       );
     }
@@ -400,4 +406,5 @@ class Component extends React.Component {
   }
 }
 
-export default Component;
+const StepOne = Form.create({ name: 'step_one' })(Component);
+export default StepOne;
