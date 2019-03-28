@@ -36,6 +36,8 @@ class Component extends React.Component {
               detail={this.props.detail}
               getDetail={this.props.getDetail}
               nextStep={this.handleNextStep}
+              getStatusHistory={this.props.getStatusHistory}
+              statusHistory={this.props.statusHistory}
             />
               :
               step === 1 ? <StepTwo

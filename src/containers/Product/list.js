@@ -315,7 +315,7 @@ class Product extends React.Component {
 
   renderTable = () => {
     try {
-      const { headers, filter } = this.state.dataSource;
+      const { headers } = this.state.dataSource;
       headers.map((i) => {
         switch (i.dataIndex) {
           case 'titlenm':
@@ -354,7 +354,7 @@ class Product extends React.Component {
             );
           case 'status':
             return (
-              i.render = text => <span><Input value={text} className={text === 1 ? style.statusOne : text === 2 ? style.statusTwo : style.statusThree} /></span>,
+              i.render = (text, record) => <span><Input disabled value={record.statusnm} className={text === 1 ? style.statusOne : text === 2 ? style.statusTwo : style.statusThree} /></span>,
               i.sorter = (a, b) => a.status - b.status,
               i.sortDirections = ['descend', 'ascend']
             );
@@ -417,6 +417,7 @@ class Product extends React.Component {
                       dataSource={this.state.selectedRow} // selected roe step one data
                       filter={this.props.dataSource.filter}
                       detail={this.props.dataSource.detail}
+                      statusHistory={this.props.dataSource.statushistory}
                       getDetail={this.props.getDetail}
                       updateProduct={this.props.updateProduct}
                       getAttribute={this.props.getAttribute}
@@ -426,6 +427,7 @@ class Product extends React.Component {
                       relational={this.props.dataSource.relational} // step-3 relational
                       getRelational={this.props.getRelational} // get getRelational={this.props.getRelational}
                       updateRelational={this.props.updateRelational}
+                      getStatusHistory={this.props.getStatusHistory}
                     />
 
                     {/** Baraanii tuluv oorchiloh modal */}

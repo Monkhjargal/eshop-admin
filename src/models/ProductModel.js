@@ -57,6 +57,11 @@ class ProductModel extends BaseModel {
           response: this.buildActionName('response', data.model, 'changestatus'),
           error: this.buildActionName('error', data.model, 'changestatus'),
         },
+        statushistory: {
+          request: this.buildActionName('request', data.model, 'statushistory'),
+          response: this.buildActionName('response', data.model, 'statushistory'),
+          error: this.buildActionName('error', data.model, 'statushistory'),
+        },
       };
     }
 
@@ -110,6 +115,9 @@ class ProductModel extends BaseModel {
   });
   changestatus = ({ body } = {}) => asyncFn({
     body, url: `/mn/api/product/status/`, method: 'POST', model: this.model.changestatus,
+  });
+  statushistory = ({ skucd } = {}) => asyncFn({
+    url: `/mn/api/product/status/${skucd}`, method: 'GET', model: this.model.statushistory,
   });
 
   reducer = (state = this.initialState, action) => {
@@ -297,7 +305,22 @@ class ProductModel extends BaseModel {
           ...state,
           status: action.payload.value,
         };
-
+      // CHANGE STATUS HISTORY
+      case this.model.statushistory.request:
+        return {
+          ...state,
+          status: this.requestCase(state.all, action),
+        };
+      case this.model.statushistory.error:
+        return {
+          ...state,
+          status: this.errorCase(state.category, action),
+        };
+      case this.model.statushistory.response:
+        return {
+          ...state,
+          statushistory: action.payload.value,
+        };
       // DEFUALT
       default:
         return state;

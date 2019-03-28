@@ -13,10 +13,15 @@ class Component extends React.Component {
           visible={this.props.visible}
           footer={null}
           onCancel={this.props.onCancel}
-          width={'50%'}
+          width={'60%'}
           destroyOnClose
         >
-          <Main />
+          <Main
+            getStatusHistory={this.props.getStatusHistory}
+            skucd={this.props.skucd}
+            name={this.props.name}
+            statusHistory={this.props.statusHistory}
+          />
         </Modal>
       </div>
     );

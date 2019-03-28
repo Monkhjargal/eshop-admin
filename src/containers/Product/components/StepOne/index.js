@@ -341,7 +341,7 @@ class Component extends React.Component {
                   <InputNumber min={0} defaultValue={detail.salemaxqty} onChange={(val) => { this.handleChange({ name: 'salemaxqty', value: val }); }} />
                 </Form.Item>
                 {
-                  detail.issalekg === 0 ? '' : (
+                  detail.measurecd !== "K" ? '' : (
                     <Form.Item {...cartLayout} className={styles.formItem} label="Кг-ын барааг гр-аар зарах бол тэмдэглэ">
                       <Checkbox defaultChecked={detail.issalekg} onChange={(val) => { this.handleChange({ name: 'issalekg', value: val }); }} />
                     </Form.Item>
@@ -353,7 +353,7 @@ class Component extends React.Component {
                   <InputNumber min={0} defaultValue={detail.addminqty} onChange={(val) => { this.handleChange({ name: 'addminqty', value: val }); }} />
                 </Form.Item>
                 {
-                  detail.issalekg === 0 ? '' : (
+                  detail.measurecd !== "K" ? '' : (
                     <Form.Item {...halfItemLayout} className={styles.formItem} label="Гр-ын зарах хамгийн доод нэгж">
                       <InputNumber min={0} defaultValue={detail.saleweight} onChange={(val) => { this.handleChange({ name: 'saleweight', value: val }); }} />
                     </Form.Item>
@@ -434,6 +434,10 @@ class Component extends React.Component {
           <StatusChangeHistory
             visible={this.state.ishistory}
             onCancel={this.handleHistoryModal}
+            getStatusHistory={this.props.getStatusHistory}
+            skucd={this.props.skucd}
+            name={this.props.detail.titlenm}
+            statusHistory={this.props.statusHistory}
           />
         </div>
       );

@@ -6,10 +6,10 @@ import { Productlist as ProductModel } from "../../models";
 import ProductList from "./list";
 
 const mapStateToProps = (state) => {
-  // console.log('Admin main props', state);
+  // console.log('MAIN PROPS', state);
   const { data, filter, headers } = state.productlist.all;
   const {
-    detail, attribute, relational, status,
+    detail, attribute, relational, status, statushistory,
   } = state.productlist;
 
   let returnObject = {
@@ -20,6 +20,7 @@ const mapStateToProps = (state) => {
     attribute,
     relational,
     status,
+    statushistory,
   };
 
   return returnObject;
@@ -37,6 +38,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     updateRelational: ProductModel.uprelational, // step 3 update relational product
     getStatusProduct: ProductModel.status, // Baraanii tolov oorchiloh hesgiin tuluv ni oorchilogdoh baraanuud avah husel
     changeProductStatus: ProductModel.changestatus, // Baraanii tuluv oorchiloh huselt
+    getStatusHistory: ProductModel.statushistory, // Tuluv oorchiloltiin tuuhiig avah huselt
   };
 
   return ({
@@ -75,6 +77,7 @@ class Product extends React.Component {
     // this.props.getAttribute({ skucd: '5000267024004' });
     this.props.getRelational({ skucd: '0081128007874' });
     // this.props.getStatusProduct({ status:  });
+    // this.props.getStatusHistory({ skucd: '0081128007874' });
   }
 
   render() {
@@ -92,6 +95,7 @@ class Product extends React.Component {
         updateRelational={this.props.updateRelational}
         getStatusProduct={this.props.getStatusProduct}
         changeProductStatus={this.props.changeProductStatus}
+        getStatusHistory={this.props.getStatusHistory}
       />
     );
   }

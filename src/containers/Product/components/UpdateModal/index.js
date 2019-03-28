@@ -27,6 +27,8 @@ class Component extends React.Component {
           relational={this.props.relational}
           getRelational={this.props.getRelational}
           updateRelational={this.props.updateRelational}
+          getStatusHistory={this.props.getStatusHistory}
+          statusHistory={this.props.statusHistory}
         />
       </Modal>
     );
