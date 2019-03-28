@@ -36,7 +36,7 @@ class SelectTreeWidget extends Component {
   });
 
   render() {
-    const root = [];
+    // const root = [];
     // console.log(this.props.schema.options);
     // this.props.schema.options.forEach((entry, index) => {
     //   if (entry.parentid === 0) {
