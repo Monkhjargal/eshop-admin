@@ -336,7 +336,7 @@ class Product extends React.Component {
             );
           case 'newprice':
             return (
-              i.render = text => <span>{formatter.format(text)}</span>,
+              i.render = text => <span>{text === 0 ? '' : formatter.format(text)}</span>,
               i.sorter = (a, b) => a.newprice - b.newprice,
               i.sortDirections = ['descend', 'ascend']
             );
@@ -348,7 +348,7 @@ class Product extends React.Component {
             );
           case 'spercent':
             return (
-              i.render = text => <span>{text}%</span>,
+              i.render = text => <span>{text === 0 ? '' : `${text}%`}</span>,
               i.sorter = (a, b) => a.spercent - b.spercent,
               i.sortDirections = ['descend', 'ascend']
             );
@@ -360,6 +360,7 @@ class Product extends React.Component {
             );
           case 'availableqty':
             return (
+              i.render = text => <span>{text === 0 ? '' : `${text}`}</span>,
               i.sorter = (a, b) => a.availableqty - b.availableqty,
               i.sortDirections = ['descend', 'ascend']
             );

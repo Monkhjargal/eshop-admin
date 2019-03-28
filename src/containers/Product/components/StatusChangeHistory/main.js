@@ -7,14 +7,6 @@ const halfItemLayout = {
 };
 
 const columns = [{
-  title: 'Эхлэх',
-  dataIndex: 'sdate',
-  key: 'sdate',
-}, {
-  title: 'Дуусах',
-  dataIndex: 'edate',
-  key: 'edate',
-}, {
   title: 'Төлөв',
   dataIndex: 'status',
   key: 'status',

@@ -56,6 +56,7 @@ class Component extends React.Component {
                 getRelational={this.props.getRelational}
                 updateRelational={this.props.updateRelational}
                 prevStep={this.handlePrevStep}
+                onCancel={this.props.onCancel}
               />
           }
         </div>

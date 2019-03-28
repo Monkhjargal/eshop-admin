@@ -39,6 +39,7 @@ class Component extends React.Component {
     this.setState({ loading: true });
     this.props.updateRelational({ body: this.state.selected, parentskucd: this.props.skucd }).then((res) => {
       this.setState({ loading: false });
+      this.props.onCancel();
     });
   }
 

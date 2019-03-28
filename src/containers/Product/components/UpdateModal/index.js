@@ -29,6 +29,7 @@ class Component extends React.Component {
           updateRelational={this.props.updateRelational}
           getStatusHistory={this.props.getStatusHistory}
           statusHistory={this.props.statusHistory}
+          onCancel={this.props.onCancel}
         />
       </Modal>
     );

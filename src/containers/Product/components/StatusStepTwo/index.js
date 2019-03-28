@@ -22,7 +22,7 @@ class Step extends React.Component {
       const { product } = this.props;
       const unselected = [];
 
-      console.log(this.prop);
+      // console.log(this.prop);
       if (product.length !== 0) {
         product.map((item) => {
           const data = {
@@ -61,6 +61,8 @@ class Step extends React.Component {
           reason: this.props.stepOneFrom.reason,
           skucds: this.state.selected,
         },
+      }).then((res) => {
+        this.props.onCancel();
       });
     }
 
