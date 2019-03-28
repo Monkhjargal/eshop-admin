@@ -235,6 +235,7 @@ class Component extends React.Component {
                     <SelectTreeWidget
                       style={{ width: '100%' }}
                       value={update.catid}
+                      size={'default'}
                       schema={{ options: filter.catids }}
                       onChange={this.handleChangeCat}
                       placeholder="Ангилал"
@@ -339,17 +340,25 @@ class Component extends React.Component {
                 <Form.Item {...cartLayout} className={styles.formItem} label="Худалдан авч болох боломжит тоо">
                   <InputNumber min={0} defaultValue={detail.salemaxqty} onChange={(val) => { this.handleChange({ name: 'salemaxqty', value: val }); }} />
                 </Form.Item>
-                <Form.Item {...cartLayout} className={styles.formItem} label="Кг-ын барааг гр-аар зарах бол тэмдэглэ">
-                  <Checkbox defaultChecked={detail.issalekg} onChange={(val) => { this.handleChange({ name: 'issalekg', value: val }); }} />
-                </Form.Item>
+                {
+                  detail.issalekg === 0 ? '' : (
+                    <Form.Item {...cartLayout} className={styles.formItem} label="Кг-ын барааг гр-аар зарах бол тэмдэглэ">
+                      <Checkbox defaultChecked={detail.issalekg} onChange={(val) => { this.handleChange({ name: 'issalekg', value: val }); }} />
+                    </Form.Item>
+                  )
+                }
               </Col>
               <Col span={12}>
                 <Form.Item {...halfItemLayout} className={styles.formItem} label="Сагсанд хэдээр нэмэгдэх тоо">
                   <InputNumber min={0} defaultValue={detail.addminqty} onChange={(val) => { this.handleChange({ name: 'addminqty', value: val }); }} />
                 </Form.Item>
-                <Form.Item {...halfItemLayout} className={styles.formItem} label="Гр-ын зарах хамгийн доод нэгж">
-                  <InputNumber min={0} defaultValue={detail.saleweight} onChange={(val) => { this.handleChange({ name: 'saleweight', value: val }); }} />
-                </Form.Item>
+                {
+                  detail.issalekg === 0 ? '' : (
+                    <Form.Item {...halfItemLayout} className={styles.formItem} label="Гр-ын зарах хамгийн доод нэгж">
+                      <InputNumber min={0} defaultValue={detail.saleweight} onChange={(val) => { this.handleChange({ name: 'saleweight', value: val }); }} />
+                    </Form.Item>
+                  )
+                }
               </Col>
             </Panel>
             <Panel header="Шинэ барааны тохиргоо" key="5">
@@ -361,7 +370,8 @@ class Component extends React.Component {
               <Col span={12}>
                 <Form.Item {...halfItemLayout} className={styles.formItem} label="Хугацаа">
                   <RangePicker
-                    defaultValue={[moment(detail.sdate, dateFormat), moment(detail.edate + 30, dateFormat)]}
+                    disabled={!update.isnew}
+                    defaultValue={[moment(detail.sdate, dateFormat), moment(detail.edate, dateFormat).add(30, 'day')]}
                     format={dateFormat}
                     onChange={this.handleChangeDate}
                   />

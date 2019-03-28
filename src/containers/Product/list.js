@@ -315,7 +315,7 @@ class Product extends React.Component {
 
   renderTable = () => {
     try {
-      const { headers } = this.state.dataSource;
+      const { headers, filter } = this.state.dataSource;
       headers.map((i) => {
         switch (i.dataIndex) {
           case 'titlenm':
@@ -354,6 +354,7 @@ class Product extends React.Component {
             );
           case 'status':
             return (
+              i.render = text => <span><Input value={text} className={text === 1 ? style.statusOne : text === 2 ? style.statusTwo : style.statusThree} /></span>,
               i.sorter = (a, b) => a.status - b.status,
               i.sortDirections = ['descend', 'ascend']
             );
