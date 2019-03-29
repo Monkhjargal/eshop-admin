@@ -70,6 +70,8 @@ class Product extends React.Component {
     }
   }
 
+  refreshList = () => { this.props.getAll({ body: this.state.body }); }
+
   refresh = () => {
     this.props.getAll({ body: this.state.body });
     this.props.getFilter();
@@ -96,6 +98,7 @@ class Product extends React.Component {
         getStatusProduct={this.props.getStatusProduct}
         changeProductStatus={this.props.changeProductStatus}
         getStatusHistory={this.props.getStatusHistory}
+        afterClose={this.refreshList}
       />
     );
   }

@@ -34,6 +34,7 @@ class StandardTable extends PureComponent {
       return (
         <Pagination
           size="small"
+          style={{ display: 'none' }}
           showQuickJumper
           onChange={(current, pageSize) => onChange({ current, pageSize }, {}, {})}
           total={data.length}
@@ -47,32 +48,26 @@ class StandardTable extends PureComponent {
         <div className={styles.footerInfo}>
           Нийт: {pagination.total && data.length !== pagination.total ? pagination.total : data.length}
         </div>
-        {
-          pagination.total && data.length !== pagination.total ?
-            <Pagination
-              size="small"
-              onChange={(current, pageSize) => onChange({ current, pageSize }, {}, {})}
-              showQuickJumper
-              {...pagination}
-            /> :
-            renderLocalPagination(pagination)
+        {pagination.total && data.length !== pagination.total ?
+          <Pagination size="small" onChange={(current, pageSize) => onChange({ current, pageSize }, {}, {})} showQuickJumper {...pagination} /> :
+          renderLocalPagination(pagination)
         }
       </div>
     );
 
-    // if (pagination.total && data.length !== pagination.total) {
-    //   filteredData = data;
-    // } else {
-    //   let offset = (pagination.current || 1) - 1;
-    //   offset *= (pagination.pageSize || 20);
-    //   const end = offset + (pagination.pageSize || 20);
+    if (pagination.total && data.length !== pagination.total) {
+      filteredData = data;
+    } else {
+      let offset = (pagination.current || 1) - 1;
+      offset *= (pagination.pageSize || 10);
+      const end = offset + (pagination.pageSize || 10);
 
-    //   filteredData = data.filter((entry, index) => {
-    //     if (index >= offset && index <= end) { return true; }
-    //     return false;
-    //   });
-    // }
-
+      filteredData = data.filter((entry, index) => {
+        if (index >= offset && index <= end) { return true; }
+        return false;
+      });
+    }
+    console.log(rest);
     return (
       <div className={styles.standardTable}>
         <Table
@@ -83,8 +78,8 @@ class StandardTable extends PureComponent {
           size="small"
           bordered={false}
           rowKey={record => record.id}
-          dataSource={data}
-          pagination={false}
+          dataSource={filteredData}
+          pagination
           footer={renderFooter}
           onChange={(p, f, sorted) => onChange({ current: 1, pageSize: pagination.pageSize || 20 }, {}, sorted)}
           {...rest}

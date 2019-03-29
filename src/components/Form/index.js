@@ -155,7 +155,7 @@ class FormComponent extends Component {
     //     }
     //   }
     // });
-    // console.log(formObject);
+    console.log(formObject);
     this.setState({
       formData: formObject.formData,
     });

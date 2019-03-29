@@ -16,7 +16,7 @@ class List extends Component {
       visible: false,
       selectedId: null,
       body: {
-        limit: 20,
+        limit: 20000,
         page: 1,
         filtered: {},
         sorted: [],
@@ -32,7 +32,6 @@ class List extends Component {
   }
 
   handleTableChange = ({ current, pageSize }, filters, sorter) => {
-    // console.log(pageSize);
     this.setState({
       body: {
         ...this.state.body,
@@ -163,27 +162,9 @@ class List extends Component {
                 <span>{col}</span>
               </div>);
           case 'imgnm':
-            return entry.render = url => (<div
-              style={{
-                background: `url(${picserver + url})`,
-                width: '100px',
-                height: '40px',
-                backgroundSize: 'contain',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-              }}
-            />);
+            return entry.render = url => <img src={picserver + url} alt={url} height="20px" />;
           case 'imgnmtwo':
-            return entry.render = url => (<div
-              style={{
-                background: `url(${picserver + url})`,
-                width: '100px',
-                height: '40px',
-                backgroundSize: 'contain',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-              }}
-            />);
+            return entry.render = url => <img src={picserver + url} alt={url} height="20px" />;
           case 'rate':
             return entry.render = (text, record) => <Rate className="align-baseline" count={5} size={22} color2={'#ffd700'} value={record.rate} edit={false}>4.5 </Rate>;
           default:
@@ -191,7 +172,7 @@ class List extends Component {
         }
       });
     }
-    // console.log(this.props, 'list');
+    console.log(this.props, 'list');
 
     return (
       <Card bordered={false}>

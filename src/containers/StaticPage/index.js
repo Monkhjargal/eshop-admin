@@ -10,7 +10,7 @@ const divStyle = {
 export default () => (
   <PageHeaderLayout title="StaticPage information" style={divStyle}>
     <List
-      actions={['create', 'update']}
+      actions={['update']}
       model={'Static'}
       name={'StaticPage'}
     />
