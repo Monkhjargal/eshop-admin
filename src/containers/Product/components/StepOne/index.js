@@ -386,7 +386,8 @@ class Component extends React.Component {
                   <Form.Item {...halfItemLayout} className={styles.formItem} label="Хугацаа">
                     <RangePicker
                       disabled={!update.isnew}
-                      defaultValue={update.isnew ? [moment(detail.sdate, dateFormat), moment(detail.edate, dateFormat)] : [moment(detail.sdate, dateFormat), moment(detail.edate, dateFormat).add(30, 'day')]}
+                      defaultValue={[moment(detail.sdate, dateFormat), moment(detail.edate, dateFormat).add(30, 'day')]}
+                      value={[moment(detail.sdate, dateFormat), moment(detail.edate, dateFormat)]}
                       format={dateFormat}
                       onChange={this.handleChangeDate}
                     />

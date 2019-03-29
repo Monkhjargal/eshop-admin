@@ -238,10 +238,10 @@ class Product extends React.Component {
                   </Form.Item>
                 </Col>
                 <Col span={6}>
-                  <Form.Item label="Үнийн өөрчлөлт орсон бараа" className={style.formItem}>
+                  <Form.Item label="Яаралтай үнийн өөрчлөлт орсон эсэх" className={style.formItem}>
                     <Select
                       size={'small'}
-                      placeholder="Үнийн өөрчлөлт орсон бараа хайх"
+                      placeholder="Яаралтай үнийн өөрчлөлт орсон эсэх"
                       style={{ width: '96%' }}
                       value={filtered.ispricechanged === 0 ? undefined : filtered.ispricechanged}
                       onChange={(val) => { this.handleChange({ name: 'ispricechanged', value: val }); }}
