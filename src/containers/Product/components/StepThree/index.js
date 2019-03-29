@@ -132,7 +132,7 @@ class Component extends React.Component {
 
           <div className={styles.stepSaveBtn}>
             <Button onClick={this.props.prevStep} style={{ marginRight: 5 }}>Болих</Button>
-            <Button type="primary" onClick={this.handleSave} disabled={this.state.selected.length === 0}>
+            <Button type="primary" onClick={this.handleSave}>
               Хадгалах
             </Button>
           </div>
