@@ -137,14 +137,20 @@ class Component extends React.Component {
   }
 
   handleChange = (e) => {
-    // console.log(e.value.target.value);
-    const { update } = this.state;
-    update[e.name] = e.value.target === undefined ? e.value : e.value.target.value === undefined ? e.value.target.checked : e.value.target.value;
-    this.setState(update);
+    if (e.value !== undefined) {
+      const { update } = this.state;
+      update[e.name] = e.value.target === undefined ? e.value : e.value.target.value === undefined ? e.value.target.checked : e.value.target.value;
+      this.setState(update);
+    } else {
+      const { update } = this.state;
+      update[e.name] = e.value;
+      this.setState(update);
+    }
   }
 
   handleSave = () => {
     const { update, images } = this.state;
+    console.log(update);
     let data = new FormData();
     images.map(i => data.append("files", i.originFileObj, i.name));
     images.map(i => (i.originFileObj === undefined ? data.append("imgnm", i.name) : ''));
@@ -171,6 +177,7 @@ class Component extends React.Component {
   }
 
   handleHistoryModal = () => { this.setState({ ishistory: !this.state.ishistory }); }
+
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -201,12 +208,6 @@ class Component extends React.Component {
     const {
       previewVisible, previewImage, update, skucd, images,
     } = this.state;
-    const uploadButton = (
-      <div>
-        <Icon type="plus" />
-        <div className="ant-upload-text">Upload</div>
-      </div>
-    );
 
     if (skucd !== this.props.skucd) {
       this.refresh();
@@ -215,23 +216,23 @@ class Component extends React.Component {
     if (!this.state.loading) {
       return (
         <div style={{ width: '100%' }}>
-          <Collapse defaultActiveKey={['1', '2', '3', '4', '5', '6', '7', '8']} className={styles.stepCollapse}>
-            <Panel header="Ерөнхий мэдээлэл" key="1" >
-              <Form style={{ width: '100%' }}>
+          <Form style={{ width: '100%' }} onSubmit={this.handleSubmit}>
+            <Collapse defaultActiveKey={['1', '2', '3', '4', '5', '6', '7', '8']} className={styles.stepCollapse}>
+              <Panel header="Ерөнхий мэдээлэл" key="1" >
                 <Col span={12}>
                   <Form.Item {...formItemLayout} className={styles.formItem} label="Барааны код">
                     <Input placeholder="Барааны нэр" value={detail.skucd} disabled />
                   </Form.Item>
-                  <Form.Item {...formItemLayout} className={styles.formItem} label="Онлайн нэр">
+                  <Form.Item hasFeedback {...formItemLayout} className={styles.formItem} label="Онлайн нэр" validateStatus={update.titlenm === "" || update.titlenm === null ? "error" : "success"}>
                     <Input placeholder="Онлайн нэр" defaultValue={detail.titlenm} onChange={(val) => { this.handleChange({ name: 'titlenm', value: val }); }} />
                   </Form.Item>
-                  <Form.Item {...formItemLayout} className={styles.formItem} label="Богино тайлбар">
+                  <Form.Item hasFeedback {...formItemLayout} className={styles.formItem} label="Богино тайлбар" validateStatus={update.featuretxt === "" || update.featuretxt === null ? "error" : "success"}>
                     <Input placeholder="Богино тайлбар" defaultValue={detail.featuretxt} onChange={(val) => { this.handleChange({ name: 'featuretxt', value: val }); }} />
                   </Form.Item>
                   <Form.Item {...formItemLayout} className={styles.formItem} label="Хаалтанд дахь нэр" >
                     <Input placeholder="Хаалт дахь нэр" defaultValue={detail.backtxt} onChange={(val) => { this.handleChange({ name: 'backtxt', value: val }); }} />
                   </Form.Item>
-                  <Form.Item {...formItemLayout} className={styles.formItem} label="Ангилал">
+                  <Form.Item hasFeedback {...formItemLayout} className={styles.formItem} label="Ангилал" validateStatus={update.catid === undefined || update.catid === null ? "error" : "success"}>
                     <SelectTreeWidget
                       style={{ width: '100%' }}
                       value={update.catid}
@@ -239,13 +240,22 @@ class Component extends React.Component {
                       schema={{ options: filter.catids }}
                       onChange={this.handleChangeCat}
                       placeholder="Ангилал"
+                      isProductdetail
                     />
                   </Form.Item>
                   <Col span={12}>
                     <Form.Item {...statusLayout} className={styles.formItem} label="Бренд">
-                      <Select placeholder="Бренд" style={{ width: '100%' }} defaultValue={detail.brandnm} onChange={val => this.handleChange({ name: 'brandid', value: val })}>
+                      <Select
+                        allowClear
+                        showSearch
+                        placeholder="Бренд"
+                        style={{ width: '100%' }}
+                          // defaultValue={detail.brandnm}
+                        onChange={val => this.handleChange({ name: 'brandid', value: val })}
+                      >
                         {filter.brandids && filter.brandids.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>)}
                       </Select>
+
                     </Form.Item>
                   </Col>
                   <Col span={12}>
@@ -253,18 +263,20 @@ class Component extends React.Component {
                       <Input placeholder="ХНС бренд" value={detail.bibrandnm} disabled />
                     </Form.Item>
                   </Col>
-                  <Col span={12}>
-                    <Form.Item {...statusLayout} className={styles.formItem} label="Төлөв">
-                      <Input
-                        disabled
-                        value={filter.productstatus.find(i => (i.id === detail.status)) === undefined ? '' : filter.productstatus.find(i => (i.id === detail.status)).name}
-                        className={detail.status === 1 ? styles.statusOne : detail.status === 2 ? styles.statusTwo : styles.statusThree}
-                      />
-                    </Form.Item>
-                  </Col>
-                  <Col span={12}>
-                    <Form.Item {...historyLayout} className={styles.formItemhistory} label=""> <a onClick={this.handleHistoryModal} >Төлөв өөрчлөлтийн түүх</a> </Form.Item>
-                  </Col>
+                  <div className={"testing"}>
+                    <Col span={12}>
+                      <Form.Item {...statusLayout} className={styles.formItem} label="Төлөв">
+                        <Input
+                          disabled
+                          value={filter.productstatus.find(i => (i.id === detail.status)) === undefined ? '' : filter.productstatus.find(i => (i.id === detail.status)).name}
+                          className={detail.status === 1 ? styles.statusOne : detail.status === 2 ? styles.statusTwo : styles.statusThree}
+                        />
+                      </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                      <Form.Item {...historyLayout} className={styles.formItemhistory} label=""> <a onClick={this.handleHistoryModal} >Төлөв өөрчлөлтийн түүх</a> </Form.Item>
+                    </Col>
+                  </div>
                 </Col>
                 <Col span={12}>
                   <Form.Item {...formItemLayout} className={styles.formItem} label="ХНС-ийн нэр" >
@@ -314,122 +326,128 @@ class Component extends React.Component {
                     </Form.Item>
                   </Col>
                 </Col>
-              </Form>
-            </Panel>
-            <Panel header="Зургийн тохиргоо" key="2">
-              <Upload
-                accept={".jpg,.png,.jpeg,.gif"}
-                action="//jsonplaceholder.typicode.com/posts/"
-                listType="picture-card"
-                fileList={images}
-                onPreview={this.handlePreview}
-                onRemove={this.handleRemove}
-                onChange={this.handleChangeImg}
-              >
-                {images.length >= 5 ? null : uploadButton}
-              </Upload>
-              <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-                <img alt="example" style={{ width: '100%' }} src={previewImage} />
-              </Modal>
-            </Panel>
-            <Panel header="Сагсны тохиргоо (Нэг худалдан авалтад)" key="4">
-              <Col span={12}>
-                <Form.Item {...cartLayout} className={styles.formItem} label="Хамгийн багадаа хэдэн нэгжээр зарах">
-                  <InputNumber min={0} defaultValue={detail.saleminqty} onChange={(val) => { this.handleChange({ name: 'saleminqty', value: val }); }} />
-                </Form.Item>
-                <Form.Item {...cartLayout} className={styles.formItem} label="Худалдан авч болох боломжит тоо">
-                  <InputNumber min={0} defaultValue={detail.salemaxqty} onChange={(val) => { this.handleChange({ name: 'salemaxqty', value: val }); }} />
-                </Form.Item>
-                {
-                  detail.measurecd !== "K" ? '' : (
-                    <Form.Item {...cartLayout} className={styles.formItem} label="Кг-ын барааг гр-аар зарах бол тэмдэглэ">
-                      <Checkbox defaultChecked={detail.issalekg} onChange={(val) => { this.handleChange({ name: 'issalekg', value: val }); }} />
-                    </Form.Item>
-                  )
-                }
-              </Col>
-              <Col span={12}>
-                <Form.Item {...halfItemLayout} className={styles.formItem} label="Сагсанд хэдээр нэмэгдэх тоо">
-                  <InputNumber min={0} defaultValue={detail.addminqty} onChange={(val) => { this.handleChange({ name: 'addminqty', value: val }); }} />
-                </Form.Item>
-                {
-                  detail.measurecd !== "K" ? '' : (
-                    <Form.Item {...halfItemLayout} className={styles.formItem} label="Гр-ын зарах хамгийн доод нэгж">
-                      <InputNumber min={0} defaultValue={detail.saleweight} onChange={(val) => { this.handleChange({ name: 'saleweight', value: val }); }} />
-                    </Form.Item>
-                  )
-                }
-              </Col>
-            </Panel>
-            <Panel header="Шинэ барааны тохиргоо" key="5">
-              <Col span={12}>
-                <Form.Item {...cartLayout} className={styles.formItem} label="Шинэ бараа болгож харуулах бол тэмдэглэ">
-                  <Checkbox defaultChecked={detail.isnew} onChange={(val) => { this.handleChange({ name: 'isnew', value: val }); }} />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item {...halfItemLayout} className={styles.formItem} label="Хугацаа">
-                  <RangePicker
-                    disabled={!update.isnew}
-                    defaultValue={[moment(detail.sdate, dateFormat), moment(detail.edate, dateFormat).add(30, 'day')]}
-                    format={dateFormat}
-                    onChange={this.handleChangeDate}
-                  />
-                </Form.Item>
-              </Col>
-            </Panel>
-            <Panel header="Нэмэлт тохиргоо" key="6">
-              <Col span={6}>
-                <Form.Item {...halfItemLayout} className={styles.formItem} label="Өнгө">
-                  <Select placeholder="Өнгө" style={{ width: '100%' }} defaultValue={detail.colornm} onChange={(val) => { this.handleChange({ name: 'colorid', value: val }); }}>
-                    {filter.colors && filter.colors.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>)}
-                  </Select>
-                </Form.Item>
-              </Col>
-              <Col span={17}>
-                <Form.Item {...searchKeyLayout} className={styles.formItem} label="Хайлтын түлхүүр үгс">
-                  <Select
-                    mode="tags"
-                    style={{ width: '100%' }}
-                    placeholder="Хайлтын түлхүүр үгс"
-                    defaultValue={detail.keywords}
-                    onChange={(val) => { this.handleChange({ name: 'keywords', value: val }); }}
-                  />
-                </Form.Item>
-              </Col>
-            </Panel>
-            <Panel header="Дэлгэрэнгүй бүртгэл" key="7">
-              <CKEditor
-                activeClass="p10"
-                content={update.description}
-                scriptUrl={'https://cdn.ckeditor.com/4.6.2/full/ckeditor.js'}
-                config={{ ckeToolbar }}
-                events={{
-                  change: this.handleCke,
-                }}
-              />
-            </Panel>
-            <Panel header="Мэдээлэл шинэчлэлт / Системийн мэдээлэл" key="8">
-              <Col span={12}>
-                <Form.Item {...formItemLayout} className={styles.formItem} label="Зассан хэрэглэгч">
-                  <Input placeholder="Зассан хэрэглэгч" value={detail.updemp} disabled />
-                </Form.Item>
-                <Form.Item {...formItemLayout} className={styles.formItem} label="Зассан огноо">
-                  <Input placeholder="Зассан огноо" value={detail.updymd} disabled />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item {...updatelayout} className={styles.formItem} label="Шинэчлэгдсэн огноо">
-                  <Input placeholder="Шинэчлэгдсэн огноо" value={detail.updymd} disabled />
-                </Form.Item>
-              </Col>
-            </Panel>
-            {/* </Form> */}
-          </Collapse>
 
-          <div className={styles.stepSaveBtn}>
-            <Button type="primary" onClick={this.handleSave}>Хадгалах</Button>
-          </div>
+              </Panel>
+              <Panel header="Зургийн тохиргоо" key="2">
+                <Upload
+                  accept={".jpg,.png,.jpeg,.gif"}
+                  action="//jsonplaceholder.typicode.com/posts/"
+                  listType="picture-card"
+                  fileList={images}
+                  onPreview={this.handlePreview}
+                  onRemove={this.handleRemove}
+                  onChange={this.handleChangeImg}
+                >
+                  {images.length >= 5 ? null : <div><Icon type="plus" /><div className="ant-upload-text">Upload</div></div>}
+                </Upload>
+                <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
+                  <img alt="example" style={{ width: '100%' }} src={previewImage} />
+                </Modal>
+              </Panel>
+              <Panel header="Сагсны тохиргоо (Нэг худалдан авалтад)" key="4">
+                <Col span={12}>
+                  <Form.Item {...cartLayout} className={styles.formItem} label="Хамгийн багадаа хэдэн нэгжээр зарах">
+                    <InputNumber min={0} defaultValue={detail.saleminqty} onChange={(val) => { this.handleChange({ name: 'saleminqty', value: val }); }} />
+                  </Form.Item>
+                  <Form.Item {...cartLayout} className={styles.formItem} label="Худалдан авч болох боломжит тоо">
+                    <InputNumber min={0} defaultValue={detail.salemaxqty} onChange={(val) => { this.handleChange({ name: 'salemaxqty', value: val }); }} />
+                  </Form.Item>
+                  {
+                    detail.measurecd !== "K" ? '' : (
+                      <Form.Item {...cartLayout} className={styles.formItem} label="Кг-ын барааг гр-аар зарах бол тэмдэглэ">
+                        <Checkbox defaultChecked={detail.issalekg} onChange={(val) => { this.handleChange({ name: 'issalekg', value: val }); }} />
+                      </Form.Item>
+                    )
+                  }
+                </Col>
+                <Col span={12}>
+                  <Form.Item {...halfItemLayout} className={styles.formItem} label="Сагсанд хэдээр нэмэгдэх тоо">
+                    <InputNumber min={0} defaultValue={detail.addminqty} onChange={(val) => { this.handleChange({ name: 'addminqty', value: val }); }} />
+                  </Form.Item>
+                  {
+                    detail.measurecd !== "K" ? '' : (
+                      <Form.Item {...halfItemLayout} className={styles.formItem} label="Гр-ын зарах хамгийн доод нэгж">
+                        <InputNumber min={0} defaultValue={detail.saleweight} onChange={(val) => { this.handleChange({ name: 'saleweight', value: val }); }} />
+                      </Form.Item>
+                    )
+                  }
+                </Col>
+              </Panel>
+              <Panel header="Шинэ барааны тохиргоо" key="5">
+                <Col span={12}>
+                  <Form.Item {...cartLayout} className={styles.formItem} label="Шинэ бараа болгож харуулах бол тэмдэглэ">
+                    <Checkbox defaultChecked={detail.isnew} onChange={(val) => { this.handleChange({ name: 'isnew', value: val }); }} />
+                  </Form.Item>
+                </Col>
+                <Col span={12}>
+                  <Form.Item {...halfItemLayout} className={styles.formItem} label="Хугацаа">
+                    <RangePicker
+                      disabled={!update.isnew}
+                      defaultValue={[moment(detail.sdate, dateFormat), moment(detail.edate, dateFormat).add(30, 'day')]}
+                      format={dateFormat}
+                      onChange={this.handleChangeDate}
+                    />
+                  </Form.Item>
+                </Col>
+              </Panel>
+              <Panel header="Нэмэлт тохиргоо" key="6">
+                <Col span={6}>
+                  <Form.Item {...halfItemLayout} className={styles.formItem} label="Өнгө">
+                    <Select placeholder="Өнгө" style={{ width: '100%' }} defaultValue={detail.colornm} onChange={(val) => { this.handleChange({ name: 'colorid', value: val }); }}>
+                      {filter.colors && filter.colors.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>)}
+                    </Select>
+                  </Form.Item>
+                </Col>
+                <Col span={17}>
+                  <Form.Item {...searchKeyLayout} className={styles.formItem} label="Хайлтын түлхүүр үгс">
+                    <Select
+                      mode="tags"
+                      style={{ width: '100%' }}
+                      placeholder="Хайлтын түлхүүр үгс"
+                      defaultValue={detail.keywords}
+                      onChange={(val) => { this.handleChange({ name: 'keywords', value: val }); }}
+                    />
+                  </Form.Item>
+                </Col>
+              </Panel>
+              <Panel header="Дэлгэрэнгүй бүртгэл" key="7">
+                <CKEditor
+                  activeClass="p10"
+                  content={update.description}
+                  scriptUrl={'https://cdn.ckeditor.com/4.6.2/full/ckeditor.js'}
+                  config={{ ckeToolbar }}
+                  events={{
+                    change: this.handleCke,
+                  }}
+                />
+              </Panel>
+              <Panel header="Мэдээлэл шинэчлэлт / Системийн мэдээлэл" key="8">
+                <Col span={12}>
+                  <Form.Item {...formItemLayout} className={styles.formItem} label="Зассан хэрэглэгч">
+                    <Input placeholder="Зассан хэрэглэгч" value={detail.updemp} disabled />
+                  </Form.Item>
+                  <Form.Item {...formItemLayout} className={styles.formItem} label="Зассан огноо">
+                    <Input placeholder="Зассан огноо" value={detail.updymd} disabled />
+                  </Form.Item>
+                </Col>
+                <Col span={12}>
+                  <Form.Item {...updatelayout} className={styles.formItem} label="Шинэчлэгдсэн огноо">
+                    <Input placeholder="Шинэчлэгдсэн огноо" value={detail.updymd} disabled />
+                  </Form.Item>
+                </Col>
+              </Panel>
+            </Collapse>
+
+            <Form.Item>
+              <div className={styles.stepSaveBtn}>
+                <Button
+                  type="primary"
+                  onClick={this.handleSave}
+                >Хадгалах
+                </Button>
+              </div>
+            </Form.Item>
+          </Form>
 
           <StatusChangeHistory
             visible={this.state.ishistory}

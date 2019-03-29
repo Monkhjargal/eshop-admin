@@ -25,39 +25,36 @@ class SelectTreeWidget extends Component {
 
   renderTreeNodes = data => data.map((item) => {
     if (item.children) {
-      // console.log(item.id);
       return (
-        <TreeNode title={item.catnm} dataRef={item} key={item.id} value={`${item.id}`}>
+        <TreeNode
+          disabled={this.props.isProductdetail === undefined ? false : item.children.length !== 0}
+          title={item.parentid === 0 ? <b>{item.catnm}</b> : item.catnm}
+          dataRef={item}
+          key={item.catnm}
+          value={`${item.id}`}
+          searchValue={item.catnm}
+        >
           {this.renderTreeNodes(item.children)}
         </TreeNode>
       );
     }
-    return <TreeNode dataRef={item} title={item.catnm} key={item.id} value={`${item.id}`} {...item} />;
+    return <TreeNode disabled dataRef={item} title={item.parentid === 0 ? <b>{item.catnm}</b> : item.catnm} key={item.id} value={`${item.id}`} {...item} />;
   });
 
   render() {
-    // const root = [];
-    // console.log(this.props.schema.options);
-    // this.props.schema.options.forEach((entry, index) => {
-    //   if (entry.parentid === 0) {
-    //     entry.children = [];
-    //     root.push(entry);
-    //   }
-    //   root.forEach((ent, ind) => {
-    //     if (ent.id === entry.parentid) {
-    //       ent.children.push(entry);
-    //     }
-    //   });
-    // });
-    // console.log(root);
+    // console.log(this.props);
+    const { placholder, size, value } = this.props;
     return (
       <TreeSelect
-        value={this.props.value}
+        value={value}
         showSearch
-        size={this.props.size === undefined ? 'small' : this.props.size}
+        size={size === undefined ? 'small' : size}
         dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
         treeDefaultExpandAll
         onChange={value => this.props.onChange(value)}
+        placholder={placholder}
+        allowClear
+        autoClearSearchValue
       >
         {this.renderTreeNodes(this.props.schema.options)}
       </TreeSelect>

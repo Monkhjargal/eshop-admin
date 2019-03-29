@@ -75,7 +75,7 @@ class Product extends React.Component {
   handleClearFilter = () => {
     const clear = {
       skunm: '',
-      catids: [],
+      catids: '',
       attributeids: [],
       attrvalueids: [],
       brandids: [],
