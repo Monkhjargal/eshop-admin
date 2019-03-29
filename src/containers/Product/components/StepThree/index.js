@@ -55,7 +55,7 @@ class Component extends React.Component {
     );
     return {
       label: customLabel, // for displayed item
-      value: item.skucd, // search hesegt haih
+      value: item.skunm, // search hesegt haih
     };
   }
 

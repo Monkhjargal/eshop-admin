@@ -382,7 +382,7 @@ class Product extends React.Component {
             size="small"
             bordered={false}
             rowKey={record => record.id}
-            pagination={{ defaultPageSize: 10, showSizeChanger: true }}
+            pagination={{ defaultPageSize: 10, showSizeChanger: true, showQuickJumper: true }}
             footer={this.renderFooter}
             onRow={record => ({
               onClick: () => this.handleRowClick(record),
@@ -429,6 +429,7 @@ class Product extends React.Component {
                       getRelational={this.props.getRelational} // get getRelational={this.props.getRelational}
                       updateRelational={this.props.updateRelational}
                       getStatusHistory={this.props.getStatusHistory}
+                      afterClose={this.props.afterClose}
                     />
 
                     {/** Baraanii tuluv oorchiloh modal */}
