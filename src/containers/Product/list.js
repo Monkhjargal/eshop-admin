@@ -211,11 +211,11 @@ class Product extends React.Component {
               </Row>
               <Row>
                 <Col span={6}>
-                  <Form.Item label="Хямдрал" className={style.formItem}>
+                  <Form.Item label="Эвентийн нэр" className={style.formItem}>
                     <Select
                       mode="multiple"
                       size={'small'}
-                      placeholder="Хямдрал хайх"
+                      placeholder="Эвентээр хайх"
                       style={{ width: '96%' }}
                       value={filtered.evnnormalids}
                       onChange={(val) => { this.handleChange({ name: 'evnnormalids', value: val }); }}
