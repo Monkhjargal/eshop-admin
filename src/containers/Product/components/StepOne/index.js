@@ -329,17 +329,20 @@ class Component extends React.Component {
 
               </Panel>
               <Panel header="Зургийн тохиргоо" key="2">
-                <Upload
-                  accept={".jpg,.png,.jpeg,.gif"}
-                  action="//jsonplaceholder.typicode.com/posts/"
-                  listType="picture-card"
-                  fileList={images}
-                  onPreview={this.handlePreview}
-                  onRemove={this.handleRemove}
-                  onChange={this.handleChangeImg}
-                >
-                  {images.length >= 5 ? null : <div><Icon type="plus" /><div className="ant-upload-text">Upload</div></div>}
-                </Upload>
+                <div style={{ marginLeft: 20 }}>
+                  <Form.Item hasFeedback className={styles.formItem} validateStatus={images.length === 0 ? "error" : "success"} />
+                  <Upload
+                    accept={".jpg,.png,.jpeg,.gif"}
+                    action="//jsonplaceholder.typicode.com/posts/"
+                    listType="picture-card"
+                    fileList={images}
+                    onPreview={this.handlePreview}
+                    onRemove={this.handleRemove}
+                    onChange={this.handleChangeImg}
+                  >
+                    {images.length >= 5 ? null : <div><Icon type="plus" /><div className="ant-upload-text">Upload</div></div>}
+                  </Upload>
+                </div>
                 <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
                   <img alt="example" style={{ width: '100%' }} src={previewImage} />
                 </Modal>
@@ -443,6 +446,7 @@ class Component extends React.Component {
                 <Button
                   type="primary"
                   onClick={this.handleSave}
+                  disabled={!(update.titlenm !== null && update.titlenm !== "" && update.featuretxt !== null && update.featuretxt !== "" && update.catid !== undefined && update.catid !== null && images.length !== 0)}
                 >Хадгалах
                 </Button>
               </div>
