@@ -85,11 +85,11 @@ const asyncFn = ({
         name,
       });
     } else {
-      console.log(body);
+      // console.log(body);
       const data = await request({
         url, method, body, isfiles,
       });
-      console.log(data);
+      // console.log(data);
       if (data && data.success !== false) {
         if (model.response === 'RESPONSE_PRODUCTLIST_UPDATE') { message.success(data.message); }
         if (model.response === 'RESPONSE_PRODUCTLIST_UPATTRIBUTE') { message.success(data.message); }

@@ -6,7 +6,6 @@ import { Package as PackageModel } from "../../models";
 import Packagelist from "./list";
 
 const mapStateToProps = (state) => {
-  console.log(state);
   const { auth } = state;
   const {
     data, filter, headers, formcreateByServer,
@@ -18,7 +17,6 @@ const mapStateToProps = (state) => {
     formcreateByServer,
     auth,
   };
-  // console.log(returnObject);
   return returnObject;
 };
 
@@ -53,7 +51,6 @@ class Collection extends React.Component {
   }
 
   refresh = () => {
-    console.log(this.props);
     this.props.getDataSource({ body: this.state.body });
   }
 

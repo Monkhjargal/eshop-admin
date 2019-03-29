@@ -170,11 +170,9 @@ class Component extends React.Component {
   };
 
   handleChangeDate = (e) => {
-    console.log('handleChangeDate', e);
     const { update } = this.state;
-    update.sdate = e[0].format('YYYY-MM-DD');
-    update.edate = e[1].format('YYYY-MM-DD');
-    console.log(update);
+    update.sdate = moment(e[0]._d + 1, dateFormat);
+    update.edate = moment(e[1]._d + 1, dateFormat);
     this.setState(update);
   }
 
@@ -389,7 +387,6 @@ class Component extends React.Component {
                     <RangePicker
                       disabled={!update.isnew}
                       defaultValue={[moment(detail.sdate, dateFormat), moment(detail.edate, dateFormat).add(30, 'day')]}
-                      // value={[moment(update.sdate, dateFormat), moment(update.edate, dateFormat)]}
                       format={dateFormat}
                       onChange={this.handleChangeDate}
                     />

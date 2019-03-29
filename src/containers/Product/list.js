@@ -211,11 +211,11 @@ class Product extends React.Component {
               </Row>
               <Row>
                 <Col span={6}>
-                  <Form.Item label="Эвентийн нэр" className={style.formItem}>
+                  <Form.Item label="Хямдрал" className={style.formItem}>
                     <Select
                       mode="multiple"
                       size={'small'}
-                      placeholder="Эвентээр хайх"
+                      placeholder="Хямдрал хайх"
                       style={{ width: '96%' }}
                       value={filtered.evnnormalids}
                       onChange={(val) => { this.handleChange({ name: 'evnnormalids', value: val }); }}
@@ -238,10 +238,10 @@ class Product extends React.Component {
                   </Form.Item>
                 </Col>
                 <Col span={6}>
-                  <Form.Item label="Яаралтай үнийн өөрчлөлт орсон эсэх" className={style.formItem}>
+                  <Form.Item label="Үнийн өөрчлөлт орсон бараа" className={style.formItem}>
                     <Select
                       size={'small'}
-                      placeholder="Яаралтай үнийн өөрчлөлт орсон эсэх"
+                      placeholder="Үнийн өөрчлөлт орсон бараа хайх"
                       style={{ width: '96%' }}
                       value={filtered.ispricechanged === 0 ? undefined : filtered.ispricechanged}
                       onChange={(val) => { this.handleChange({ name: 'ispricechanged', value: val }); }}
@@ -382,7 +382,7 @@ class Product extends React.Component {
             size="small"
             bordered={false}
             rowKey={record => record.id}
-            pagination={{ defaultPageSize: 10, showSizeChanger: true, showQuickJumper: true }}
+            pagination={{ defaultPageSize: 10, showSizeChanger: true }}
             footer={this.renderFooter}
             onRow={record => ({
               onClick: () => this.handleRowClick(record),
@@ -429,7 +429,6 @@ class Product extends React.Component {
                       getRelational={this.props.getRelational} // get getRelational={this.props.getRelational}
                       updateRelational={this.props.updateRelational}
                       getStatusHistory={this.props.getStatusHistory}
-                      afterClose={this.props.afterClose}
                     />
 
                     {/** Baraanii tuluv oorchiloh modal */}

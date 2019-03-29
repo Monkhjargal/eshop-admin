@@ -12,7 +12,6 @@ class Component extends React.Component {
         onCancel={this.props.onCancel}
         onOk={this.props.onCancel}
         width={'80%'}
-        afterClose={this.props.afterClose}
         destroyOnClose
       >
         <MainStep

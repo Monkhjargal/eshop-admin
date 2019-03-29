@@ -55,7 +55,7 @@ class Component extends React.Component {
     );
     return {
       label: customLabel, // for displayed item
-      // value: item.skunm, // search hesegt haih
+      value: item.skucd, // search hesegt haih
     };
   }
 
@@ -82,7 +82,7 @@ class Component extends React.Component {
 
   render() {
     // console.log(this.props);
-    // const { getFieldDecorator } = this.props.form;
+    const { getFieldDecorator } = this.props.form;
     const { loading } = this.state;
 
     if (!loading) {
@@ -127,12 +127,12 @@ class Component extends React.Component {
           }}
             targetKeys={this.state.selected}
             onChange={this.handleChange}
-            render={item => `${item.skucd} - ${item.skunm} - ${item.catnm}`}
+            render={this.renderItem}
           />
 
           <div className={styles.stepSaveBtn}>
             <Button onClick={this.props.prevStep} style={{ marginRight: 5 }}>Болих</Button>
-            <Button type="primary" onClick={this.handleSave}>
+            <Button type="primary" onClick={this.handleSave} disabled={this.state.selected.length === 0}>
               Хадгалах
             </Button>
           </div>
