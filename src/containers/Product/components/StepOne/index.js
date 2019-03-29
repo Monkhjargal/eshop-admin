@@ -252,7 +252,7 @@ class Component extends React.Component {
                         showSearch
                         placeholder="Бренд"
                         style={{ width: '100%' }}
-                          // defaultValue={detail.brandnm}
+                        defaultValue={detail.brandnm}
                         onChange={val => this.handleChange({ name: 'brandid', value: val })}
                       >
                         {filter.brandids && filter.brandids.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>)}

@@ -9,7 +9,7 @@ class MultiSelect extends Component {
   }
   componentDidMount() {
     const { items } = this.props.schema;
-    console.log(items);
+    // console.log(items);
     // for (let i = 0; i < this.options.enum.length; i++) {
     //   console.log(options[i]);
     // }
@@ -46,7 +46,7 @@ class MultiSelect extends Component {
   };
 
   onSelect(sel) {
-    console.log(sel);
+    // console.log(sel);
   }
 
   render() {
@@ -56,7 +56,8 @@ class MultiSelect extends Component {
         size="small"
         mode="multiple"
         placeholder={this.props.placeholder}
-        value={this.state.val}
+        // value={this.state.val}
+        value={typeof this.state.value === "undefined" ? this.state.val : this.state.val}
         style={{ width: '100%' }}
         onChange={this.handleChange}
       >
