@@ -55,7 +55,7 @@ class Component extends React.Component {
     );
     return {
       label: customLabel, // for displayed item
-      value: item.skunm, // search hesegt haih
+      // value: item.skunm, // search hesegt haih
     };
   }
 
@@ -82,7 +82,7 @@ class Component extends React.Component {
 
   render() {
     // console.log(this.props);
-    const { getFieldDecorator } = this.props.form;
+    // const { getFieldDecorator } = this.props.form;
     const { loading } = this.state;
 
     if (!loading) {
@@ -127,7 +127,7 @@ class Component extends React.Component {
           }}
             targetKeys={this.state.selected}
             onChange={this.handleChange}
-            render={this.renderItem}
+            render={item => `${item.skucd} - ${item.skunm} - ${item.catnm}`}
           />
 
           <div className={styles.stepSaveBtn}>

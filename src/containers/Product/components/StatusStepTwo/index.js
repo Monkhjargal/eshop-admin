@@ -81,7 +81,7 @@ class Step extends React.Component {
                     }}
               targetKeys={selected}
               onChange={this.handleChange}
-              render={this.renderItem}
+              render={item => `${item.skucd} - ${item.skunm} - ${item.catnm}`}
             />
 
             <div className={styles.stepSaveBtn}>
