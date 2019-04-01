@@ -26,15 +26,17 @@ class Component extends React.Component {
     handleSubmit = (e) => {
       e.preventDefault();
       this.props.form.validateFields((err, values) => {
-        // console.log('Received values of form: ', values);
-        this.props.updateAttr({ body: values, skucd: this.props.skucd }).then((res) => {
-          this.props.nextStep();
-        });
+        if (!err) {
+          // console.log('Received values of form: ', values);
+          this.props.updateAttr({ body: values, skucd: this.props.skucd }).then((res) => {
+            this.props.nextStep();
+          });
+        }
       });
     }
 
     render() {
-      console.log(this.state);
+      // console.log(this.state);
       const { getFieldDecorator } = this.props.form;
       const { attribute, loading } = this.state;
 
@@ -48,9 +50,10 @@ class Component extends React.Component {
                     <Form.Item {...formItemLayout} label={i.label} >
                       {getFieldDecorator(`${i.name}`, {
                                 initialValue: `${attribute.productattributes.find(k => k.attrid === i.key) === undefined ? '' : attribute.productattributes.find(k => k.attrid === i.key).attrvalueid}`,
-                                rules: [{ required: false }],
+                                rules: [{ required: `${i.required}`, message: 'Заавал бөглөнө үү!' }],
                             })(
                               <Select
+                                allowClear
                                 size={'small'}
                                 style={{ width: '96%' }}
                               >
