@@ -54,7 +54,7 @@ class SelectTreeWidget extends Component {
         onChange={value => this.props.onChange(value)}
         placholder={placholder}
         allowClear
-        autoClearSearchValue
+        filterTreeNode={(inputValue, treeNode) => treeNode.key.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
       >
         {this.renderTreeNodes(this.props.schema.options)}
       </TreeSelect>

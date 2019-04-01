@@ -120,6 +120,7 @@ class Product extends React.Component {
                       placeholder="Аттрибут хайх"
                       style={{ width: '96%' }}
                       value={filtered.attributeids === undefined ? '' : filtered.attributeids}
+                      filterOption={(inputValue, option) => option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
                       onChange={(val) => { this.handleChange({ name: 'attributeids', value: val }); }}
                     >
                       { filter.attributeids.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>) }
@@ -146,6 +147,7 @@ class Product extends React.Component {
                       placeholder="Аттрибутын утга хайх"
                       style={{ width: '96%' }}
                       value={filtered.attrvalueids}
+                      filterOption={(inputValue, option) => option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
                       onChange={(val) => { this.handleChange({ name: 'attrvalueids', value: val }); }}
                     >
                       { filter.attrvalueids.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>) }
@@ -161,6 +163,7 @@ class Product extends React.Component {
                       size={'small'}
                       placeholder="Бренд хайх"
                       style={{ width: '96%' }}
+                      filterOption={(inputValue, option) => option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
                       value={filtered.brandids}
                       onChange={(val) => { this.handleChange({ name: 'brandids', value: val }); }}
                     >
