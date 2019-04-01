@@ -34,6 +34,7 @@ class Component extends React.Component {
     }
 
     render() {
+      console.log(this.state);
       const { getFieldDecorator } = this.props.form;
       const { attribute, loading } = this.state;
 
