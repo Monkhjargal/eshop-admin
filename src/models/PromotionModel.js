@@ -12,11 +12,6 @@ class PromotionModel extends BaseModel {
           response: this.buildActionName('response', data.model, 'all'),
           error: this.buildActionName('error', data.model, 'all'),
         },
-        get: {
-          request: this.buildActionName('request', data.model, 'get'),
-          response: this.buildActionName('response', data.model, 'get'),
-          error: this.buildActionName('error', data.model, 'get'),
-        },
         create: {
           request: this.buildActionName('request', data.model, 'create'),
           response: this.buildActionName('response', data.model, 'create'),
@@ -31,6 +26,16 @@ class PromotionModel extends BaseModel {
           request: this.buildActionName('request', data.model, 'update'),
           response: this.buildActionName('response', data.model, 'update'),
           error: this.buildActionName('error', data.model, 'update'),
+        },
+        getProduct: {
+          request: this.buildActionName('request', data.model, 'getProduct'),
+          response: this.buildActionName('response', data.model, 'getProduct'),
+          error: this.buildActionName('error', data.model, 'getProduct'),
+        },
+        updateProduct: {
+          request: this.buildActionName('request', data.model, 'updateProduct'),
+          response: this.buildActionName('response', data.model, 'updateProduct'),
+          error: this.buildActionName('error', data.model, 'updateProduct'),
         },
       };
     }
@@ -52,24 +57,31 @@ class PromotionModel extends BaseModel {
         formcreateByServer: {},
         data: {},
       },
+      createRes: [],
+      product: [],
+      updateProduct: [],
     };
   }
 
-  get = ({ _id, url }) => asyncFn({
-    url: `${url || this.url}/${_id}`, method: 'GET', model: this.model.get,
-  });
   all = ({ body, url } = {}) => asyncFn({
     body, url: `${url || this.url}/all`, method: 'GET', model: this.model.all,
   });
   create = ({ body, url }) => asyncFn({
     body, url: url || this.url, method: 'POST', model: this.model.create,
-  })
-  delete = ({ _id, url }) => asyncFn({
-    url: `${url || this.url}/${_id}`, method: 'DELETE', model: this.model.delete,
   });
-  update = ({ body, url }) => asyncFn({
-    body, url: `${url || this.url}`, method: 'PUT', model: this.model.update,
+  delete = ({ id, url }) => asyncFn({
+    url: `${url || this.url}/${id}`, method: 'DELETE', model: this.model.delete,
   });
+  update = ({ body, id }) => asyncFn({
+    body, url: `${this.url}/${id}`, method: 'PUT', model: this.model.update,
+  });
+  getProduct = ({ id }) => asyncFn({
+    url: `${this.url}/skus/${id}`, method: 'GET', model: this.model.getProduct,
+  });
+  updateProduct = ({ body, id }) => asyncFn({
+    body, url: `${this.url}/${id}`, method: 'PUT', model: this.model.updateProduct,
+  });
+
 
   reducer = (state = this.initialState, action) => {
     switch (action.type) {
@@ -87,48 +99,25 @@ class PromotionModel extends BaseModel {
         return {
           ...state,
           all: {
-            ...state.all,
             isLoading: false,
             data: action.payload.value,
-            total: action.payload.rowCount,
             headers: action.payload.headers,
-            formcreateByServer: action.payload.data,
-          },
-        };
-      case this.model.get.request:
-        return {
-          ...state,
-          current: this.requestCase(state.current, action),
-        };
-      case this.model.get.error:
-        return {
-          ...state,
-          current: this.errorCase(state.current, action),
-        };
-      case this.model.get.response:
-        return {
-          ...state,
-          current: {
-            ...state.current,
-            isLoading: false,
-            data: action.payload.value,
           },
         };
       case this.model.create.request:
         return {
           ...state,
-          current: this.requestCase(state.current, action),
+          createRes: this.requestCase(state.current, action),
         };
       case this.model.create.error:
         return {
           ...state,
-          current: this.errorCase(state.current, action),
+          createRes: this.errorCase(state.current, action),
         };
       case this.model.create.response:
         return {
           ...state,
-          current: {
-            ...state.current,
+          createRes: {
             isLoading: false,
             data: action.payload,
           },
@@ -171,6 +160,45 @@ class PromotionModel extends BaseModel {
             data: action.payload,
           },
         };
+      // PROMOTION GET PRODUCT
+      case this.model.getProduct.request:
+        return {
+          ...state,
+          current: this.requestCase(state.current, action),
+        };
+      case this.model.getProduct.error:
+        return {
+          ...state,
+          current: this.errorCase(state.current, action),
+        };
+      case this.model.getProduct.response:
+        return {
+          ...state,
+          product: {
+            isLoading: false,
+            data: action.payload,
+          },
+        };
+      // PROMOTION UPDATE PRODUCT
+      case this.model.updateProduct.request:
+        return {
+          ...state,
+          current: this.requestCase(state.current, action),
+        };
+      case this.model.updateProduct.error:
+        return {
+          ...state,
+          current: this.errorCase(state.current, action),
+        };
+      case this.model.updateProduct.response:
+        return {
+          ...state,
+          updateProduct: {
+            isLoading: false,
+            data: action.payload,
+          },
+        };
+
       default:
         return state;
     }

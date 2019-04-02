@@ -33,7 +33,7 @@ const Filter = new FilterModel({
 
 const Promotion = new PromotionModel({
   url: '/mn/api/promotioncategory',
-  model: 'promotion',
+  model: 'promotionlist',
 });
 
 const Product = new ProductModel({

@@ -1,16 +1,87 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-class Promotion extends PureComponent {
+import { Promotion as PromotionModel } from "../../models";
+import ProductList from "./list";
+
+const mapStateToProps = (state) => {
+  console.log('MAIN PROPS', state);
+  const { data, headers } = state.promotionlist.all;
+  const { createRes, product } = state.promotionlist;
+
+  let returnObject = {
+    data,
+    headers,
+    createRes,
+    product,
+  };
+
+  return returnObject;
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  let actionCreators = {
+    getAll: PromotionModel.all, // Promotion-iin husnegtiin data avah huselt
+    create: PromotionModel.create, // Promotion vvsget huselt
+    update: PromotionModel.update, // Promotion zasah
+    delete: PromotionModel.delete, // Promotion ustgah
+    getProduct: PromotionModel.getProduct, // Promotion-iin product
+    updateProduct: PromotionModel.updateProduct, // Promotion-iin product update
+  };
+
+  return ({
+    ...bindActionCreators(actionCreators, dispatch),
+  });
+};
+
+class Product extends React.Component {
+  state = {
+    dataSource: {},
+    filterSource: {},
+    body: {
+      limit: 20,
+      page: 1,
+      filtered: {},
+      sorted: [],
+    },
+  };
+
+  componentDidMount() { this.refresh(); }
+
+  componentWillReceiveProps(prevProps) {
+    // console.log('prevProps', prevProps.relational);
+  }
+
+  componentWillUpdate(prevProps, prevState) {
+    if (prevProps !== prevState.dataSource) {
+      this.setState({ dataSource: prevProps });
+    }
+  }
+
+  refresh = () => {
+    this.props.getAll({ body: this.state.body });
+    // this.props.getProduct({ id: 2 });
+  }
+
   render() {
+    // console.log('Product State', this.state);
+    const { dataSource } = this.state;
     return (
-      <div>
-        <tt>hello</tt>
-      </div>
+      <ProductList
+        dataSource={dataSource}
+        create={this.props.create}
+        refresh={this.props.getAll}
+        update={this.props.update}
+        delete={this.props.delete}
+        getProduct={this.props.getProduct}
+        updateProduct={this.props.updateProduct}
+      />
     );
   }
 }
 
-export default Promotion;
+export default connect(mapStateToProps, mapDispatchToProps)(Product);
 
 
 // import React, { Component } from "react";
