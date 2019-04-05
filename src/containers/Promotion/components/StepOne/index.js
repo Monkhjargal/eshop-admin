@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef, useRef, useImperativeHandle } from 'react';
 import { Form, Input, Checkbox } from "antd";
 
 const formItemLayout = {
@@ -7,30 +7,22 @@ const formItemLayout = {
 };
 
 class Step extends React.Component {
+  componentDidMount() { this.props.onRef(this); }
+  componentWillUnmount() { this.props.onRef(null); }
+
   handleSubmit = (e) => {
-    e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        this.setState({ loading: true });
+        // console.log(values);
         values.isenable = values.isenable === undefined ? false : values.isenable;
-        // console.log('Received values of form: ', { ...values, skucds: [] });
-        this.props.create({ body: { ...values, skucds: [] } })
-          .then((res) => {
-            this.setState({ loading: false });
-            this.props.onCancel();
-            this.props.refresh();
-          });
+        // console.log(values);
+        this.props.getValue(values);
       }
     });
   }
 
-  getAlert() {
-    console.log('====================================');
-    console.log('asds');
-    console.log('====================================');
-  }
-
   render() {
+    // console.log(this.props);
     const { getFieldDecorator } = this.props.form;
 
     return (
@@ -41,6 +33,7 @@ class Step extends React.Component {
             label="Суртачилгааны ангилал: "
           >
             {getFieldDecorator('promotnm', {
+              initialValue: `${this.props.defValue.length === 0 ? '' : this.props.defValue.promotnm}`,
               rules: [{ required: true, message: 'Заавал бөглөнө үү!' }],
               })(
                 <Input />,
@@ -52,9 +45,10 @@ class Step extends React.Component {
             label="Идэвхитэй эсэх: "
           >
             {getFieldDecorator('isenable', {
+              initialValue: `${this.props.defValue.length === 0 ? false : this.props.defValue.isenable}`,
               rules: [{ required: false }],
               })(
-                <Checkbox defaultChecked={false} />,
+                <Checkbox defaultChecked={this.props.defValue.length === 0 ? false : this.props.defValue.isenable} />,
             )}
           </Form.Item>
         </Form>

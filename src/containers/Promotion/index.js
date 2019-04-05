@@ -3,18 +3,19 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { Promotion as PromotionModel } from "../../models";
-import ProductList from "./list";
+import PromotionList from "./list";
 
 const mapStateToProps = (state) => {
-  console.log('MAIN PROPS', state);
+  // console.log('MAIN PROPS', state);
   const { data, headers } = state.promotionlist.all;
-  const { createRes, product } = state.promotionlist;
+  const { createRes, product, detail } = state.promotionlist;
 
   let returnObject = {
     data,
     headers,
     createRes,
     product,
+    detail,
   };
 
   return returnObject;
@@ -28,6 +29,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     delete: PromotionModel.delete, // Promotion ustgah
     getProduct: PromotionModel.getProduct, // Promotion-iin product
     updateProduct: PromotionModel.updateProduct, // Promotion-iin product update
+    getDetail: PromotionModel.detail, // Promotion detail
   };
 
   return ({
@@ -61,14 +63,14 @@ class Product extends React.Component {
 
   refresh = () => {
     this.props.getAll({ body: this.state.body });
-    // this.props.getProduct({ id: 2 });
+    this.props.getDetail({ id: 1 });
   }
 
   render() {
     // console.log('Product State', this.state);
     const { dataSource } = this.state;
     return (
-      <ProductList
+      <PromotionList
         dataSource={dataSource}
         create={this.props.create}
         refresh={this.props.getAll}
@@ -76,6 +78,7 @@ class Product extends React.Component {
         delete={this.props.delete}
         getProduct={this.props.getProduct}
         updateProduct={this.props.updateProduct}
+        getDetail={this.props.getDetail}
       />
     );
   }

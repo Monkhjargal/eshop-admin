@@ -3,11 +3,6 @@ import { Modal, Form, Input, Checkbox, Button } from "antd";
 import styles from "../../styles.less";
 import { MainStep } from "../";
 
-const formItemLayout = {
-  labelCol: { span: 10 },
-  wrapperCol: { span: 12 },
-};
-
 class Component extends React.Component {
   state = {
     loading: false,
@@ -50,10 +45,10 @@ class Component extends React.Component {
         <MainStep
           getProduct={this.props.getProduct}
           product={this.props.product}
-          updateProduct={this.props.updateProduct}
           create={this.props.create}
           data={this.props.data}
           onCancel={this.props.onCancel}
+          refresh={this.props.refresh}
         />
       </Modal>
     );

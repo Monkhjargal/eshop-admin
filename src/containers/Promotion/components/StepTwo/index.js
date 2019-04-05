@@ -23,9 +23,10 @@ class Component extends React.Component {
     const { data } = this.props;
     data.skucds = this.state.selected;
 
-    this.props.updateProduct({ body: data, id: data.id }).then((res) => {
+    this.props.create({ body: data, id: data.id }).then((res) => {
       this.setState({ loading: false });
       this.props.onCancel();
+      this.props.refresh();
     });
   }
 
@@ -58,8 +59,8 @@ class Component extends React.Component {
         catnm: `${item.catnm}`,
         chosen: `${item.state}`,
       };
-      if (data.chosen === '1') { selected.push(data.key); }
 
+      if (data.chosen === '1') { selected.push(data.key); }
       return unselected.push(data);
     });
 

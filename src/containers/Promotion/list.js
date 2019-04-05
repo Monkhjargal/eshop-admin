@@ -4,7 +4,7 @@ import { Card, Button, Table, Spin, Switch, Popconfirm } from "antd";
 import PageHeaderLayout from "../../layouts/PageHeaderLayout";
 import styles from '../../components/List/style.less';
 import tableStyle from "../../components/StandardTable/index.less";
-import { CreateModal, UpdateModal, TransferModal } from "./components";
+import { CreateModal, UpdateModal } from "./components";
 
 class Product extends React.Component {
   state = {
@@ -160,32 +160,17 @@ class Product extends React.Component {
         <UpdateModal
           visible={isupdate}
           onCancel={this.handleUpdateModal}
-          data={selectedRow}
+          id={selectedRow.id}
+          detail={this.props.dataSource.detail}
           refresh={this.refreshList}
-          update={this.props.update}
+          update={this.props.updateProduct}
+          getProduct={this.props.getProduct}
+          product={this.props.dataSource.product}
+          getDetail={this.props.getDetail}
         />
       );
     } catch (err) {
       return console.log('Суртачилгааны ангилал засах үед алдаа гарлаа');
-    }
-  }
-
-  renderTransferModal = () => {
-    try {
-      const { istransfer, selectedRow } = this.state;
-      return (
-        <TransferModal
-          visible={istransfer}
-          onCancel={this.handleTransferModal}
-          refresh={this.refreshList}
-          data={selectedRow}
-          getProduct={this.props.getProduct}
-          product={this.props.dataSource.product}
-          updateProduct={this.props.updateProduct}
-        />
-      );
-    } catch (err) {
-      return console.log('Суртачилгааны ангилалын бараа засах үед алдаа гарлаа');
     }
   }
 
@@ -207,7 +192,6 @@ class Product extends React.Component {
                   {this.renderTable()}
                   {this.renderCreateModal()}
                   {this.renderUpdateModal()}
-                  {this.renderTransferModal()}
                 </div>
               </div>
             </Card>

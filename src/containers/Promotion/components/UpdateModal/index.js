@@ -1,10 +1,6 @@
 import React from "react";
-import { Modal, Form, Input, Checkbox, Button } from "antd";
-
-const formItemLayout = {
-  labelCol: { span: 10 },
-  wrapperCol: { span: 12 },
-};
+import { Modal, Form } from "antd";
+import { UMainStep } from "../";
 
 class Component extends React.Component {
   state = {
@@ -16,8 +12,9 @@ class Component extends React.Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         this.setState({ loading: true });
-        console.log('Received values of form: ', { ...values, skucds: this.props.data.skucds });
-        this.props.update({ body: { ...values, skucds: this.props.data.skucds }, id: this.props.data.id })
+        values.isenable = values.isenable === undefined ? false : values.isenable;
+        // console.log('Received values of form: ', { ...values, skucds: [] });
+        this.props.create({ body: { ...values, skucds: [] } })
           .then((res) => {
             this.setState({ loading: false });
             this.props.onCancel();
@@ -28,48 +25,30 @@ class Component extends React.Component {
   }
 
   render() {
-    // console.log("PROMOTION UPDATE MODAL PROPS: ", this.props);
-    const { getFieldDecorator } = this.props.form;
+    // console.log("PROMOTION CREATE MODAL PROPS: ", this.props);
     const { loading } = this.state;
-    const { data } = this.props;
-
     return (
       <Modal
-        title="Суртачилгааны ангилал засах"
+        title="Суртачилгааны ангилал бүртгэх"
         visible={this.props.visible}
         onCancel={this.props.onCancel}
         onOk={this.props.onCancel}
         width={'50%'}
         afterClose={this.props.afterClose}
         destroyOnClose
-        footer={[
-          <Button type="primary" loading={loading} htmlType="submit" onClick={this.handleSubmit} >Хадгалах</Button>,
-        ]}
+        footer={null}
       >
-        <Form>
-          <Form.Item
-            {...formItemLayout}
-            label="Суртачилгааны ангилал: "
-          >
-            {getFieldDecorator('promotnm', {
-              initialValue: `${data.promotnm}`,
-              rules: [{ required: true, message: 'Заавал бөглөнө үү!' }],
-              })(
-                <Input />,
-            )}
-
-          </Form.Item>
-          <Form.Item
-            {...formItemLayout}
-            label="Идэвхитэй эсэх: "
-          >
-            {getFieldDecorator('isenable', {
-              rules: [{ required: false }],
-              })(
-                <Checkbox defaultChecked={data.isenable} />,
-            )}
-          </Form.Item>
-        </Form>
+        <UMainStep
+          getProduct={this.props.getProduct}
+          product={this.props.product}
+          update={this.props.update}
+          data={this.props.data}
+          id={this.props.id}
+          detail={this.props.detail}
+          onCancel={this.props.onCancel}
+          refresh={this.props.refresh}
+          getDetail={this.props.getDetail}
+        />
       </Modal>
     );
   }

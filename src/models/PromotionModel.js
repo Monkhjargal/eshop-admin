@@ -27,6 +27,11 @@ class PromotionModel extends BaseModel {
           response: this.buildActionName('response', data.model, 'update'),
           error: this.buildActionName('error', data.model, 'update'),
         },
+        detail: {
+          request: this.buildActionName('request', data.model, 'detail'),
+          response: this.buildActionName('response', data.model, 'detail'),
+          error: this.buildActionName('error', data.model, 'detail'),
+        },
         getProduct: {
           request: this.buildActionName('request', data.model, 'getProduct'),
           response: this.buildActionName('response', data.model, 'getProduct'),
@@ -60,6 +65,7 @@ class PromotionModel extends BaseModel {
       createRes: [],
       product: [],
       updateProduct: [],
+      detail: [],
     };
   }
 
@@ -74,6 +80,9 @@ class PromotionModel extends BaseModel {
   });
   update = ({ body, id }) => asyncFn({
     body, url: `${this.url}/${id}`, method: 'PUT', model: this.model.update,
+  });
+  detail = ({ body, id }) => asyncFn({
+    body, url: `${this.url}/${id}`, method: 'GET', model: this.model.detail,
   });
   getProduct = ({ id }) => asyncFn({
     url: `${this.url}/skus/${id}`, method: 'GET', model: this.model.getProduct,
@@ -194,6 +203,25 @@ class PromotionModel extends BaseModel {
         return {
           ...state,
           updateProduct: {
+            isLoading: false,
+            data: action.payload,
+          },
+        };
+      // DETAIL PROMOTION
+      case this.model.detail.request:
+        return {
+          ...state,
+          current: this.requestCase(state.current, action),
+        };
+      case this.model.detail.error:
+        return {
+          ...state,
+          current: this.errorCase(state.current, action),
+        };
+      case this.model.detail.response:
+        return {
+          ...state,
+          detail: {
             isLoading: false,
             data: action.payload,
           },

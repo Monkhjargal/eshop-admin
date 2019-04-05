@@ -10,18 +10,21 @@ const Step = Steps.Step;
 class Component extends React.Component {
   state = {
     step: 0,
+    stepOneData: [],
   }
 
   handleNextStep = (e) => {
     if (this.state.step !== e.value) {
-      this.child.getAlert();
+      if (this.state.step === 0) { this.stepOne.handleSubmit(); } else { this.setState({ step: e.value }); }
     }
   }
 
+  getValue = (e) => { this.setState({ stepOneData: { ...e, skucds: [], id: 0 }, step: this.state.step + 1 }); }
 
   render() {
     // console.log('Main step', this.props);
-    const { step } = this.state;
+    // console.log(this.state);
+    const { step, stepOneData } = this.state;
     return (
       <div>
         <Steps current={step}>
@@ -31,15 +34,20 @@ class Component extends React.Component {
         <div className={styles.stepContent}>
           {
             step === 0 ? <StepOne
-              ref={(instance) => { this.child = instance; }}
+              onRef={ref => (this.stepOne = ref)}
               onCancel={this.props.onCancel}
               nextStep={this.handleNextStep}
+              getValue={this.getValue}
+              defValue={stepOneData}
             />
               :
             <StepTwo
-              data={this.props.data}
+              data={stepOneData}
               product={this.props.product}
               getProduct={this.props.getProduct}
+              create={this.props.create}
+              onCancel={this.props.onCancel}
+              refresh={this.props.refresh}
             />
           }
         </div>
