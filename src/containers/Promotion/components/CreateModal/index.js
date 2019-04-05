@@ -1,6 +1,7 @@
 import React from "react";
 import { Modal, Form, Input, Checkbox, Button } from "antd";
 import styles from "../../styles.less";
+import { MainStep } from "../";
 
 const formItemLayout = {
   labelCol: { span: 10 },
@@ -31,7 +32,6 @@ class Component extends React.Component {
 
   render() {
     // console.log("PROMOTION CREATE MODAL PROPS: ", this.props);
-    const { getFieldDecorator } = this.props.form;
     const { loading } = this.state;
     return (
       <Modal
@@ -42,33 +42,19 @@ class Component extends React.Component {
         width={'50%'}
         afterClose={this.props.afterClose}
         destroyOnClose
-        footer={[
-          <Button type="primary" loading={loading} htmlType="submit" onClick={this.handleSubmit} >Хадгалах</Button>,
-        ]}
+        footer={null}
+        // footer={[
+        //   <Button type="primary" loading={loading} htmlType="submit" onClick={this.handleSubmit} >Хадгалах</Button>,
+        // ]}
       >
-        <Form>
-          <Form.Item
-            {...formItemLayout}
-            label="Суртачилгааны ангилал: "
-          >
-            {getFieldDecorator('promotnm', {
-              rules: [{ required: true, message: 'Заавал бөглөнө үү!' }],
-              })(
-                <Input />,
-            )}
-
-          </Form.Item>
-          <Form.Item
-            {...formItemLayout}
-            label="Идэвхитэй эсэх: "
-          >
-            {getFieldDecorator('isenable', {
-              rules: [{ required: false }],
-              })(
-                <Checkbox defaultChecked={false} />,
-            )}
-          </Form.Item>
-        </Form>
+        <MainStep
+          getProduct={this.props.getProduct}
+          product={this.props.product}
+          updateProduct={this.props.updateProduct}
+          create={this.props.create}
+          data={this.props.data}
+          onCancel={this.props.onCancel}
+        />
       </Modal>
     );
   }

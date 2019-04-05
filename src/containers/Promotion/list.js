@@ -134,7 +134,7 @@ class Product extends React.Component {
 
   renderCreateModal = () => {
     try {
-      const { iscreate } = this.state;
+      const { iscreate, selectedRow } = this.state;
       return (
         <CreateModal
           visible={iscreate}
@@ -142,6 +142,10 @@ class Product extends React.Component {
           create={this.props.create}
           response={this.props.dataSource.createRes}
           refresh={this.refreshList}
+          data={selectedRow}
+          getProduct={this.props.getProduct}
+          product={this.props.dataSource.product}
+          updateProduct={this.props.updateProduct}
         />
       );
     } catch (err) {
