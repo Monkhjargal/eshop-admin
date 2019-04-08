@@ -12,6 +12,11 @@ class PromotionModel extends BaseModel {
           response: this.buildActionName('response', data.model, 'all'),
           error: this.buildActionName('error', data.model, 'all'),
         },
+        filter: {
+          request: this.buildActionName('request', data.model, 'filter'),
+          response: this.buildActionName('response', data.model, 'filter'),
+          error: this.buildActionName('error', data.model, 'filter'),
+        },
         create: {
           request: this.buildActionName('request', data.model, 'create'),
           response: this.buildActionName('response', data.model, 'create'),
@@ -66,11 +71,15 @@ class PromotionModel extends BaseModel {
       product: [],
       updateProduct: [],
       detail: [],
+      filter: [],
     };
   }
 
   all = ({ body, url } = {}) => asyncFn({
-    body, url: `${url || this.url}/all`, method: 'GET', model: this.model.all,
+    body, url: `${url || this.url}/all`, method: 'POST', model: this.model.all,
+  });
+  filter = ({ body } = {}) => asyncFn({
+    body, url: `/mn/api/filter/promotioncategory`, method: 'GET', model: this.model.filter,
   });
   create = ({ body, url }) => asyncFn({
     body, url: url || this.url, method: 'POST', model: this.model.create,
@@ -222,6 +231,25 @@ class PromotionModel extends BaseModel {
         return {
           ...state,
           detail: {
+            isLoading: false,
+            data: action.payload,
+          },
+        };
+      // PROMOTION FILTER
+      case this.model.filter.request:
+        return {
+          ...state,
+          current: this.requestCase(state.current, action),
+        };
+      case this.model.filter.error:
+        return {
+          ...state,
+          current: this.errorCase(state.current, action),
+        };
+      case this.model.filter.response:
+        return {
+          ...state,
+          filter: {
             isLoading: false,
             data: action.payload,
           },

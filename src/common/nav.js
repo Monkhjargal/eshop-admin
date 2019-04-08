@@ -51,7 +51,7 @@ export const getNavData = [
         component: CategoryList,
       },
       {
-        name: 'Сурталчилгааны ангилал',
+        name: 'Улирлын цэс',
         path: 'promotion',
         component: Promotion,
       },
@@ -70,11 +70,6 @@ export const getNavData = [
         name: 'Брэнд',
         path: 'brands',
         component: BrandList,
-      },
-      {
-        name: 'Info',
-        path: 'info-transfer',
-        component: InfoList,
       },
       {
         name: 'Багцын бараа',

@@ -1,20 +1,27 @@
 import React from 'react';
-import { Card, Button, Table, Spin, Switch, Popconfirm } from "antd";
+import { Card, Button, Table, Spin, Switch, Popconfirm, Form, Col, Input, Row, Select } from "antd";
 
 import PageHeaderLayout from "../../layouts/PageHeaderLayout";
 import styles from '../../components/List/style.less';
 import tableStyle from "../../components/StandardTable/index.less";
 import { CreateModal, UpdateModal } from "./components";
+import productSty from "../Product/styles.less";
 
-class Product extends React.Component {
+class Promotion extends React.Component {
   state = {
-    name: 'Суртачилгааны ангилал',
+    name: 'Улирлын цэс',
     selectedRow: [],
     isupdate: false,
     iscreate: false,
     dataSource: {},
     tloading: false,
     istransfer: false,
+    body: {
+      limit: 20,
+      page: 1,
+      filtered: {},
+      sorted: [],
+    },
   }
 
   handleRowClick = (record) => {
@@ -38,13 +45,88 @@ class Product extends React.Component {
 
   handleCreateModal = () => { this.setState({ iscreate: !this.state.iscreate }); }
   handleUpdateModal = () => { this.setState({ isupdate: !this.state.isupdate }); }
-  handleTransferModal = () => { this.setState({ istransfer: !this.state.istransfer }); }
 
   handleDelete = () => {
     this.props.delete({ id: this.state.selectedRow.id })
       .then((res) => {
         this.refreshList();
       });
+  }
+
+  handleResetFilter = () => { this.props.form.resetFields(); }
+
+  handleFilter = (e) => {
+    e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        this.setState({ tloading: true });
+        this.props.refresh({ body: values }).then(res => this.setState({ tloading: false }));
+      }
+    });
+  }
+
+  renderFilter = () => {
+    try {
+      const { getFieldDecorator } = this.props.form;
+      const { value } = this.props.dataSource.filter.data;
+
+      return (
+        <div>
+          <Form className={productSty.otform} onSubmit={this.handleFilter} >
+            <Row>
+              <Col span={6}>
+                <Form.Item className={productSty.formItem} label="Нэр" style={{ width: '96%' }}>
+                  {getFieldDecorator('promotnm', {
+                    initialValue: "",
+                    rules: [{
+                      required: false,
+                    }],
+                  })(
+                    <Input size={'small'} placeholder="Улирлын цэсны нэрээр хайх" />,
+                  )}
+                </Form.Item>
+              </Col>
+              <Col span={6}>
+                <Form.Item className={productSty.formItem} label="Идэвхитэй эсэх" style={{ width: '96%' }}>
+                  {getFieldDecorator('isenable', {
+                    initialValue: [],
+                    rules: [{ required: false }],
+                  })(
+                    <Select mode="multiple" size={'small'} placeholder="Идэвхитэй эсэхээр хайх">
+                      {value !== undefined ? value.isenable.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>) : '' }
+                    </Select>,
+                  )}
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item className={productSty.formItem} label="Улирлын цэсэнд орсон бараа">
+                  {getFieldDecorator('skucds', {
+                    initialValue: [],
+                    rules: [{ required: false }],
+                  })(
+                    <Select
+                      mode="multiple"
+                      size={'small'}
+                      placeholder="Улирлын цэсэнд орсон бараагаар хайх"
+                      filterOption={(inputValue, option) => option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
+                    >
+                      {value !== undefined ? value.skucds.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>) : '' }
+                    </Select>,
+                  )}
+                </Form.Item>
+              </Col>
+            </Row>
+            <div className="ant-modal-footer">
+              <Button size="small" type="button" onClick={this.handleResetFilter} >{'Цэвэрлэх'}</Button>
+              <Button size="small" htmlType="submit" type="primary" >{'Хайх'}</Button>
+            </div>
+          </Form>
+        </div>
+      );
+    // eslint-disable-next-line no-unreachable
+    } catch (err) {
+      return console.log(err);
+    }
   }
 
   renderButtons = () => {
@@ -101,7 +183,7 @@ class Product extends React.Component {
           case 'aid':
             return i.render = (text, record, index) => <span>{index + 1}</span>;
           case 'promotnm':
-            return i.render = text => <span onClick={this.handleTransferModal}>{text}</span>;
+            return i.render = text => <span onClick={this.handleUpdateModal}>{text}</span>;
           case 'isenable':
             return i.render = (text, record) => <Switch checked={record.isenable} disabled />;
 
@@ -117,7 +199,7 @@ class Product extends React.Component {
             columns={headers}
             size="small"
             loading={this.state.tloading}
-            bordered={false}
+            bordered
             rowKey={record => record.id}
             pagination={{ defaultPageSize: 10, showSizeChanger: true, showQuickJumper: true }}
             footer={this.renderFooter}
@@ -149,7 +231,7 @@ class Product extends React.Component {
         />
       );
     } catch (err) {
-      return console.log('Суртачилгааны ангилал бүртгэх үед алдаа гарлаа');
+      return console.log('Улирлын цэс бүртгэх үед алдаа гарлаа');
     }
   }
 
@@ -170,7 +252,7 @@ class Product extends React.Component {
         />
       );
     } catch (err) {
-      return console.log('Суртачилгааны ангилал засах үед алдаа гарлаа');
+      return console.log('Улирлын цэс засах үед алдаа гарлаа');
     }
   }
 
@@ -188,6 +270,7 @@ class Product extends React.Component {
             <Card bordered={false}>
               <div>
                 <div className={styles.tableList} style={{ overflow: 'hidden', overflowX: 'auto' }}>
+                  {this.renderFilter()}
                   {this.renderButtons()}
                   {this.renderTable()}
                   {this.renderCreateModal()}
@@ -208,4 +291,5 @@ class Product extends React.Component {
   }
 }
 
-export default Product;
+const PromotionList = Form.create({ name: 'promotion_list' })(Promotion);
+export default PromotionList;

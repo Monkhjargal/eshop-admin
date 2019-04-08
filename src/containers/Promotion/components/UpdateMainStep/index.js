@@ -30,6 +30,8 @@ class Component extends React.Component {
 
   getValue = (e) => { this.setState({ stepOneData: { ...e, skucds: [], id: this.state.id }, step: this.state.step + 1 }); }
 
+  prevStep = () => { this.setState({ step: this.state.step - 1 }); }
+
   render() {
     // console.log('Update Main step', this.props);
     // console.log(this.state);
@@ -39,7 +41,7 @@ class Component extends React.Component {
       return (
         <div>
           <Steps current={step}>
-            <Step title="Суртачилгааны ангилал бүртгэх" onClick={e => this.handleNextStep({ event: e, value: 0 })} />
+            <Step title="Улирлын цэс засах" onClick={e => this.handleNextStep({ event: e, value: 0 })} />
             <Step title="Бараа тохируулах" onClick={e => this.handleNextStep({ event: e, value: 1 })} />
           </Steps>
           <div className={styles.stepContent}>
@@ -59,6 +61,7 @@ class Component extends React.Component {
                 create={this.props.update}
                 onCancel={this.props.onCancel}
                 refresh={this.props.refresh}
+                prevStep={this.prevStep}
               />
             }
           </div>

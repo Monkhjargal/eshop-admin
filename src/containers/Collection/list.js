@@ -45,7 +45,7 @@ class Packagelist extends React.Component {
   );
 
   handleUpdateModal = () => { this.setState({ isupdate: !this.state.isupdate }); }
-  handleCreateModal = () => { this.setState({ isupdate: !this.state.iscreate }); }
+  handleCreateModal = () => { this.setState({ iscreate: !this.state.iscreate }); }
 
   renderEditButton = () => (
     <div className={styles.tableListOperator}>
@@ -65,6 +65,7 @@ class Packagelist extends React.Component {
         type="dashed"
         className={`${styles.formbutton} ${styles.update}`}
         onClick={this.handleUpdateModal}
+        disabled={!this.state.selectedRow}
       >
         {`${this.state.name} дэлгэрэнгүй засах`}
       </Button>
@@ -79,7 +80,7 @@ class Packagelist extends React.Component {
           icon="delete"
           type="danger"
           size="small"
-          disabled={!this.state.selectedId}
+          disabled={!this.state.selectedRow}
         >
           {`${this.state.name} устгах`}
         </Button>
@@ -122,8 +123,24 @@ class Packagelist extends React.Component {
     }
   }
 
+  renderCreate = () => {
+    try {
+      const { iscreate } = this.state;
+      return (
+        <CreateModal
+          visible={iscreate}
+          onCancel={this.handleCreateModal}
+          getProduct={this.props.getProduct}
+          product={this.props.dataSource.product}
+          create={this.props.create}
+        />
+      );
+    } catch (error) {
+      return console.log(error);
+    }
+  }
+
   render() {
-    const { auth } = this.props.dataSource;
     return (
       <PageHeaderLayout>
         <Card bordered={false}>
@@ -134,17 +151,7 @@ class Packagelist extends React.Component {
                   {/* {this.renderFilterFields()} */}
                   {this.renderEditButton()}
                   {this.renderTable()}
-                  <UpdateModal
-                    visible={this.state.isupdate}
-                    onCancel={this.handleUpdateModal}
-                    dataSource={this.state.selectedRow}
-                    auth={auth}
-                  />
-                  <CreateModal
-                    visible={this.state.iscreate}
-                    modalName="test"
-                    // onCancel={this.handleCreateModal}
-                  />
+                  {this.renderCreate()}
                 </div>
               )
             }

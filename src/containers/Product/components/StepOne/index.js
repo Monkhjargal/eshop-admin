@@ -150,7 +150,7 @@ class Component extends React.Component {
 
   handleSave = () => {
     const { update, images } = this.state;
-    console.log(update);
+    // console.log(update);
     let data = new FormData();
     images.map(i => data.append("files", i.originFileObj, i.name));
     images.map(i => (i.originFileObj === undefined ? data.append("imgnm", i.name) : ''));
@@ -170,11 +170,11 @@ class Component extends React.Component {
   };
 
   handleChangeDate = (e) => {
-    console.log('handleChangeDate', e);
+    // console.log('handleChangeDate', e);
     const { update } = this.state;
     update.sdate = e[0].format('YYYY-MM-DD');
     update.edate = e[1].format('YYYY-MM-DD');
-    console.log(update);
+    // console.log(update);
     this.setState(update);
   }
 
@@ -254,6 +254,7 @@ class Component extends React.Component {
                         style={{ width: '100%' }}
                         defaultValue={detail.brandnm}
                         onChange={val => this.handleChange({ name: 'brandid', value: val })}
+                        filterOption={(inputValue, option) => option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
                       >
                         {filter.brandids && filter.brandids.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>)}
                       </Select>

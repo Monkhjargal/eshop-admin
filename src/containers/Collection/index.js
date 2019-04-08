@@ -6,23 +6,22 @@ import { Package as PackageModel } from "../../models";
 import Packagelist from "./list";
 
 const mapStateToProps = (state) => {
-  const { auth } = state;
-  const {
-    data, filter, headers, formcreateByServer,
-  } = state.package.all;
+  // console.log('MAIN PROPS: ', state);
+  const { data, headers } = state.package.all;
+  const { product } = state.package;
   const returnObject = {
     data,
-    filter,
     headers,
-    formcreateByServer,
-    auth,
+    product,
   };
   return returnObject;
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   let actionCreators = {
-    getDataSource: PackageModel.all,
+    create: PackageModel.create,
+    getAll: PackageModel.all,
+    getProduct: PackageModel.product,
   };
 
   return ({
@@ -51,13 +50,20 @@ class Collection extends React.Component {
   }
 
   refresh = () => {
-    this.props.getDataSource({ body: this.state.body });
+    this.props.getAll({ body: this.state.body });
+    // this.props.getProduct({ id: 0 });
   }
 
   render() {
-    const { dataSource, auth } = this.state;
+    // console.log('PACKAGE STATE:', this.state);
+    const { dataSource } = this.state;
     return (
-      <Packagelist dataSource={dataSource} getDataSource={this.props.getDataSource} />
+      <Packagelist
+        create={this.props.create}
+        dataSource={dataSource}
+        getAll={this.props.getAll}
+        getProduct={this.props.getProduct}
+      />
     );
   }
 }

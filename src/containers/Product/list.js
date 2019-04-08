@@ -383,7 +383,7 @@ class Product extends React.Component {
             dataSource={this.state.dataSource.data}
             columns={this.state.dataSource.headers}
             size="small"
-            bordered={false}
+            bordered
             rowKey={record => record.id}
             pagination={{ defaultPageSize: 10, showSizeChanger: true, showQuickJumper: true }}
             footer={this.renderFooter}

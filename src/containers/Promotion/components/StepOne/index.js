@@ -1,5 +1,6 @@
 import React, { forwardRef, useRef, useImperativeHandle } from 'react';
-import { Form, Input, Checkbox } from "antd";
+import { Form, Input, Checkbox, Button, Icon } from "antd";
+import styles from "../../styles.less";
 
 const formItemLayout = {
   labelCol: { span: 10 },
@@ -10,7 +11,8 @@ class Step extends React.Component {
   componentDidMount() { this.props.onRef(this); }
   componentWillUnmount() { this.props.onRef(null); }
 
-  handleSubmit = (e) => {
+  handleSubmit = (e, isprev) => {
+    if (!isprev) { e.preventDefault(); }
     this.props.form.validateFields((err, values) => {
       if (!err) {
         // console.log(values);
@@ -27,10 +29,10 @@ class Step extends React.Component {
 
     return (
       <div style={{ width: '100%' }}>
-        <Form>
+        <Form onSubmit={this.handleSubmit}>
           <Form.Item
             {...formItemLayout}
-            label="Суртачилгааны ангилал: "
+            label="Улирлын цэсны нэр: "
           >
             {getFieldDecorator('promotnm', {
               initialValue: `${this.props.defValue.length === 0 ? '' : this.props.defValue.promotnm}`,
@@ -50,6 +52,9 @@ class Step extends React.Component {
               })(
                 <Checkbox defaultChecked={this.props.defValue.length === 0 ? false : this.props.defValue.isenable} />,
             )}
+          </Form.Item>
+          <Form.Item className={styles.stepSaveBtn}>
+            <Button type="primary" htmlType="submit"><Icon type="arrow-right" /></Button>
           </Form.Item>
         </Form>
       </div>

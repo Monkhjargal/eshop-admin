@@ -30,7 +30,7 @@ class Component extends React.Component {
     const { loading } = this.state;
     return (
       <Modal
-        title="Суртачилгааны ангилал бүртгэх"
+        title="Улирлын цэс бүртгэх"
         visible={this.props.visible}
         onCancel={this.props.onCancel}
         onOk={this.props.onCancel}

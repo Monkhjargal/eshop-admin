@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Button, Transfer, Spin } from "antd";
+import { Form, Button, Transfer, Spin, Icon } from "antd";
 
 import styles from "../../styles.less";
 
@@ -90,6 +90,7 @@ class Component extends React.Component {
           />
 
           <div className={styles.stepSaveBtn}>
+            <Button type="dashed" onClick={this.props.prevStep} ><Icon type="arrow-left" /></Button>{' '}
             <Button type="primary" onClick={this.handleSave}>
               Хадгалах
             </Button>

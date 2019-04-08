@@ -4,6 +4,7 @@ import FormModel from './FormModel';
 import FilterModel from './FilterModel';
 import PromotionModel from './PromotionModel';
 import ProductModel from './ProductModel';
+import PackageModel from "./PackageModel";
 
 const Auth = new AuthModel({
   model: 'auth',
@@ -61,7 +62,7 @@ const Productlist = new ProductModel({
   model: 'productlist',
 });
 
-const Package = new ProductModel({
+const Package = new PackageModel({
   url: '/mn/api/package',
   model: 'package',
 });

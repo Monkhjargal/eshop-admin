@@ -12,11 +12,16 @@ class PackageModel extends BaseModel {
           response: this.buildActionName('response', data.model, 'all'),
           error: this.buildActionName('error', data.model, 'all'),
         },
-        update: {
-          request: this.buildActionName('request', data.model, 'update'),
-          response: this.buildActionName('response', data.model, 'update'),
-          error: this.buildActionName('error', data.model, 'update'),
-        }
+        product: {
+          request: this.buildActionName('request', data.model, 'product'),
+          response: this.buildActionName('response', data.model, 'product'),
+          error: this.buildActionName('error', data.model, 'product'),
+        },
+        create: {
+          request: this.buildActionName('request', data.model, 'create'),
+          response: this.buildActionName('response', data.model, 'create'),
+          error: this.buildActionName('error', data.model, 'create'),
+        },
       };
     }
 
@@ -38,15 +43,19 @@ class PackageModel extends BaseModel {
         formcreateByServer: {},
         data: {},
       },
+      product: [],
+      iscreate: [],
     };
   }
 
   all = ({ body, url }) => asyncFn({
     body, url: `${url || this.url}/all`, method: 'POST', model: this.model.all,
   });
-
-  update = ({ body, url, id }) => asyncFn({
-    body, url: `${url || this.url}/${id}`, method: 'PUT', model: this.model.update,
+  product = ({ id }) => asyncFn({
+    url: `${this.url}/skus/${id}`, method: 'GET', model: this.model.product,
+  });
+  create = ({ body, isfiles }) => asyncFn({
+    body, url: `${this.url}`, method: 'POST', model: this.model.create, isfiles,
   })
 
   reducer = (state = this.initialState, action) => {
@@ -74,6 +83,45 @@ class PackageModel extends BaseModel {
             formcreateByServer: action.payload.data,
           },
         };
+      // PACKAGE'S PRODUCT
+      case this.model.product.request:
+        return {
+          ...state,
+          all: this.requestCase(state.all, action),
+        };
+      case this.model.product.error:
+        return {
+          ...state,
+          all: this.errorCase(state.all, action),
+        };
+      case this.model.product.response:
+        return {
+          ...state,
+          product: {
+            isLoading: false,
+            data: action.payload.value,
+          },
+        };
+      // CREATE PACKAGE
+      case this.model.create.request:
+        return {
+          ...state,
+          all: this.requestCase(state.all, action),
+        };
+      case this.model.create.error:
+        return {
+          ...state,
+          all: this.errorCase(state.all, action),
+        };
+      case this.model.create.response:
+        return {
+          ...state,
+          iscreate: {
+            isLoading: false,
+            data: action.payload.value,
+          },
+        };
+
       // DEFUALT
       default:
         return state;

@@ -10,15 +10,23 @@ const Step = Steps.Step;
 class Component extends React.Component {
   state = {
     step: 0,
+    stepOneData: [],
   };
+
   handleClickstep = (e) => {
     if (this.state.step !== e.value) {
-      this.setState({ step: e.value });
+      if (this.state.step === 0) { this.StepOne.handleSubmit('', true); } else { this.setState({ step: e.value }); }
     }
   };
 
+  nextStep = (e) => {
+    console.log(e);
+    this.setState({ step: this.state.step + 1, stepOneData: e });
+  }
+  prevStep = () => { this.setState({ step: this.state.step - 1 }); }
+
   render() {
-    const { step } = this.state;
+    const { step, stepOneData } = this.state;
     return (
       <div>
         <Steps current={step}>
@@ -30,22 +38,26 @@ class Component extends React.Component {
             title="Бараа тохируулах"
             onClick={e => this.handleClickstep({ event: e, value: 1 })}
           />
-          {/* <Step title="Хослох бараа бүртгэл" onClick={e => this.handleClickstep({ event: e, value: 2 })} /> */}
         </Steps>
+
         <div className={styles.stepContent}>
           {step === 0 ? (
             <StepOne
+              onRef={ref => (this.StepOne = ref)}
               dataSource={this.props.dataSource}
               filter={this.props.filter}
               auth={this.props.auth}
-            />
-          ) : step === 1 ? (
-            <StepTwo
-              dataSource={this.props.dataSource}
-              filter={this.props.filter}
+              nextStep={this.nextStep}
             />
           ) : (
-            <h1>2</h1>
+            <StepTwo
+              stepOneData={stepOneData}
+              onCancel={this.props.onCancel}
+              getProduct={this.props.getProduct}
+              product={this.props.product}
+              prevStep={this.prevStep}
+              create={this.props.create}
+            />
           )}
         </div>
       </div>

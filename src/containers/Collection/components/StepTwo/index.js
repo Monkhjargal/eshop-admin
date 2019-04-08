@@ -1,34 +1,54 @@
 import React from 'react';
-import { Form, Input, Row, Col, Button, Transfer } from "antd";
+import { Form, Spin, Row, Icon, Button, Transfer } from "antd";
 
 import styles from "../../styles.less";
-
-const formItemLayout = {
-  labelCol: { span: 6 },
-  wrapperCol: { span: 18 },
-};
 
 class Component extends React.Component {
   state = {
     unselected: [],
     selected: [],
+    loading: true,
   }
 
-  componentDidMount() {
-    // this.getMock();
+  componentWillMount() {
+    this.props.getProduct({ id: 0 })
+      .then((res) => {
+        this.setState({ loading: false });
+        this.renderProduct();
+      });
   }
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log('Received values of form: ', values);
-      }
+  renderProduct = () => {
+    const { product } = this.props;
+    const selected = [];
+    const unselected = [];
+    // console.log(product);
+
+    product.data.map((item) => {
+      const data = {
+        key: item.skucd,
+        skucd: `${item.skucd}`,
+        skunm: `${item.skunm}`,
+        catnm: `${item.catnm}`,
+        chosen: `${item.state}`,
+      };
+      if (data.chosen === '1') { selected.push(data.key); }
+      return unselected.push(data);
     });
+    this.setState({ unselected, selected });
   }
 
   handleSave = () => {
-    console.log(this.state.selected);
+    console.log(this.state.selected, this.props.stepOneData);
+    const { stepOneData } = this.props;
+    let formData = new FormData();
+
+    this.state.selected.map(i => formData.append("skucds", i));
+    Object.keys(stepOneData).map(keyname => (keyname === 'fileList' ? '' : formData.append(keyname, stepOneData[keyname])));
+    stepOneData.fileList.map(i => formData.append("files", i.originFileObj, i.name));
+
+    const isfiles = true;
+    this.props.create({ body: formData, isfiles });
   }
 
   handleChange = (selected) => {
@@ -36,94 +56,35 @@ class Component extends React.Component {
     this.setState({ selected });
   }
 
-  renderItem = (item) => {
-    const customLabel = (
-      <span className="custom-item">
-        {item.skucd} - {item.skunm} - {item.catnm}
-        {/* <text className="t-skucd">{item.skucd}</text>
-        <text className="t-skunm">{item.skunm}</text>
-        <text className="t-catnm">{item.catnm}</text> */}
-      </span>
-    );
-
-    return {
-      label: customLabel, // for displayed item
-      value: item.skucd, // search hesegt haih
-    };
-  }
-
-  // getMock = () => {
-  //   const { product } = this.props;
-  //   const selected = [];
-  //   const unselected = [];
-  //   // console.log(product);
-
-  //   product.map((item) => {
-  //     const data = {
-  //       key: item.skucd,
-  //       skucd: `${item.skucd}`,
-  //       skunm: `${item.skunm}`,
-  //       catnm: `${item.catnm}`,
-  //     };
-  //     // if (data.chosen) {
-  //     //   targetKeys.push(data.key);
-  //     // }
-  //     unselected.push(data);
-  //     return item;
-  //   });
-  //   this.setState({ unselected, selected });
-  // }
-
   render() {
-    const { getFieldDecorator } = this.props.form;
+    console.log('STEP RWO FORM DATA', this.props);
+    const { selected, unselected, loading } = this.state;
     return (
-      <div style={{ width: '100%' }}>
-        <Form onSubmit={this.handleSubmit}>
-          <Row>
-            <Col span={7}>
-              <Form.Item {...formItemLayout} label="Ангилал">
-                {getFieldDecorator('category', { rules: [{ required: false }] })(
-                  <Input />)}
-              </Form.Item>
-            </Col>
-
-            <Col span={7}>
-              <Form.Item {...formItemLayout} label="Бренд">
-                {getFieldDecorator('brand', { rules: [{ required: false }] })(
-                  <Input />)}
-              </Form.Item>
-            </Col>
-
-            <Col span={4}>
-              <Form.Item>
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                >
-                  хайх
-                </Button>
-              </Form.Item>
-            </Col>
-          </Row>
-        </Form>
-
-        <Transfer
-          showSearch
-          titles={['Сонгогдоогүй бараа', 'Сонгогдсон бараа']}
-          // dataSource={this.state.unselected}
-          listStyle={{
-            width: '47%',
-            height: 500,
-          }}
-          targetKeys={this.state.selected}
-          onChange={this.handleChange}
-          render={this.renderItem}
-        />
+      <Row style={{ width: '100%', marginTop: 25 }}>
+        {
+          !loading ? (
+            <Transfer
+              showSearch
+              titles={['Сонгогдоогүй бараа', 'Сонгогдсон бараа']}
+              dataSource={unselected}
+              listStyle={{
+                width: '47%',
+                height: 500,
+              }}
+              targetKeys={selected}
+              onChange={this.handleChange}
+              render={item => `${item.skucd} - ${item.skunm} - ${item.catnm}`}
+            />
+          ) : (
+            <div style={{ marginLeft: '49%', paddingTop: '15%', paddingBottom: '15%' }}><Spin /></div>
+          )
+        }
 
         <div className={styles.stepSaveBtn}>
-          <Button type="primary">Хадгалах</Button>
+          <Button type="dashed" onClick={this.props.prevStep}><Icon type="arrow-left" /></Button>{' '}
+          <Button type="primary" onClick={this.handleSave} ><Icon type="save" />Хадгалах</Button>
         </div>
-      </div>
+      </Row>
     );
   }
 }

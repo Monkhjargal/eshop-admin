@@ -8,7 +8,9 @@ import PromotionList from "./list";
 const mapStateToProps = (state) => {
   // console.log('MAIN PROPS', state);
   const { data, headers } = state.promotionlist.all;
-  const { createRes, product, detail } = state.promotionlist;
+  const {
+    createRes, product, detail, filter,
+  } = state.promotionlist;
 
   let returnObject = {
     data,
@@ -16,6 +18,7 @@ const mapStateToProps = (state) => {
     createRes,
     product,
     detail,
+    filter,
   };
 
   return returnObject;
@@ -24,6 +27,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   let actionCreators = {
     getAll: PromotionModel.all, // Promotion-iin husnegtiin data avah huselt
+    getFilter: PromotionModel.filter,
     create: PromotionModel.create, // Promotion vvsget huselt
     update: PromotionModel.update, // Promotion zasah
     delete: PromotionModel.delete, // Promotion ustgah
@@ -63,11 +67,12 @@ class Product extends React.Component {
 
   refresh = () => {
     this.props.getAll({ body: this.state.body });
-    this.props.getDetail({ id: 1 });
+    this.props.getFilter();
+    // this.props.getDetail({ id: 1 });
   }
 
   render() {
-    // console.log('Product State', this.state);
+    // console.log('Promotion State', this.state);
     const { dataSource } = this.state;
     return (
       <PromotionList
@@ -79,6 +84,7 @@ class Product extends React.Component {
         getProduct={this.props.getProduct}
         updateProduct={this.props.updateProduct}
         getDetail={this.props.getDetail}
+        filterList={this.filter}
       />
     );
   }

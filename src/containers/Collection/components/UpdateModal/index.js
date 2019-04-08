@@ -12,8 +12,13 @@ class Component extends React.Component {
         onCancel={this.props.onCancel}
         onOk={this.props.onCancel}
         width={'60%'}
+        destroyOnClose
       >
-        <MainStep auth={this.props.auth} dataSource={this.props.dataSource} filter={this.props.filter} />
+        <MainStep
+          onCancel={this.props.onCancel}
+          getProduct={this.props.getProduct}
+          product={this.props.product}
+        />
       </Modal>
     );
   }
