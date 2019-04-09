@@ -16,12 +16,6 @@ class Promotion extends React.Component {
     dataSource: {},
     tloading: false,
     istransfer: false,
-    body: {
-      limit: 20,
-      page: 1,
-      filtered: {},
-      sorted: [],
-    },
   }
 
   handleRowClick = (record) => {
@@ -183,10 +177,22 @@ class Promotion extends React.Component {
           case 'aid':
             return i.render = (text, record, index) => <span>{index + 1}</span>;
           case 'promotnm':
-            return i.render = text => <span onClick={this.handleUpdateModal}>{text}</span>;
+            return (
+              i.render = text => <span onClick={this.handleUpdateModal}>{text}</span>,
+              i.sorter = (a, b) => a.promotnm.localeCompare(b.promotnm),
+              i.sortDirections = ['descend', 'ascend']
+            );
           case 'isenable':
-            return i.render = (text, record) => <Switch checked={record.isenable} disabled />;
-
+            return (
+              i.render = (text, record) => <Switch checked={record.isenable} disabled />,
+              i.sorter = (a, b) => a.isenable - b.isenable,
+              i.sortDirections = ['descend', 'ascend']
+            );
+          case 'skucnt':
+            return (
+              i.sorter = (a, b) => a.skucnt - b.skucnt,
+              i.sortDirections = ['descend', 'ascend']
+            );
           default:
             return '';
         }

@@ -17,6 +17,7 @@ const formItemLayout = {
   labelCol: { span: 6 },
   wrapperCol: { span: 17 },
 };
+const picserver = 'http://202.55.180.199:8877/';
 
 const ckeToolbar = [
   { name: 'document', items: ['Source', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates'] },
@@ -45,6 +46,15 @@ class Component extends React.Component {
 
   componentDidMount() { this.props.onRef(this); }
   componentWillUnmount() { this.props.onRef(null); }
+  componentWillMount() {
+    // console.log(this.props);
+    let files = [];
+
+    // eslint-disable-next-line no-unused-expressions
+    this.props.defValue.files === undefined ? '' : this.props.defValue.files.map((i, index) => files.push({ url: picserver + i, name: i, uid: index }));
+    // eslint-disable-next-line no-unused-expressions
+    this.props.defValue.length === 0 ? '' : this.setState({ fileList: this.props.defValue.fileList === undefined ? files : this.props.defValue.fileList, description: this.props.defValue.description });
+  }
 
   handleChangeImg = ({ fileList }) => this.setState({ fileList });
 
@@ -71,8 +81,8 @@ class Component extends React.Component {
     if (!isprev) { e.preventDefault(); }
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        // console.log('STEP ONE FORM DATA: ', values, this.state.fileList, this.state.description);
         const { fileList, description } = this.state;
+        // console.log(values);
         this.props.nextStep({ ...values, fileList, description });
       }
     });
@@ -89,6 +99,7 @@ class Component extends React.Component {
       previewVisible, previewImage, fileList, description,
     } = this.state;
     const { getFieldDecorator } = this.props.form;
+    const { defValue } = this.props;
     return (
       <div style={{ marginTop: 30 }}>
         <Form onSubmit={this.handleSubmit}>
@@ -100,6 +111,7 @@ class Component extends React.Component {
                 label="Багцын нэр"
               >
                 {getFieldDecorator('packagenm', {
+                  initialValue: `${defValue.length === 0 ? '' : defValue.packagenm}`,
                   rules: [{
                     required: true, message: 'Багцын нэр заавал бөглөнө үү!',
                   }],
@@ -115,12 +127,12 @@ class Component extends React.Component {
                 label="Идэвхитэй эсэх"
               >
                 {getFieldDecorator('isenable', {
-                  initialValue: false,
+                  initialValue: defValue.length === 0 ? false : defValue.isenable,
                   rules: [{
                     required: false,
                   }],
                 })(
-                  <Checkbox />,
+                  <Checkbox defaultChecked={defValue.length === 0 ? false : defValue.isenable} />,
                 )}
               </Form.Item>
             </Col>
@@ -132,6 +144,7 @@ class Component extends React.Component {
                 label="Богино тайлбар"
               >
                 {getFieldDecorator('featuretxt', {
+                  initialValue: `${defValue.length === 0 ? '' : defValue.featuretxt}`,
                   rules: [{
                     required: true, message: 'Богино тайлбар заавал бөглөнө үү!',
                   }],
@@ -152,9 +165,9 @@ class Component extends React.Component {
                   accept={".jpg,.png,.jpeg,.gif"}
                   action="//jsonplaceholder.typicode.com/posts/"
                   listType="picture-card"
-                  fileList={this.state.fileList}
+                  fileList={fileList}
                   onPreview={this.handlePreview}
-                    // onRemove={this.handleRemove}
+                  onRemove={this.handleRemove}
                   onChange={this.handleChangeImg}
                 >
                   {fileList.length >= 5 ? null : <div><Icon type="plus" /><div className="ant-upload-text">Upload</div></div>}

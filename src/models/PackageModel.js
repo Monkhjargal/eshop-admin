@@ -22,6 +22,26 @@ class PackageModel extends BaseModel {
           response: this.buildActionName('response', data.model, 'create'),
           error: this.buildActionName('error', data.model, 'create'),
         },
+        update: {
+          request: this.buildActionName('request', data.model, 'update'),
+          response: this.buildActionName('response', data.model, 'update'),
+          error: this.buildActionName('error', data.model, 'update'),
+        },
+        delete: {
+          request: this.buildActionName('request', data.model, 'delete'),
+          response: this.buildActionName('response', data.model, 'delete'),
+          error: this.buildActionName('error', data.model, 'delete'),
+        },
+        detail: {
+          request: this.buildActionName('request', data.model, 'detail'),
+          response: this.buildActionName('response', data.model, 'detail'),
+          error: this.buildActionName('error', data.model, 'detail'),
+        },
+        filter: {
+          request: this.buildActionName('request', data.model, 'filter'),
+          response: this.buildActionName('response', data.model, 'filter'),
+          error: this.buildActionName('error', data.model, 'filter'),
+        },
       };
     }
 
@@ -45,6 +65,9 @@ class PackageModel extends BaseModel {
       },
       product: [],
       iscreate: [],
+      detail: [],
+      filter: [],
+      isupdate: [],
     };
   }
 
@@ -56,7 +79,19 @@ class PackageModel extends BaseModel {
   });
   create = ({ body, isfiles }) => asyncFn({
     body, url: `${this.url}`, method: 'POST', model: this.model.create, isfiles,
-  })
+  });
+  update = ({ body, id, isfiles }) => asyncFn({
+    body, url: `${this.url}/${id}`, method: 'PUT', model: this.model.update, isfiles,
+  });
+  delete = ({ id, url }) => asyncFn({
+    url: `${url || this.url}/${id}`, method: 'DELETE', model: this.model.delete,
+  });
+  detail = ({ id, url }) => asyncFn({
+    url: `${url || this.url}/${id}`, method: 'GET', model: this.model.detail,
+  });
+  filter = ({ body } = {}) => asyncFn({
+    body, url: `/mn/api/filter/package`, method: 'GET', model: this.model.filter,
+  });
 
   reducer = (state = this.initialState, action) => {
     switch (action.type) {
@@ -121,7 +156,83 @@ class PackageModel extends BaseModel {
             data: action.payload.value,
           },
         };
+      // DELETE PACKAGE
+      case this.model.delete.request:
+        return {
+          ...state,
+          all: this.requestCase(state.all, action),
+        };
+      case this.model.delete.error:
+        return {
+          ...state,
+          all: this.errorCase(state.all, action),
+        };
+      case this.model.delete.response:
+        return {
+          ...state,
+          isdelete: {
+            isLoading: false,
+            data: action.payload.value,
+          },
+        };
 
+      // PACKAGE DETAIL
+      case this.model.detail.request:
+        return {
+          ...state,
+          all: this.requestCase(state.all, action),
+        };
+      case this.model.detail.error:
+        return {
+          ...state,
+          all: this.errorCase(state.all, action),
+        };
+      case this.model.detail.response:
+        return {
+          ...state,
+          detail: {
+            isLoading: false,
+            data: action.payload.value,
+          },
+        };
+        // PACKAGE FILTER
+      case this.model.filter.request:
+        return {
+          ...state,
+          current: this.requestCase(state.current, action),
+        };
+      case this.model.filter.error:
+        return {
+          ...state,
+          current: this.errorCase(state.current, action),
+        };
+      case this.model.filter.response:
+        return {
+          ...state,
+          filter: {
+            isLoading: false,
+            data: action.payload,
+          },
+        };
+      // PACKAGE UPDATE
+      case this.model.update.request:
+        return {
+          ...state,
+          current: this.requestCase(state.current, action),
+        };
+      case this.model.update.error:
+        return {
+          ...state,
+          current: this.errorCase(state.current, action),
+        };
+      case this.model.update.response:
+        return {
+          ...state,
+          isupdate: {
+            isLoading: false,
+            data: action.payload,
+          },
+        };
       // DEFUALT
       default:
         return state;

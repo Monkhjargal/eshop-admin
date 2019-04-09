@@ -20,8 +20,7 @@ class Component extends React.Component {
   };
 
   nextStep = (e) => {
-    console.log(e);
-    this.setState({ step: this.state.step + 1, stepOneData: e });
+    this.setState({ step: this.state.step + 1, stepOneData: { ...e, id: 0 } });
   }
   prevStep = () => { this.setState({ step: this.state.step - 1 }); }
 
@@ -48,6 +47,7 @@ class Component extends React.Component {
               filter={this.props.filter}
               auth={this.props.auth}
               nextStep={this.nextStep}
+              defValue={stepOneData}
             />
           ) : (
             <StepTwo
@@ -57,6 +57,7 @@ class Component extends React.Component {
               product={this.props.product}
               prevStep={this.prevStep}
               create={this.props.create}
+              refresh={this.props.refresh}
             />
           )}
         </div>

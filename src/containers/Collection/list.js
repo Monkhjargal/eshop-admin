@@ -1,33 +1,26 @@
 import React from 'react';
-import { Card, Button, Table, Spin, Popconfirm, Switch } from "antd";
+import { Card, Button, Table, Spin, Popconfirm, Switch, Form, Row, Col, Input, Select } from "antd";
 import PageHeaderLayout from "../../layouts/PageHeaderLayout";
 
 import styles from '../../components/List/style.less';
 import tableStyle from "../../components/StandardTable/index.less";
 import style from "./styles.less";
 import { UpdateModal, CreateModal } from "./components";
+import productSty from "../Product/styles.less";
 
-class Packagelist extends React.Component {
+class Package extends React.Component {
   state = {
     name: 'Багцын',
     selectedId: null,
     selectedRow: [],
-    filtered: {
-      skunm: '',
-      catids: [],
-      attributeids: [],
-      attrvalueids: [],
-      brandids: [],
-      isnewproduct: 0,
-      isevnnormal: 0,
-      evnnormalids: [],
-      productstatus: [],
-      isproductchanged: 0,
-      ispricechanged: 0,
-      updemps: [],
-    },
     isupdate: false,
     iscreate: false,
+    tloading: false,
+  }
+
+  refreshList = () => {
+    this.setState({ tloading: true });
+    this.props.refresh({ body: [] }).then(res => this.setState({ tloading: false }));
   }
 
   handleRowClick = (record) => {
@@ -47,6 +40,84 @@ class Packagelist extends React.Component {
   handleUpdateModal = () => { this.setState({ isupdate: !this.state.isupdate }); }
   handleCreateModal = () => { this.setState({ iscreate: !this.state.iscreate }); }
 
+  handleDelete = () => {
+    this.props.dataSource.delete({ id: this.state.selectedRow.id }).then(res => this.refreshList());
+  }
+
+  handleFilter = (e) => {
+    e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        this.setState({ tloading: true });
+        this.props.refresh({ body: values }).then(res => this.setState({ tloading: false }));
+      }
+    });
+  }
+
+  renderFilter = () => {
+    try {
+      const { getFieldDecorator } = this.props.form;
+      const { value } = this.props.dataSource.filter.data;
+
+      return (
+        <div>
+          <Form className={productSty.otform} onSubmit={this.handleFilter} >
+            <Row>
+              <Col span={6}>
+                <Form.Item className={productSty.formItem} label="Нэр" style={{ width: '96%' }}>
+                  {getFieldDecorator('packagenm', {
+                    initialValue: "",
+                    rules: [{
+                      required: false,
+                    }],
+                  })(
+                    <Input size={'small'} placeholder="Багцын нэрээр хайх" />,
+                  )}
+                </Form.Item>
+              </Col>
+              <Col span={6}>
+                <Form.Item className={productSty.formItem} label="Идэвхитэй эсэх" style={{ width: '96%' }}>
+                  {getFieldDecorator('isenable', {
+                    initialValue: [],
+                    rules: [{ required: false }],
+                  })(
+                    <Select mode="multiple" size={'small'} placeholder="Идэвхитэй эсэхээр хайх">
+                      {value !== undefined ? value.isenable.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>) : '' }
+                    </Select>,
+                  )}
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item className={productSty.formItem} label="Багцад орсон бараа">
+                  {getFieldDecorator('skucds', {
+                    initialValue: [],
+                    rules: [{ required: false }],
+                  })(
+                    <Select
+                      mode="multiple"
+                      size={'small'}
+                      placeholder="Багцад орсон бараагаар хайх"
+                      filterOption={(inputValue, option) => option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
+                    >
+                      {value !== undefined ? value.skucds.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>) : '' }
+                    </Select>,
+                  )}
+                </Form.Item>
+              </Col>
+            </Row>
+            <div className="ant-modal-footer">
+              <Button size="small" type="button" onClick={this.handleResetFilter} >{'Цэвэрлэх'}</Button>
+              <Button size="small" htmlType="submit" type="primary" >{'Хайх'}</Button>
+            </div>
+          </Form>
+        </div>
+      );
+    // eslint-disable-next-line no-unreachable
+    } catch (err) {
+      return console.log(err);
+    }
+  }
+
   renderEditButton = () => (
     <div className={styles.tableListOperator}>
       <Button
@@ -65,13 +136,13 @@ class Packagelist extends React.Component {
         type="dashed"
         className={`${styles.formbutton} ${styles.update}`}
         onClick={this.handleUpdateModal}
-        disabled={!this.state.selectedRow}
+        disabled={this.state.selectedRow.length === 0}
       >
         {`${this.state.name} дэлгэрэнгүй засах`}
       </Button>
       <Popconfirm
         title="Та устгахдаа итгэлтэй байна уу?"
-        // onConfirm={e => this.deleteData(e)}
+        onConfirm={this.handleDelete}
         okText="Тийм"
         cancelText="Үгүй"
       >
@@ -80,7 +151,7 @@ class Packagelist extends React.Component {
           icon="delete"
           type="danger"
           size="small"
-          disabled={!this.state.selectedRow}
+          disabled={this.state.selectedRow.length === 0}
         >
           {`${this.state.name} устгах`}
         </Button>
@@ -90,13 +161,53 @@ class Packagelist extends React.Component {
 
   renderTable = () => {
     try {
+      const { tloading } = this.state;
       const { headers } = this.props.dataSource;
       headers.map((i) => {
         switch (i.dataIndex) {
-          case 'description':
-            return i.render = (text, record) => <div style={{ height: '70px' }}>{record.description}</div>;
+          case 'packagenm':
+            return (
+              // i.render = (text, record) => <div style={{ height: '70px' }}>{record.description}</div>,
+              i.sorter = (a, b) => a.packagenm.localeCompare(b.packagenm),
+              i.sortDirections = ['descend', 'ascend']
+            );
+          case "featuretxt":
+            return (
+              i.sorter = (a, b) => a.featuretxt.localeCompare(b.featuretxt),
+              i.sortDirections = ['descend', 'ascend']
+            );
           case 'isenable':
-            return i.render = (text, record) => <Switch checked={!!record.isenable} disabled />;
+            return (
+              i.render = (text, record) => <Switch checked={!!record.isenable} disabled />,
+              i.sorter = (a, b) => a.isenable - b.isenable,
+              i.sortDirections = ['descend', 'ascend']
+            );
+          case 'skucnt':
+            return (
+              i.sorter = (a, b) => a.skucnt - b.skucnt,
+              i.sortDirections = ['descend', 'ascend']
+            );
+          case 'insemp':
+            return (
+              i.sorter = (a, b) => a.insemp - b.insemp,
+              i.sortDirections = ['descend', 'ascend']
+            );
+          case 'insymd':
+            return (
+              i.sorter = (a, b) => a.insymd - b.insymd,
+              i.sortDirections = ['descend', 'ascend']
+            );
+          case 'updemp':
+            return (
+              i.sorter = (a, b) => a.updemp - b.updemp,
+              i.sortDirections = ['descend', 'ascend']
+            );
+          case 'updymd':
+            return (
+              i.sorter = (a, b) => a.updymd - b.updymd,
+              i.sortDirections = ['descend', 'ascend']
+            );
+
           default:
             return '';
         }
@@ -105,6 +216,7 @@ class Packagelist extends React.Component {
         <div className={tableStyle.standardTable}>
           <Table
             rowClassName={this.handleRowClass}
+            loading={tloading}
             dataSource={this.props.dataSource.data}
             columns={this.props.dataSource.headers}
             size="small"
@@ -133,6 +245,28 @@ class Packagelist extends React.Component {
           getProduct={this.props.getProduct}
           product={this.props.dataSource.product}
           create={this.props.create}
+          refresh={this.refreshList}
+        />
+      );
+    } catch (error) {
+      return console.log(error);
+    }
+  }
+
+  renderUpdate = () => {
+    try {
+      const { isupdate, selectedRow } = this.state;
+      return (
+        <UpdateModal
+          visible={isupdate}
+          onCancel={this.handleUpdateModal}
+          getProduct={this.props.getProduct}
+          product={this.props.dataSource.product}
+          updatePackage={this.props.updatePackage}
+          refresh={this.refreshList}
+          id={selectedRow.id}
+          getDetail={this.props.getDetail}
+          detail={this.props.dataSource.detail}
         />
       );
     } catch (error) {
@@ -148,10 +282,11 @@ class Packagelist extends React.Component {
             {
               this.props.dataSource.data === undefined ? <div style={{ marginLeft: '49%', paddingTop: '15%', paddingBottom: '15%' }}><Spin /></div> : (
                 <div className={styles.tableList} style={{ overflow: 'hidden', overflowX: 'auto' }}>
-                  {/* {this.renderFilterFields()} */}
+                  {this.renderFilter()}
                   {this.renderEditButton()}
                   {this.renderTable()}
                   {this.renderCreate()}
+                  {this.renderUpdate()}
                 </div>
               )
             }
@@ -162,4 +297,5 @@ class Packagelist extends React.Component {
   }
 }
 
+const Packagelist = Form.create({ name: 'package_list' })(Package);
 export default Packagelist;

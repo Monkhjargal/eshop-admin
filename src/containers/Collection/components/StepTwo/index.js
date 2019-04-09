@@ -11,7 +11,7 @@ class Component extends React.Component {
   }
 
   componentWillMount() {
-    this.props.getProduct({ id: 0 })
+    this.props.getProduct({ id: this.props.id })
       .then((res) => {
         this.setState({ loading: false });
         this.renderProduct();
@@ -39,16 +39,23 @@ class Component extends React.Component {
   }
 
   handleSave = () => {
-    console.log(this.state.selected, this.props.stepOneData);
+    // console.log(this.state.selected, this.props.stepOneData);
+    this.setState({ loading: true });
     const { stepOneData } = this.props;
+    // console.log(stepOneData, this.state.selected);
     let formData = new FormData();
 
     this.state.selected.map(i => formData.append("skucds", i));
     Object.keys(stepOneData).map(keyname => (keyname === 'fileList' ? '' : formData.append(keyname, stepOneData[keyname])));
     stepOneData.fileList.map(i => formData.append("files", i.originFileObj, i.name));
+    stepOneData.fileList.map(i => (i.originFileObj === undefined ? formData.append("imgnm", i.name) : ''));
 
     const isfiles = true;
-    this.props.create({ body: formData, isfiles });
+    this.props.create({ body: formData, id: this.props.id, isfiles }).then((res) => {
+      this.setState({ loading: false });
+      this.props.onCancel();
+      this.props.refresh();
+    });
   }
 
   handleChange = (selected) => {
@@ -57,7 +64,7 @@ class Component extends React.Component {
   }
 
   render() {
-    console.log('STEP RWO FORM DATA', this.props);
+    // console.log('STEP RWO FORM DATA', this.props);
     const { selected, unselected, loading } = this.state;
     return (
       <Row style={{ width: '100%', marginTop: 25 }}>

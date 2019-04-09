@@ -1,6 +1,6 @@
 import React from "react";
 import { Modal } from "antd";
-import { MainStep } from "../";
+import { UMainStep } from "../";
 
 class Component extends React.Component {
   render() {
@@ -14,10 +14,15 @@ class Component extends React.Component {
         width={'60%'}
         destroyOnClose
       >
-        <MainStep
+        <UMainStep
           onCancel={this.props.onCancel}
           getProduct={this.props.getProduct}
           product={this.props.product}
+          id={this.props.id}
+          getDetail={this.props.getDetail}
+          detail={this.props.detail}
+          updatePackage={this.props.updatePackage}
+          refresh={this.props.refresh}
         />
       </Modal>
     );
