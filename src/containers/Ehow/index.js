@@ -1,26 +1,93 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Button, List, Select } from 'antd';
-import Page from '../Exception/500';
+import { bindActionCreators } from 'redux';
+
+import { Recipe as RecipeModel } from "../../models";
+import RecipeList from "./list";
 
 const mapStateToProps = (state) => {
-  const { brands } = state;
-  return {
-    brands,
+  const { data, headers } = state.recipe.all;
+  const {
+    filter, crecipe, stepTwoData, product, stepOne,
+  } = state.recipe;
+
+  let returnObject = {
+    data,
+    headers,
+    filter,
+    crecipe,
+    stepTwoData,
+    product,
+    stepOne,
   };
+
+  return returnObject;
 };
 
-class CollectionList extends React.Component {
-  constructor(props) {
-    super(props);
+const mapDispatchToProps = (dispatch, ownProps) => {
+  let actionCreators = {
+    getAll: RecipeModel.all,
+    getFilter: RecipeModel.filter,
+    createStepOne: RecipeModel.createStepOne,
+    delete: RecipeModel.delete,
+    getStepTwo: RecipeModel.getStepTwo,
+    createStepTwo: RecipeModel.createStepTwo,
+    getProduct: RecipeModel.getProduct,
+    getStepOne: RecipeModel.getStepOne,
+    updateStepOne: RecipeModel.updateStepOne,
+    updateProduct: RecipeModel.updateProduct,
+  };
+
+  return ({
+    ...bindActionCreators(actionCreators, dispatch),
+  });
+};
+
+class Recipe extends React.Component {
+  state = {
+    dataSource: {},
+    filterSource: {},
+    body: {
+      limit: 20,
+      page: 1,
+      filtered: {},
+      sorted: [],
+    },
+  };
+
+  componentDidMount() { this.refresh(); }
+
+  componentWillUpdate(prevProps, prevState) {
+    if (prevProps !== prevState.dataSource) {
+      this.setState({ dataSource: prevProps });
+    }
   }
-  componentDidMount() {
+
+  refreshList = () => { this.props.getAll({ body: this.state.body }); }
+
+  refresh = () => {
+    this.props.getFilter();
+    // this.props.getStepOne({ id: 1 });
   }
+
   render() {
+    // console.log('Product State', this.state);
+    const { dataSource } = this.state;
     return (
-      <Page />
+      <RecipeList
+        dataSource={dataSource}
+        getAll={this.props.getAll}
+        createStepOne={this.props.createStepOne}
+        delete={this.props.delete}
+        getStepTwo={this.props.getStepTwo}
+        createStepTwo={this.props.createStepTwo}
+        getProduct={this.props.getProduct}
+        getStepOne={this.props.getStepOne}
+        updateStepOne={this.props.updateStepOne}
+        updateProduct={this.props.updateProduct}
+      />
     );
   }
 }
 
-export default connect(mapStateToProps)(CollectionList);
+export default connect(mapStateToProps, mapDispatchToProps)(Recipe);

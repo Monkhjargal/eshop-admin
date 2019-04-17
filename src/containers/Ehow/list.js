@@ -1,61 +1,26 @@
 import React from 'react';
-import { Card, Button, Table, Spin, Popconfirm, Switch, Form, Row, Col, Input, Select } from "antd";
-import PageHeaderLayout from "../../layouts/PageHeaderLayout";
+import { Card, Spin, Form, Row, Col, Input, Select, Button, Popconfirm, Table, Switch } from "antd";
 
 import styles from '../../components/List/style.less';
-import tableStyle from "../../components/StandardTable/index.less";
-import style from "./styles.less";
-import { UpdateModal, CreateModal } from "./components";
+import PageHeaderLayout from "../../layouts/PageHeaderLayout";
 import productSty from "../Product/styles.less";
+import tableStyle from "../../components/StandardTable/index.less";
+import { CreateModal, UpdateModal } from "./component";
 
-class Package extends React.Component {
+class Recipe extends React.Component {
   state = {
-    name: 'Багцын',
-    selectedId: null,
+    name: 'Жор',
     selectedRow: [],
-    isupdate: false,
+    tloading: true,
     iscreate: false,
-    tloading: false,
+    isupdate: false,
   }
 
-  componentWillMount() {
-    this.refreshList();
-  }
+  componentWillMount() { this.refreshList(); }
 
   refreshList = () => {
     this.setState({ tloading: true });
-    this.props.refresh({ body: [] }).then(res => this.setState({ tloading: false }));
-  }
-
-  handleRowClick = (record) => {
-    this.setState({ selectedRow: record });
-  }
-
-  handleRowClass = record => (record.id === this.state.selectedRow.id ? tableStyle.selected : '');
-
-  renderFooter = () => (
-    <div className={tableStyle.tableFooter}>
-      <div className={tableStyle.footerInfo}>
-        Нийт: {this.props.dataSource.data.length}
-      </div>
-    </div>
-  );
-
-  handleUpdateModal = () => { this.setState({ isupdate: !this.state.isupdate }); }
-  handleCreateModal = () => { this.setState({ iscreate: !this.state.iscreate }); }
-
-  handleDelete = () => {
-    this.props.dataSource.delete({ id: this.state.selectedRow.id }).then(res => this.refreshList());
-  }
-
-  handleFilter = (e) => {
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        this.setState({ tloading: true });
-        this.props.refresh({ body: values }).then(res => this.setState({ tloading: false }));
-      }
-    });
+    this.props.getAll({ body: {} }).then(res => this.setState({ tloading: false }));
   }
 
   handleResetFilter = () => { this.props.form.resetFields(); }
@@ -63,21 +28,62 @@ class Package extends React.Component {
   renderFilter = () => {
     try {
       const { getFieldDecorator } = this.props.form;
-      const { value } = this.props.dataSource.filter.data;
+      const { data } = this.props.dataSource.filter;
 
       return (
         <div>
-          <Form className={productSty.otform} onSubmit={this.handleFilter} >
+          <Form className={productSty.otform} onSubmit={this.handleFilter}>
             <Row>
               <Col span={6}>
-                <Form.Item className={productSty.formItem} label="Нэр" style={{ width: '96%' }}>
-                  {getFieldDecorator('packagenm', {
+                <Form.Item className={productSty.formItem} label="Жорын нэр" style={{ width: '96%' }}>
+                  {getFieldDecorator('recipenm', {
                     initialValue: "",
                     rules: [{
                       required: false,
                     }],
                   })(
-                    <Input size={'small'} placeholder="Багцын нэрээр хайх" />,
+                    <Input size={'small'} placeholder="Жорын нэрээр хайх" />,
+                  )}
+                </Form.Item>
+              </Col>
+              <Col span={6}>
+                <Form.Item className={productSty.formItem} label="Орц" style={{ width: '96%' }}>
+                  {getFieldDecorator('recipenm', {
+                    initialValue: "",
+                    rules: [{
+                      required: false,
+                    }],
+                  })(
+                    <Input size={'small'} placeholder="Жорын орцоор хайх" />,
+                  )}
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item className={productSty.formItem} label="Жоронд орсон бараа">
+                  {getFieldDecorator('skucds', {
+                    initialValue: [],
+                    rules: [{ required: false }],
+                  })(
+                    <Select
+                      mode="multiple"
+                      size={'small'}
+                      placeholder="Жоронд орсон бараагаар хайх"
+                      filterOption={(inputValue, option) => option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
+                    >
+                      {data !== undefined ? data.skucds.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>) : '' }
+                    </Select>,
+                  )}
+                </Form.Item>
+              </Col>
+              <Col span={6}>
+                <Form.Item className={productSty.formItem} label="Амтлагч" style={{ width: '96%' }}>
+                  {getFieldDecorator('recipenm', {
+                    initialValue: "",
+                    rules: [{
+                      required: false,
+                    }],
+                  })(
+                    <Input size={'small'} placeholder="Жорны амтлагчаар хайх" />,
                   )}
                 </Form.Item>
               </Col>
@@ -88,29 +94,13 @@ class Package extends React.Component {
                     rules: [{ required: false }],
                   })(
                     <Select mode="multiple" size={'small'} placeholder="Идэвхитэй эсэхээр хайх">
-                      {value !== undefined ? value.isenable.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>) : '' }
-                    </Select>,
-                  )}
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item className={productSty.formItem} label="Багцад орсон бараа">
-                  {getFieldDecorator('skucds', {
-                    initialValue: [],
-                    rules: [{ required: false }],
-                  })(
-                    <Select
-                      mode="multiple"
-                      size={'small'}
-                      placeholder="Багцад орсон бараагаар хайх"
-                      filterOption={(inputValue, option) => option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
-                    >
-                      {value !== undefined ? value.skucds.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>) : '' }
+                      {data !== undefined ? data.isenable.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>) : '' }
                     </Select>,
                   )}
                 </Form.Item>
               </Col>
             </Row>
+
             <div className="ant-modal-footer">
               <Button size="small" type="button" onClick={this.handleResetFilter} >{'Цэвэрлэх'}</Button>
               <Button size="small" htmlType="submit" type="primary" >{'Хайх'}</Button>
@@ -120,8 +110,20 @@ class Package extends React.Component {
       );
     // eslint-disable-next-line no-unreachable
     } catch (err) {
-      return console.log('render filter');
+      return null;
     }
+  }
+
+  handleCreateModal = () => { this.setState({ iscreate: !this.state.iscreate }); }
+
+  handleUpdateModal = () => { this.setState({ isupdate: !this.state.isupdate }); }
+
+  handleDelete = () => {
+    this.props.delete({ id: this.state.selectedRow.id })
+      .then((res) => {
+        this.setState({ selectedRow: [] });
+        this.refreshList();
+      });
   }
 
   renderButton = () => (
@@ -165,21 +167,35 @@ class Package extends React.Component {
     </div>
   )
 
+  handleRowClick = (record) => { this.setState({ selectedRow: record }); }
+  handleRowClass = record => (record.id === this.state.selectedRow.id ? tableStyle.selected : '');
+
   renderTable = () => {
     try {
       const { tloading } = this.state;
       const { headers } = this.props.dataSource;
+
       headers.map((i) => {
         switch (i.dataIndex) {
-          case 'packagenm':
+          case 'recipenm':
             return (
-              i.render = text => <span onClick={this.handleUpdateModal} style={{ color: '#1890FF' }}>{text}</span>,
-              i.sorter = (a, b) => a.packagenm.localeCompare(b.packagenm),
+              i.render = text => <span onClick={this.handleUpdateModal}>{text}</span>,
+              i.sorter = (a, b) => a.recipenm.localeCompare(b.recipenm),
               i.sortDirections = ['descend', 'ascend']
             );
-          case "featuretxt":
+          case "madeoflvl":
             return (
-              i.sorter = (a, b) => a.featuretxt.localeCompare(b.featuretxt),
+              i.sorter = (a, b) => a.madeoflvl - b.madeoflvl,
+              i.sortDirections = ['descend', 'ascend']
+            );
+          case "time":
+            return (
+              i.sorter = (a, b) => a.time - b.time,
+              i.sortDirections = ['descend', 'ascend']
+            );
+          case "humancnt":
+            return (
+              i.sorter = (a, b) => a.humancnt - b.humancnt,
               i.sortDirections = ['descend', 'ascend']
             );
           case 'isenable':
@@ -228,7 +244,7 @@ class Package extends React.Component {
             size="small"
             bordered
             rowKey={record => record.id}
-            pagination={{ defaultPageSize: 11 }}
+            pagination={{ defaultPageSize: 11, showSizeChanger: true, showQuickJumper: true }}
             footer={this.renderFooter}
             onRow={record => ({
               onClick: () => this.handleRowClick(record),
@@ -236,8 +252,8 @@ class Package extends React.Component {
           />
         </div>
       );
-    } catch (error) {
-      return console.log('render table');
+    } catch (err) {
+      return null;
     }
   }
 
@@ -246,41 +262,58 @@ class Package extends React.Component {
       const { iscreate } = this.state;
       return (
         <CreateModal
+          selectOption={this.props.dataSource.filter}
           visible={iscreate}
           onCancel={this.handleCreateModal}
           getProduct={this.props.getProduct}
           product={this.props.dataSource.product}
           create={this.props.create}
           refresh={this.refreshList}
+          createStepOne={this.props.createStepOne}
+          crecipe={this.props.dataSource.crecipe}
+          getStepTwo={this.props.getStepTwo}
+          stepTwoData={this.props.dataSource.stepTwoData}
+          createStepTwo={this.props.createStepTwo}
+          updateProduct={this.props.updateProduct}
         />
       );
-    } catch (error) {
-      return console.log(error);
+    } catch (err) {
+      return console.log(err);
     }
   }
 
   renderUpdate = () => {
     try {
-      const { isupdate, selectedRow } = this.state;
+      const { isupdate } = this.state;
       return (
         <UpdateModal
+          selectOption={this.props.dataSource.filter}
           visible={isupdate}
           onCancel={this.handleUpdateModal}
           getProduct={this.props.getProduct}
           product={this.props.dataSource.product}
-          updatePackage={this.props.updatePackage}
+          create={this.props.create}
           refresh={this.refreshList}
-          id={selectedRow.id}
-          getDetail={this.props.getDetail}
-          detail={this.props.dataSource.detail}
+          crecipe={this.props.dataSource.crecipe}
+          getStepTwo={this.props.getStepTwo}
+          stepTwoData={this.props.dataSource.stepTwoData}
+          createStepTwo={this.props.createStepTwo}
+          getStepOne={this.props.getStepOne}
+          stepOneDetail={this.props.dataSource.stepOne}
+          selectedRow={this.state.selectedRow}
+          updateStepOne={this.props.updateStepOne}
+          updateProduct={this.props.updateProduct}
         />
       );
     } catch (error) {
-      return console.log(error);
+      return console.log('RECIPE UPDATE MODAL: \n', error);
     }
   }
 
   render() {
+    // console.log("RECIPE LIST PROPS: ", this.props);
+    // console.log("RECIPE LIST STATE: ", this.state.iscreate);
+
     return (
       <PageHeaderLayout>
         <Card bordered={false}>
@@ -297,5 +330,5 @@ class Package extends React.Component {
   }
 }
 
-const Packagelist = Form.create({ name: 'package_list' })(Package);
-export default Packagelist;
+const RecipeList = Form.create({ name: 'recipe_list' })(Recipe);
+export default RecipeList;

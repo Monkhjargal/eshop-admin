@@ -25,7 +25,8 @@ const request = ({
       },
     }).then((response) => {
       if (response.status === 401 || response.status === 403) {
-        // props.history.push('/');
+        // console.log('clear');
+        localStorage.clear();
       }
       if (!response.ok) {
         // console.log(response.statusText);
@@ -95,6 +96,11 @@ const asyncFn = ({
         if (model.response === 'RESPONSE_PRODUCTLIST_UPATTRIBUTE') { message.success(data.message); }
         if (model.response === 'RESPONSE_PRODUCTLIST_UPRELATIONAL') { message.success(data.message); }
         if (model.response === 'RESPONSE_PRODUCTLIST_CHANGESTATUS') { message.success(data.message); }
+        if (model.response === 'RESPONSE_RECIPE_CREATESTEPONE') { message.success(data.message); }
+        if (model.response === 'RESPONSE_RECIPE_CREATESTEPTWO') { message.success(data.message); }
+        if (model.response === 'RESPONSE_RECIPE_UPDATESTEPONE') { message.success(data.message); }
+        if (model.response === 'RESPONSE_RECIPE_UPDATEPRODUCT') { message.success(data.message); }
+
         // message.success(data.message);
         // console.log('success');
       } else {

@@ -59,9 +59,9 @@ class Collection extends React.Component {
   }
 
   refresh = () => {
-    this.props.getAll({ body: this.state.body });
+    // this.props.getAll({ body: this.state.body });
     this.props.getFilter();
-    this.props.getDetail({ id: 1 });
+    // this.props.getDetail({ id: 1 });
     // this.props.getProduct({ id: 0 });
   }
 

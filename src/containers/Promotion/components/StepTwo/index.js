@@ -83,10 +83,14 @@ class Component extends React.Component {
               width: '47%',
               height: 500,
             }}
-            filterOption={(inputValue, option) => option.catnm.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1 || option.skunm.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
             targetKeys={this.state.selected}
             onChange={this.handleChange}
             render={item => `${item.skucd} - ${item.skunm} - ${item.catnm}`}
+            filterOption={
+              (inputValue, option) => option.catnm.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1 ||
+                option.skunm.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1 ||
+                option.skucd.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+            }
           />
 
           <div className={styles.stepSaveBtn}>

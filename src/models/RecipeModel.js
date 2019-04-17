@@ -3,35 +3,59 @@ import { asyncFn } from './utils';
 
 class RecipeModel extends BaseModel {
   constructor(data = {}) {
-    console.log('RecipeModel=>data', data);
     super(data);
 
     if (data.model) {
       this.model = {
-        get: {
-          request: this.buildActionName('request', data.model, 'get'),
-          response: this.buildActionName('response', data.model, 'get'),
-          error: this.buildActionName('error', data.model, 'get'),
+        all: {
+          request: this.buildActionName('request', data.model, 'all'),
+          response: this.buildActionName('response', data.model, 'all'),
+          error: this.buildActionName('error', data.model, 'all'),
         },
-        create: {
-          request: this.buildActionName('request', data.model, 'create'),
-          response: this.buildActionName('response', data.model, 'create'),
-          error: this.buildActionName('error', data.model, 'create'),
+        filter: {
+          request: this.buildActionName('request', data.model, 'filter'),
+          response: this.buildActionName('response', data.model, 'filter'),
+          error: this.buildActionName('error', data.model, 'filter'),
         },
-        update: {
-          request: this.buildActionName('request', data.model, 'update'),
-          response: this.buildActionName('response', data.model, 'update'),
-          error: this.buildActionName('error', data.model, 'update'),
+        createStepOne: {
+          request: this.buildActionName('request', data.model, 'createStepOne'),
+          response: this.buildActionName('response', data.model, 'createStepOne'),
+          error: this.buildActionName('error', data.model, 'createStepOne'),
+        },
+        getStepOne: {
+          request: this.buildActionName('request', data.model, 'getStepOne'),
+          response: this.buildActionName('response', data.model, 'getStepOne'),
+          error: this.buildActionName('error', data.model, 'getStepOne'),
         },
         delete: {
           request: this.buildActionName('request', data.model, 'delete'),
           response: this.buildActionName('response', data.model, 'delete'),
           error: this.buildActionName('error', data.model, 'delete'),
         },
-        all: {
-          request: this.buildActionName('request', data.model, 'all'),
-          response: this.buildActionName('response', data.model, 'all'),
-          error: this.buildActionName('error', data.model, 'all'),
+        getStepTwo: {
+          request: this.buildActionName('request', data.model, 'getStepTwo'),
+          response: this.buildActionName('response', data.model, 'getStepTwo'),
+          error: this.buildActionName('error', data.model, 'getStepTwo'),
+        },
+        createStepTwo: {
+          request: this.buildActionName('request', data.model, 'createStepTwo'),
+          response: this.buildActionName('response', data.model, 'createStepTwo'),
+          error: this.buildActionName('error', data.model, 'createStepTwo'),
+        },
+        getProduct: {
+          request: this.buildActionName('request', data.model, 'getProduct'),
+          response: this.buildActionName('response', data.model, 'getProduct'),
+          error: this.buildActionName('error', data.model, 'getProduct'),
+        },
+        updateStepOne: {
+          request: this.buildActionName('request', data.model, 'updateStepOne'),
+          response: this.buildActionName('response', data.model, 'updateStepOne'),
+          error: this.buildActionName('error', data.model, 'updateStepOne'),
+        },
+        updateProduct: {
+          request: this.buildActionName('request', data.model, 'updateProduct'),
+          response: this.buildActionName('response', data.model, 'updateProduct'),
+          error: this.buildActionName('error', data.model, 'updateProduct'),
         },
       };
     }
@@ -43,33 +67,55 @@ class RecipeModel extends BaseModel {
         isLoading: false,
         data: [],
         headers: [],
-        formcreateByServer: {},
         total: 0,
       },
       current: {
         error: false,
         errorMessage: '',
         isLoading: false,
-        formcreateByServer: {},
         data: {},
       },
+      filter: [],
+      crecipe: [],
+      isdelete: [],
+      stepTwoData: [],
+      isCreateStepTwo: [],
+      product: [],
+      stepOne: [],
+      isUpdateStepOne: [],
+      isUpdateProduct: [],
     };
   }
 
-  get = ({ _id, url }) => asyncFn({
-    url: `${url || this.url}/${_id}`, method: 'GET', model: this.model.get,
+  all = ({ body } = {}) => asyncFn({
+    body, url: `${this.url}/all`, method: 'POST', model: this.model.all,
   });
-  create = ({ formData: body, url }) => asyncFn({
-    body, url: url || this.url, method: 'POST', model: this.model.create,
-  })
-  update = ({ _id, formData: body, url }) => asyncFn({
-    body, url: `${url || this.url}/${_id}`, method: 'PUT', model: this.model.update,
+  filter = ({ body } = {}) => asyncFn({
+    body, url: `/mn/api/filter/recipe`, method: 'GET', model: this.model.filter,
   });
-  delete = ({ _id, url }) => asyncFn({
-    url: `${url || this.url}/${_id}`, method: 'DELETE', model: this.model.delete,
+  createStepOne = ({ body, isfiles } = {}) => asyncFn({
+    body, url: this.url, method: 'POST', model: this.model.createStepOne, isfiles,
   });
-  all = ({ body, url } = {}) => asyncFn({
-    body, url: `${url || this.url}/all`, method: 'GET', model: this.model.all,
+  delete = ({ id }) => asyncFn({
+    url: `${this.url}/${id}`, method: 'DELETE', model: this.model.delete,
+  });
+  getStepTwo = ({ id }) => asyncFn({
+    url: `${this.url}/step/${id}`, method: 'GET', model: this.model.getStepTwo,
+  }, console.log(id));
+  createStepTwo = ({ body, id, isfiles } = {}) => asyncFn({
+    body, url: `${this.url}/step/${id}`, method: 'POST', model: this.model.createStepTwo, isfiles,
+  });
+  getProduct = ({ id }) => asyncFn({
+    url: `${this.url}/skus/${id}`, method: 'GET', model: this.model.getProduct,
+  });
+  getStepOne = ({ id }) => asyncFn({
+    url: `${this.url}/${id}`, method: 'GET', model: this.model.getStepOne,
+  });
+  updateStepOne = ({ body, id, isfiles } = {}) => asyncFn({
+    body, url: `${this.url}/${id}`, method: 'PUT', model: this.model.updateStepOne, isfiles,
+  });
+  updateProduct = ({ body, id } = {}) => asyncFn({
+    body, url: `${this.url}/skus/${id}`, method: 'POST', model: this.model.updateProduct,
   });
 
   reducer = (state = this.initialState, action) => {
@@ -93,66 +139,47 @@ class RecipeModel extends BaseModel {
             data: action.payload.value,
             total: action.payload.rowCount,
             headers: action.payload.headers,
-            formcreateByServer: action.payload.data,
           },
         };
-      case this.model.get.request:
+      // FILTER
+      case this.model.filter.request:
         return {
           ...state,
           current: this.requestCase(state.current, action),
         };
-      case this.model.get.error:
+      case this.model.filter.error:
         return {
           ...state,
           current: this.errorCase(state.current, action),
         };
-      case this.model.get.response:
+      case this.model.filter.response:
         return {
           ...state,
-          current: {
-            ...state.current,
+          filter: {
             isLoading: false,
             data: action.payload.value,
           },
         };
-      case this.model.create.request:
+      // CREATE
+      case this.model.createStepOne.request:
         return {
           ...state,
           current: this.requestCase(state.current, action),
         };
-      case this.model.create.error:
+      case this.model.createStepOne.error:
         return {
           ...state,
           current: this.errorCase(state.current, action),
         };
-      case this.model.create.response:
+      case this.model.createStepOne.response:
         return {
           ...state,
-          current: {
-            ...state.current,
+          crecipe: {
             isLoading: false,
-            data: action.payload,
+            data: action.payload.value,
           },
         };
-      case this.model.update.request:
-        return {
-          ...state,
-          current: this.requestCase(state.current, action),
-        };
-      case this.model.update.error:
-        return {
-          ...state,
-          current: this.errorCase(state.current, action),
-        };
-      case this.model.update.response:
-        return {
-          ...state,
-          current: {
-            ...state.current,
-            isLoading: false,
-            data: action.payload,
-          },
-        };
+      // DELETE
       case this.model.delete.request:
         return {
           ...state,
@@ -166,10 +193,123 @@ class RecipeModel extends BaseModel {
       case this.model.delete.response:
         return {
           ...state,
-          current: {
-            ...state.current,
+          isdelete: {
             isLoading: false,
-            data: {},
+            data: action.payload.value,
+          },
+        };
+      // GET STEP TWO DATA
+      case this.model.getStepTwo.request:
+        return {
+          ...state,
+          current: this.requestCase(state.current, action),
+        };
+      case this.model.getStepTwo.error:
+        return {
+          ...state,
+          current: this.errorCase(state.current, action),
+        };
+      case this.model.getStepTwo.response:
+        return {
+          ...state,
+          stepTwoData: {
+            isLoading: false,
+            data: action.payload.value,
+          },
+        };
+      // CRETAE STEP TWO DATA
+      case this.model.createStepTwo.request:
+        return {
+          ...state,
+          current: this.requestCase(state.current, action),
+        };
+      case this.model.createStepTwo.error:
+        return {
+          ...state,
+          current: this.errorCase(state.current, action),
+        };
+      case this.model.createStepTwo.response:
+        return {
+          ...state,
+          isCreateStepTwo: {
+            isLoading: false,
+            data: action.payload.value,
+          },
+        };
+      // GET PRODUCT
+      case this.model.getProduct.request:
+        return {
+          ...state,
+          current: this.requestCase(state.current, action),
+        };
+      case this.model.getProduct.error:
+        return {
+          ...state,
+          current: this.errorCase(state.current, action),
+        };
+      case this.model.getProduct.response:
+        return {
+          ...state,
+          product: {
+            isLoading: false,
+            data: action.payload.value,
+          },
+        };
+      // GET STEP ONE DATA
+      case this.model.getStepOne.request:
+        return {
+          ...state,
+          current: this.requestCase(state.current, action),
+        };
+      case this.model.getStepOne.error:
+        return {
+          ...state,
+          current: this.errorCase(state.current, action),
+        };
+      case this.model.getStepOne.response:
+        return {
+          ...state,
+          stepOne: {
+            isLoading: false,
+            data: action.payload.value,
+          },
+        };
+      // updateStepOne
+      case this.model.updateStepOne.request:
+        return {
+          ...state,
+          current: this.requestCase(state.current, action),
+        };
+      case this.model.updateStepOne.error:
+        return {
+          ...state,
+          current: this.errorCase(state.current, action),
+        };
+      case this.model.updateStepOne.response:
+        return {
+          ...state,
+          isUpdateStepOne: {
+            isLoading: false,
+            data: action.payload.value,
+          },
+        };
+        // updateProduct
+      case this.model.updateProduct.request:
+        return {
+          ...state,
+          current: this.requestCase(state.current, action),
+        };
+      case this.model.updateProduct.error:
+        return {
+          ...state,
+          current: this.errorCase(state.current, action),
+        };
+      case this.model.updateProduct.response:
+        return {
+          ...state,
+          isUpdateProduct: {
+            isLoading: false,
+            data: action.payload.value,
           },
         };
       default:

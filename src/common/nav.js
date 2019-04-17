@@ -102,11 +102,11 @@ export const getNavData = [
         path: 'menus',
         component: MenuList,
       },
-      {
-        name: 'Орчуулга',
-        path: 'languages',
-        component: Language,
-      },
+      // {
+      //   name: 'Орчуулга',
+      //   path: 'languages',
+      //   component: Language,
+      // },
       {
         name: 'Баннер',
         path: 'banner',
@@ -116,11 +116,6 @@ export const getNavData = [
         name: 'Шошго',
         path: 'label',
         component: LabelList,
-      },
-      {
-        name: 'Өнгө',
-        path: 'color',
-        component: ColorList,
       },
       {
         name: 'Статик хуудас',

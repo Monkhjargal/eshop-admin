@@ -56,7 +56,15 @@ class Component extends React.Component {
     this.props.defValue.length === 0 ? '' : this.setState({ fileList: this.props.defValue.fileList === undefined ? files : this.props.defValue.fileList, description: this.props.defValue.description });
   }
 
-  handleChangeImg = ({ fileList }) => this.setState({ fileList });
+  handleChangeImg = ({ fileList }) => {
+    this.props.form.setFields({
+      imageList: {
+        value: fileList,
+        errors: [new Error('forbid ha')],
+      },
+    });
+    this.setState({ fileList });
+  };
 
   handleCancel = () => this.setState({ previewVisible: false })
 
@@ -85,6 +93,7 @@ class Component extends React.Component {
         // console.log(values);
         this.props.nextStep({ ...values, fileList, description });
       }
+      console.log(...values);
     });
   }
 
@@ -160,18 +169,26 @@ class Component extends React.Component {
               <Form.Item
                 className={styles.formItem}
                 label="Багцын зураг"
+                style={{ marginLeft: '3%' }}
               >
-                <Upload
-                  accept={".jpg,.png,.jpeg,.gif"}
-                  action="//jsonplaceholder.typicode.com/posts/"
-                  listType="picture-card"
-                  fileList={fileList}
-                  onPreview={this.handlePreview}
-                  onRemove={this.handleRemove}
-                  onChange={this.handleChangeImg}
-                >
-                  {fileList.length >= 5 ? null : <div><Icon type="plus" /><div className="ant-upload-text">Upload</div></div>}
-                </Upload>
+                {getFieldDecorator('imageList', {
+                  initialValue: fileList,
+                  rules: [{
+                    required: true, message: 'Багцын зургийг заавал бөглөнө үү!',
+                  }],
+                })(
+                  <Upload
+                    accept={".jpg,.png,.jpeg,.gif"}
+                    action="//jsonplaceholder.typicode.com/posts/"
+                    listType="picture-card"
+                    fileList={fileList}
+                    onPreview={this.handlePreview}
+                    onRemove={this.handleRemove}
+                    onChange={this.handleChangeImg}
+                  >
+                    {fileList.length >= 5 ? null : <div><Icon type="plus" /><div className="ant-upload-text">Upload</div></div>}
+                  </Upload>,
+                )}
                 <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
                   <img alt="example" style={{ width: '100%' }} src={previewImage} />
                 </Modal>
@@ -179,7 +196,7 @@ class Component extends React.Component {
             </Col>
 
             <Col span={24}>
-              <Form.Item className={styles.formItem} label="Дэлгэрэнгүй тайлбар">
+              <Form.Item className={styles.formItem} label="Дэлгэрэнгүй тайлбар" style={{ marginLeft: '3%' }}>
                 <CKEditor
                   activeClass="p10"
                   scriptUrl={'https://cdn.ckeditor.com/4.6.2/full/ckeditor.js'}

@@ -7,7 +7,7 @@ class Component extends React.Component {
   state = {
     unselected: [],
     selected: [],
-    loading: true,
+    loading: false,
     bloading: false,
   }
 
@@ -23,7 +23,6 @@ class Component extends React.Component {
     const { product } = this.props;
     const selected = [];
     const unselected = [];
-    // console.log(product);
 
     product.data.map((item) => {
       const data = {
@@ -40,23 +39,9 @@ class Component extends React.Component {
   }
 
   handleSave = () => {
-    // console.log(this.state.selected, this.props.stepOneData);
     this.setState({ bloading: true });
-    const { stepOneData } = this.props;
-    // console.log(stepOneData, this.state.selected);
-    let formData = new FormData();
-
-    this.state.selected.map(i => formData.append("skucds", i));
-    Object.keys(stepOneData).map(keyname => (keyname === 'fileList' || keyname === 'imageList' ? '' : formData.append(keyname, stepOneData[keyname])));
-    stepOneData.fileList.map(i => formData.append("files", i.originFileObj, i.name));
-    stepOneData.fileList.map(i => (i.originFileObj === undefined ? formData.append("imgnm", i.name) : ''));
-
-    const isfiles = true;
-    this.props.create({ body: formData, id: this.props.id, isfiles }).then((res) => {
-      this.setState({ bloading: false });
-      this.props.onCancel();
-      this.props.refresh();
-    });
+    this.props.updateProduct({ body: this.state.selected, id: this.props.id })
+      .then(res => this.setState({ bloading: false }));
   }
 
   handleChange = (selected) => {

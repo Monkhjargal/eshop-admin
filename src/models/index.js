@@ -5,6 +5,7 @@ import FilterModel from './FilterModel';
 import PromotionModel from './PromotionModel';
 import ProductModel from './ProductModel';
 import PackageModel from "./PackageModel";
+import RecipeModel from './RecipeModel';
 
 const Auth = new AuthModel({
   model: 'auth',
@@ -129,6 +130,11 @@ const Infotrans = new CrudModel({
   model: 'infotrans',
 });
 
+const Recipe = new RecipeModel({
+  url: '/mn/api/recipe',
+  model: 'recipe',
+});
+
 export {
   Auth,
   Filter,
@@ -153,4 +159,5 @@ export {
   Product,
   Infotrans,
   Package,
+  Recipe,
 };

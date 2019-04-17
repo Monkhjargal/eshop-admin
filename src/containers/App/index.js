@@ -48,6 +48,7 @@ class App extends Component {
 
     this.state = {
       isLoaded: false,
+      collapsed: false,
     };
   }
 
@@ -66,61 +67,60 @@ class App extends Component {
     }
   }
 
+  onCollapse = (collapsed) => { this.setState({ collapsed }); }
+
   render() {
+    console.log(this.props.auth);
     return this.state.isLoaded &&
       <Switch>
         <Route exact path="/login" component={Login} />
         <PrivateRoute>
-          { params => (
-            <div className={classNames(params)} style={{ height: '100%' }}>
+          <div style={{ height: '100%' }}>
+            <Layout style={{ height: '100%' }}>
+              <Sider
+                collapsible
+                collapsed={this.state.collapsed}
+                onCollapse={this.onCollapse}
+                theme="light"
+                className="sdsd"
+              >
+                <div className={styles.logo}>
+                  <Link to="/">
+                    <img src={otLogo} alt=' "emart" logo' />
+                  </Link>
+                </div>
+                <SideNav menus={this.menus} />
+              </Sider>
               <Layout style={{ height: '100%' }}>
-                <Sider className={styles.sider}>
-                  <Header className={styles.header}>
-                    <div className={styles.logo}>
-                      <Link to="/">
-                        <img src={otLogo} alt=' "emart" logo' />
-                      </Link>
-                    </div>
-                    {/* <div>
-                      <Badge className={styles.logout}>
-                        <Avatar shape="square" icon="user" />
-                      </Badge>
-                      <span> {this.props.auth.data.value.userInfo.lastname}</span>
-                    </div> */}
-                    <SideNav menus={this.menus} />
-                  </Header>
-                </Sider>
-                <Layout style={{ height: '100%' }}>
-                  <Content style={{ height: 'calc(100% - 21px)' }} className="main-content">
-                    <div style={{ minHeight: '95%' }}>
-                      <Menu mode="horizontal" style={{ textAlign: 'right', display: 'flex', justifyContent: 'flex-end' }}>
-                        <SubMenu title={<span className="submenu-title-wrapper"><Icon type="user" />{this.props.auth && this.props.auth.data.value.userInfo.lastname} </span>}>
-                          <Menu.Item key="profile">
-                            <a className={styles.logoutbutton}>
-                              <span> <Icon type="home" />  Профайл </span>
-                            </a>
-                          </Menu.Item>
-                          <Menu.Item key="logout">
-                            <a onClick={() => this.props.logout()} className={styles.logoutbutton}>
-                              <span> <Icon type="logout" />  Гарах </span>
-                            </a>
-                          </Menu.Item>
-                        </SubMenu>
-                      </Menu>
-                      <Main getRouteData={this.routes} />
-                    </div>
-                    <GlobalFooter
-                      copyright={
-                        <div>
+                <Content style={{ height: 'calc(100% - 21px)' }} className="main-content">
+                  <div style={{ minHeight: '95%' }}>
+                    <Menu mode="horizontal" style={{ textAlign: 'right', display: 'flex', justifyContent: 'flex-end' }}>
+                      <SubMenu title={<span className="submenu-title-wrapper"><Icon type="user" />{this.props.auth.data.success ? this.props.auth.data.value.userInfo.lastname : ''} </span>}>
+                        <Menu.Item key="profile">
+                          <a className={styles.logoutbutton}>
+                            <span> <Icon type="home" />  Профайл </span>
+                          </a>
+                        </Menu.Item>
+                        <Menu.Item key="logout">
+                          <a onClick={() => this.props.logout()} className={styles.logoutbutton}>
+                            <span> <Icon type="logout" />  Гарах </span>
+                          </a>
+                        </Menu.Item>
+                      </SubMenu>
+                    </Menu>
+                    <Main getRouteData={this.routes} />
+                  </div>
+                  <GlobalFooter
+                    copyright={
+                      <div>
                           Copyright <Icon type="copyright" /> 2018 Datacare
-                        </div>
+                      </div>
                       }
-                    />
-                  </Content>
-                </Layout>
+                  />
+                </Content>
               </Layout>
-            </div>
-          )}
+            </Layout>
+          </div>
         </PrivateRoute>
       </Switch>;
   }
