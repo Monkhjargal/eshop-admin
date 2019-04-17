@@ -99,7 +99,7 @@ class List extends Component {
         // console.log(requestObject);
       }
       this.props.deleteData(requestObject).then(() => {
-        console.log(this.state);
+        // console.log(this.state);
         this.refresh();
       });
     }

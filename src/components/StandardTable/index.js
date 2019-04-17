@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Table, Pagination, Switch } from 'antd';
+import { Table, Pagination } from 'antd';
 import styles from './index.less';
 
 class StandardTable extends PureComponent {
@@ -35,6 +35,7 @@ class StandardTable extends PureComponent {
         <Pagination
           size="small"
           showQuickJumper
+          showSizeChanger
           onChange={(current, pageSize) => onChange({ current, pageSize }, {}, {})}
           total={data.length}
           {...rest}
@@ -47,18 +48,21 @@ class StandardTable extends PureComponent {
         <div className={styles.footerInfo}>
           Нийт: {pagination.total && data.length !== pagination.total ? pagination.total : data.length}
         </div>
-        {
+        {/* {
           pagination.total && data.length !== pagination.total ?
             <Pagination
               size="small"
+              showSizeChanger
               onChange={(current, pageSize) => onChange({ current, pageSize }, {}, {})}
               showQuickJumper
               {...pagination}
             /> :
             renderLocalPagination(pagination)
-        }
+        } */}
       </div>
     );
+
+    const paginationOptions = ['10', '20', '30'];
 
     // if (pagination.total && data.length !== pagination.total) {
     //   filteredData = data;
@@ -84,7 +88,7 @@ class StandardTable extends PureComponent {
           bordered={false}
           rowKey={record => record.id}
           dataSource={data}
-          pagination={false}
+          pagination={{ defaultPageSize: 10, showSizeChanger: true, showQuickJumper: true }}
           footer={renderFooter}
           onChange={(p, f, sorted) => onChange({ current: 1, pageSize: pagination.pageSize || 20 }, {}, sorted)}
           {...rest}
