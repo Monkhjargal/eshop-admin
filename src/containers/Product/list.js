@@ -1,6 +1,5 @@
 import React from 'react';
-import { Card, Button, Table, Spin, Form, Input, Col, Row, Select, Switch } from "antd";
-import Rate from 'react-stars';
+import { Card, Button, Table, Spin, Form, Input, Col, Row, Select, Switch, Progress } from "antd";
 
 import PageHeaderLayout from "../../layouts/PageHeaderLayout";
 import styles from '../../components/List/style.less';
@@ -15,7 +14,7 @@ class Product extends React.Component {
   state = {
     name: 'Барааны',
     selectedRow: [],
-    checkedRow: [],
+    loading: true,
     filtered: {
       skunm: '',
       catids: null,
@@ -34,6 +33,15 @@ class Product extends React.Component {
     isstatus: false,
     dataSource: {},
     detail: {},
+  }
+
+  componentWillMount() {
+    this.refreshList();
+  }
+
+  refreshList = () => {
+    this.setState({ loading: true });
+    this.props.getDataSource({ body: {} }).then(res => this.setState({ loading: false }));
   }
 
   handleRowClick = (record) => {
@@ -68,8 +76,9 @@ class Product extends React.Component {
   }
 
   handleSearch = () => {
+    this.setState({ loading: true });
     const { filtered } = this.state;
-    this.props.getDataSource({ body: filtered });
+    this.props.getDataSource({ body: filtered }).then(res => this.setState({ loading: false }));
   }
 
   handleClearFilter = () => {
@@ -318,6 +327,7 @@ class Product extends React.Component {
 
   renderTable = () => {
     try {
+      const { loading } = this.state;
       const { headers } = this.state.dataSource;
       headers.map((i) => {
         switch (i.dataIndex) {
@@ -325,6 +335,15 @@ class Product extends React.Component {
             return (
               i.render = text => <span onClick={this.handleName}><a style={{ color: '#1890ff' }}>{text}</a></span>,
               i.sorter = (a, b) => a.titlenm.localeCompare(b.titlenm),
+              i.sortDirections = ['descend', 'ascend']
+            );
+          case 'cstatus':
+            return (
+              i.render = text => (text === 0 ? <Progress strokeColor="#fd5c63" type="circle" percent={25} width={30} style={{ display: 'flex', justifyContent: 'center' }} /> :
+                text === 1 ? <Progress strokeColor="#ffc20e" type="circle" percent={50} width={30} style={{ display: 'flex', justifyContent: 'center' }} /> :
+                  text === 2 ? <Progress type="circle" percent={75} width={30} style={{ display: 'flex', justifyContent: 'center' }} /> :
+                    text === 3 ? <Progress type="circle" percent={100} width={30} style={{ display: 'flex', justifyContent: 'center' }} /> : <span>{text}</span>),
+              i.sorter = (a, b) => a.cstatus - b.cstatus,
               i.sortDirections = ['descend', 'ascend']
             );
           case 'catnm':
@@ -383,6 +402,7 @@ class Product extends React.Component {
             dataSource={this.state.dataSource.data}
             columns={this.state.dataSource.headers}
             size="small"
+            loading={loading}
             bordered
             rowKey={record => record.id}
             pagination={{ defaultPageSize: 10, showSizeChanger: true, showQuickJumper: true }}
@@ -408,44 +428,37 @@ class Product extends React.Component {
       return (
         <PageHeaderLayout>
           <Card bordered={false}>
-            <div>
-              {
-                (!this.props.dataSource.data) ? <div style={{ marginLeft: '49%', paddingTop: '15%', paddingBottom: '15%' }}><Spin /></div> : (
-                  <div className={styles.tableList} style={{ overflow: 'hidden', overflowX: 'auto' }}>
-                    {this.renderFilterFields()}
-                    {this.renderEditButton()}
-                    {this.renderTable()}
-                    <UpdateModal
-                      visible={this.state.isupdate}
-                      onCancel={this.handleUpdateModal}
-                      dataSource={this.state.selectedRow} // selected roe step one data
-                      filter={this.props.dataSource.filter}
-                      detail={this.props.dataSource.detail}
-                      statusHistory={this.props.dataSource.statushistory}
-                      getDetail={this.props.getDetail}
-                      updateProduct={this.props.updateProduct}
-                      getAttribute={this.props.getAttribute}
-                      attribute={this.props.dataSource.attribute} // attribute step 2
-                      updateAttr={this.props.updateAttr}
-                      product={this.props.dataSource.data} // product list
-                      relational={this.props.dataSource.relational} // step-3 relational
-                      getRelational={this.props.getRelational} // get getRelational={this.props.getRelational}
-                      updateRelational={this.props.updateRelational}
-                      getStatusHistory={this.props.getStatusHistory}
-                      afterClose={this.props.afterClose}
-                    />
-
-                    {/** Baraanii tuluv oorchiloh modal */}
-                    <StatusModal
-                      visible={this.state.isstatus}
-                      onCancel={this.handleStatusModal}
-                      getStatusProduct={this.props.getStatusProduct}
-                      product={this.props.dataSource.status}
-                      changeProductStatus={this.props.changeProductStatus}
-                    />
-                  </div>
-                )
-              }
+            <div className={styles.tableList} style={{ overflow: 'hidden', overflowX: 'auto' }}>
+              {this.renderFilterFields()}
+              {this.renderEditButton()}
+              {this.renderTable()}
+              <UpdateModal
+                visible={this.state.isupdate}
+                onCancel={this.handleUpdateModal}
+                dataSource={this.state.selectedRow} // selected roe step one data
+                filter={this.props.dataSource.filter}
+                detail={this.props.dataSource.detail}
+                statusHistory={this.props.dataSource.statushistory}
+                getDetail={this.props.getDetail}
+                updateProduct={this.props.updateProduct}
+                getAttribute={this.props.getAttribute}
+                attribute={this.props.dataSource.attribute} // attribute step 2
+                updateAttr={this.props.updateAttr}
+                product={this.props.dataSource.data} // product list
+                relational={this.props.dataSource.relational} // step-3 relational
+                getRelational={this.props.getRelational} // get getRelational={this.props.getRelational}
+                updateRelational={this.props.updateRelational}
+                getStatusHistory={this.props.getStatusHistory}
+                afterClose={this.refreshList}
+              />
+              {/** Baraanii tuluv oorchiloh modal */}
+              <StatusModal
+                visible={this.state.isstatus}
+                onCancel={this.handleStatusModal}
+                getStatusProduct={this.props.getStatusProduct}
+                product={this.props.dataSource.status}
+                changeProductStatus={this.props.changeProductStatus}
+              />
             </div>
           </Card>
         </PageHeaderLayout>

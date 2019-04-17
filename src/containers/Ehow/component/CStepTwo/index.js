@@ -361,7 +361,6 @@ class StepTwo extends React.Component {
       // }
       formData.append("file", '');
       formData.append("imgnm", i.file);
-
       return null;
     });
 

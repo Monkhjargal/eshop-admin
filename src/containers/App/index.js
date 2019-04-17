@@ -70,7 +70,6 @@ class App extends Component {
   onCollapse = (collapsed) => { this.setState({ collapsed }); }
 
   render() {
-    console.log(this.props.auth);
     return this.state.isLoaded &&
       <Switch>
         <Route exact path="/login" component={Login} />

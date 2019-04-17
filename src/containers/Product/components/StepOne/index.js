@@ -211,9 +211,9 @@ class Component extends React.Component {
       previewVisible, previewImage, update, skucd, images,
     } = this.state;
 
-    if (skucd !== this.props.skucd) {
-      this.refresh();
-    }
+    // if (skucd !== this.props.skucd) {
+    //   this.refresh();
+    // }
 
     if (!this.state.loading) {
       return (

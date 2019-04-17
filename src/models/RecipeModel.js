@@ -101,7 +101,7 @@ class RecipeModel extends BaseModel {
   });
   getStepTwo = ({ id }) => asyncFn({
     url: `${this.url}/step/${id}`, method: 'GET', model: this.model.getStepTwo,
-  }, console.log(id));
+  });
   createStepTwo = ({ body, id, isfiles } = {}) => asyncFn({
     body, url: `${this.url}/step/${id}`, method: 'POST', model: this.model.createStepTwo, isfiles,
   });
