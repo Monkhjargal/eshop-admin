@@ -180,7 +180,7 @@ class Step extends React.Component {
               </Col>
               <Col span={12}>
                 <Form.Item {...formItemLayout} label="Идэвхтэй эсэх" className={styles.formItem}>
-                  {getFieldDecorator('isenable', { rules: [{ required: false }] })(
+                  {getFieldDecorator('isenable', { initialValue: data.isenable, rules: [{ required: false }] })(
                     <Checkbox defaultChecked={data.isenable === true} />,
                       )}
                 </Form.Item>

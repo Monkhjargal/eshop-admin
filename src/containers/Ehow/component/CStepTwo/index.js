@@ -137,22 +137,16 @@ class StepTwo extends React.Component {
     this.props.form.setFields({
       file: {
         value: fileList,
-        errors: [new Error('.')],
       },
     });
     this.setState({ fileList, file: fileList });
   };
 
-  handleSubmitAddStep = (e, isprev) => {
-    if (!isprev) { e.preventDefault(); }
+  handleSubmitAddStep = (e) => {
+    e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        values.file = values.file.fileList;
-        values.seq = this.state.data.length + 1;
-        const { data } = this.state;
-        data.push({ ...values });
-        this.setState({ data });
-        this.handleCreateModal();
+        console.log('Received values of form: ', values);
       }
     });
   }
@@ -190,7 +184,7 @@ class StepTwo extends React.Component {
                 )}
               </Form.Item>
               <Form.Item {...formItemLayout} label="Алхмын тайлбар" className={styles.formItem}>
-                {getFieldDecorator('description', { initialValue: ``, rules: [{ required: true, message: 'Заавал бөглөнө үү!' }] })(
+                {getFieldDecorator('description', { initialValue: '', rules: [{ required: true, message: 'Заавал бөглөнө үү!' }] })(
                   <TextArea
                     placeholder="Алхмын тайлбар"
                     autosize={{ minRows: 6, maxRows: 15 }}

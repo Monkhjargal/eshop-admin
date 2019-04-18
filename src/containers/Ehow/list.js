@@ -25,6 +25,17 @@ class Recipe extends React.Component {
 
   handleResetFilter = () => { this.props.form.resetFields(); }
 
+  handleFilter = (e) => {
+    e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        // console.log('handleFilter values of form: ', values);
+        this.setState({ tloading: !this.state.tloading });
+        this.props.getAll({ body: values }).then(res => this.setState({ tloading: !this.state.tloading }));
+      }
+    });
+  }
+
   renderFilter = () => {
     try {
       const { getFieldDecorator } = this.props.form;
@@ -48,13 +59,20 @@ class Recipe extends React.Component {
               </Col>
               <Col span={6}>
                 <Form.Item className={productSty.formItem} label="Орц" style={{ width: '96%' }}>
-                  {getFieldDecorator('recipenm', {
-                    initialValue: "",
+                  {getFieldDecorator('ingredient', {
+                    initialValue: [],
                     rules: [{
                       required: false,
                     }],
                   })(
-                    <Input size={'small'} placeholder="Жорын орцоор хайх" />,
+                    <Select
+                      mode="multiple"
+                      size={'small'}
+                      placeholder="Жоронд орсон орцоор хайх"
+                      // filterOption={(inputValue, option) => option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
+                    >
+                      {data !== undefined ? data.ingredient.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>) : '' }
+                    </Select>,
                   )}
                 </Form.Item>
               </Col>
@@ -77,13 +95,20 @@ class Recipe extends React.Component {
               </Col>
               <Col span={6}>
                 <Form.Item className={productSty.formItem} label="Амтлагч" style={{ width: '96%' }}>
-                  {getFieldDecorator('recipenm', {
-                    initialValue: "",
+                  {getFieldDecorator('spice', {
+                    initialValue: [],
                     rules: [{
                       required: false,
                     }],
                   })(
-                    <Input size={'small'} placeholder="Жорны амтлагчаар хайх" />,
+                    <Select
+                      mode="multiple"
+                      size={'small'}
+                      placeholder="Жоронд орсон амтлагчаар хайх"
+                      filterOption={(inputValue, option) => option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
+                    >
+                      {data !== undefined ? data.spice.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>) : '' }
+                    </Select>,
                   )}
                 </Form.Item>
               </Col>
