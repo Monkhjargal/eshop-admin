@@ -211,10 +211,6 @@ class Component extends React.Component {
       previewVisible, previewImage, update, skucd, images,
     } = this.state;
 
-    // if (skucd !== this.props.skucd) {
-    //   this.refresh();
-    // }
-
     if (!this.state.loading) {
       return (
         <div style={{ width: '100%' }}>
@@ -412,7 +408,9 @@ class Component extends React.Component {
                       placeholder="Хайлтын түлхүүр үгс"
                       defaultValue={detail.keywords}
                       onChange={(val) => { this.handleChange({ name: 'keywords', value: val }); }}
-                    />
+                    >
+                      {filter.keywords && filter.keywords.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>)}
+                    </Select>
                   </Form.Item>
                 </Col>
               </Panel>

@@ -18,13 +18,15 @@ class Component extends React.Component {
     //     this.StepOne.handleSubmit(null, true);
     //   } else { this.setState({ step: e.value }); }
     // }
-    this.setState({ step: e.value });
+    // this.setState({ step: e.value });
   };
 
   nextStep = (e) => {
     this.setState({ step: this.state.step + 1 });
   };
-  //   prevStep = () => { this.setState({ step: this.state.step - 1 }); }
+  prevStep = () => {
+    this.setState({ step: this.state.step - 1 });
+  };
 
   render() {
     const { step, stepOneData } = this.state;
@@ -63,6 +65,8 @@ class Component extends React.Component {
               getStepTwo={this.props.getStepTwo}
               stepTwoData={this.props.stepTwoData}
               createStepTwo={this.props.createStepTwo}
+              nextStep={this.nextStep}
+              prevStep={this.prevStep}
             />
           ) : (
             <CThree
@@ -70,6 +74,8 @@ class Component extends React.Component {
               getProduct={this.props.getProduct}
               product={this.props.product}
               updateProduct={this.props.updateProduct}
+              prevStep={this.prevStep}
+              onCancel={this.props.onCancel}
             />
           )}
         </div>

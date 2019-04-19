@@ -1,8 +1,10 @@
 import React from 'react';
 import { Form, Input, Icon, Modal, Button, Popconfirm, Table, Upload, Row } from "antd";
-
+import CreateModal from "../CStepTwoC"; // Create step Modal
+import UpdateModal from "../CStepTwoU"; // Update step Modal
 import tableStyle from "../../../../components/StandardTable/index.less";
 import styles from "../../../../components/List/style.less";
+
 
 const picserver = 'http://202.55.180.199:8877/';
 const { TextArea } = Input;
@@ -125,104 +127,24 @@ class StepTwo extends React.Component {
     }
   }
 
-  handleCancel = () => this.setState({ previewVisible: false })
-  handlePreview = (file) => {
-    this.setState({
-      previewImage: file.url || file.thumbUrl,
-      previewVisible: true,
-    });
-  }
-
-  handleChangeImg = ({ fileList }) => {
-    this.props.form.setFields({
-      file: {
-        value: fileList,
-      },
-    });
-    this.setState({ fileList, file: fileList });
-  };
-
-  handleSubmitAddStep = (e) => {
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log('Received values of form: ', values);
-      }
-    });
-  }
-
-  handleAddStepClose = () => {
-    this.setState({ file: [] });
-    this.props.form.resetFields();
+  // add recipe step
+  addStep = (value) => {
+    const { data } = this.state;
+    data.push(value);
+    this.setState({ data });
   }
 
   renderCreate = () => {
     try {
-      const {
-        iscreate, previewVisible, previewImage, file,
-      } = this.state;
-      const { getFieldDecorator } = this.props.form;
+      const { iscreate, data } = this.state;
 
       return (
-        <Modal
-          destroyOnClose
-          title="Алхам нэмэх"
+        <CreateModal
           visible={iscreate}
-          footer={null}
-          width={'60%'}
           onCancel={this.handleCreateModal}
-          afterClose={this.handleAddStepClose}
-        >
-          <Form onSubmit={this.handleSubmitAddStep}>
-            <Row>
-              <Form.Item {...formItemLayout} label="Алхмын дугаар" className={styles.formItem}>
-                {getFieldDecorator('seq', { initialValue: `${this.state.data.length + 1}`, rules: [{ required: true, message: 'Заавал бөглөнө үү!' }] })(
-                  <Input
-                    disabled
-                    placeholder="Алхмын дугаар"
-                  />,
-                )}
-              </Form.Item>
-              <Form.Item {...formItemLayout} label="Алхмын тайлбар" className={styles.formItem}>
-                {getFieldDecorator('description', { initialValue: '', rules: [{ required: true, message: 'Заавал бөглөнө үү!' }] })(
-                  <TextArea
-                    placeholder="Алхмын тайлбар"
-                    autosize={{ minRows: 6, maxRows: 15 }}
-                  />,
-                )}
-              </Form.Item>
-              <Form.Item
-                className={styles.formItem}
-                label="Алхмын зураг"
-                {...formItemLayout}
-              >
-                {getFieldDecorator('file', {
-                  initialValue: [],
-                  rules: [{
-                    required: true, message: 'Заавал бөглөнө үү!',
-                  }],
-                })(
-                  <Upload
-                    accept={".jpg,.png,.jpeg,.gif"}
-                    action="//jsonplaceholder.typicode.com/posts/"
-                    listType="picture-card"
-                    fileList={file}
-                    onPreview={this.handlePreview}
-                    onChange={this.handleChangeImg}
-                  >
-                    {file.length >= 1 ? null : <div><Icon type="plus" /><div className="ant-upload-text">Upload</div></div>}
-                  </Upload>,
-                )}
-                <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-                  <img alt="example" style={{ width: '100%' }} src={previewImage} />
-                </Modal>
-              </Form.Item>
-              <Form.Item style={{ float: "right" }}>
-                <Button type="primary" htmlType="submit" ><Icon type="save" />Хадгалах</Button>{" "}
-              </Form.Item>
-            </Row>
-          </Form>
-        </Modal>
+          step={data.length + 1}
+          handleSubmit={this.addStep}
+        />
       );
     } catch (error) {
       return console.log(error);
@@ -242,94 +164,41 @@ class StepTwo extends React.Component {
     this.setState({ updateStep });
   };
 
-  handleSubmitUpdateStep = (e, isprev) => {
-    if (!isprev) { e.preventDefault(); }
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        values.file = values.file.fileList;
-        const { data } = this.state;
+  handleSubmitUpdateStep = (value) => {
+    console.log(value);
+    // if (!isprev) { e.preventDefault(); }
+    // this.props.form.validateFields((err, values) => {
+    //   if (!err) {
+    //     values.file = values.file.fileList;
+    //     const { data } = this.state;
 
-        data.map((i) => {
-          if (i.seq === parseInt(values.seq, 10)) {
-            i.description = values.description;
-            i.file = values.file;
-          }
+    //     data.map((i) => {
+    //       if (i.seq === parseInt(values.seq, 10)) {
+    //         i.description = values.description;
+    //         i.file = values.file;
+    //       }
 
-          return null;
-        });
+    //       return null;
+    //     });
 
-        this.setState({ data });
-        this.handleUpdateModal();
-      }
-    });
+    //     this.setState({ data });
+    //     this.handleUpdateModal();
+    //   }
+    // });
   }
-
 
   renderUpdate = () => {
     try {
       const {
-        isupdate, previewVisible, previewImage, updateStep,
+        isupdate, updateStep,
       } = this.state;
-      const { getFieldDecorator } = this.props.form;
       return (
-        <Modal
-          destroyOnClose
-          title="Алхам засах"
+        <UpdateModal
           visible={isupdate}
-          footer={null}
-          width={'60%'}
           onCancel={this.handleUpdateModal}
-        >
-          <Form onSubmit={this.handleSubmitUpdateStep}>
-            <Row>
-              <Form.Item {...formItemLayout} label="Алхмын дугаар" className={styles.formItem}>
-                {getFieldDecorator('seq', { initialValue: `${updateStep.seq}`, rules: [{ required: true, message: 'Заавал бөглөнө үү!' }] })(
-                  <Input
-                    disabled
-                    placeholder="Алхмын дугаар"
-                  />,
-                )}
-              </Form.Item>
-              <Form.Item {...formItemLayout} label="Алхмын тайлбар" className={styles.formItem}>
-                {getFieldDecorator('description', { initialValue: `${updateStep.description}`, rules: [{ required: true, message: 'Заавал бөглөнө үү!' }] })(
-                  <TextArea
-                    placeholder="Алхмын тайлбар"
-                    autosize={{ minRows: 6, maxRows: 15 }}
-                  />,
-                )}
-              </Form.Item>
-              <Form.Item
-                className={styles.formItem}
-                label="Алхмын зураг"
-                {...formItemLayout}
-              >
-                {getFieldDecorator('file', {
-                  initialValue: `${updateStep.file}`,
-                  rules: [{
-                    required: true, message: 'Заавал бөглөнө үү!',
-                  }],
-                })(
-                  <Upload
-                    accept={".jpg,.png,.jpeg,.gif"}
-                    action="//jsonplaceholder.typicode.com/posts/"
-                    listType="picture-card"
-                    fileList={updateStep.file}
-                    onPreview={this.handlePreview}
-                    onChange={this.handleUpdateImg}
-                  >
-                    {updateStep.file.length >= 1 ? null : <div><Icon type="plus" /><div className="ant-upload-text">Upload</div></div>}
-                  </Upload>,
-                )}
-                <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-                  <img alt="example" style={{ width: '100%' }} src={previewImage} />
-                </Modal>
-              </Form.Item>
-              <Form.Item style={{ float: "right" }}>
-                <Button type="primary" htmlType="submit" ><Icon type="save" />Хадгалах</Button>{" "}
-              </Form.Item>
-            </Row>
-          </Form>
-        </Modal>
+          data={updateStep}
+          handleSubmit={this.handleSubmitUpdateStep}
+        />
       );
     } catch (error) {
       return null;
@@ -363,14 +232,19 @@ class StepTwo extends React.Component {
   }
 
   render() {
-    // console.log(this.state);
+    console.log(this.state);
     return (
       <Row style={{ marginTop: 20 }}>
         {this.renderButton()}
         {this.renderTable()}
         {this.renderCreate()}
         {this.renderUpdate()}
-        <Button type="primary" onClick={this.handleSave} style={{ float: "right", marginTop: 10 }} ><Icon type="save" />Хадгалах</Button>
+
+        <div style={{ float: "right", marginTop: 10 }}>
+          {/* <Button type="dashed" onClick={this.props.prevStep} ><Icon type="arrow-left" /></Button>{" "} */}
+          <Button type="primary" onClick={this.handleSave} ><Icon type="save" />Хадгалах</Button>{" "}
+          <Button type="dashed" onClick={this.props.nextStep} ><Icon type="arrow-right" /></Button>
+        </div>
       </Row>
     );
   }

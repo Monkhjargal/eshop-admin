@@ -206,7 +206,7 @@ class Step extends React.Component {
                       mode="tags"
                       placeholder="Амтлагч"
                     >
-                      {this.props.selectOption.data.spice.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>)}
+                      {/* {this.props.selectOption.data.spice.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>)} */}
                     </Select>,
                       )}
                 </Form.Item>

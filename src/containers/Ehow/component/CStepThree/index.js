@@ -7,7 +7,7 @@ class Component extends React.Component {
   state = {
     unselected: [],
     selected: [],
-    loading: false,
+    loading: true,
     bloading: false,
   }
 
@@ -42,6 +42,7 @@ class Component extends React.Component {
     this.setState({ bloading: true });
     this.props.updateProduct({ body: this.state.selected, id: this.props.id })
       .then(res => this.setState({ bloading: false }));
+    this.props.onCancel();
   }
 
   handleChange = (selected) => {

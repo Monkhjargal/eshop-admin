@@ -12,72 +12,76 @@ class Component extends React.Component {
     stepOneData: [],
   };
 
-    handleClickstep = (e) => {
-      // if (this.state.step !== e.value) {
-      //   if (this.state.step === 0) {
-      //     this.StepOne.handleSubmit(null, true);
-      //   } else { this.setState({ step: e.value }); }
-      // }
-      this.setState({ step: e.value });
-    };
+  handleClickstep = (e) => {
+    // if (this.state.step !== e.value) {
+    //   if (this.state.step === 0) {
+    //     this.StepOne.handleSubmit(null, true);
+    //   } else { this.setState({ step: e.value }); }
+    // }
+    // this.setState({ step: e.value });
+  };
 
-    nextStep = (e) => {
-      this.setState({ step: this.state.step + 1 });
-    }
+  nextStep = (e) => {
+    this.setState({ step: this.state.step + 1 });
+  };
 
-    render() {
-      const { step } = this.state;
+  prevStep = (e) => {
+    this.setState({ step: this.state.step - 1 });
+  };
 
-      return (
-        <div>
-          <Steps current={step}>
-            <Step
-              title="Жор үүсгэх"
-              onClick={e => this.handleClickstep({ event: e, value: 0 })}
+  render() {
+    const { step } = this.state;
+
+    return (
+      <div>
+        <Steps current={step}>
+          <Step
+            title="Жор үүсгэх"
+            onClick={e => this.handleClickstep({ event: e, value: 0 })}
+          />
+          <Step
+            title="Алхамууд тохируулах"
+            onClick={e => this.handleClickstep({ event: e, value: 1 })}
+          />
+          <Step
+            title="Бараа тохируулах"
+            onClick={e => this.handleClickstep({ event: e, value: 2 })}
+          />
+        </Steps>
+
+        <div className="top-container">
+          {step === 0 ? (
+            <CStepOne
+              nextStep={this.nextStep}
+              selectOption={this.props.selectOption}
+              createStepOne={this.props.createStepOne}
+              crecipe={this.props.crecipe.data}
+              getStepOne={this.props.getStepOne}
+              stepOneDetail={this.props.stepOneDetail}
             />
-            <Step
-              title="Алхамууд тохируулах"
-              onClick={e => this.handleClickstep({ event: e, value: 1 })}
+          ) : step === 1 ? (
+            <CStepTwo
+              crecipe={this.props.crecipe.data}
+              getStepTwo={this.props.getStepTwo}
+              stepTwoData={this.props.stepTwoData}
+              createStepTwo={this.props.createStepTwo}
+              nextStep={this.nextStep}
+              prevStep={this.prevStep}
             />
-            <Step
-              title="Бараа тохируулах"
-              onClick={e => this.handleClickstep({ event: e, value: 2 })}
+          ) : (
+            <CThree
+              id={this.props.crecipe.data}
+              getProduct={this.props.getProduct}
+              product={this.props.product}
+              updateProduct={this.props.updateProduct}
+              prevStep={this.prevStep}
+              onCancel={this.props.onCancel}
             />
-          </Steps>
-
-          <div className="top-container">
-            {
-              step === 0 ? (
-                <CStepOne
-                  nextStep={this.nextStep}
-                  selectOption={this.props.selectOption}
-                  createStepOne={this.props.createStepOne}
-                  crecipe={this.props.crecipe.data}
-                  getStepOne={this.props.getStepOne}
-                  stepOneDetail={this.props.stepOneDetail}
-                />
-              )
-              :
-              step === 1 ? (
-                <CStepTwo
-                  crecipe={this.props.crecipe.data}
-                  getStepTwo={this.props.getStepTwo}
-                  stepTwoData={this.props.stepTwoData}
-                  createStepTwo={this.props.createStepTwo}
-                />
-                ) :
-                <CThree
-                  id={this.props.crecipe.data}
-                  getProduct={this.props.getProduct}
-                  product={this.props.product}
-                  updateProduct={this.props.updateProduct}
-                />
-
-            }
-          </div>
+          )}
         </div>
-      );
-    }
+      </div>
+    );
+  }
 }
 
 export default Component;
