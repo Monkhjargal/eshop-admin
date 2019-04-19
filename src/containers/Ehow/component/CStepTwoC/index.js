@@ -66,6 +66,7 @@ class Component extends React.Component {
             <Form.Item {...formItemLayout} label="Алхмын дугаар" className={styles.formItem}>
               {getFieldDecorator('seq', { initialValue: step, rules: [{ required: true, message: 'Заавал бөглөнө үү!' }] })(
                 <Input
+                  disabled
                   placeholder="Алхмын дугаар"
                 />,
                   )}

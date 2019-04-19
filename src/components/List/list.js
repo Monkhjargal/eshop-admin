@@ -110,6 +110,8 @@ class List extends Component {
       this.props.headers.forEach((entry, index) => {
         const picserver = 'http://202.55.180.199:8877/';
         switch (entry.dataIndex) {
+          case 'name':
+            return entry.render = text => <span onClick={() => this.showModal(`${this.props.model}Update`)}>{text}</span>;
           case 'aid':
             return entry.render = (text, record, index) => <span>{index + 1}</span>;
           case 'description':

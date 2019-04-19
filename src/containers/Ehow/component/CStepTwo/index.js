@@ -211,8 +211,8 @@ class StepTwo extends React.Component {
     let formData = new FormData();
 
     data.map((i) => {
-      console.log(i);
       formData.append("description", i.description);
+
       if (Array.isArray(i.file)) {
         formData.append("imgnm", '');
         i.file.map(file => formData.append("file", file.originFileObj, file.name));
@@ -229,6 +229,7 @@ class StepTwo extends React.Component {
 
     let isfiles = true;
     this.props.createStepTwo({ body: formData, id: this.props.crecipe, isfiles });
+    this.props.nextStep();
   }
 
   render() {
@@ -241,9 +242,7 @@ class StepTwo extends React.Component {
         {this.renderUpdate()}
 
         <div style={{ float: "right", marginTop: 10 }}>
-          {/* <Button type="dashed" onClick={this.props.prevStep} ><Icon type="arrow-left" /></Button>{" "} */}
-          <Button type="primary" onClick={this.handleSave} ><Icon type="save" />Хадгалах</Button>{" "}
-          <Button type="dashed" onClick={this.props.nextStep} ><Icon type="arrow-right" /></Button>
+          <Button type="primary" onClick={this.handleSave} ><Icon type="save" />Хадгалах</Button>
         </div>
       </Row>
     );

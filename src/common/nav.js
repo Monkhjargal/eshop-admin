@@ -133,5 +133,11 @@ export const getNavData = [
         component: ColorList,
       },
     ],
+  }, {
+    name: 'Захиалга',
+    icon: 'ordered-list',
+    path: 'order',
+    children: [
+    ],
   },
 ];

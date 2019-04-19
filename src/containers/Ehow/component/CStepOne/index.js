@@ -55,6 +55,7 @@ class Step extends React.Component {
           .then((res) => {
             this.setState({ sloading: false });
           });
+        this.handleNextStep();
       } else {
         console.log('err');
       }
@@ -164,7 +165,7 @@ class Step extends React.Component {
             </Col>
             <Col span={12} >
               <Form.Item label="Жорын орц" {...formItemLayout} className={styles.formItem} hasFeedback validateStatus={this.formItemValidate('ingredients')}>
-                {getFieldDecorator('ingredients', { initialValue: [], rules: [{ required: true, message: 'Заавал бөглөнө үү!' }] })(
+                {getFieldDecorator('ingredient', { initialValue: [], rules: [{ required: true, message: 'Заавал бөглөнө үү!' }] })(
                   <Select
                     allowClear
                     mode="tags"
@@ -225,7 +226,6 @@ class Step extends React.Component {
             <Col span={24}>
               <Form.Item className={styles.stepSaveBtn}>
                 <Button type="primary" htmlType="submit" loading={sloading}><Icon type="save" />Хадгалах</Button>{" "}
-                <Button type="dashed" onClick={this.handleNextStep} ><Icon type="arrow-right" /></Button>
               </Form.Item>
             </Col>
           </Row>

@@ -50,7 +50,7 @@ class Component extends React.Component {
     const { visible, onCancel, data } = this.props;
     const { previewVisible, previewImage, file } = this.state;
     const { getFieldDecorator } = this.props.form;
-    console.log(this.props);
+    // console.log(this.props);
     return (
       <Modal
         destroyOnClose

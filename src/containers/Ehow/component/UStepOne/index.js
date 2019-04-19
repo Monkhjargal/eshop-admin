@@ -57,7 +57,7 @@ class Step extends React.Component {
     this.props.form.validateFields((err, values) => {
       const { fileList, description } = this.state;
       if (
-        values.featuretxt !== '' && values.humancnt !== '' && values.ingredients.length !== 0 && fileList.length !== 0 &&
+        values.featuretxt !== '' && values.humancnt !== '' && values.ingredient.length !== 0 && fileList.length !== 0 &&
         values.madeoflvl.length !== 0 && values.recipenm !== '' && values.spice.length !== 0 && values.time !== "" && description.length !== 0) {
         this.setState({ sloading: true });
 
@@ -72,6 +72,7 @@ class Step extends React.Component {
           .then((res) => {
             this.setState({ sloading: false });
           });
+        this.handleNextStep();
       } else {
         console.log('err');
       }
@@ -111,7 +112,7 @@ class Step extends React.Component {
   handleNextStep = () => {
     const { description, fileList } = this.state;
     this.props.form.validateFields((err, values) => {
-      if (values.featuretxt !== '' && values.humancnt !== '' && values.ingredients.length !== 0 && fileList.length !== 0 &&
+      if (values.featuretxt !== '' && values.humancnt !== '' && values.ingredient.length !== 0 && fileList.length !== 0 &&
       values.madeoflvl.length !== 0 && values.recipenm !== '' && values.spice.length !== 0 && values.time !== "" && description.length !== 0) {
         this.props.nextStep();
       }
@@ -186,8 +187,8 @@ class Step extends React.Component {
                 </Form.Item>
               </Col>
               <Col span={12} >
-                <Form.Item label="Жорын орц" {...formItemLayout} className={styles.formItem} hasFeedback validateStatus={this.formItemValidate('ingredients')}>
-                  {getFieldDecorator('ingredients', { initialValue: `${data.ingredients}`, rules: [{ required: true, message: 'Заавал бөглөнө үү!' }] })(
+                <Form.Item label="Жорын орц" {...formItemLayout} className={styles.formItem} hasFeedback validateStatus={this.formItemValidate('ingredient')}>
+                  {getFieldDecorator('ingredient', { initialValue: `${data.ingredient}`, rules: [{ required: true, message: 'Заавал бөглөнө үү!' }] })(
                     <Select
                       allowClear
                       mode="tags"
@@ -247,8 +248,7 @@ class Step extends React.Component {
 
               <Col span={24}>
                 <Form.Item className={styles.stepSaveBtn}>
-                  <Button type="primary" htmlType="submit" loading={sloading}><Icon type="save" />Хадгалах</Button>{" "}
-                  <Button type="dashed" onClick={this.handleNextStep} ><Icon type="arrow-right" /></Button>
+                  <Button type="primary" htmlType="submit" loading={sloading}><Icon type="save" />Хадгалах</Button>
                 </Form.Item>
               </Col>
             </Row>
