@@ -41,7 +41,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 class Collection extends React.Component {
   state = {
     dataSource: {},
-    filterSource: {},
     body: {
       limit: 20,
       page: 1,

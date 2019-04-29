@@ -22,6 +22,7 @@ import Promotion from './Promotion';
 import Infotrans from './Infotransfer';
 import ColorList from './Color';
 import Product from "./Product";
+import OrderList from "./OrderList";
 
 import Exception500 from './Exception/500';
 
@@ -49,4 +50,5 @@ export {
   Promotion,
   Infotrans,
   Product,
+  OrderList,
 };

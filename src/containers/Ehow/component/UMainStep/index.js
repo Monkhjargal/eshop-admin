@@ -13,12 +13,7 @@ class Component extends React.Component {
   };
 
   handleClickstep = (e) => {
-    // if (this.state.step !== e.value) {
-    //   if (this.state.step === 0) {
-    //     this.StepOne.handleSubmit(null, true);
-    //   } else { this.setState({ step: e.value }); }
-    // }
-    // this.setState({ step: e.value });
+    this.setState({ step: e.value });
   };
 
   nextStep = (e) => {
@@ -67,6 +62,7 @@ class Component extends React.Component {
               createStepTwo={this.props.createStepTwo}
               nextStep={this.nextStep}
               prevStep={this.prevStep}
+              update
             />
           ) : (
             <CThree

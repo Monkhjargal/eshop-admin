@@ -100,6 +100,8 @@ const asyncFn = ({
         if (model.response === 'RESPONSE_RECIPE_CREATESTEPTWO') { message.success(data.message); }
         if (model.response === 'RESPONSE_RECIPE_UPDATESTEPONE') { message.success(data.message); }
         if (model.response === 'RESPONSE_RECIPE_UPDATEPRODUCT') { message.success(data.message); }
+        if (model.response === 'RESPONSE_PACKAGE_CREATE') { message.success(data.message); }
+        if (model.response === 'RESPONSE_ORDER_ADDAMOUNT') { message.success(data.message); }
 
         // message.success(data.message);
         // console.log('success');

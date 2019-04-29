@@ -3,15 +3,8 @@ import { Form, Input, Icon, Modal, Button, Popconfirm, Table, Upload, Row } from
 import CreateModal from "../CStepTwoC"; // Create step Modal
 import UpdateModal from "../CStepTwoU"; // Update step Modal
 import tableStyle from "../../../../components/StandardTable/index.less";
-import styles from "../../../../components/List/style.less";
-
 
 const picserver = 'http://202.55.180.199:8877/';
-const { TextArea } = Input;
-const formItemLayout = {
-  labelCol: { span: 6 },
-  wrapperCol: { span: 15 },
-};
 
 class StepTwo extends React.Component {
   state = {
@@ -28,7 +21,7 @@ class StepTwo extends React.Component {
   }
 
   componentWillMount() {
-    if (this.props.crecipe !== null) {
+    if (this.props.create || this.props.update) {
       this.props.getStepTwo({ id: this.props.crecipe })
         .then((res) => {
           this.setState({ loading: false, data: this.props.stepTwoData.data });
@@ -42,10 +35,10 @@ class StepTwo extends React.Component {
     // console.log(selectedRow);
 
     data.map((i, index) => {
-      if (i.seq === selectedRow.seq) { return data.splice(index, 1); } return null;
+      if (i.orders === selectedRow.orders) { return data.splice(index, 1); } return null;
     });
 
-    data.map((i, index) => i.seq = index + 1);
+    data.map((i, index) => i.orders = index + 1);
 
     this.setState({ data, loading: false });
   }
@@ -109,6 +102,7 @@ class StepTwo extends React.Component {
         <div>
           <Table
             bordered
+            size={'small'}
             loading={loading}
             dataSource={data}
             columns={headers}
@@ -130,7 +124,7 @@ class StepTwo extends React.Component {
   // add recipe step
   addStep = (value) => {
     const { data } = this.state;
-    data.push(value);
+    data.push({ ...value, seq: data.length + 1 });
     this.setState({ data });
   }
 
@@ -165,38 +159,32 @@ class StepTwo extends React.Component {
   };
 
   handleSubmitUpdateStep = (value) => {
-    console.log(value);
-    // if (!isprev) { e.preventDefault(); }
-    // this.props.form.validateFields((err, values) => {
-    //   if (!err) {
-    //     values.file = values.file.fileList;
-    //     const { data } = this.state;
+    console.log('value: ', value);
+    const { data, selectedRow } = this.state;
 
-    //     data.map((i) => {
-    //       if (i.seq === parseInt(values.seq, 10)) {
-    //         i.description = values.description;
-    //         i.file = values.file;
-    //       }
+    data.map((i) => {
+      if (i.seq === selectedRow.seq) {
+        i.description = value.description;
+        i.orders = value.orders;
 
-    //       return null;
-    //     });
+        value.file.map(f => (f.originFileObj === undefined ? i.file = f : i.file = value.file));
+      }
+      return '';
+    });
 
-    //     this.setState({ data });
-    //     this.handleUpdateModal();
-    //   }
-    // });
+    this.setState({ selectedRow: [] });
   }
 
   renderUpdate = () => {
     try {
       const {
-        isupdate, updateStep,
+        isupdate, selectedRow,
       } = this.state;
       return (
         <UpdateModal
           visible={isupdate}
           onCancel={this.handleUpdateModal}
-          data={updateStep}
+          data={selectedRow}
           handleSubmit={this.handleSubmitUpdateStep}
         />
       );
@@ -212,16 +200,15 @@ class StepTwo extends React.Component {
 
     data.map((i) => {
       formData.append("description", i.description);
+      formData.append("orders", i.orders);
+      console.log(i);
 
       if (Array.isArray(i.file)) {
         formData.append("imgnm", '');
         i.file.map(file => formData.append("file", file.originFileObj, file.name));
         return null;
       }
-      // if (Array.isArray(i.file)) {
-      //   formData.append("imgnm", '');
-      //   i.file.map(file => formData.append("file", file.originFileObj, file.name));
-      // }
+
       formData.append("file", '');
       formData.append("imgnm", i.file);
       return null;
@@ -233,13 +220,13 @@ class StepTwo extends React.Component {
   }
 
   render() {
-    console.log(this.state);
+    const { isupdate } = this.state;
     return (
       <Row style={{ marginTop: 20 }}>
         {this.renderButton()}
         {this.renderTable()}
         {this.renderCreate()}
-        {this.renderUpdate()}
+        {isupdate ? this.renderUpdate() : null}
 
         <div style={{ float: "right", marginTop: 10 }}>
           <Button type="primary" onClick={this.handleSave} ><Icon type="save" />Хадгалах</Button>
@@ -250,8 +237,12 @@ class StepTwo extends React.Component {
 }
 
 const headers = [{
-  title: '№',
+  title: 'Д.д',
   dataIndex: 'seq',
+  width: 70,
+}, {
+  title: 'Дараалал',
+  dataIndex: 'orders',
   width: 70,
 }, {
   title: 'Алхмын тайлбар',

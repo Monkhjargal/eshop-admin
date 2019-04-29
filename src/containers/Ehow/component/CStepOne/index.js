@@ -39,7 +39,7 @@ class Step extends React.Component {
     this.props.form.validateFields((err, values) => {
       const { fileList, description } = this.state;
       if (
-        values.featuretxt !== '' && values.humancnt !== '' && values.ingredients.length !== 0 && fileList.length !== 0 &&
+        values.featuretxt !== '' && values.humancnt !== '' && values.ingredient.length !== 0 && fileList.length !== 0 &&
         values.madeoflvl.length !== 0 && values.recipenm !== '' && values.spice.length !== 0 && values.time !== "" && description.length !== 0) {
         this.setState({ sloading: true });
 
@@ -89,7 +89,7 @@ class Step extends React.Component {
   handleNextStep = () => {
     const { description, fileList } = this.state;
     this.props.form.validateFields((err, values) => {
-      if (values.featuretxt !== '' && values.humancnt !== '' && values.ingredients.length !== 0 && fileList.length !== 0 &&
+      if (values.featuretxt !== '' && values.humancnt !== '' && values.ingredient.length !== 0 && fileList.length !== 0 &&
       values.madeoflvl.length !== 0 && values.recipenm !== '' && values.spice.length !== 0 && values.time !== "" && description.length !== 0) {
         this.props.nextStep();
       }
@@ -164,7 +164,7 @@ class Step extends React.Component {
               </Form.Item>
             </Col>
             <Col span={12} >
-              <Form.Item label="Жорын орц" {...formItemLayout} className={styles.formItem} hasFeedback validateStatus={this.formItemValidate('ingredients')}>
+              <Form.Item label="Жорын орц" {...formItemLayout} className={styles.formItem} hasFeedback validateStatus={this.formItemValidate('ingredient')}>
                 {getFieldDecorator('ingredient', { initialValue: [], rules: [{ required: true, message: 'Заавал бөглөнө үү!' }] })(
                   <Select
                     allowClear
@@ -211,7 +211,7 @@ class Step extends React.Component {
             </Col>
 
             <Col span={24} style={{ marginLeft: 20 }}>
-              <Form.Item label="Дэлгэрэнгүй тайлбар" hasFeedback validateStatus={description.length === 0 ? "error" : "success"} />
+              <Form.Item label="Зөвлөгөө" hasFeedback validateStatus={description.length === 0 ? "error" : "success"} />
               <CKEditor
                 activeClass="p10"
                 content={description}

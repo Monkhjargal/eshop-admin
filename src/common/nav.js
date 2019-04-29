@@ -20,6 +20,7 @@ import {
   Promotion,
   Infotrans,
   Product,
+  OrderList,
 } from "../containers";
 
 export const getNavData = [
@@ -138,6 +139,11 @@ export const getNavData = [
     icon: 'ordered-list',
     path: 'order',
     children: [
+      {
+        name: 'Захиалгын жагсаалт',
+        path: 'order-list',
+        component: OrderList,
+      },
     ],
   },
 ];

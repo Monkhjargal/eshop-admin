@@ -45,7 +45,8 @@ class Step extends React.Component {
         const { files, description } = this.props.stepOneDetail.data;
         let fileList = [];
 
-        files.map((file, index) => fileList.push({ url: picserver + file, name: file, uid: index }));
+        // eslint-disable-next-line no-unused-expressions
+        files !== undefined ? files.map((file, index) => fileList.push({ url: picserver + file, name: file, uid: index })) : '';
         this.setState({
           data: this.props.stepOneDetail.data, fileList, description, loading: false,
         });
@@ -188,11 +189,12 @@ class Step extends React.Component {
               </Col>
               <Col span={12} >
                 <Form.Item label="Жорын орц" {...formItemLayout} className={styles.formItem} hasFeedback validateStatus={this.formItemValidate('ingredient')}>
-                  {getFieldDecorator('ingredient', { initialValue: `${data.ingredient}`, rules: [{ required: true, message: 'Заавал бөглөнө үү!' }] })(
+                  {getFieldDecorator('ingredient', { initialValue: data.ingredient || [], rules: [{ required: true, message: 'Заавал бөглөнө үү!', type: 'array' }] })(
                     <Select
                       allowClear
                       mode="tags"
                       placeholder="Жорын орц"
+
                     >
                       {this.props.selectOption.data.ingredient.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>)}
                     </Select>,
@@ -201,13 +203,13 @@ class Step extends React.Component {
               </Col>
               <Col span={12} >
                 <Form.Item label="Амтлагч" {...formItemLayout} className={styles.formItem} hasFeedback validateStatus={this.formItemValidate('spice')}>
-                  {getFieldDecorator('spice', { initialValue: `${data.spice}`, rules: [{ required: true, message: 'Заавал бөглөнө үү!' }] })(
+                  {getFieldDecorator('spice', { initialValue: data.spice || [], rules: [{ required: true, message: 'Заавал бөглөнө үү!', type: 'array' }] })(
                     <Select
                       allowClear
                       mode="tags"
                       placeholder="Амтлагч"
                     >
-                      {/* {this.props.selectOption.data.spice.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>)} */}
+                      {this.props.selectOption.data.spice.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>)}
                     </Select>,
                       )}
                 </Form.Item>
@@ -234,10 +236,10 @@ class Step extends React.Component {
               </Col>
 
               <Col span={24} style={{ marginLeft: 20 }}>
-                <Form.Item label="Дэлгэрэнгүй тайлбар" hasFeedback validateStatus={description.length === 0 ? "error" : "success"} />
+                <Form.Item label="Зөвлөгөө" hasFeedback validateStatus={description !== undefined ? (description.length === 0 ? "error" : "success") : 'error'} />
                 <CKEditor
                   activeClass="p10"
-                  content={description}
+                  content={description !== undefined ? '' : description}
                   scriptUrl={'https://cdn.ckeditor.com/4.6.2/full/ckeditor.js'}
                   config={{ ckeToolbar }}
                   events={{

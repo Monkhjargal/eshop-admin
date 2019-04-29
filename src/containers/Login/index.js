@@ -102,7 +102,7 @@ class Login extends Component {
           </div>
           <Form onSubmit={this.handleSubmit} className="login-form">
             <FormItem>
-              {getFieldDecorator('username', {
+              {getFieldDecorator('userName', {
                 rules: [{
                   required: type === 'account', message: 'Нэвтрэх нэр оруулна уу！',
                 }],

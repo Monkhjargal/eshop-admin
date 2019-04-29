@@ -67,6 +67,7 @@ class Component extends React.Component {
               createStepTwo={this.props.createStepTwo}
               nextStep={this.nextStep}
               prevStep={this.prevStep}
+              create={false}
             />
           ) : (
             <CThree

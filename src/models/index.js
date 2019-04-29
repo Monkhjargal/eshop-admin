@@ -6,6 +6,7 @@ import PromotionModel from './PromotionModel';
 import ProductModel from './ProductModel';
 import PackageModel from "./PackageModel";
 import RecipeModel from './RecipeModel';
+import OrderModel from "./OrderModel";
 
 const Auth = new AuthModel({
   model: 'auth',
@@ -135,6 +136,11 @@ const Recipe = new RecipeModel({
   model: 'recipe',
 });
 
+const Order = new OrderModel({
+  url: '/mn/api/order',
+  model: 'order',
+});
+
 export {
   Auth,
   Filter,
@@ -160,4 +166,5 @@ export {
   Infotrans,
   Package,
   Recipe,
+  Order,
 };

@@ -64,12 +64,11 @@ class Component extends React.Component {
         <Row>
           <Form onSubmit={this.handleSubmit}>
             <Form.Item {...formItemLayout} label="Алхмын дугаар" className={styles.formItem}>
-              {getFieldDecorator('seq', { initialValue: step, rules: [{ required: true, message: 'Заавал бөглөнө үү!' }] })(
+              {getFieldDecorator('orders', { rules: [{ required: true, message: 'Заавал бөглөнө үү!' }] })(
                 <Input
-                  disabled
                   placeholder="Алхмын дугаар"
                 />,
-                  )}
+              )}
             </Form.Item>
             <Form.Item {...formItemLayout} label="Алхмын тайлбар" className={styles.formItem}>
               {getFieldDecorator('description', { rules: [{ required: true, message: 'Заавал бөглөнө үү!' }] })(

@@ -1,5 +1,5 @@
 import React from "react";
-import { Steps } from "antd";
+import { Steps, Icon } from "antd";
 
 import styles from "../../styles.less";
 import { StepOne, StepTwo, StepThree } from "../";
@@ -12,7 +12,7 @@ class Component extends React.Component {
     step: 0,
   }
 
-  handleClickstep = (e) => { } // if (this.state.step !== e.value) { this.setState({ step: e.value }); }
+  handleClickstep = (e) => { if (this.state.step !== e.value) { this.setState({ step: e.value }); } }
 
   handleNextStep = () => { this.setState({ step: this.state.step + 1 }); }
   handlePrevStep = () => { this.setState({ step: this.state.step - 1 }); }
@@ -28,6 +28,11 @@ class Component extends React.Component {
           <Step title="Хослох бараа бүртгэл" onClick={e => this.handleClickstep({ event: e, value: 2 })} />
         </Steps>
         <div className={styles.stepContent}>
+          <Icon
+            type="eye"
+            style={{ position: 'fixed', marginLeft: '75%' }}
+            onClick={() => window.open(`http://test.e-mart.mn/productdetail/${this.props.dataSource.skucd}`, "_blank")}
+          />
           {
             step === 0 ? <StepOne
               skucd={this.props.dataSource.skucd}

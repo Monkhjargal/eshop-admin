@@ -7,6 +7,8 @@ import productSty from "../Product/styles.less";
 import tableStyle from "../../components/StandardTable/index.less";
 import { CreateModal, UpdateModal } from "./component";
 
+const picserver = 'http://202.55.180.199:8877/';
+
 class Recipe extends React.Component {
   state = {
     name: 'Жор',
@@ -207,6 +209,19 @@ class Recipe extends React.Component {
               i.render = text => <span onClick={this.handleUpdateModal}>{text}</span>,
               i.sorter = (a, b) => a.recipenm.localeCompare(b.recipenm),
               i.sortDirections = ['descend', 'ascend']
+            );
+          case 'imgnm':
+            return (
+              i.render = img => (<div
+                style={{
+                  background: `url(${picserver + img})`,
+                  width: '100px',
+                  height: '40px',
+                  backgroundSize: 'contain',
+                  backgroundPosition: 'center',
+                  backgroundRepeat: 'no-repeat',
+                }}
+              />)
             );
           case "madeoflvl":
             return (

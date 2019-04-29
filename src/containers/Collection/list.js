@@ -1,3 +1,10 @@
+/**
+ * COMPONENT NAME:                                      PRODUCT LIST
+ * CREATED BY:                                          **BATTSOGT BATGERELT**
+ * CREARED DATED:                                       2019-03-12
+ * DESCRIPTION:                                         PRODUCT LIST VIEW, PRODUCT DETAIL, PRODUCT CHANGE STATUS AND PRODUCT CHANGE STATUS HISTORY VIEW
+ */
+
 import React from 'react';
 import { Card, Button, Table, Spin, Popconfirm, Switch, Form, Row, Col, Input, Select } from "antd";
 import PageHeaderLayout from "../../layouts/PageHeaderLayout";
@@ -127,7 +134,6 @@ class Package extends React.Component {
   renderButton = () => (
     <div className={styles.tableListOperator}>
       <Button
-        // onClick={() => this.showModal(`${this.props.model}Create`)}
         size="small"
         icon="plus"
         type="primary"
@@ -228,7 +234,7 @@ class Package extends React.Component {
             size="small"
             bordered
             rowKey={record => record.id}
-            pagination={{ defaultPageSize: 11 }}
+            pagination={{ defaultPageSize: 12, showSizeChanger: true, showQuickJumper: true }}
             footer={this.renderFooter}
             onRow={record => ({
               onClick: () => this.handleRowClick(record),
