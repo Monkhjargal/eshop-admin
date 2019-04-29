@@ -15,6 +15,7 @@ class Component extends React.Component {
           console.log('this.props.id: ', this.props.id);
 
           this.setState({ loading: false });
+          this.props.onOk(values.amount);
           this.props.onCancel();
         });
       }

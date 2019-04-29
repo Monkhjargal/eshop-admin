@@ -7,12 +7,13 @@ import OrderList from "./list";
 
 const mapStateToProps = (state) => {
   const { data, headers } = state.order.all;
-  const { filter, detail } = state.order;
+  const { filter, detail, amountHistory } = state.order;
   const returnObject = {
     data,
     headers,
     filter,
     detail,
+    amountHistory,
   };
 
   return returnObject;

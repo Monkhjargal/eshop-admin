@@ -268,6 +268,7 @@ class Recipe extends Component {
               current: this.state.body.page,
               pageSize: this.state.body.limit,
               showSizeChanger: true,
+              pageSizeOptions: ['50', '100', '200'],
             }}
             scroll={{ x: this.props.scroll }}
           />

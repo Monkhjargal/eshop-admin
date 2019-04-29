@@ -234,7 +234,9 @@ class Package extends React.Component {
             size="small"
             bordered
             rowKey={record => record.id}
-            pagination={{ defaultPageSize: 12, showSizeChanger: true, showQuickJumper: true }}
+            pagination={{
+              defaultPageSize: 12, showSizeChanger: true, showQuickJumper: true, pageSizeOptions: ['50', '100', '200'],
+            }}
             footer={this.renderFooter}
             onRow={record => ({
               onClick: () => this.handleRowClick(record),

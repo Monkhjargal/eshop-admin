@@ -6,7 +6,7 @@
  */
 
 import React from "react";
-import { Modal, Collapse, Spin, Col, Input, Form, Table, Icon, Tooltip } from "antd";
+import { Modal, Collapse, Spin, Col, Input, Form, Table, Icon, Tooltip, Button } from "antd";
 
 import { AmountHistoryModal, AddAmountModal } from '../';
 import styles from "../../styles.less";
@@ -176,13 +176,13 @@ class Content extends React.Component {
                   <Input value={detail.deliverytype} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Дүүрэг">
-                  <Input value={detail.trucknumber} />
+                  <Input value={detail.districtnm} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Хороо">
-                  <Input value={detail.trucknumber} />
+                  <Input value={detail.committeenm} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Хаяг">
-                  <Input value={detail.trucknumber} />
+                  <Input value={detail.address} />
                 </Form.Item>
               </Form>
             </Col>
@@ -205,7 +205,7 @@ class Content extends React.Component {
               <h4 className={styles.title}>Захиалгын төлбөр төлөлтийн мэдээлэл</h4>
               <Form>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Захиалгын барааны дүн">
-                  <Input value={detail.itemamount} />
+                  <Input value={formatter.format(detail.itemamount)} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Нийт хямдралын дүн">
                   <Input value={''} />
@@ -223,7 +223,7 @@ class Content extends React.Component {
                   <Input value={''} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Нийт төлөх дүн">
-                  <Input value={detail.payamount} />
+                  <Input value={formatter.format(detail.payamount)} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Төлсөн">
                   {// Төлбөрийн хэлбэр нь дансаар хийсэн тохиолдолд үнийэ дүнг нэмэх боломжтой байна.
@@ -246,14 +246,14 @@ class Content extends React.Component {
                               </Tooltip>
                             </div>
                           }
-                          value={detail.paidamount}
+                          value={formatter.format(detail.paidamount)}
                         />
                       </div>
                     ) : <Input value={detail.paidamount} />
                   }
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Зөрүү дүн">
-                  <Input value={detail.varianceamount} />
+                  <Input value={formatter.format(detail.varianceamount)} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Epoint-д нэмэгдсэн оноо">
                   <Input value={''} />
@@ -311,6 +311,24 @@ class Content extends React.Component {
               pagination={false}
               rowKey={record => record.skucd}
             />
+
+            <div>
+              {
+                detail.paymenttype === 2 ? (
+                  <div style={{
+                    float: "right", marginTop: 10, padding: 10, paddingRight: 0,
+                    }}
+                  >
+                    <Button
+                      type="primary"
+                      htmlType="submit"
+                      disabled={!(detail.varianceamount <= 0)}
+                    ><Icon type="save" />Баталгаажуулах
+                    </Button>
+                  </div>
+                ) : null
+              }
+            </div>
           </Collapse.Panel>
         </Collapse>
       );
@@ -326,7 +344,7 @@ class Content extends React.Component {
 
       return (
         <AmountHistoryModal
-          id={detail.ordernumber}
+          id={detail.id}
           visible={isAmountHistory}
           onCancel={this.handleAmountHistory}
           select={this.props.filter}
@@ -340,14 +358,22 @@ class Content extends React.Component {
   }
 
   // RENDER AMOUNT CHANGE MODAL
+  handleOkAddAmount = (amount) => {
+    const { detail } = this.state;
+    detail.varianceamount -= amount;
+    detail.paidamount += amount;
+    this.setState({ detail });
+  }
+
   renderAddAmountModal = () => {
     try {
       const { detail, isAddAmount } = this.state;
       return (
         <AddAmountModal
-          id={detail.ordernumber}
+          id={detail.id}
           visible={isAddAmount}
           onCancel={this.handleAddAmount}
+          onOk={this.handleOkAddAmount}
           select={this.props.filter}
           addAmount={this.props.addAmount}
         />

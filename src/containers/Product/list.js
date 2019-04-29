@@ -405,10 +405,13 @@ class Product extends React.Component {
             loading={loading}
             bordered
             rowKey={record => record.id}
-            pagination={{ defaultPageSize: 10, showSizeChanger: true, showQuickJumper: true }}
+            pagination={{
+              defaultPageSize: 10, showSizeChanger: true, showQuickJumper: true, pageSizeOptions: ['50', '100', '200'],
+            }}
             footer={this.renderFooter}
             onRow={record => ({
               onClick: () => this.handleRowClick(record),
+              onDoubleClick: () => this.handleUpdateModal(),
             })}
           />
         </div>

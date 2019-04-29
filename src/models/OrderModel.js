@@ -84,8 +84,9 @@ class PackageModel extends BaseModel {
       method: "GET",
       model: this.model.detail,
     });
-  addAmount = ({ id }) =>
+  addAmount = ({ body, id }) =>
     asyncFn({
+      body,
       url: `/mn/api/orderresidual/${id}`,
       method: "POST",
       model: this.model.addAmount,
@@ -184,7 +185,7 @@ class PackageModel extends BaseModel {
       case this.model.amountHistory.response:
         return {
           ...state,
-          amountHistory: { ...action.payload.value },
+          amountHistory: action.payload.value,
         };
       // DEFUALT
       default:

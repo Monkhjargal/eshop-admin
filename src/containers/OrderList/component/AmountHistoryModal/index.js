@@ -39,24 +39,23 @@ class Content extends React.Component {
     this.props.getAmountHistory({ id: this.props.id })
       .then((res) => {
         this.setState({ data: this.props.data, loading: false });
-        console.log('this.props: ', this.props);
       });
   }
 
   render() {
-    const { loading } = this.state;
+    const { loading, data } = this.state;
 
     const columns = [{
       title: 'Төлсөн дүн',
-      dataIndex: 'name',
-      key: 'name',
+      dataIndex: 'amount',
+      key: 'amount',
     }, {
       title: 'Огноо',
-      dataIndex: 'age',
-      key: 'age',
+      dataIndex: 'insymd',
+      key: 'insymd',
     }, {
       title: 'Банк',
-      dataIndex: 'address',
+      dataIndex: 'banknm',
       key: 'address',
     }, {
       title: 'Тайлбар',
@@ -69,8 +68,10 @@ class Content extends React.Component {
         bordered
         size={'small'}
         loading={loading}
+        dataSource={data}
         columns={columns}
-        dataSource={[]}
+        footer={null}
+        pagination={false}
       />
     );
   }
