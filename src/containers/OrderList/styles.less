@@ -5,11 +5,18 @@
 
 .standardTable {
   :global {
+    .ant-table{
+      line-height: 0.5 !important;
+      font-size: 13px !important;
+    }
     .ant-table-pagination {
       margin-top: 24px;
     }
     .ant-table-thead > tr > th {
-      white-space: nowrap;
+      justify-content: center;
+      white-space: pre-wrap;
+      padding-right: 0px !important;
+      line-height: 0.9 !important;
     }
     .ant-table-tbody > tr > td:nth-child(2) {
       color: #1890FF;
@@ -20,7 +27,7 @@
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
-      padding: 6px;
+      padding: 7px;
       font-size: 13px;
       padding-left: 20px;
       .description {
@@ -33,6 +40,9 @@
       overflow: hidden;
       overflow-x: auto;
     }
+    .ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-sorters, .ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-filters {
+      padding-right: 0% !important;
+    }    
   }
 
   .tableFooter {
@@ -49,6 +59,7 @@
       -webkit-box-flex: 1;
       -ms-flex: 1;
       flex: 1;
+      line-height: 1;
     }
     :global {
       .ant-pagination {
@@ -84,4 +95,35 @@
 .title{
   display: flex;
   justify-content: flex-end;
+}
+
+.negativeValue{
+  color: rgb(255, 0, 0);
+}
+
+.boldText{
+  font-weight: bold;
+
+  .ant-input-wrapper{
+    .ant-input-group{
+      input{
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+.number{
+  display: flex !important;
+  justify-content: flex-end !important;
+}
+
+.text{
+  display: flex !important;
+  justify-content: center !important;
+}
+
+.code{
+  display: flex !important;
+  justify-content: flex-start !important;
 }

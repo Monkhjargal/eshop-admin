@@ -26,6 +26,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     getDetail: OrderModel.detail,
     addAmount: OrderModel.addAmount,
     getAmountHistory: OrderModel.amountHistory,
+    amountApprove: OrderModel.amountApprove,
   };
 
   return ({

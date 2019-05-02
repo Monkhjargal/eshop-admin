@@ -15,6 +15,8 @@ import style from "./styles.less";
 import { UpdateModal, CreateModal } from "./components";
 import productSty from "../Product/styles.less";
 
+const picserver = 'http://202.55.180.199:8877/';
+
 class Package extends React.Component {
   state = {
     name: 'Багцын',
@@ -219,6 +221,19 @@ class Package extends React.Component {
               i.sorter = (a, b) => a.updymd - b.updymd,
               i.sortDirections = ['descend', 'ascend']
             );
+          case 'imgnm':
+            return (
+              i.render = img => (<div
+                style={{
+                  background: `url(${picserver + img})`,
+                  width: '100px',
+                  height: '40px',
+                  backgroundSize: 'contain',
+                  backgroundPosition: 'center',
+                  backgroundRepeat: 'no-repeat',
+                }}
+              />)
+            );
 
           default:
             return '';
@@ -235,7 +250,7 @@ class Package extends React.Component {
             bordered
             rowKey={record => record.id}
             pagination={{
-              defaultPageSize: 12, showSizeChanger: true, showQuickJumper: true, pageSizeOptions: ['50', '100', '200'],
+              defaultPageSize: 50, showSizeChanger: true, showQuickJumper: true, pageSizeOptions: ['50', '100', '200'],
             }}
             footer={this.renderFooter}
             onRow={record => ({

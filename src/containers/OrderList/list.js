@@ -405,37 +405,39 @@ class Component extends React.Component {
                 i.sorter = (a, b) => a.orderdate.localeCompare(b.orderdate),
                 i.sortDirections = ['descend', 'ascend']
               );
-            case "itemamount":
+            case "orderamount":
               return (
-                i.render = text => <span>{formatter.format(text)}</span>,
-                i.sorter = (a, b) => a.itemamount - b.itemamount,
+                i.render = text => <span className={tableStyle.number} >{formatter.format(text)}</span>,
+                i.sorter = (a, b) => a.orderamount - b.orderamount,
                 i.sortDirections = ['descend', 'ascend']
               );
             case "payamount":
               return (
-                i.render = text => <span>{formatter.format(text)}</span>,
+                i.render = text => <span className={tableStyle.number} >{formatter.format(text)}</span>,
                 i.sorter = (a, b) => a.payamount - b.payamount,
                 i.sortDirections = ['descend', 'ascend']
               );
             case "paidamount":
               return (
-                i.render = text => <span>{formatter.format(text)}</span>,
+                i.render = text => <span className={tableStyle.number}>{formatter.format(text)}</span>,
                 i.sorter = (a, b) => a.payamount - b.payamount,
                 i.sortDirections = ['descend', 'ascend']
               );
             case "varianceamount":
               return (
-                i.render = text => <span>{formatter.format(text)}</span>,
+                i.render = text => <span className={tableStyle.number} >{formatter.format(text)}</span>,
                 i.sorter = (a, b) => a.payamount - b.payamount,
                 i.sortDirections = ['descend', 'ascend']
               );
             case "ordernumber":
               return (
+                i.render = text => <span className={tableStyle.text} onClick={this.handleDetailModal}>{text}</span>,
                 i.sorter = (a, b) => a.ordernumber - b.ordernumber,
                 i.sortDirections = ['descend', 'ascend']
               );
             case "totalquantity":
               return (
+                i.render = text => <span className={tableStyle.text} >{text}</span>,
                 i.sorter = (a, b) => a.totalquantity - b.totalquantity,
                 i.sortDirections = ['descend', 'ascend']
               );
@@ -502,7 +504,7 @@ class Component extends React.Component {
             bordered
             rowKey={record => record.id}
             pagination={{
-              defaultPageSize: 12, showSizeChanger: true, showQuickJumper: true, pageSizeOptions: ['50', '100', '200'],
+              defaultPageSize: 50, showSizeChanger: true, showQuickJumper: true, pageSizeOptions: ['50', '100', '200'],
             }}
             footer={this.renderFooter}
             onRow={record => ({
@@ -525,6 +527,7 @@ class Component extends React.Component {
           row={selectedRow}
           visible={isdetail}
           onCancel={this.handleDetailModal}
+          refresh={this.refreshList}
           {...this.props}
         />
       );

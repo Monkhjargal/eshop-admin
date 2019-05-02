@@ -36,7 +36,9 @@ class Component extends React.Component {
       if (data.chosen === '1') { selected.push(data.key); }
       return unselected.push(data);
     });
-    this.setState({ unselected, selected });
+
+    console.log('hello');
+    // this.setState({ unselected, selected });
   }
 
   handleSave = () => {

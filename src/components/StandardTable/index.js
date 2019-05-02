@@ -88,7 +88,7 @@ class StandardTable extends PureComponent {
           bordered={false}
           rowKey={record => record.id}
           dataSource={data}
-          pagination={{ defaultPageSize: 10, showSizeChanger: true, showQuickJumper: true }}
+          pagination={{ defaultPageSize: 50, showSizeChanger: true, showQuickJumper: true }}
           footer={renderFooter}
           onChange={(p, f, sorted) => onChange({ current: 1, pageSize: pagination.pageSize || 20 }, {}, sorted)}
           {...rest}

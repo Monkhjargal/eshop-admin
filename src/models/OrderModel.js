@@ -27,6 +27,11 @@ class PackageModel extends BaseModel {
           response: this.buildActionName("response", data.model, "addAmount"),
           error: this.buildActionName("error", data.model, "addAmount"),
         },
+        amountApprove: {
+          request: this.buildActionName("request", data.model, "amountApprove"),
+          response: this.buildActionName("response", data.model, "amountApprove"),
+          error: this.buildActionName("error", data.model, "amountApprove"),
+        },
         amountHistory: {
           request: this.buildActionName("request", data.model, "amountHistory"),
           response: this.buildActionName(
@@ -61,6 +66,7 @@ class PackageModel extends BaseModel {
       detail: [],
       isAdd: [],
       amountHistory: [],
+      isApprove: [],
     };
   }
 
@@ -97,6 +103,12 @@ class PackageModel extends BaseModel {
       method: "GET",
       model: this.model.amountHistory,
     });
+    amountApprove = ({ id }) =>
+      asyncFn({
+        url: `/mn/api/paymentapprove/${id}`,
+        method: "POST",
+        model: this.model.amountApprove,
+      });
 
   reducer = (state = this.initialState, action) => {
     switch (action.type) {
@@ -186,6 +198,22 @@ class PackageModel extends BaseModel {
         return {
           ...state,
           amountHistory: action.payload.value,
+        };
+      // APPROVE
+      case this.model.amountApprove.request:
+        return {
+          ...state,
+          current: this.requestCase(state.current, action),
+        };
+      case this.model.amountApprove.error:
+        return {
+          ...state,
+          current: this.errorCase(state.current, action),
+        };
+      case this.model.amountApprove.response:
+        return {
+          ...state,
+          isApprove: action.payload.value,
         };
       // DEFUALT
       default:

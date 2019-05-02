@@ -285,7 +285,7 @@ class Recipe extends React.Component {
             bordered
             rowKey={record => record.id}
             pagination={{
-              defaultPageSize: 11, showSizeChanger: true, showQuickJumper: true, pageSizeOptions: ['50', '100', '200'],
+              defaultPageSize: 50, showSizeChanger: true, showQuickJumper: true, pageSizeOptions: ['50', '100', '200'],
             }}
             footer={this.renderFooter}
             onRow={record => ({

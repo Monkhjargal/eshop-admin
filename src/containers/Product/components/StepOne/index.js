@@ -369,7 +369,7 @@ class Component extends React.Component {
                   {
                     detail.measurecd !== "K" ? '' :
                     <Form.Item {...halfItemLayout} className={styles.formItem} label="Гр-ын зарах хамгийн доод нэгж">
-                      <InputNumber disabled={!update.issalekg} min={0} defaultValue={detail.saleweight} onChange={(val) => { this.handleChange({ name: 'saleweight', value: val }); }} />
+                      <InputNumber disabled={!update.issalekg} min={1} defaultValue={detail.saleweight} onChange={(val) => { this.handleChange({ name: 'saleweight', value: val }); }} />
                     </Form.Item>
                   }
                 </Col>
