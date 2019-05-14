@@ -130,7 +130,7 @@ class Component extends React.Component {
               </Form.Item>
             </Col>
             <Col span={2}>
-              <Form.Item className={productSty.formItem} label="Эхлэх онгоо" style={{ width: '100%' }}>
+              <Form.Item className={productSty.formItem} label="Эхлэх огноо" style={{ width: '100%' }}>
                 {getFieldDecorator("osdate", {
                   initialValue: null,
                   rules: [{ required: false }],
@@ -138,7 +138,7 @@ class Component extends React.Component {
               </Form.Item>
             </Col>
             <Col span={2}>
-              <Form.Item className={productSty.formItem} label="Дуусах онгоо" style={{ width: '100%' }}>
+              <Form.Item className={productSty.formItem} label="Дуусах огноо" style={{ width: '100%' }}>
                 {getFieldDecorator("oedate", {
                   initialValue: null,
                   rules: [{ required: false }],
@@ -390,6 +390,9 @@ class Component extends React.Component {
       const { headers, data, filter } = this.props.dataSource;
       const { loading } = this.state;
 
+      let footerData = data;
+      let columns = headers;
+
       // eslint-disable-next-line no-unused-expressions
       headers === undefined && filter === undefined ? null :
         headers.map((i) => {
@@ -420,13 +423,13 @@ class Component extends React.Component {
             case "paidamount":
               return (
                 i.render = text => <span className={tableStyle.number}>{formatter.format(text)}</span>,
-                i.sorter = (a, b) => a.payamount - b.payamount,
+                i.sorter = (a, b) => a.paidamount - b.paidamount,
                 i.sortDirections = ['descend', 'ascend']
               );
             case "varianceamount":
               return (
                 i.render = text => <span className={tableStyle.number} >{formatter.format(text)}</span>,
-                i.sorter = (a, b) => a.payamount - b.payamount,
+                i.sorter = (a, b) => a.varianceamount - b.varianceamount,
                 i.sortDirections = ['descend', 'ascend']
               );
             case "ordernumber":
@@ -443,7 +446,7 @@ class Component extends React.Component {
               );
             case "paymenttypenm":
               return (
-                i.sorter = (a, b) => a.orderdate.localeCompare(b.orderdate),
+                i.sorter = (a, b) => a.paymenttypenm.localeCompare(b.paymenttypenm),
                 i.sortDirections = ['descend', 'ascend']
               );
             case "paymentstatus":
@@ -485,7 +488,7 @@ class Component extends React.Component {
               );
             case "deliveryamount":
               return (
-                i.render = text => <span>{formatter.format(text)}</span>,
+                i.render = text => <span className={tableStyle.number}>{formatter.format(text)}</span>,
                 i.sorter = (a, b) => a.deliveryamount - b.deliveryamount,
                 i.sortDirections = ['descend', 'ascend']
               );
@@ -493,6 +496,7 @@ class Component extends React.Component {
               return '';
           }
         });
+
       return (
         <div className={tableStyle.standardTable}>
           <Table
@@ -504,7 +508,10 @@ class Component extends React.Component {
             bordered
             rowKey={record => record.id}
             pagination={{
-              defaultPageSize: 50, showSizeChanger: true, showQuickJumper: true, pageSizeOptions: ['50', '100', '200'],
+              defaultPageSize: 50,
+              showSizeChanger: true,
+              showQuickJumper: true,
+              pageSizeOptions: ['50', '100', '200'],
             }}
             footer={this.renderFooter}
             onRow={record => ({

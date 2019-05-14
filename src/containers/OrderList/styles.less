@@ -7,7 +7,7 @@
   :global {
     .ant-table{
       line-height: 0.5 !important;
-      font-size: 13px !important;
+      font-size: 12px !important;
     }
     .ant-table-pagination {
       margin-top: 24px;
@@ -28,7 +28,7 @@
       white-space: nowrap;
       text-overflow: ellipsis;
       padding: 7px;
-      font-size: 13px;
+      font-size: 12px;
       padding-left: 20px;
       .description {
         width: 200px !important;
@@ -42,8 +42,15 @@
     }
     .ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-sorters, .ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-filters {
       padding-right: 0% !important;
-    }    
+      text-align: center !important;
+    }   
+    
+    .ant-table-footer {
+      padding: 0 !important;
+    }
   }
+
+  
 
   .tableFooter {
     display: flex;
@@ -60,6 +67,7 @@
       -ms-flex: 1;
       flex: 1;
       line-height: 1;
+      padding: 20px;
     }
     :global {
       .ant-pagination {
@@ -77,13 +85,13 @@
 }
 
 .selected td{
-  border-top: solid 3px #feb434 !important;
-  border-bottom: solid 3px #feb434 !important;
+  // border-top: solid 2px #feb434 !important;
+  // border-bottom: solid 2px #feb434 !important;
   // border-right: solid 1px #feb434 !important;
   // border-left: solid 1px #feb434 !important;
   // border-top: solid 1px #feb434 !important;
   // background-color: @geekblue-5 !important;
-  // background-color: #ffb434 !important;
+  background-color: #fdda9e !important;
   // color: #fff;
 }
 

@@ -9,6 +9,16 @@ import ModalLayout from "../../layouts/ModalLayout";
 import style from "./style.less";
 
 class ModalFormComponent extends Component {
+  render() {
+    return this.props.visible ? <Content {...this.props} /> : null;
+  }
+}
+
+export default ModalFormComponent;
+
+
+// eslint-disable-next-line react/no-multi-comp
+class Content extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -93,7 +103,7 @@ class ModalFormComponent extends Component {
   }
 }
 
-ModalFormComponent.defaultProps = {
+Content.defaultProps = {
   error: undefined,
   errorMessage: '',
   title: '',
@@ -107,7 +117,7 @@ ModalFormComponent.defaultProps = {
   url: '',
 };
 
-ModalFormComponent.propTypes = {
+Content.propTypes = {
   error: PropTypes.bool,
   errorMessage: PropTypes.string,
   title: PropTypes.string,
@@ -125,5 +135,3 @@ ModalFormComponent.propTypes = {
   afterSubmit: PropTypes.func,
   url: PropTypes.string,
 };
-
-export default ModalFormComponent;

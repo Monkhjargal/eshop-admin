@@ -112,14 +112,16 @@ class List extends Component {
         switch (entry.dataIndex) {
           case 'name':
             return entry.render = text => <span onClick={() => this.showModal(`${this.props.model}Update`)}>{text}</span>;
+          case 'catnm':
+            return entry.render = text => <span className={this.props.isCategory ? styles.catnm : ''} onClick={() => this.showModal(`${this.props.model}Update`)}>{text}</span>;
           case 'aid':
             return entry.render = (text, record, index) => <span>{index + 1}</span>;
           case 'description':
             return entry.render = (text, record, index) => <div className="description">{record.description}</div>;
           case 'isusefilter':
-            return entry.render = (text, record) => <Switch checked={Boolean(record.isusefilter)} disabled />;
+            return entry.render = (text, record) => <Switch className={styles.center} size="small" checked={Boolean(record.isusefilter)} disabled />;
           case 'isnew':
-            return entry.render = (text, record) => <Switch checked={Boolean(record.isnew)} disabled />;
+            return entry.render = (text, record) => <Switch className={styles.center} size="small" checked={Boolean(record.isnew)} disabled />;
           case 'insymd':
             return entry.render = (text, record) => <span>{record.insymd ? (<Moment format="YYYY-MM-DD">{record.insymd}</Moment>) : ''}</span>;
           case 'attributes':
@@ -131,11 +133,11 @@ class List extends Component {
           case 'edate':
             return entry.render = (text, record) => <span><Moment format="YYYY-MM-DD">{record.edate}</Moment></span>;
           case 'isenable':
-            return entry.render = (text, record) => <Switch checked={Boolean(record.isenable)} disabled />;
+            return entry.render = (text, record) => <Switch className={styles.center} size="small" checked={Boolean(record.isenable)} disabled />;
           case 'isemart':
-            return entry.render = (text, record) => <Switch checked={record.isemart} disabled />;
+            return entry.render = (text, record) => <Switch className={styles.center} size="small" checked={record.isemart} disabled />;
           case 'isshownm':
-            return entry.render = (text, record) => <Switch checked={record.isshownm} disabled />;
+            return entry.render = (text, record) => <Switch className={styles.center} size="small" checked={record.isshownm} disabled />;
           case 'colorcd':
             return entry.render = col => (
               <div>
@@ -148,7 +150,7 @@ class List extends Component {
                     marginRight: '20px',
                   }}
                 />
-                <span>{col}</span>
+                {/* <span>{col}</span> */}
               </div>);
           case 'color':
             return entry.render = col => (
@@ -162,28 +164,28 @@ class List extends Component {
                     marginRight: '20px',
                   }}
                 />
-                <span>{col}</span>
+                {/* <span>{col}</span> */}
               </div>);
           case 'imgnm':
             return entry.render = url => (<div
               style={{
                 background: `url(${picserver + url})`,
-                width: '100px',
-                height: '40px',
+                height: '20px',
                 backgroundSize: 'contain',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
+                padding: '0px !important',
               }}
             />);
           case 'imgnmtwo':
             return entry.render = url => (<div
               style={{
                 background: `url(${picserver + url})`,
-                width: '100px',
-                height: '40px',
+                height: '20px',
                 backgroundSize: 'contain',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
+                padding: 0,
               }}
             />);
           case 'rate':

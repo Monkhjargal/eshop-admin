@@ -1,7 +1,12 @@
 import React from 'react';
-import { Form, Spin, Row, Icon, Button, Transfer } from "antd";
+import { Form, Spin, Row, Icon, Button, Transfer, Select, Col } from "antd";
 
 import styles from "../../styles.less";
+
+const formItemLayout = {
+  labelCol: { span: 10 },
+  wrapperCol: { span: 14 },
+};
 
 class Component extends React.Component {
   state = {
@@ -50,6 +55,76 @@ class Component extends React.Component {
     this.setState({ selected });
   }
 
+  handleFilter = (e) => {
+    e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        console.log('Filter values: ', values);
+      }
+    });
+  }
+
+  handleReset = () => {
+    this.props.form.resetFields();
+  }
+
+  renderFilter = () => {
+    try {
+      const { getFieldDecorator } = this.props.form;
+
+      return (
+        <Row>
+          <Form className={styles.otModalForm} onSubmit={this.handleFilter}>
+            <Col span={8}>
+              <Form.Item {...formItemLayout} label="Барааны ангилал">
+                {getFieldDecorator("catid", {
+                  initialValue: [],
+                  rules: [
+                    {
+                      required: false,
+                    },
+                  ],
+                })(<Select
+                  allowClear
+                  size={"small"}
+                  placeholder="Барааны ангилалаар хайх"
+                  filterOption={(input, option) => option.props.value.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                />)}
+              </Form.Item>
+            </Col>
+            <Col span={8}>
+              <Form.Item {...formItemLayout} label="Барааны бренд">
+                {getFieldDecorator("brandid", {
+                  initialValue: [],
+                  rules: [
+                    {
+                      required: false,
+                    },
+                  ],
+                })(<Select
+                  allowClear
+                  size={"small"}
+                  placeholder="Барааны брендээр хайх"
+                  filterOption={(input, option) => option.props.value.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                />)}
+              </Form.Item>
+            </Col>
+            <Col span={8}>
+              <Form.Item style={{ display: 'flex', justifyContent: 'center' }}>
+                <Button size="small" type="button" onClick={this.handleReset} >{'Цэвэрлэх'}</Button>
+                <Button size="small" htmlType="submit" type="primary" style={{ marginLeft: 3 }} >{'Хайх'}</Button>
+              </Form.Item>
+            </Col>
+
+          </Form>
+        </Row>
+      );
+      // eslint-disable-next-line no-unreachable
+    } catch (error) {
+      return error;
+    }
+  };
+
   render() {
     // console.log('STEP RWO FORM DATA', this.props);
     const {
@@ -57,6 +132,7 @@ class Component extends React.Component {
     } = this.state;
     return (
       <Row style={{ width: '100%', marginTop: 25 }}>
+        <div>{this.renderFilter()}</div>
         {
           !loading ? (
             <Transfer

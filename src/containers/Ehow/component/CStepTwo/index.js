@@ -98,6 +98,18 @@ class StepTwo extends React.Component {
     try {
       const { data, loading } = this.state;
 
+      headers.map((i) => {
+        switch (i.dataIndex) {
+          case "description":
+            return (
+              i.render = text => <span onClick={this.handleUpdateModal} style={{ color: '#1890FF', fontWeight: 'bold' }} >{text}</span>
+            );
+
+          default:
+            return '';
+        }
+      });
+
       return (
         <div>
           <Table

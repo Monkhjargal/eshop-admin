@@ -5,11 +5,18 @@
 
 .standardTable {
   :global {
+    .ant-table{
+      line-height: 0.5 !important;
+      font-size: 12px !important;
+    }
     .ant-table-pagination {
       margin-top: 24px;
     }
     .ant-table-thead > tr > th {
-      white-space: nowrap;
+      justify-content: center;
+      white-space: pre-wrap !important;
+      padding-right: 0px !important;
+      line-height: 0.9 !important;
     }
     .ant-table-tbody > tr > td:nth-child(2) {
       color: #1890FF;
@@ -20,18 +27,17 @@
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
-      padding: 6px;
-      font-size: 13px;
-      padding-left: 20px;
-      .description {
-        width: 200px !important;
-        height: 70px;
-        white-space: initial;
-      }
+      font-size: 12px;
+      padding-bottom: 4px !important;
+      padding-top: 4px !important;
     }
     .ant-table-body {
       overflow: hidden;
       overflow-x: auto;
+    }
+    .ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-sorters, .ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-filters {
+      padding-right: 0% !important;
+      text-align: center !important;
     }
   }
 
@@ -49,6 +55,7 @@
       -webkit-box-flex: 1;
       -ms-flex: 1;
       flex: 1;
+      line-height: 1;
     }
     :global {
       .ant-pagination {
@@ -59,19 +66,15 @@
       }
     }
   }
-
-  .tableAlert {
-    margin-bottom: 16px;
-  }
 }
 
 .selected td{
-  border-top: solid 3px #feb434 !important;
-  border-bottom: solid 3px #feb434 !important;
+  // border-top: solid 3px #feb434 !important;
+  // border-bottom: solid 3px #feb434 !important;
   // border-right: solid 1px #feb434 !important;
   // border-left: solid 1px #feb434 !important;
   // border-top: solid 1px #feb434 !important;
   // background-color: @geekblue-5 !important;
-  // background-color: #ffb434 !important;
+  background-color: #fdda9e !important;
   // color: #fff;
 }

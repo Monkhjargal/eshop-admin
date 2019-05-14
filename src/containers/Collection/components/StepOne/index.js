@@ -111,7 +111,7 @@ class Component extends React.Component {
     const { defValue } = this.props;
     return (
       <div style={{ marginTop: 30 }}>
-        <Form onSubmit={this.handleSubmit}>
+        <Form onSubmit={this.handleSubmit} className={styles.otModalForm}>
           <Row>
             <Col span={12}>
               <Form.Item
@@ -196,7 +196,7 @@ class Component extends React.Component {
             </Col>
 
             <Col span={24}>
-              <Form.Item className={styles.formItem} label="Дэлгэрэнгүй тайлбар" style={{ marginLeft: '3%' }}>
+              <Form.Item className={styles.formItem} label="Дэлгэрэнгүй тайлбар" style={{ marginLeft: '3%', marginBottom: 0 }}>
                 <CKEditor
                   activeClass="p10"
                   scriptUrl={'https://cdn.ckeditor.com/4.6.2/full/ckeditor.js'}

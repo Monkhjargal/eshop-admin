@@ -3,7 +3,7 @@ import { Card, Button, Table, Spin, Switch, Popconfirm, Form, Col, Input, Row, S
 
 import PageHeaderLayout from "../../layouts/PageHeaderLayout";
 import styles from '../../components/List/style.less';
-import tableStyle from "../../components/StandardTable/index.less";
+import tableStyle from "./styles.less";
 import { CreateModal, UpdateModal } from "./components";
 import productSty from "../Product/styles.less";
 
@@ -175,7 +175,9 @@ class Promotion extends React.Component {
       headers.map((i) => {
         switch (i.dataIndex) {
           case 'aid':
-            return i.render = (text, record, index) => <span>{index + 1}</span>;
+            return (
+              i.render = (text, record, index) => <span>{index + 1}</span>
+            );
           case 'promotnm':
             return (
               i.render = text => <span onClick={this.handleUpdateModal}>{text}</span>,
@@ -184,7 +186,7 @@ class Promotion extends React.Component {
             );
           case 'isenable':
             return (
-              i.render = (text, record) => <Switch checked={record.isenable} disabled />,
+              i.render = (text, record) => <Switch size="small" checked={record.isenable} disabled />,
               i.sorter = (a, b) => a.isenable - b.isenable,
               i.sortDirections = ['descend', 'ascend']
             );
@@ -208,7 +210,7 @@ class Promotion extends React.Component {
             bordered
             rowKey={record => record.id}
             pagination={{
-              defaultPageSize: 50, showSizeChanger: true, showQuickJumper: true, pageSizeOptions: ['30', '50', '100', '200'],
+              defaultPageSize: 50, showSizeChanger: true, showQuickJumper: true, pageSizeOptions: ['50', '100', '200'],
             }}
             footer={this.renderFooter}
             onRow={record => ({

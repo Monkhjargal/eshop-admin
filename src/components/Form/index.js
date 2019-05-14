@@ -34,7 +34,6 @@ import {
   FieldTemplate,
   ObjectFieldTemplate,
 } from './FieldTemplates';
-// import { studentData } from './mockjs';
 
 class FormComponent extends Component {
   constructor(props) {
@@ -47,7 +46,7 @@ class FormComponent extends Component {
   }
 
   componentDidMount() {
-    // console.log('>>>>>>>>>>>>');
+    console.log(this.props);
     this.fetchForm();
   }
 
@@ -172,39 +171,18 @@ class FormComponent extends Component {
     if (this.props.url) {
       submitObject = { ...submitObject, ...{ url: this.props.url } };
     }
-    console.log(submitObject);
-    // Object.keys(submitObject.formData).forEach((item) => {
-    //   if (item === 'attrvalues') {
-    //     if (submitObject.formData.attrvalues) {
-    //       submitObject.formData.attrvalues = (submitObject.formData.attrvalues).toString();
-    //     }
-    //   }
-    // });
-    // console.log(submitObject);
-    // const submitResult = this.props.submitAction(submitObject);
+
     await this.props.submitAction(submitObject);
     if (this.props.error) {
       this.setState({
         isSubmitted: true,
       });
-      // console.log(this.props.error, this.props.errorMessage);
     } else if (this.props.afterSubmit) {
       this.props.afterSubmit();
     }
-
-    // if (submitResult && submitResult.then) {
-    //   submitResult.then(() => {
-    //     if (this.props.afterSubmit) {
-    //       this.props.afterSubmit();
-    //     }
-    //   });
-    // } else if (this.props.afterSubmit) {
-    //   this.props.afterSubmit();
-    // }
   }
 
   onErrorHandler = (formObject, a, b, c) => {
-    console.log('!!!!', formObject, a, b, c);
     this.setState({
       isSubmitted: true,
     });

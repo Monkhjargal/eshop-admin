@@ -3,8 +3,7 @@ import { Card, Button, Table, Spin, Form, Input, Col, Row, Select, Switch, Progr
 
 import PageHeaderLayout from "../../layouts/PageHeaderLayout";
 import styles from '../../components/List/style.less';
-import tableStyle from "../../components/StandardTable/index.less";
-import style from "./styles.less";
+import tableStyle from "./styles.less";
 import { UpdateModal, StatusModal, Excel } from "./components";
 import { SelectTreeWidget } from "../../components/Form/Widgets";
 
@@ -14,7 +13,8 @@ class Product extends React.Component {
   state = {
     name: 'Барааны',
     selectedRow: [],
-    loading: true,
+    loading: false, // table loading
+    mainLoading: true, // page main loading хуудас дуудагдах үед
     filtered: {
       skunm: '',
       catids: null,
@@ -28,6 +28,8 @@ class Product extends React.Component {
       isproductchanged: 0,
       ispricechanged: 0,
       updemps: [],
+      pageno: 1, // page number
+      rowcnt: 50, // row count
     },
     isupdate: false,
     isstatus: false,
@@ -36,7 +38,7 @@ class Product extends React.Component {
   }
 
   componentWillMount() {
-    this.refreshList();
+    this.props.getDataSource({ body: {} }).then(res => this.setState({ mainLoading: false }));
   }
 
   refreshList = () => {
@@ -114,21 +116,21 @@ class Product extends React.Component {
       return (
         <div>
           <div>
-            <Form className={style.otform}>
+            <Form className={tableStyle.otform}>
               <Row>
                 <Col span={6}>
-                  <Form.Item label="Барааны нэр" className={style.formItem}>
+                  <Form.Item label="Барааны нэр" className={tableStyle.formItem}>
                     <Input size={'small'} placeholder="Барааны нэр хайх" style={{ width: '96%' }} onChange={this.handleFilterInput} value={filtered.skunm} />
                   </Form.Item>
                 </Col>
                 <Col span={6}>
-                  <Form.Item label="Аттрибут" className={style.formItem}>
+                  <Form.Item label="Аттрибут" className={tableStyle.formItem}>
                     <Select
                       mode="multiple"
                       size={'small'}
                       placeholder="Аттрибут хайх"
                       style={{ width: '96%' }}
-                      value={filtered.attributeids === undefined ? '' : filtered.attributeids}
+                      value={filtered.attributeids === undefined ? [] : filtered.attributeids}
                       filterOption={(inputValue, option) => option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
                       onChange={(val) => { this.handleChange({ name: 'attributeids', value: val }); }}
                     >
@@ -137,7 +139,7 @@ class Product extends React.Component {
                   </Form.Item>
                 </Col>
                 <Col span={6}>
-                  <Form.Item label="Ангилал" className={style.formItem}>
+                  <Form.Item label="Ангилал" className={tableStyle.formItem}>
                     <div style={{ width: '96%' }} >
                       <SelectTreeWidget
                         value={filtered.catids}
@@ -149,7 +151,7 @@ class Product extends React.Component {
                   </Form.Item>
                 </Col>
                 <Col span={6}>
-                  <Form.Item label="Аттрибутын утга" className={style.formItem}>
+                  <Form.Item label="Аттрибутын утга" className={tableStyle.formItem}>
                     <Select
                       mode="multiple"
                       size={'small'}
@@ -166,7 +168,7 @@ class Product extends React.Component {
               </Row>
               <Row>
                 <Col span={6}>
-                  <Form.Item label="Бренд" className={style.formItem}>
+                  <Form.Item label="Бренд" className={tableStyle.formItem}>
                     <Select
                       mode="multiple"
                       size={'small'}
@@ -181,7 +183,7 @@ class Product extends React.Component {
                   </Form.Item>
                 </Col>
                 <Col span={6}>
-                  <Form.Item label="Шинэ бараа эсэх" className={style.formItem}>
+                  <Form.Item label="Шинэ бараа эсэх" className={tableStyle.formItem}>
                     <Select
                       size={'small'}
                       placeholder="Шинэ бараа эсэх хайх"
@@ -194,7 +196,7 @@ class Product extends React.Component {
                   </Form.Item>
                 </Col>
                 <Col span={6}>
-                  <Form.Item label="Хямдралтай эсэх" className={style.formItem}>
+                  <Form.Item label="Хямдралтай эсэх" className={tableStyle.formItem}>
                     <Select
                       size={'small'}
                       placeholder="Хямдралтай эсэх хайх"
@@ -207,7 +209,7 @@ class Product extends React.Component {
                   </Form.Item>
                 </Col>
                 <Col span={6}>
-                  <Form.Item label="Онлайн төлөв" className={style.formItem}>
+                  <Form.Item label="Онлайн төлөв" className={tableStyle.formItem}>
                     <Select
                       mode="multiple"
                       size={'small'}
@@ -223,7 +225,7 @@ class Product extends React.Component {
               </Row>
               <Row>
                 <Col span={6}>
-                  <Form.Item label="Эвентийн нэр" className={style.formItem}>
+                  <Form.Item label="Эвентийн нэр" className={tableStyle.formItem}>
                     <Select
                       mode="multiple"
                       size={'small'}
@@ -237,7 +239,7 @@ class Product extends React.Component {
                   </Form.Item>
                 </Col>
                 <Col span={6}>
-                  <Form.Item label="Мэдээлэл шинэчлэлт" className={style.formItem}>
+                  <Form.Item label="Мэдээлэл шинэчлэлт" className={tableStyle.formItem}>
                     <Select
                       size={'small'}
                       placeholder="Мэдээлэл шинэчлэлт хайх"
@@ -250,7 +252,7 @@ class Product extends React.Component {
                   </Form.Item>
                 </Col>
                 <Col span={6}>
-                  <Form.Item label="Яаралтай үнийн өөрчлөлт орсон эсэх" className={style.formItem}>
+                  <Form.Item label="Яаралтай үнийн өөрчлөлт орсон эсэх" className={tableStyle.formItem}>
                     <Select
                       size={'small'}
                       placeholder="Яаралтай үнийн өөрчлөлт орсон эсэх"
@@ -263,7 +265,7 @@ class Product extends React.Component {
                   </Form.Item>
                 </Col>
                 <Col span={6}>
-                  <Form.Item label="Зассан хэрэглэгч" className={style.formItem}>
+                  <Form.Item label="Зассан хэрэглэгч" className={tableStyle.formItem}>
                     <Select
                       mode="multiple"
                       size={'small'}
@@ -325,6 +327,10 @@ class Product extends React.Component {
 
   handleName = (e) => { this.handleUpdateModal(); }
 
+  handleChangePageSize = (pageno, rowcnt) => {
+    console.log('pageno, rowcnt: ', pageno, rowcnt);
+  }
+
   renderTable = () => {
     try {
       const { loading } = this.state;
@@ -333,16 +339,16 @@ class Product extends React.Component {
         switch (i.dataIndex) {
           case 'titlenm':
             return (
-              i.render = text => <span onClick={this.handleName}><a style={{ color: '#1890ff' }}>{text}</a></span>,
+              i.render = text => <span className={tableStyle.left} onClick={this.handleName}><a style={{ color: '#1890ff' }}>{text}</a></span>,
               i.sorter = (a, b) => a.titlenm.localeCompare(b.titlenm),
               i.sortDirections = ['descend', 'ascend']
             );
           case 'cstatus':
             return (
-              i.render = text => (text === 0 ? <Progress strokeColor="#fd5c63" type="circle" percent={25} width={30} style={{ display: 'flex', justifyContent: 'center' }} /> :
-                text === 1 ? <Progress strokeColor="#ffc20e" type="circle" percent={50} width={30} style={{ display: 'flex', justifyContent: 'center' }} /> :
-                  text === 2 ? <Progress type="circle" percent={75} width={30} style={{ display: 'flex', justifyContent: 'center' }} /> :
-                    text === 3 ? <Progress type="circle" percent={100} width={30} style={{ display: 'flex', justifyContent: 'center' }} /> : <span>{text}</span>),
+              i.render = text => (text === 0 ? <Progress strokeColor="#fd5c63" type="circle" percent={25} width={25} style={{ display: 'flex', justifyContent: 'center' }} /> :
+                text === 1 ? <Progress strokeColor="#ffc20e" type="circle" percent={50} width={25} style={{ display: 'flex', justifyContent: 'center' }} /> :
+                  text === 2 ? <Progress type="circle" percent={75} width={25} style={{ display: 'flex', justifyContent: 'center' }} /> :
+                    text === 3 ? <Progress type="circle" percent={100} width={25} style={{ display: 'flex', justifyContent: 'center' }} /> : <span>{text}</span>),
               i.sorter = (a, b) => a.cstatus - b.cstatus,
               i.sortDirections = ['descend', 'ascend']
             );
@@ -358,43 +364,48 @@ class Product extends React.Component {
             );
           case 'newprice':
             return (
-              i.render = text => <span>{text === 0 ? '' : formatter.format(text)}</span>,
+              i.render = text => <span className={tableStyle.right}>{text === 0 ? '' : formatter.format(text)}</span>,
               i.sorter = (a, b) => a.newprice - b.newprice,
               i.sortDirections = ['descend', 'ascend']
             );
           case 'sprice':
             return (
-              i.render = text => <span>{formatter.format(text)}</span>,
+              i.render = text => <span className={tableStyle.right}>{formatter.format(text)}</span>,
               i.sorter = (a, b) => a.sprice - b.sprice,
               i.sortDirections = ['descend', 'ascend']
             );
           case 'spercent':
             return (
-              i.render = text => <span>{text === 0 ? '' : `${text}%`}</span>,
+              i.render = text => <span className={tableStyle.center}>{text === 0 ? '' : `${text}%`}</span>,
               i.sorter = (a, b) => a.spercent - b.spercent,
               i.sortDirections = ['descend', 'ascend']
             );
           case 'status':
             return (
-              i.render = (text, record) => <span><Input disabled value={record.statusnm} className={text === 1 ? style.statusOne : text === 2 ? style.statusTwo : style.statusThree} /></span>,
+              i.render = (text, record) => <span><Input size={'small'} disabled value={record.statusnm} className={text === 1 ? tableStyle.statusOne : text === 2 ? tableStyle.statusTwo : tableStyle.statusThree} /></span>,
               i.sorter = (a, b) => a.status - b.status,
               i.sortDirections = ['descend', 'ascend']
             );
           case 'availableqty':
             return (
-              i.render = text => <span>{text === 0 ? '' : `${text}`}</span>,
+              i.render = text => <span className={tableStyle.center}>{text === 0 ? '' : `${text}`}</span>,
               i.sorter = (a, b) => a.availableqty - b.availableqty,
               i.sortDirections = ['descend', 'ascend']
             );
           case 'isnew':
-            return i.render = (text, record) => <Switch checked={!!record.isnew} disabled />;
+            return i.render = (text, record) => <Switch size="small" checked={!!record.isnew} disabled />;
           case 'rate':
-            return (i.sorter = (a, b) => a.rate - b.rate);
+            return (
+              i.render = text => <span className={tableStyle.center}>{text === 0 ? '' : `${text}`}</span>,
+              i.sorter = (a, b) => a.rate - b.rate,
+              i.sortDirections = ['descend', 'ascend']
+            );
 
           default:
             return '';
         }
       });
+
       return (
         <div className={tableStyle.standardTable}>
           <Table
@@ -406,7 +417,11 @@ class Product extends React.Component {
             bordered
             rowKey={record => record.id}
             pagination={{
-              defaultPageSize: 50, showSizeChanger: true, showQuickJumper: true, pageSizeOptions: ['50', '100', '200'],
+              defaultPageSize: 50,
+              showSizeChanger: true,
+              showQuickJumper: true,
+              pageSizeOptions: ['50', '100', '200'],
+              onChange: this.handleChangePageSize,
             }}
             footer={this.renderFooter}
             onRow={record => ({
@@ -423,48 +438,55 @@ class Product extends React.Component {
 
   render() {
     try {
-      // console.log(this.props.dataSource);
-      // const { filter } = this.props.filter[0] === undefined ? [] : this.props.filter[0];
+      const { mainLoading } = this.state;
+
       if (this.state.dataSource !== this.props.dataSource) {
         this.setState({ dataSource: this.props.dataSource });
       }
+
+      if (!mainLoading) {
+        return (
+          <PageHeaderLayout>
+            <Card bordered={false}>
+              <div className={styles.tableList} style={{ overflow: 'hidden', overflowX: 'auto' }}>
+                {this.renderFilterFields()}
+                {this.renderEditButton()}
+                {this.renderTable()}
+                <UpdateModal
+                  visible={this.state.isupdate}
+                  onCancel={this.handleUpdateModal}
+                  dataSource={this.state.selectedRow} // selected roe step one data
+                  filter={this.props.dataSource.filter}
+                  detail={this.props.dataSource.detail}
+                  statusHistory={this.props.dataSource.statushistory}
+                  getDetail={this.props.getDetail}
+                  updateProduct={this.props.updateProduct}
+                  getAttribute={this.props.getAttribute}
+                  attribute={this.props.dataSource.attribute} // attribute step 2
+                  updateAttr={this.props.updateAttr}
+                  product={this.props.dataSource.data} // product list
+                  relational={this.props.dataSource.relational} // step-3 relational
+                  getRelational={this.props.getRelational} // get getRelational={this.props.getRelational}
+                  updateRelational={this.props.updateRelational}
+                  getStatusHistory={this.props.getStatusHistory}
+                  afterClose={this.handleSearch}
+                />
+                {/** Baraanii tuluv oorchiloh modal */}
+                <StatusModal
+                  visible={this.state.isstatus}
+                  onCancel={this.handleStatusModal}
+                  getStatusProduct={this.props.getStatusProduct}
+                  product={this.props.dataSource.status}
+                  changeProductStatus={this.props.changeProductStatus}
+                />
+              </div>
+            </Card>
+          </PageHeaderLayout>
+        );
+      }
+
       return (
-        <PageHeaderLayout>
-          <Card bordered={false}>
-            <div className={styles.tableList} style={{ overflow: 'hidden', overflowX: 'auto' }}>
-              {this.renderFilterFields()}
-              {this.renderEditButton()}
-              {this.renderTable()}
-              <UpdateModal
-                visible={this.state.isupdate}
-                onCancel={this.handleUpdateModal}
-                dataSource={this.state.selectedRow} // selected roe step one data
-                filter={this.props.dataSource.filter}
-                detail={this.props.dataSource.detail}
-                statusHistory={this.props.dataSource.statushistory}
-                getDetail={this.props.getDetail}
-                updateProduct={this.props.updateProduct}
-                getAttribute={this.props.getAttribute}
-                attribute={this.props.dataSource.attribute} // attribute step 2
-                updateAttr={this.props.updateAttr}
-                product={this.props.dataSource.data} // product list
-                relational={this.props.dataSource.relational} // step-3 relational
-                getRelational={this.props.getRelational} // get getRelational={this.props.getRelational}
-                updateRelational={this.props.updateRelational}
-                getStatusHistory={this.props.getStatusHistory}
-                afterClose={this.refreshList}
-              />
-              {/** Baraanii tuluv oorchiloh modal */}
-              <StatusModal
-                visible={this.state.isstatus}
-                onCancel={this.handleStatusModal}
-                getStatusProduct={this.props.getStatusProduct}
-                product={this.props.dataSource.status}
-                changeProductStatus={this.props.changeProductStatus}
-              />
-            </div>
-          </Card>
-        </PageHeaderLayout>
+        <div style={{ marginLeft: '49%', paddingTop: '15%', paddingBottom: '15%' }}><Spin /></div>
       );
     } catch (error) {
       return console.log(error);

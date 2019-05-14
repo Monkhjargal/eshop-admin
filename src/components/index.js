@@ -13,6 +13,7 @@ import Ellipsis from './Ellipsis';
 import TimeTable from './TimeTable';
 import RoleBasedAccess from './RoleBasedAccess';
 import Sortable from './Sortable';
+import ProductTransfer from "./ProductTransfer";
 
 export {
   StandardTable,
@@ -30,4 +31,5 @@ export {
   Ellipsis,
   TimeTable,
   Sortable,
+  ProductTransfer,
 };

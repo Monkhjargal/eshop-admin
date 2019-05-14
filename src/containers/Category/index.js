@@ -50,6 +50,7 @@ class CategoryList extends React.Component {
           model={'Category'}
           name={'Category'}
           filter
+          isCategory
         />
       </PageHeaderLayout>
     );

@@ -8,7 +8,10 @@
 import React from "react";
 import { Modal, Collapse, Spin, Col, Input, Form, Table, Icon, Tooltip, Button } from "antd";
 
-import { AmountHistoryModal, AddAmountModal } from '../';
+import {
+  AmountHistoryModal, AddAmountModal, ChangeStatusHistory,
+  DeliveryTypeHistory,
+} from '../';
 import styles from "../../styles.less";
 
 class Component extends React.Component {
@@ -39,6 +42,8 @@ class Content extends React.Component {
     detail: [],
     isAmountHistory: false, // Төлбөр төлөлтийн түүх харах эсэх
     isAddAmount: false, // Төлбөр төлөлт өөрчилөх эсэх
+    isStatusHistory: false,
+    isDeliveryHistory: false,
   }
 
   componentDidMount() {
@@ -49,6 +54,8 @@ class Content extends React.Component {
   // RENDER DETAIL AND METHOD'S
   handleAmountHistory = () => { this.setState({ isAmountHistory: !this.state.isAmountHistory }); }
   handleAddAmount = () => { this.setState({ isAddAmount: !this.state.isAddAmount }); }
+  handleStatusHistory = () => { this.setState({ isStatusHistory: !this.state.isStatusHistory }); }
+  handleDeliveryHistory = () => { this.setState({ isDeliveryHistory: !this.state.isDeliveryHistory }); }
 
   handleApprove = () => {
     this.props.amountApprove({ id: this.state.detail.id }).then((res) => {
@@ -119,7 +126,14 @@ class Content extends React.Component {
             <Col span={12}>
               <Form>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Захиалгын №">
-                  <Input value={detail.ordernumber} />
+                  <Input
+                    value={detail.ordernumber}
+                    addonAfter={
+                      <Tooltip placement="top" title="Төлөв өөрчлөлтийн түүх" >
+                        <Icon type="ordered-list" onClick={this.handleStatusHistory} />
+                      </Tooltip>
+                    }
+                  />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Захиалгын огноо">
                   <Input value={detail.orderdate} />
@@ -171,12 +185,6 @@ class Content extends React.Component {
                 <Form.Item {...formItemLayout} className={styles.formItem} label="ePoint card">
                   <Input value={detail.ecardno} />
                 </Form.Item>
-                {/* <Form.Item {...formItemLayout} className={styles.formItem} label="ePoint card нэр">
-                  <Input value={detail.ecardnm} />
-                </Form.Item> */}
-                {/* <Form.Item>
-                  <Input {...formItemLayout} className={styles.formItem} label="" />
-                </Form.Item> */}
               </Form>
             </Col>
           </Collapse.Panel>
@@ -187,7 +195,14 @@ class Content extends React.Component {
                   <Input value={detail.trucknumber} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Хүргэлтийн төрөл">
-                  <Input value={detail.deliverytypenm} />
+                  <Input
+                    value={detail.deliverytypenm}
+                    addonAfter={
+                      <Tooltip placement="top" title="Хүргэлтийн төрөл өөрчлөлтийн түүх" >
+                        <Icon type="ordered-list" onClick={this.handleDeliveryHistory} />
+                      </Tooltip>
+                    }
+                  />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Дүүрэг">
                   <Input value={detail.districtnm} />
@@ -205,7 +220,7 @@ class Content extends React.Component {
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Хүргэх огноо">
                   <Input value={detail.deliverydate} />
                 </Form.Item>
-                <Form.Item {...formItemLayout} className={styles.formItem} label="Хүргэгдсэн огноо">
+                <Form.Item {...formItemLayout} className={styles.formItem} label="Хүргэсэн огноо">
                   <Input value={detail.delivereddate} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Захиалга гарах салбар">
@@ -214,9 +229,9 @@ class Content extends React.Component {
               </Form>
             </Col>
           </Collapse.Panel>
-          <Collapse.Panel header="Захиалгын төлбөр төлөлтийн мэдээлэл Бэлтгэгдсэн захиалгын дүн">
+          <Collapse.Panel header="Захиалгын дэлгэрэнгүй мэдээлэл">
             <Col span={12}>
-              <h4 className={styles.title}>Захиалгын төлбөр төлөлтийн мэдээлэл</h4>
+              <h4 className={styles.title}>Урьдчилсан захиалгын мэдээлэл</h4>
               <Form>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Захиалгын барааны дүн">
                   <Input value={formatter.format(detail.orderamount)} />
@@ -227,14 +242,14 @@ class Content extends React.Component {
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Захиалгын төлөх дүн">
                   <Input value={formatter.format(detail.payamount)} />
                 </Form.Item>
+                <Form.Item {...formItemLayout} className={styles.formItem} label="Хүргэлтийн төлбөр">
+                  <Input value={formatter.format(detail.deliveryamount)} />
+                </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="НӨАТ ">
                   <Input value={formatter.format(detail.vatamount)} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Оноогоор">
                   <Input value={formatter.format(detail.outpoint)} />
-                </Form.Item>
-                <Form.Item {...formItemLayout} className={styles.formItem} label="Хүргэлтийн төлбөр">
-                  <Input value={formatter.format(detail.deliveryamount)} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Нийт төлөх дүн">
                   <Input value={formatter.format(detail.totalamount)} className={styles.boldText} />
@@ -281,7 +296,7 @@ class Content extends React.Component {
 
 
             <Col span={12}>
-              <h4 className={styles.title}>Бэлтгэгдсэн захиалгын дүн</h4>
+              <h4 className={styles.title}>Бэлтгэгдсэн захиалгын мэдээлэл</h4>
               <Form>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Бэлтгэгдсэн нийт дүн">
                   <Input />
@@ -292,13 +307,13 @@ class Content extends React.Component {
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Захиалгын төлөх дүн">
                   <Input />
                 </Form.Item>
+                <Form.Item {...formItemLayout} className={styles.formItem} label="Хүргэлтийн төлбөр">
+                  <Input />
+                </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="НӨАТ ">
                   <Input />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Оноогоор">
-                  <Input />
-                </Form.Item>
-                <Form.Item {...formItemLayout} className={styles.formItem} label="Хүргэлтийн төлбөр">
                   <Input />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Нийт төлөх дүн">
@@ -308,9 +323,6 @@ class Content extends React.Component {
                   <Input />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Буцааж шилжүүлэх дүн">
-                  <Input />
-                </Form.Item>
-                <Form.Item {...formItemLayout} className={styles.formItem} label="Epoint-д нэмэгдсэн оноо">
                   <Input />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Санхүү шилжүүлсэн эсэх">
@@ -401,6 +413,44 @@ class Content extends React.Component {
     }
   }
 
+  renderChangeStatusHistory = () => {
+    try {
+      const { isStatusHistory, detail } = this.state;
+
+      return (
+        <ChangeStatusHistory
+          id={detail.id}
+          visible={isStatusHistory}
+          onCancel={this.handleStatusHistory}
+          select={this.props.filter}
+          getAmountHistory={this.props.getAmountHistory}
+          data={this.props.amountHistory}
+        />
+      );
+    } catch (error) {
+      return console.log(error);
+    }
+  }
+
+  renderDeliveryHistory = () => {
+    try {
+      const { isDeliveryHistory, detail } = this.state;
+
+      return (
+        <DeliveryTypeHistory
+          id={detail.id}
+          visible={isDeliveryHistory}
+          onCancel={this.handleDeliveryHistory}
+          select={this.props.filter}
+          getAmountHistory={this.props.getAmountHistory}
+          data={this.props.amountHistory}
+        />
+      );
+    } catch (error) {
+      return console.log(error);
+    }
+  }
+
   render() {
     const { loading } = this.state;
 
@@ -410,6 +460,8 @@ class Content extends React.Component {
           {this.renderDetail()}
           {this.renderAddAmountModal()}
           {this.renderAmountHistory()}
+          {this.renderChangeStatusHistory()}
+          {this.renderDeliveryHistory()}
         </div>
       );
     }

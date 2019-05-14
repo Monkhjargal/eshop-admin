@@ -23,6 +23,7 @@ import Infotrans from './Infotransfer';
 import ColorList from './Color';
 import Product from "./Product";
 import OrderList from "./OrderList";
+import EmergencyOrder from "./EmergencyOrder"; // Яаралт шийдвэрлэх захиалгын цонх
 
 import Exception500 from './Exception/500';
 
@@ -51,4 +52,5 @@ export {
   Infotrans,
   Product,
   OrderList,
+  EmergencyOrder,
 };

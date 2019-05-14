@@ -1,4 +1,97 @@
 
+@import "~antd/lib/style/themes/default.less";
+.ant-table-body {
+  overflow: hidden;
+}
+
+.standardTable {
+  :global {
+    .ant-table{
+      line-height: 0.5 !important;
+      font-size: 12px !important;
+    }
+    .ant-table-pagination {
+      margin-top: 24px;
+    }
+    .ant-table-thead > tr > th {
+      justify-content: center;
+      white-space: pre-wrap;
+      padding-right: 0px !important;
+      line-height: 1 !important;      
+    }
+    .ant-table-tbody > tr > td:nth-child(2) {
+      color: #1890FF;
+      font-weight: bold;
+    }
+    .ant-table-tbody > tr > td {
+      cursor: pointer;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      padding: 7px;
+      font-size: 12px;
+      padding-top: 3px !important;
+      padding-bottom: 3px !important;
+      padding-right: 2px !important;
+      .description {
+        width: 200px !important;
+        height: 70px;
+        white-space: initial;
+      }
+    }
+    .ant-table-body {
+      overflow: hidden;
+      overflow-x: auto;
+    }
+    .ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-sorters, 
+    .ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-filters {
+      padding-right: 0% !important;
+      text-align: center !important;
+    }    
+  }
+
+  .tableFooter {
+    display: flex;
+    .footerInfo {
+      font-size: 14px;
+      -o-text-overflow: ellipsis;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      color: rgba(0, 0, 0, 0.85);
+      font-weight: 500;
+      display: inline-block;
+      -webkit-box-flex: 1;
+      -ms-flex: 1;
+      flex: 1;
+      line-height: 1;
+    }
+    :global {
+      .ant-pagination {
+        float: right;
+        text-align: right;
+        margin-left: auto;
+        transition: right .3s;
+      }
+    }
+  }
+
+  .tableAlert {
+    margin-bottom: 16px;
+  }
+}
+
+.selected td{
+  // border-top: solid 2px #feb434 !important;
+  // border-bottom: solid 2px #feb434 !important;
+  // border-right: solid 1px #feb434 !important;
+  // border-left: solid 1px #feb434 !important;
+  // border-top: solid 1px #feb434 !important;
+  // background-color: @geekblue-5 !important;
+  background-color: #fdda9e !important;
+  // color: #fff;
+}
+
 .formItem{
     padding: 0% !important;
     margin-bottom: 0% !important;
@@ -30,7 +123,7 @@
         label{
             font-size: 11px !important;
         }
-    }  
+    }
 }
 
 .statusOne{
@@ -38,6 +131,8 @@
     background-color: #009689 !important;
     color: #ffffff !important;
     text-align: center !important;
+    width: 100px;
+    font-size: 12px;
 }
 
 .statusTwo{
@@ -45,6 +140,8 @@
     background-color: #4748B1 !important;
     color: #ffffff !important;
     text-align: center !important;
+    width: 100px;
+    font-size: 12px;
 }
 
 .statusThree{
@@ -52,6 +149,8 @@
     background-color: #7C7C7C !important;
     color: #ffffff !important;
     text-align: center !important;
+    width: 100px;
+    font-size: 12px;
 }
 
 .discountPercnt{
@@ -140,4 +239,19 @@
             margin-top: 16px;;
         }
     }
+}
+
+.right{
+    display: flex !important;
+    justify-content: flex-end !important;
+}
+  
+.center{
+  display: flex !important;
+  justify-content: center !important;
+}
+
+.left{
+  display: flex !important;
+  justify-content: flex-start !important;
 }

@@ -10,7 +10,6 @@ import { Card, Button, Table, Spin, Popconfirm, Switch, Form, Row, Col, Input, S
 import PageHeaderLayout from "../../layouts/PageHeaderLayout";
 
 import styles from '../../components/List/style.less';
-import tableStyle from "../../components/StandardTable/index.less";
 import style from "./styles.less";
 import { UpdateModal, CreateModal } from "./components";
 import productSty from "../Product/styles.less";
@@ -40,11 +39,11 @@ class Package extends React.Component {
     this.setState({ selectedRow: record });
   }
 
-  handleRowClass = record => (record.id === this.state.selectedRow.id ? tableStyle.selected : '');
+  handleRowClass = record => (record.id === this.state.selectedRow.id ? style.selected : '');
 
   renderFooter = () => (
-    <div className={tableStyle.tableFooter}>
-      <div className={tableStyle.footerInfo}>
+    <div className={style.tableFooter}>
+      <div className={style.footerInfo}>
         Нийт: {this.props.dataSource.data.length}
       </div>
     </div>
@@ -179,6 +178,10 @@ class Package extends React.Component {
       const { headers } = this.props.dataSource;
       headers.map((i) => {
         switch (i.dataIndex) {
+          case 'aid':
+            return (
+              i.width = 20
+            );
           case 'packagenm':
             return (
               i.render = text => <span onClick={this.handleUpdateModal} style={{ color: '#1890FF' }}>{text}</span>,
@@ -192,47 +195,57 @@ class Package extends React.Component {
             );
           case 'isenable':
             return (
-              i.render = (text, record) => <Switch checked={!!record.isenable} disabled />,
+              i.render = (text, record) => <span className={style.center}><Switch size="small" checked={!!record.isenable} disabled /></span>,
               i.sorter = (a, b) => a.isenable - b.isenable,
-              i.sortDirections = ['descend', 'ascend']
+              i.sortDirections = ['descend', 'ascend'],
+              i.width = 80
             );
           case 'skucnt':
             return (
               i.sorter = (a, b) => a.skucnt - b.skucnt,
-              i.sortDirections = ['descend', 'ascend']
+              i.sortDirections = ['descend', 'ascend'],
+              i.width = 60
             );
           case 'insemp':
             return (
               i.sorter = (a, b) => a.insemp - b.insemp,
-              i.sortDirections = ['descend', 'ascend']
+              i.sortDirections = ['descend', 'ascend'],
+              i.width = 50
             );
           case 'insymd':
             return (
               i.sorter = (a, b) => a.insymd - b.insymd,
-              i.sortDirections = ['descend', 'ascend']
+              i.sortDirections = ['descend', 'ascend'],
+              i.width = 110
             );
           case 'updemp':
             return (
               i.sorter = (a, b) => a.updemp - b.updemp,
-              i.sortDirections = ['descend', 'ascend']
+              i.sortDirections = ['descend', 'ascend'],
+              i.width = 60
             );
           case 'updymd':
             return (
               i.sorter = (a, b) => a.updymd - b.updymd,
-              i.sortDirections = ['descend', 'ascend']
+              i.sortDirections = ['descend', 'ascend'],
+              i.width = 110
             );
           case 'imgnm':
             return (
               i.render = img => (<div
                 style={{
                   background: `url(${picserver + img})`,
-                  width: '100px',
-                  height: '40px',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  width: '50px',
+                  height: '20px',
                   backgroundSize: 'contain',
                   backgroundPosition: 'center',
                   backgroundRepeat: 'no-repeat',
+                  padding: 0,
                 }}
-              />)
+              />),
+              i.width = 30
             );
 
           default:
@@ -240,7 +253,7 @@ class Package extends React.Component {
         }
       });
       return (
-        <div className={tableStyle.standardTable}>
+        <div className={style.standardTable}>
           <Table
             rowClassName={this.handleRowClass}
             loading={tloading}

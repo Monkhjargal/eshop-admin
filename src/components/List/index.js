@@ -11,7 +11,7 @@ String.prototype.unCapitalize = function unCapitalize() {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  // console.log(createForm);
+  // console.log(state);
   const {
     [ownProps.model.unCapitalize()]: {
       all: {
@@ -45,11 +45,9 @@ const mapStateToProps = (state, ownProps) => {
     total,
     currentData,
     currentIsLoading,
-    // default props
     createForm,
     updateForm,
     formIsLoading,
-    // form props
     filterForm,
     filterIsLoading,
     error,
@@ -57,7 +55,6 @@ const mapStateToProps = (state, ownProps) => {
   };
 
   if (ownProps.addons && ownProps.addons.length) {
-    // console.log(ownProps);
     let addonsArray = [];
     ownProps.addons.forEach((entry, index) => {
       addonsArray[index] = {};
@@ -99,77 +96,35 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   });
 };
 
-const List = props => (props.list ?
-  props.list(props) :
-  <ListComponent {...props} />);
+// const List = props => (props.list ?
+//   props.list(props) :
+//   <ListComponent {...props} />);
+
+class List extends React.Component {
+  state = {
+    dataSource: {},
+  }
+
+  componentWillUpdate(prevProps, prevState) {
+    if (prevProps !== prevState.dataSource) {
+      this.setState({ dataSource: prevProps });
+    }
+  }
+
+  render() {
+    // console.log(this.props);
+    return <ListComponent {...this.props} />;
+  }
+}
 
 
 List.propTypes = {
   list: PropTypes.func,
   actions: PropTypes.array.isRequired,
-  // getAllData: PropTypes.func.isRequired,
-  // headers: PropTypes.array,
-  // data: PropTypes.array,
-  // isLoading: PropTypes.bool,
-  // total: PropTypes.number,
-  // // end of list props
-
-  // model: PropTypes.string.isRequired,
-  // filter: PropTypes.bool,
-  // scroll: PropTypes.number,
-  // addonsArray: PropTypes.array,
-  // name: PropTypes.string,
-  // url: PropTypes.string,
-  // customAddons: PropTypes.array,
-  // list: PropTypes.func,
-  // // end of component props
-
-  // fetchForm: PropTypes.func.isRequired,
-  // formIsLoading: PropTypes.bool,
-  // // end of form props
-
-  // fetchFilter: PropTypes.func.isRequired,
-  // filterIsLoading: PropTypes.bool,
-  // filterForm: PropTypes.object,
-  // // end of filter props
-
-  // createData: PropTypes.func.isRequired,
-  // updateData: PropTypes.func.isRequired,
-  // createForm: PropTypes.object,
-  // updateForm: PropTypes.object,
-  // getData: PropTypes.func.isRequired,
-  // dataIsLoading: PropTypes.bool,
-  // currentData: PropTypes.object,
-  // // end of create update props
 };
 
 List.defaultProps = {
-  //   headers: [],
-  //   data: [],
-  //   isLoading: false,
-  //   total: 0,
-  //   // end of list props
-
-  //   filter: false,
-  //   scroll: 1800,
-  //   addonsArray: [],
-  //   name: '',
-  //   url: undefined,
-  //   customAddons: [],
   list: undefined,
-  //   // end of component props
-
-  //   formIsLoading: false,
-  //   // end of form props
-
-  //   filterIsLoading: false,
-  //   filterForm: {},
-  //   // end of filter props
-
-  //   createForm: {},
-  //   updateForm: {},
-  //   dataIsLoading: false,
-  //   currentData: {},
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(List);

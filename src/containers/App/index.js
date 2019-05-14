@@ -81,7 +81,7 @@ class App extends Component {
                 collapsed={this.state.collapsed}
                 onCollapse={this.onCollapse}
                 theme="light"
-                className="sdsd"
+                className={styles.sider}
               >
                 <div className={styles.logo}>
                   <Link to="/">

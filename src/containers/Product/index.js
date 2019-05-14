@@ -58,7 +58,7 @@ class Product extends React.Component {
     },
   };
 
-  componentDidMount() { this.refresh(); }
+  componentDidMount() { this.props.getFilter(); }
 
   componentWillReceiveProps(prevProps) {
     // console.log('prevProps', prevProps.relational);
@@ -68,16 +68,6 @@ class Product extends React.Component {
     if (prevProps !== prevState.dataSource) {
       this.setState({ dataSource: prevProps });
     }
-  }
-
-  refresh = () => {
-    // this.props.getAll({ body: this.state.body });
-    this.props.getFilter();
-    // this.props.getDetail({ skucd: '5000267024004' });
-    // this.props.getAttribute({ skucd: '5000267024004' });
-    this.props.getRelational({ skucd: '0081128007874' });
-    // this.props.getStatusProduct({ status:  });
-    // this.props.getStatusHistory({ skucd: '0081128007874' });
   }
 
   render() {

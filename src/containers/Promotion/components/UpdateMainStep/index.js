@@ -24,7 +24,7 @@ class Component extends React.Component {
 
   handleNextStep = (e) => {
     if (this.state.step !== e.value) {
-      if (this.state.step === 0) { this.stepOne.handleSubmit(); } else { this.setState({ step: e.value }); }
+      if (this.state.step === 0) { this.stepOne.handleSubmit(null, true); } else { this.setState({ step: e.value }); }
     }
   }
 

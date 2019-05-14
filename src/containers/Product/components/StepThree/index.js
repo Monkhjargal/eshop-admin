@@ -1,11 +1,11 @@
 import React from 'react';
-import { Form, Input, Row, Col, Button, Transfer, Spin } from "antd";
+import { Form, Select, Row, Col, Button, Transfer, Spin } from "antd";
 
 import styles from "../../styles.less";
 
 const formItemLayout = {
-  labelCol: { span: 6 },
-  wrapperCol: { span: 18 },
+  labelCol: { span: 10 },
+  wrapperCol: { span: 14 },
 };
 
 class Component extends React.Component {
@@ -80,6 +80,76 @@ class Component extends React.Component {
     this.setState({ unselected, selected });
   }
 
+  handleFilter = (e) => {
+    e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        console.log('Filter values: ', values);
+      }
+    });
+  }
+
+  handleReset = () => {
+    this.props.form.resetFields();
+  }
+
+  renderFilter = () => {
+    try {
+      const { getFieldDecorator } = this.props.form;
+
+      return (
+        <Row>
+          <Form className={styles.otModalForm} onSubmit={this.handleFilter}>
+            <Col span={6}>
+              <Form.Item {...formItemLayout} label="Барааны ангилал">
+                {getFieldDecorator("catid", {
+                  initialValue: [],
+                  rules: [
+                    {
+                      required: false,
+                    },
+                  ],
+                })(<Select
+                  allowClear
+                  size={"small"}
+                  placeholder="Барааны ангилалаар хайх"
+                  filterOption={(input, option) => option.props.value.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                />)}
+              </Form.Item>
+            </Col>
+            <Col span={6}>
+              <Form.Item {...formItemLayout} label="Барааны бренд">
+                {getFieldDecorator("brandid", {
+                  initialValue: [],
+                  rules: [
+                    {
+                      required: false,
+                    },
+                  ],
+                })(<Select
+                  allowClear
+                  size={"small"}
+                  placeholder="Барааны брендээр хайх"
+                  filterOption={(input, option) => option.props.value.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                />)}
+              </Form.Item>
+            </Col>
+            <Col span={6}>
+              <Form.Item style={{ display: 'flex', justifyContent: 'center' }}>
+                <Button size="small" type="button" onClick={this.handleReset} >{'Цэвэрлэх'}</Button>
+                <Button size="small" htmlType="submit" type="primary" style={{ marginLeft: 3 }} >{'Хайх'}</Button>
+              </Form.Item>
+            </Col>
+
+          </Form>
+        </Row>
+      );
+      // eslint-disable-next-line no-unreachable
+    } catch (error) {
+      return error;
+    }
+  };
+
   render() {
     // console.log(this.props);
     // const { getFieldDecorator } = this.props.form;
@@ -88,34 +158,7 @@ class Component extends React.Component {
     if (!loading) {
       return (
         <div style={{ width: '100%' }}>
-          <Form onSubmit={this.handleSubmit}>
-            <Row>
-              {/* <Col span={7}>
-                <Form.Item {...formItemLayout} label="Ангилал">
-                  {getFieldDecorator('category', { rules: [{ required: false }] })(
-                    <Input />)}
-                </Form.Item>
-              </Col>
-
-              <Col span={7}>
-                <Form.Item {...formItemLayout} label="Бренд">
-                  {getFieldDecorator('brand', { rules: [{ required: false }] })(
-                    <Input />)}
-                </Form.Item>
-              </Col> */}
-
-              {/* <Col span={4}>
-                <Form.Item>
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                  >
-                    хайх
-                  </Button>
-                </Form.Item>
-              </Col> */}
-            </Row>
-          </Form>
+          <div>{this.renderFilter()}</div>
 
           <Transfer
             showSearch

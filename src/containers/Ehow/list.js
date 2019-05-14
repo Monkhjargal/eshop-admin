@@ -4,7 +4,7 @@ import { Card, Spin, Form, Row, Col, Input, Select, Button, Popconfirm, Table, S
 import styles from '../../components/List/style.less';
 import PageHeaderLayout from "../../layouts/PageHeaderLayout";
 import productSty from "../Product/styles.less";
-import tableStyle from "../../components/StandardTable/index.less";
+import tableStyle from "./styles.less";
 import { CreateModal, UpdateModal } from "./component";
 
 const picserver = 'http://202.55.180.199:8877/';
@@ -204,6 +204,10 @@ class Recipe extends React.Component {
 
       headers.map((i) => {
         switch (i.dataIndex) {
+          case 'aid':
+            return (
+              i.width = 20
+            );
           case 'recipenm':
             return (
               i.render = text => <span onClick={this.handleUpdateModal}>{text}</span>,
@@ -215,8 +219,7 @@ class Recipe extends React.Component {
               i.render = img => (<div
                 style={{
                   background: `url(${picserver + img})`,
-                  width: '100px',
-                  height: '40px',
+                  height: '20px',
                   backgroundSize: 'contain',
                   backgroundPosition: 'center',
                   backgroundRepeat: 'no-repeat',
@@ -240,7 +243,7 @@ class Recipe extends React.Component {
             );
           case 'isenable':
             return (
-              i.render = (text, record) => <Switch checked={!!record.isenable} disabled />,
+              i.render = (text, record) => <Switch className={tableStyle.center} size="small" checked={!!record.isenable} disabled />,
               i.sorter = (a, b) => a.isenable - b.isenable,
               i.sortDirections = ['descend', 'ascend']
             );

@@ -5,7 +5,10 @@ import { Link, withRouter } from 'react-router-dom';
 import {
   Menu,
   Icon,
+  Badge,
 } from 'antd';
+
+import styles from "./index.less";
 
 const { SubMenu } = Menu;
 
@@ -79,7 +82,6 @@ class SideNav extends PureComponent {
       }
       const icon = item.icon && <Icon type={item.icon} />;
 
-      // console.log(item.id);
       return (
         <Menu.Item key={item.key || item.path}>
           {
@@ -98,7 +100,7 @@ class SideNav extends PureComponent {
               >
                 {icon}
                 <span>
-                  {item.name}
+                  {item.path === 'emergency' ? <Badge dot className={styles.badge}>{item.name}</Badge> : item.name}
                 </span>
               </Link>
               )
