@@ -370,7 +370,7 @@ class Product extends React.Component {
             );
           case 'sprice':
             return (
-              i.render = text => <span className={tableStyle.right}>{formatter.format(text)}</span>,
+              i.render = text => <span className={tableStyle.right}>{text === 0 ? '' : formatter.format(text)}</span>,
               i.sorter = (a, b) => a.sprice - b.sprice,
               i.sortDirections = ['descend', 'ascend']
             );

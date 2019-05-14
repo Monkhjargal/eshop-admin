@@ -410,25 +410,25 @@ class Component extends React.Component {
               );
             case "orderamount":
               return (
-                i.render = text => <span className={tableStyle.number} >{formatter.format(text)}</span>,
+                i.render = text => <span className={tableStyle.number} >{text === 0 ? '' : formatter.format(text)}</span>,
                 i.sorter = (a, b) => a.orderamount - b.orderamount,
                 i.sortDirections = ['descend', 'ascend']
               );
             case "payamount":
               return (
-                i.render = text => <span className={tableStyle.number} >{formatter.format(text)}</span>,
+                i.render = text => <span className={tableStyle.number} >{text === 0 ? '' : formatter.format(text)}</span>,
                 i.sorter = (a, b) => a.payamount - b.payamount,
                 i.sortDirections = ['descend', 'ascend']
               );
             case "paidamount":
               return (
-                i.render = text => <span className={tableStyle.number}>{formatter.format(text)}</span>,
+                i.render = text => <span className={tableStyle.number}>{text === 0 ? '' : formatter.format(text)}</span>,
                 i.sorter = (a, b) => a.paidamount - b.paidamount,
                 i.sortDirections = ['descend', 'ascend']
               );
             case "varianceamount":
               return (
-                i.render = text => <span className={tableStyle.number} >{formatter.format(text)}</span>,
+                i.render = text => <span className={tableStyle.number} >{text === 0 ? '' : formatter.format(text)}</span>,
                 i.sorter = (a, b) => a.varianceamount - b.varianceamount,
                 i.sortDirections = ['descend', 'ascend']
               );
@@ -488,7 +488,7 @@ class Component extends React.Component {
               );
             case "deliveryamount":
               return (
-                i.render = text => <span className={tableStyle.number}>{formatter.format(text)}</span>,
+                i.render = text => <span className={tableStyle.number}>{text === 0 ? '' : formatter.format(text)}</span>,
                 i.sorter = (a, b) => a.deliveryamount - b.deliveryamount,
                 i.sortDirections = ['descend', 'ascend']
               );

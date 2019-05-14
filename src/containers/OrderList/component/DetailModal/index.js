@@ -84,40 +84,45 @@ class Content extends React.Component {
         dataIndex: 'skunm',
         key: 'skunm',
       }, {
-        title: 'Тоо ширхэг',
+        title: 'Тоо хэмжээ',
         dataIndex: 'quantity',
         key: 'quantity',
-        render: text => <span>{text === 0 ? '' : formatter.format(text)}</span>,
+        render: text => <span className={styles.center}>{formatter.format(text)}</span>,
       }, {
         title: 'Худалдах үнэ',
-        dataIndex: 'price',
-        key: 'price',
-        render: text => <span>{text === 0 ? '' : formatter.format(text)}</span>,
-      }, {
-        title: 'Нийт үнэ',
-        dataIndex: 'totalamount',
-        key: 'totalamount',
-        render: text => <span>{text === 0 ? '' : formatter.format(text)}</span>,
-      }, {
-        title: 'Хямдрал дүн',
         dataIndex: 'newprice',
         key: 'newprice',
-        render: text => <span>{text === 0 ? '' : formatter.format(text)}</span>,
+        render: text => <span className={styles.rigth}>{text === 0 ? '' : formatter.format(text)}</span>,
       }, {
-        title: 'Цэвэр дүн',
-        dataIndex: 'nettotalamount',
-        key: 'nettotalamount',
-        render: text => <span>{text === 0 ? '' : formatter.format(text)}</span>,
+        title: 'Нийт дүн',
+        dataIndex: 'totalamount',
+        key: 'totalamount',
+        render: text => <span className={styles.rigth}>{text === 0 ? '' : formatter.format(text)}</span>,
+      }, {
+        title: 'Хямдрал хувь',
+        dataIndex: 'discountpercent',
+        key: 'discountpercent',
+        render: text => <span className={styles.rigth}>{text === 0 ? '' : formatter.format(text)}%</span>,
+      }, {
+        title: 'Хямдарсан дүн',
+        dataIndex: 'discountamount',
+        key: 'discountamount',
+        render: text => <span className={styles.rigth}>{text === 0 ? '' : formatter.format(text)}</span>,
+      }, {
+        title: 'Захиалгын дүн',
+        dataIndex: 'orderamount',
+        key: 'orderamount',
+        render: text => <span className={styles.rigth}>{text === 0 ? '' : formatter.format(text)}</span>,
       }, {
         title: 'НӨАТ-ийн дүн',
         dataIndex: 'vatamount',
         key: 'vatamount',
-        render: text => <span>{text === 0 ? '' : formatter.format(text)}</span>,
+        render: text => <span className={styles.rigth}>{text === 0 ? '' : formatter.format(text)}</span>,
       }, {
         title: 'НӨАТ-гүй дүн',
         dataIndex: 'nonvatamount',
         key: 'nonvatamount',
-        render: text => <span>{text === 0 ? '' : formatter.format(text)}</span>,
+        render: text => <span className={styles.rigth}>{text === 0 ? '' : formatter.format(text)}</span>,
       }];
 
       return (
@@ -127,6 +132,8 @@ class Content extends React.Component {
               <Form>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Захиалгын №">
                   <Input
+                    disabled
+                    className={styles.disabled}
                     value={detail.ordernumber}
                     addonAfter={
                       <Tooltip placement="top" title="Төлөв өөрчлөлтийн түүх" >
@@ -136,28 +143,28 @@ class Content extends React.Component {
                   />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Захиалгын огноо">
-                  <Input value={detail.orderdate} />
+                  <Input disabled className={styles.disabled} value={detail.orderdate} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Төлөв">
-                  <Input value={detail.orderstatusnm} />
+                  <Input disabled className={styles.disabled} value={detail.orderstatusnm} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Төлбөрийн хэлбэр">
-                  <Input value={detail.paymenttypenm} />
+                  <Input disabled className={styles.disabled} value={detail.paymenttypenm} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Захиалга хийгдсэн IP">
-                  <Input value={''} />
+                  <Input disabled className={styles.disabled} value={''} />
                 </Form.Item>
                 {
                   detail.paymenttype === 1 ? (
                     <div>
                       <Form.Item {...formItemLayout} className={styles.formItem} label="Имерчант банк">{/** only Имерчант */}
-                        <Input value={''} />
+                        <Input disabled className={styles.disabled} value={''} />
                       </Form.Item>
                       <Form.Item {...formItemLayout} className={styles.formItem} label="Зөвшөөрлийн код">{/** only Имерчант */}
-                        <Input value={''} />
+                        <Input disabled className={styles.disabled} value={''} />
                       </Form.Item>
                       <Form.Item {...formItemLayout} className={styles.formItem} label="Холболт тайлбар">{/** only Имерчант */}
-                        <Input value={''} />
+                        <Input disabled className={styles.disabled} value={''} />
                       </Form.Item>
                     </div>
                   ) : null
@@ -168,22 +175,22 @@ class Content extends React.Component {
             <Col span={12}>
               <Form>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Овог">
-                  <Input value={detail.lastname} />
+                  <Input disabled className={styles.disabled} value={detail.lastname} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Нэр">
-                  <Input value={detail.firstname} />
+                  <Input disabled className={styles.disabled} value={detail.firstname} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Утасны дугаар 1">
-                  <Input value={detail.phone1} />
+                  <Input disabled className={styles.disabled} value={detail.phone1} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Утасны дугаар 2">
-                  <Input value={detail.phone2} />
+                  <Input disabled className={styles.disabled} value={detail.phone2} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="И-мэйл">
-                  <Input value={detail.email} />
+                  <Input disabled className={styles.disabled} value={detail.email} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="ePoint card">
-                  <Input value={detail.ecardno} />
+                  <Input disabled className={styles.disabled} value={detail.ecardno} />
                 </Form.Item>
               </Form>
             </Col>
@@ -192,10 +199,12 @@ class Content extends React.Component {
             <Col span={12}>
               <Form>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Хүргэлтийн №">
-                  <Input value={detail.trucknumber} />
+                  <Input disabled className={styles.disabled} value={detail.trucknumber} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Хүргэлтийн төрөл">
                   <Input
+                    disabled
+                    className={styles.disabled}
                     value={detail.deliverytypenm}
                     addonAfter={
                       <Tooltip placement="top" title="Хүргэлтийн төрөл өөрчлөлтийн түүх" >
@@ -205,26 +214,26 @@ class Content extends React.Component {
                   />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Дүүрэг">
-                  <Input value={detail.districtnm} />
+                  <Input disabled className={styles.disabled} value={detail.districtnm} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Хороо">
-                  <Input value={detail.committeenm} />
+                  <Input disabled className={styles.disabled} value={detail.committeenm} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Хаяг">
-                  <Input value={detail.address} />
+                  <Input disabled className={styles.disabled} value={detail.address} />
                 </Form.Item>
               </Form>
             </Col>
             <Col span={12}>
               <Form>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Хүргэх огноо">
-                  <Input value={detail.deliverydate} />
+                  <Input disabled className={styles.disabled} value={detail.deliverydate} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Хүргэсэн огноо">
-                  <Input value={detail.delivereddate} />
+                  <Input disabled className={styles.disabled} value={detail.delivereddate} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Захиалга гарах салбар">
-                  <Input value={detail.outofstore} />
+                  <Input disabled className={styles.disabled} value={detail.outofstore} />
                 </Form.Item>
               </Form>
             </Col>
@@ -234,33 +243,35 @@ class Content extends React.Component {
               <h4 className={styles.title}>Урьдчилсан захиалгын мэдээлэл</h4>
               <Form>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Захиалгын барааны дүн">
-                  <Input value={formatter.format(detail.orderamount)} />
+                  <Input disabled className={styles.disabled} value={formatter.format(detail.orderamount)} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Нийт хямдралын дүн">
-                  <Input value={formatter.format(detail.totaldiscount)} />
+                  <Input disabled className={styles.disabled} value={formatter.format(detail.totaldiscount)} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Захиалгын төлөх дүн">
-                  <Input value={formatter.format(detail.payamount)} />
+                  <Input disabled className={styles.disabled} value={formatter.format(detail.payamount)} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Хүргэлтийн төлбөр">
-                  <Input value={formatter.format(detail.deliveryamount)} />
+                  <Input disabled className={styles.disabled} value={formatter.format(detail.deliveryamount)} />
                 </Form.Item>
-                <Form.Item {...formItemLayout} className={styles.formItem} label="НӨАТ ">
-                  <Input value={formatter.format(detail.vatamount)} />
+                <Form.Item {...formItemLayout} className={styles.formItem} label="НӨАТ">
+                  <Input disabled className={styles.disabled} value={formatter.format(detail.vatamount)} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Оноогоор">
-                  <Input value={formatter.format(detail.outpoint)} />
+                  <Input disabled className={styles.disabled} value={formatter.format(detail.outpoint)} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Нийт төлөх дүн">
-                  <Input value={formatter.format(detail.totalamount)} className={styles.boldText} />
+                  <Input disabled className={`${styles.disabled} ${styles.boldText}`} value={formatter.format(detail.totalamount)} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Төлсөн">
                   {// Төлбөрийн хэлбэр нь дансаар хийсэн тохиолдолд үнийэ дүнг нэмэх боломжтой байна.
                     detail.paymenttype === 2 ? (
                       <div>
                         <Input
+                          disabled
+                          className={`${styles.disabled} ${styles.boldText}`}
                           addonAfter={
-                            <div>
+                            <div className={styleMedia.disabled}>
                               <Tooltip placement="top" title={'Төлсөн дүн оруулах'}>
                                 <Icon
                                   type="plus"
@@ -276,19 +287,18 @@ class Content extends React.Component {
                             </div>
                           }
                           value={formatter.format(detail.paidamount)}
-                          className={styles.boldText}
                         />
                       </div>
                     ) : (
                       <div>
-                        <Input className={styles.boldText} value={detail.paidamount} />
+                        <Input disabled className={`${styles.disabled} ${styles.boldText}`} value={detail.paidamount} />
                       </div>)
                   }
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Зөрүү дүн">
                   <Input
+                    className={`${detail.varianceamount < 0 ? styles.negativeValue : ''}`}
                     value={formatter.format(detail.varianceamount)}
-                    className={detail.varianceamount < 0 ? styles.negativeValue : ''}
                   />
                 </Form.Item>
               </Form>
@@ -299,34 +309,34 @@ class Content extends React.Component {
               <h4 className={styles.title}>Бэлтгэгдсэн захиалгын мэдээлэл</h4>
               <Form>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Бэлтгэгдсэн нийт дүн">
-                  <Input />
+                  <Input disabled className={styles.disabled} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Нийт хямдралын дүн">
-                  <Input />
+                  <Input disabled className={styles.disabled} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Захиалгын төлөх дүн">
-                  <Input />
+                  <Input disabled className={styles.disabled} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Хүргэлтийн төлбөр">
-                  <Input />
+                  <Input disabled className={styles.disabled} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="НӨАТ ">
-                  <Input />
+                  <Input disabled className={styles.disabled} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Оноогоор">
-                  <Input />
+                  <Input disabled className={styles.disabled} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Нийт төлөх дүн">
-                  <Input />
+                  <Input disabled className={styles.disabled} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Төлсөн">
-                  <Input />
+                  <Input disabled className={styles.disabled} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Буцааж шилжүүлэх дүн">
-                  <Input />
+                  <Input disabled className={styles.disabled} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Санхүү шилжүүлсэн эсэх">
-                  <Input />
+                  <Input disabled className={styles.disabled} />
                 </Form.Item>
               </Form>
             </Col>
@@ -349,12 +359,16 @@ class Content extends React.Component {
                     float: "right", marginTop: 10, padding: 10, paddingRight: 0,
                     }}
                   >
-                    <Button
-                      type="primary"
-                      onClick={this.handleApprove}
-                      disabled={!(detail.varianceamount <= 0)}
-                    ><Icon type="save" />Баталгаажуулах
-                    </Button>
+                    {
+                      detail.orderstatus === 2 ? '' :
+                      <Button
+                        type="primary"
+                        onClick={this.handleApprove}
+                        disabled={!(detail.varianceamount <= 0)}
+                      ><Icon type="save" />Баталгаажуулах
+                      </Button>
+                    }
+
                   </div>
                 ) : null
               }

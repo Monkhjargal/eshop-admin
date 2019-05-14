@@ -106,32 +106,44 @@
 }
 
 .negativeValue{
-  color: rgb(255, 0, 0);
+  color: rgb(255, 0, 0) !important;
 }
 
 .boldText{
   font-weight: bold;
 
-  .ant-input-wrapper{
-    .ant-input-group{
-      input{
+  :global {
+    .ant-input-wrapper{
+      .ant-input{
         font-weight: bold;
       }
     }
   }
 }
 
-.number{
+.rigth{
   display: flex !important;
   justify-content: flex-end !important;
 }
 
-.text{
+.center{
   display: flex !important;
   justify-content: center !important;
 }
 
-.code{
+.left{
   display: flex !important;
   justify-content: flex-start !important;
+}
+
+.disabled{
+  color: rgba(0, 0, 0, 0.65) !important;
+
+  :global {
+    .ant-input-wrapper{
+      .ant-input{
+        color: rgba(0, 0, 0, 0.65) !important;
+      }
+    }
+  }
 }

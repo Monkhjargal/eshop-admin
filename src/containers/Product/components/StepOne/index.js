@@ -322,6 +322,7 @@ class Component extends React.Component {
                     label="Барааны код"
                   >
                     <Input
+                      className={styles.disabled}
                       placeholder="Барааны нэр"
                       value={detail.skucd}
                       disabled
@@ -434,6 +435,7 @@ class Component extends React.Component {
                       label="ХНС бренд"
                     >
                       <Input
+                        className={styles.disabled}
                         placeholder="ХНС бренд"
                         value={detail.bibrandnm}
                         disabled
@@ -459,11 +461,12 @@ class Component extends React.Component {
                                 ).name
                           }
                           className={
-                            detail.status === 1
+                            `${detail.status === 1
                               ? styles.statusOne
                               : detail.status === 2
                               ? styles.statusTwo
-                              : styles.statusThree
+                                : styles.statusThree}
+                              ${styles.disabled}`
                           }
                         />
                       </Form.Item>
@@ -489,6 +492,7 @@ class Component extends React.Component {
                     label="ХНС-ийн нэр"
                   >
                     <Input
+                      className={styles.disabled}
                       placeholder="ХНС-ийн нэр"
                       value={detail.titlenm}
                       disabled
@@ -500,6 +504,7 @@ class Component extends React.Component {
                     label="Гарал үүсэл"
                   >
                     <Input
+                      className={styles.disabled}
                       placeholder="Гарал үүсэл"
                       value={detail.countrynm}
                       disabled
@@ -511,6 +516,7 @@ class Component extends React.Component {
                     label="Хэмжих нэгж"
                   >
                     <Input
+                      className={styles.disabled}
                       placeholder="Хэмжих нэгж"
                       value={detail.measurenm}
                       disabled
@@ -523,6 +529,7 @@ class Component extends React.Component {
                       label="Худалдах үнэ"
                     >
                       <Input
+                        className={styles.disabled}
                         placeholder="Худалдах үнэ"
                         value={`${formatter.format(detail.sprice)}₮`}
                         disabled
@@ -536,6 +543,7 @@ class Component extends React.Component {
                       label="Хямдралтай үнэ"
                     >
                       <Input
+                        className={styles.disabled}
                         placeholder=""
                         value={`${formatter.format(detail.newprice)}₮`}
                         disabled
@@ -547,7 +555,7 @@ class Component extends React.Component {
                     className={styles.formItem}
                     label="Хямдрал нэр"
                   >
-                    <Input value={detail.norevnnm} disabled />
+                    <Input className={styles.disabled} value={detail.norevnnm} disabled />
                   </Form.Item>
                   <Col span={8}>
                     <Form.Item
@@ -556,7 +564,7 @@ class Component extends React.Component {
                       label="Хямдрал хувь"
                     >
                       <Input
-                        className={styles.discountPercnt}
+                        className={`${styles.discountPercnt} ${styles.disabled}`}
                         value={`${detail.spercent}%`}
                         disabled
                       />
@@ -570,6 +578,7 @@ class Component extends React.Component {
                     >
                       <Row className={styles.dateformItem}>
                         <Input
+                          className={styles.disabled}
                           disabled
                           value={
                             detail.esdate
@@ -579,6 +588,7 @@ class Component extends React.Component {
                         />{" "}
                         {` - `}
                         <Input
+                          className={styles.disabled}
                           disabled
                           value={
                             detail.eedate
@@ -612,7 +622,7 @@ class Component extends React.Component {
                       className={styles.formItem}
                       label="Хэрэглэгч тоо"
                     >
-                      <Input placeholder="" value={detail.ratecnt} disabled />
+                      <Input className={styles.disabled} value={detail.ratecnt} disabled />
                     </Form.Item>
                   </Col>
                 </Col>
@@ -724,6 +734,7 @@ class Component extends React.Component {
                       label="Гр-ын зарах хамгийн доод нэгж"
                     >
                       <InputNumber
+                        className={styles.disabled}
                         disabled={!update.issalekg}
                         min={1}
                         defaultValue={detail.saleweight}
@@ -801,7 +812,7 @@ class Component extends React.Component {
                       mode="tags"
                       style={{ width: "100%" }}
                       placeholder="Хайлтын түлхүүр үгс"
-                      defaultValue={detail.keywords}
+                      defaultValue={detail.keywords === "" ? [] : detail.keywords}
                       onChange={(val) => {
                         this.handleChange({ name: "keywords", value: val });
                       }}
@@ -833,6 +844,7 @@ class Component extends React.Component {
                     label="Зассан хэрэглэгч"
                   >
                     <Input
+                      className={styles.disabled}
                       placeholder="Зассан хэрэглэгч"
                       value={detail.updemp}
                       disabled
@@ -844,6 +856,7 @@ class Component extends React.Component {
                     label="Зассан огноо"
                   >
                     <Input
+                      className={styles.disabled}
                       placeholder="Зассан огноо"
                       value={detail.updymd}
                       disabled
@@ -857,6 +870,7 @@ class Component extends React.Component {
                     label="Шинэчлэгдсэн огноо"
                   >
                     <Input
+                      className={styles.disabled}
                       placeholder="Шинэчлэгдсэн огноо"
                       value={detail.updymd}
                       disabled
