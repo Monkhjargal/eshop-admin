@@ -16,6 +16,13 @@ class Promotion extends React.Component {
     dataSource: {},
     tloading: false,
     istransfer: false,
+    loading: true,
+  }
+
+  componentWillMount() {
+    this.props.getAll({ body: [] }).then((res) => {
+      this.setState({ loading: false });
+    });
   }
 
   handleRowClick = (record) => {
@@ -24,7 +31,7 @@ class Promotion extends React.Component {
 
   refreshList = () => {
     this.setState({ tloading: true });
-    this.props.refresh().then(res => this.setState({ tloading: false }));
+    this.props.getAll().then(res => this.setState({ tloading: false }));
   }
 
   handleRowClass = record => (record.id === this.state.selectedRow.id ? tableStyle.selected : '');
@@ -32,7 +39,7 @@ class Promotion extends React.Component {
   renderFooter = () => (
     <div className={tableStyle.tableFooter}>
       <div className={tableStyle.footerInfo}>
-        Нийт: {this.props.dataSource.data === undefined ? 0 : this.props.dataSource.data.length}
+        Нийт: {this.props.data === undefined ? 0 : this.props.data.length}
       </div>
     </div>
   );
@@ -54,7 +61,7 @@ class Promotion extends React.Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         this.setState({ tloading: true });
-        this.props.refresh({ body: values }).then(res => this.setState({ tloading: false }));
+        this.props.getAll({ body: values }).then(res => this.setState({ tloading: false }));
       }
     });
   }
@@ -62,7 +69,7 @@ class Promotion extends React.Component {
   renderFilter = () => {
     try {
       const { getFieldDecorator } = this.props.form;
-      const { value } = this.props.dataSource.filter.data;
+      const { value } = this.props.filter.data;
 
       return (
         <div>
@@ -119,7 +126,8 @@ class Promotion extends React.Component {
       );
     // eslint-disable-next-line no-unreachable
     } catch (err) {
-      return console.log(err);
+      // console.log('err: ', err);
+      return false;
     }
   }
 
@@ -165,13 +173,14 @@ class Promotion extends React.Component {
         </div>
       );
     } catch (err) {
-      return console.log(err);
+      // console.log('err: ', err);
+      return false;
     }
   }
 
   renderTable = () => {
     try {
-      const { headers, data } = this.state.dataSource;
+      const { headers, data } = this.props;
       headers.map((i) => {
         switch (i.dataIndex) {
           case 'aid':
@@ -186,7 +195,7 @@ class Promotion extends React.Component {
             );
           case 'isenable':
             return (
-              i.render = (text, record) => <Switch size="small" checked={record.isenable} disabled />,
+              i.render = (text, record) => <Switch size="small" checked={!!record.isenable} disabled />,
               i.sorter = (a, b) => a.isenable - b.isenable,
               i.sortDirections = ['descend', 'ascend']
             );
@@ -220,7 +229,8 @@ class Promotion extends React.Component {
         </div>
       );
     } catch (error) {
-      return '';
+      console.log('error: ', error);
+      return false;
     }
   }
 
@@ -262,19 +272,16 @@ class Promotion extends React.Component {
         />
       );
     } catch (err) {
-      return console.log('Улирлын цэс засах үед алдаа гарлаа');
+      // console.log('err: ', err);
+      return false;
     }
   }
 
   render() {
+    const { loading } = this.state;
     try {
-      // console.log('PROMOTION LIST PROPS: ', this.props);
-      if (this.state.dataSource !== this.props.dataSource) {
-        this.setState({ dataSource: this.props.dataSource });
-      }
-
       // dataSource is empty web loading mode
-      if (Object.keys(this.props.dataSource).length !== 0) {
+      if (!loading) {
         return (
           <PageHeaderLayout>
             <Card bordered={false}>
@@ -296,7 +303,8 @@ class Promotion extends React.Component {
         <div style={{ marginLeft: '49%', paddingTop: '15%', paddingBottom: '15%' }}><Spin /></div>
       );
     } catch (error) {
-      return console.log(error);
+      // console.log('error: ', error);
+      return false;
     }
   }
 }

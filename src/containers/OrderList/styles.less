@@ -16,7 +16,7 @@
       justify-content: center;
       white-space: pre-wrap;
       padding-right: 0px !important;
-      line-height: 0.9 !important;
+      line-height: 1 !important;      
     }
     .ant-table-tbody > tr > td:nth-child(2) {
       color: #1890FF;
@@ -29,7 +29,9 @@
       text-overflow: ellipsis;
       padding: 7px;
       font-size: 12px;
-      padding-left: 20px;
+      padding-top: 3px !important;
+      padding-bottom: 3px !important;
+      padding-right: 2px !important;
       .description {
         width: 200px !important;
         height: 70px;
@@ -40,17 +42,12 @@
       overflow: hidden;
       overflow-x: auto;
     }
-    .ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-sorters, .ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-filters {
+    .ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-sorters, 
+    .ant-table-thead > tr > th.ant-table-column-has-actions.ant-table-column-has-filters {
       padding-right: 0% !important;
       text-align: center !important;
-    }   
-    
-    .ant-table-footer {
-      padding: 0 !important;
-    }
+    }    
   }
-
-  
 
   .tableFooter {
     display: flex;
@@ -67,7 +64,6 @@
       -ms-flex: 1;
       flex: 1;
       line-height: 1;
-      padding: 20px;
     }
     :global {
       .ant-pagination {
@@ -96,8 +92,23 @@
 }
 
 .formItem{
+  display: flex;
   padding: 0% !important;
-  margin-bottom: 0% !important;
+  margin: 0% !important;
+  max-height: 30px !important;
+  min-height: 30px !important;
+}
+
+.collapse{
+  :global{
+    .ant-collapse-item{
+      .ant-collapse-content{
+        .ant-collapse-content-box{
+          padding: 0% !important;
+        }        
+      }
+    }
+  }
 }
 
 .title{
@@ -146,4 +157,73 @@
       }
     }
   }
+}
+
+.parent{
+  display: flex;
+  flex-direction: row;
+}
+
+.column{
+  flex: 1 1 0px;
+}
+
+.statusOne{
+  padding: 0px !important;
+  background-color: #2D85C1 !important;
+  color: #ffffff !important;
+  text-align: center !important;
+  font-size: 12px;
+  width: 200px;
+}
+
+.statusTwo{
+  padding: 0px !important;
+  background-color: #FFAF00 !important;
+  color: #ffffff !important;
+  text-align: center !important;
+  font-size: 12px;
+  width: 200px;
+}
+
+.statusThree{
+  padding: 0px !important;
+  background-color: #16A58A !important;
+  color: #ffffff !important;
+  text-align: center !important;
+  font-size: 12px;
+  width: 200px;
+}
+
+.statusOneM{
+  :global{
+    .ant-input{
+      padding: 0px !important;
+      background-color: #2D85C1 !important;
+      color: #ffffff !important;
+      text-align: center !important;
+    }
+  }
+}
+
+.statusTwoM{
+  :global{
+    .ant-input{
+      padding: 0px !important;
+      background-color: #FFAF00 !important;
+      color: #ffffff !important;
+      text-align: center !important;
+    }
+  } 
+}
+
+.statusThreeM{
+  :global{
+    .ant-input{
+      padding: 0px !important;
+      background-color: #16A58A !important;
+      color: #ffffff !important;
+      text-align: center !important;
+    }
+  }  
 }

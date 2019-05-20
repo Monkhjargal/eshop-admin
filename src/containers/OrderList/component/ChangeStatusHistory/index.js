@@ -19,7 +19,7 @@ class Component extends React.Component {
         footer={null}
         onCancel={this.props.onCancel}
         onOk={this.props.onCancel}
-        width={'40%'}
+        width={'60%'}
         destroyOnClose
       >
         <Content {...this.props} />
@@ -38,7 +38,7 @@ class Content extends React.Component {
   }
 
   componentWillMount() {
-    this.props.getAmountHistory({ id: this.props.id })
+    this.props.getData({ id: this.props.id })
       .then((res) => {
         this.setState({ data: this.props.data, loading: false });
       });
@@ -53,16 +53,17 @@ class Content extends React.Component {
       key: 'orddate',
     }, {
       title: 'Захиалга №',
-      dataIndex: 'insymd',
-      key: 'insymd',
+      dataIndex: 'ordernumber',
+      key: 'ordernumber',
     }, {
       title: 'Тайлбар',
       dataIndex: 'description',
       key: 'description',
+      width: 200,
     }, {
       title: 'Захиалгын төлөв',
-      dataIndex: 'status',
-      key: 'status',
+      dataIndex: 'orderstatus',
+      key: 'orderstatus',
     }, {
       title: 'Хэрэглэгч',
       dataIndex: 'user',

@@ -40,14 +40,9 @@ class MultiSelect extends Component {
   }
   handleChange = (selectedItems) => {
     const arr = selectedItems;
-    console.log(arr);
     this.props.onChange(selectedItems);
     // this.props.onChange(selectedItems.join(','));
   };
-
-  onSelect(sel) {
-    // console.log(sel);
-  }
 
   render() {
     // console.log(this.state.val);
@@ -77,7 +72,7 @@ MultiSelect.defaultProps = {
 
 MultiSelect.propTypes = {
   value: PropTypes.any,
-  required: PropTypes.bool.isRequired,
+  // required: PropTypes.bool.isRequired,
   onChange: PropTypes.func.isRequired,
   schema: PropTypes.object.isRequired,
   placeholder: PropTypes.string,

@@ -7,13 +7,16 @@ import OrderList from "./list";
 
 const mapStateToProps = (state) => {
   const { data, headers } = state.order.all;
-  const { filter, detail, amountHistory } = state.order;
+  const {
+    filter, detail, amountHistory, statusHis,
+  } = state.order;
   const returnObject = {
     data,
     headers,
     filter,
     detail,
     amountHistory,
+    statusHis,
   };
 
   return returnObject;
@@ -27,6 +30,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     addAmount: OrderModel.addAmount,
     getAmountHistory: OrderModel.amountHistory,
     amountApprove: OrderModel.amountApprove,
+    statusHistory: OrderModel.statusHistory,
   };
 
   return ({

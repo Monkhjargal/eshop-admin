@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-expressions */
 /**
  * COMPONENT NAME:                                      ORDER LIST
  * CREATED BY:                                          **BATTSOGT BATGERELT**
@@ -17,12 +19,14 @@ import {
   Table,
   DatePicker,
 } from "antd";
+import moment from "moment";
 
 import tableStyle from "./styles.less";
 import styles from "../../components/List/style.less";
 import PageHeaderLayout from "../../layouts/PageHeaderLayout";
 import productSty from "../Product/styles.less";
 import { DetailModal } from "./component";
+import { Print } from "../../components";
 
 const formatter = new Intl.NumberFormat("en-US");
 
@@ -34,8 +38,8 @@ class Component extends React.Component {
     selectedRow: [], // selected table's row
     isdetail: false, // detail modal
   };
-  componentWillMount() {
-    this.refreshList();
+  componentDidMount() {
+    this.handleFilter({}, true);
   }
 
   refreshList = () => {
@@ -51,16 +55,14 @@ class Component extends React.Component {
   handleResetFilter = () => {
     this.props.form.resetFields();
   };
-  handleFilter = (e) => {
-    e.preventDefault();
+  handleFilter = (e, val) => {
+    val ? null : e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
         this.setState({ floading: !this.state.floading, loading: !this.state.loading });
 
         // moment format-ийг хөрвүүлж байгаа
-        // eslint-disable-next-line no-unused-expressions
         values.osdate === null ? '' : values.osdate = values.osdate.format('YYYY-MM-DD');
-        // eslint-disable-next-line no-unused-expressions
         values.oedate === null ? '' : values.oedate = values.oedate.format('YYYY-MM-DD');
 
         this.props.getAll({ body: values }).then((res) => {
@@ -132,7 +134,7 @@ class Component extends React.Component {
             <Col span={2}>
               <Form.Item className={productSty.formItem} label="Эхлэх огноо" style={{ width: '100%' }}>
                 {getFieldDecorator("osdate", {
-                  initialValue: null,
+                  initialValue: moment(),
                   rules: [{ required: false }],
                 })(<DatePicker allowClear size={"small"} style={{ width: '96%' }} />)}
               </Form.Item>
@@ -140,7 +142,7 @@ class Component extends React.Component {
             <Col span={2}>
               <Form.Item className={productSty.formItem} label="Дуусах огноо" style={{ width: '100%' }}>
                 {getFieldDecorator("oedate", {
-                  initialValue: null,
+                  initialValue: moment(),
                   rules: [{ required: false }],
                 })(<DatePicker allowClear size={"small"} style={{ width: '96%' }} />)}
               </Form.Item>
@@ -204,7 +206,7 @@ class Component extends React.Component {
                   <Input
                     allowClear
                     size={"small"}
-                    placeholder="Хүргэлтийн дугаараар хайх"
+                    placeholder="Хүргэлт дугаараар хайх"
                   />,
                 )}
               </Form.Item>
@@ -212,7 +214,7 @@ class Component extends React.Component {
             <Col span={6}>
               <Form.Item
                 className={productSty.formItem}
-                label="Төлбөрийн хэлбэр"
+                label="Төлбөр хэлбэр"
                 style={{ width: "96%" }}
               >
                 {getFieldDecorator("paymenttype", {
@@ -241,7 +243,7 @@ class Component extends React.Component {
             <Col span={6}>
               <Form.Item
                 className={productSty.formItem}
-                label="Төлбөрийн төлөв"
+                label="Төлбөр төлөв"
                 style={{ width: "96%" }}
               >
                 {getFieldDecorator("paymentstatus", {
@@ -270,7 +272,7 @@ class Component extends React.Component {
             <Col span={6}>
               <Form.Item
                 className={productSty.formItem}
-                label="Хүргэлтийн төрөл"
+                label="Хүргэлт төрөл"
                 style={{ width: "96%" }}
               >
                 {getFieldDecorator("deliverytype", {
@@ -348,20 +350,29 @@ class Component extends React.Component {
   handleDetailModal = () => {
     this.setState({ isdetail: !this.state.isdetail });
   }
+
   renderButton = () => (
-    <div
-      className={styles.tableListOperator}
-      style={{ display: "flex", justifyContent: "flex-end", marginBottom: 10 }}
-    >
-      <Button
-        icon="edit"
-        type="dashed"
-        className={`${styles.formbutton} ${styles.update}`}
-        onClick={this.handleDetailModal}
-        disabled={this.state.selectedRow.length === 0}
-      >
-        {`${this.state.name} дэлгэрэнгүй`}
-      </Button>
+    <div className={tableStyle.parent} style={{ marginBottom: 20 }}>
+      <div className={tableStyle.column} style={{ display: 'flex', justifyContent: 'flex-start' }}>
+        <Print
+          name="Захиалгын жагсаалт"
+          data={this.props.dataSource.data}
+          headers={this.props.dataSource.headers}
+        />
+      </div>
+
+      <div className={tableStyle.column} style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <Button
+          icon="edit"
+          type="dashed"
+          className={`${styles.formbutton} ${styles.update}`}
+          onClick={this.handleDetailModal}
+          disabled={this.state.selectedRow.length === 0}
+        >
+          {`${this.state.name} дэлгэрэнгүй`}
+        </Button>
+      </div>
+
     </div>
   );
 
@@ -389,9 +400,6 @@ class Component extends React.Component {
     try {
       const { headers, data, filter } = this.props.dataSource;
       const { loading } = this.state;
-
-      let footerData = data;
-      let columns = headers;
 
       // eslint-disable-next-line no-unused-expressions
       headers === undefined && filter === undefined ? null :
@@ -457,7 +465,15 @@ class Component extends React.Component {
               );
             case "orderstatus":
               return (
-                i.render = text => <span>{filter.length === 0 ? null : filter.ostatus.find(i => (i.id === text)) === undefined ? '' : filter.ostatus.find(i => (i.id === text)).name}</span>,
+                i.render = (text, row) => (
+                  <span>
+                    <Input
+                      size={'small'}
+                      disabled
+                      value={filter.length === 0 ? null : filter.ostatus.find(i => (i.id === text)) === undefined ? '' : filter.ostatus.find(i => (i.id === text)).name}
+                      className={row.orderstatusgroupid === 1 ? tableStyle.statusOne : row.orderstatusgroupid === 2 ? tableStyle.statusTwo : tableStyle.statusThree}
+                    />
+                  </span>),
                 i.sorter = (a, b) => a.orderstatus - b.orderstatus,
                 i.sortDirections = ['descend', 'ascend']
               );

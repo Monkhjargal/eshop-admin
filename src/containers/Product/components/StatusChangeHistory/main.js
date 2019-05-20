@@ -1,6 +1,9 @@
 import React from "react";
 import { Form, Input, Spin, Col, Table } from "antd";
 
+import styles from "../../styles.less";
+import styleTable from "../../../../components/StandardTable/index.less";
+
 const halfItemLayout = {
   labelCol: { span: 8 },
   wrapperCol: { span: 16 },
@@ -32,7 +35,6 @@ class Component extends React.Component {
 
   componentDidMount() {
     this.props.getStatusHistory({ skucd: this.props.skucd }).then((res) => {
-      console.log('PRODUCT STATUS CHANGE HISTORY PROPS', this.props);
       this.setState({
         loading: false,
       });
@@ -45,16 +47,29 @@ class Component extends React.Component {
         <div>
           <Col span={12}>
             <Form.Item {...halfItemLayout} label="Барааны код">
-              <Input disabled value={this.props.skucd} />
+              <Input disabled value={this.props.skucd} className={styles.disabled} />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item {...halfItemLayout} label="Онлайн нэр">
-              <Input disabled value={this.props.name} />
+              <Input disabled value={this.props.name} className={styles.disabled} />
             </Form.Item>
           </Col>
 
-          <Table columns={columns} dataSource={this.props.statusHistory} />
+          <div className={styleTable.subTable}>
+            <Table
+              bordered
+              size="small"
+              columns={columns}
+              dataSource={this.props.statusHistory}
+              pagination={{
+                defaultPageSize: 15,
+                showSizeChanger: true,
+                showQuickJumper: true,
+                pageSizeOptions: ['50', '100', '200'],
+              }}
+            />
+          </div>
         </div>
       );
     }

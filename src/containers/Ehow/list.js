@@ -137,7 +137,8 @@ class Recipe extends React.Component {
       );
     // eslint-disable-next-line no-unreachable
     } catch (err) {
-      return null;
+      // console.log('err: ', err);
+      return false;
     }
   }
 
@@ -298,7 +299,8 @@ class Recipe extends React.Component {
         </div>
       );
     } catch (err) {
-      return null;
+      // console.log('err: ', err);
+      return false;
     }
   }
 
@@ -323,7 +325,8 @@ class Recipe extends React.Component {
         />
       );
     } catch (err) {
-      return console.log(err);
+      // console.log('err: ', err);
+      return false;
     }
   }
 
@@ -351,7 +354,8 @@ class Recipe extends React.Component {
         />
       );
     } catch (error) {
-      return console.log('RECIPE UPDATE MODAL: \n', error);
+      // console.log('error: ', error);
+      return false;
     }
   }
 

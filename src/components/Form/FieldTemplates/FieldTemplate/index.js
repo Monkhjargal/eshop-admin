@@ -143,7 +143,7 @@ FieldTemplate.propTypes = {
   label: PropTypes.string,
   id: PropTypes.string.isRequired,
   description: PropTypes.object,
-  children: PropTypes.object.isRequired,
+  children: PropTypes.array.isRequired,
   errors: PropTypes.object,
   help: PropTypes.object,
   required: PropTypes.bool,

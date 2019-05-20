@@ -13,6 +13,9 @@ import {
   DeliveryTypeHistory,
 } from '../';
 import styles from "../../styles.less";
+import tableStyle from "../../../../components/StandardTable/index.less";
+
+const formatter = new Intl.NumberFormat("en-US");
 
 class Component extends React.Component {
   render() {
@@ -24,6 +27,7 @@ class Component extends React.Component {
         onCancel={this.props.onCancel}
         onOk={this.props.onCancel}
         width={'60%'}
+        style={{ top: 20 }}
         destroyOnClose
       >
         <Content {...this.props} />
@@ -64,10 +68,21 @@ class Content extends React.Component {
     });
   }
 
+  renderFooter = () => (
+    <div className={tableStyle.tableFooter}>
+      <div className={tableStyle.footerInfo}>
+      Захиалсан барааны нийт дүн:{" "}
+        {this.props.dataSource.data === undefined
+          ? 0
+          : formatter.format(this.state.detail.orderamount)}
+      </div>
+    </div>
+  );
+
   renderDetail = () => {
     try {
       const { data, detail } = this.state;
-      const formatter = new Intl.NumberFormat("en-US");
+      const { row } = this.props;
 
       const formItemLayout = {
         labelCol: { span: 10 },
@@ -102,9 +117,9 @@ class Content extends React.Component {
         title: 'Хямдрал хувь',
         dataIndex: 'discountpercent',
         key: 'discountpercent',
-        render: text => <span className={styles.rigth}>{text === 0 ? '' : formatter.format(text)}%</span>,
+        render: text => <span className={styles.rigth}>{text === 0 ? '' : `${formatter.format(text)}%`}</span>,
       }, {
-        title: 'Хямдарсан дүн',
+        title: 'Хямдралын дүн',
         dataIndex: 'discountamount',
         key: 'discountamount',
         render: text => <span className={styles.rigth}>{text === 0 ? '' : formatter.format(text)}</span>,
@@ -114,7 +129,12 @@ class Content extends React.Component {
         key: 'orderamount',
         render: text => <span className={styles.rigth}>{text === 0 ? '' : formatter.format(text)}</span>,
       }, {
-        title: 'НӨАТ-ийн дүн',
+        title: 'НХАТ',
+        dataIndex: 'citytaxamount',
+        key: 'citytaxamount',
+        render: text => <span className={styles.rigth}>{text === 0 ? '' : formatter.format(text)}</span>,
+      }, {
+        title: 'НӨАТ дүн',
         dataIndex: 'vatamount',
         key: 'vatamount',
         render: text => <span className={styles.rigth}>{text === 0 ? '' : formatter.format(text)}</span>,
@@ -126,15 +146,27 @@ class Content extends React.Component {
       }];
 
       return (
-        <Collapse defaultActiveKey={['0', '1', '2', '3', '4']}>
+        <Collapse defaultActiveKey={['0', '1', '2', '3', '4']} className={styles.collapse}>
           <Collapse.Panel header="Захиалга болон худалдан авагчийн мэдээлэл">
             <Col span={12}>
               <Form>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Захиалгын №">
                   <Input
+                    size="small"
                     disabled
                     className={styles.disabled}
                     value={detail.ordernumber}
+                  />
+                </Form.Item>
+                <Form.Item {...formItemLayout} className={styles.formItem} label="Захиалгын огноо">
+                  <Input size="small" disabled className={styles.disabled} value={detail.orderdate} />
+                </Form.Item>
+                <Form.Item {...formItemLayout} className={styles.formItem} label="Төлөв">
+                  <Input
+                    size="small"
+                    disabled
+                    className={`${row.orderstatusgroupid === 1 ? styles.statusOneM : row.orderstatusgroupid === 2 ? styles.statusTwoM : styles.statusThreeM}`}
+                    value={detail.orderstatusnm}
                     addonAfter={
                       <Tooltip placement="top" title="Төлөв өөрчлөлтийн түүх" >
                         <Icon type="ordered-list" onClick={this.handleStatusHistory} />
@@ -142,29 +174,23 @@ class Content extends React.Component {
                     }
                   />
                 </Form.Item>
-                <Form.Item {...formItemLayout} className={styles.formItem} label="Захиалгын огноо">
-                  <Input disabled className={styles.disabled} value={detail.orderdate} />
-                </Form.Item>
-                <Form.Item {...formItemLayout} className={styles.formItem} label="Төлөв">
-                  <Input disabled className={styles.disabled} value={detail.orderstatusnm} />
-                </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Төлбөрийн хэлбэр">
-                  <Input disabled className={styles.disabled} value={detail.paymenttypenm} />
+                  <Input size="small" disabled className={styles.disabled} value={detail.paymenttypenm} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Захиалга хийгдсэн IP">
-                  <Input disabled className={styles.disabled} value={''} />
+                  <Input size="small" disabled className={styles.disabled} value={detail.ipaddress} />
                 </Form.Item>
                 {
                   detail.paymenttype === 1 ? (
                     <div>
                       <Form.Item {...formItemLayout} className={styles.formItem} label="Имерчант банк">{/** only Имерчант */}
-                        <Input disabled className={styles.disabled} value={''} />
+                        <Input size="small" disabled className={styles.disabled} value={''} />
                       </Form.Item>
                       <Form.Item {...formItemLayout} className={styles.formItem} label="Зөвшөөрлийн код">{/** only Имерчант */}
-                        <Input disabled className={styles.disabled} value={''} />
+                        <Input size="small" disabled className={styles.disabled} value={''} />
                       </Form.Item>
                       <Form.Item {...formItemLayout} className={styles.formItem} label="Холболт тайлбар">{/** only Имерчант */}
-                        <Input disabled className={styles.disabled} value={''} />
+                        <Input size="small" disabled className={styles.disabled} value={''} />
                       </Form.Item>
                     </div>
                   ) : null
@@ -175,34 +201,35 @@ class Content extends React.Component {
             <Col span={12}>
               <Form>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Овог">
-                  <Input disabled className={styles.disabled} value={detail.lastname} />
+                  <Input size="small" disabled className={styles.disabled} value={detail.lastname} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Нэр">
-                  <Input disabled className={styles.disabled} value={detail.firstname} />
+                  <Input size="small" disabled className={styles.disabled} value={detail.firstname} />
                 </Form.Item>
-                <Form.Item {...formItemLayout} className={styles.formItem} label="Утасны дугаар 1">
-                  <Input disabled className={styles.disabled} value={detail.phone1} />
+                <Form.Item {...formItemLayout} className={styles.formItem} label="Утасны № 1">
+                  <Input size="small" disabled className={styles.disabled} value={detail.phone1} />
                 </Form.Item>
-                <Form.Item {...formItemLayout} className={styles.formItem} label="Утасны дугаар 2">
-                  <Input disabled className={styles.disabled} value={detail.phone2} />
+                <Form.Item {...formItemLayout} className={styles.formItem} label="Утасны № 2">
+                  <Input size="small" disabled className={styles.disabled} value={detail.phone2} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="И-мэйл">
-                  <Input disabled className={styles.disabled} value={detail.email} />
+                  <Input size="small" disabled className={styles.disabled} value={detail.email} />
                 </Form.Item>
-                <Form.Item {...formItemLayout} className={styles.formItem} label="ePoint card">
-                  <Input disabled className={styles.disabled} value={detail.ecardno} />
+                <Form.Item {...formItemLayout} label="ePoint card" style={{ margin: 0 }}>
+                  <Input size="small" disabled className={styles.disabled} value={detail.ecardno} />
                 </Form.Item>
               </Form>
             </Col>
           </Collapse.Panel>
           <Collapse.Panel header="Хүргэлтийн мэдээлэл">
-            <Col span={12}>
+            <Col span={12} style={{ padding: 5 }}>
               <Form>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Хүргэлтийн №">
-                  <Input disabled className={styles.disabled} value={detail.trucknumber} />
+                  <Input size="small" disabled className={styles.disabled} value={detail.trucknumber} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Хүргэлтийн төрөл">
                   <Input
+                    size="small"
                     disabled
                     className={styles.disabled}
                     value={detail.deliverytypenm}
@@ -214,26 +241,26 @@ class Content extends React.Component {
                   />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Дүүрэг">
-                  <Input disabled className={styles.disabled} value={detail.districtnm} />
+                  <Input size="small" disabled className={styles.disabled} value={detail.districtnm} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Хороо">
-                  <Input disabled className={styles.disabled} value={detail.committeenm} />
+                  <Input size="small" disabled className={styles.disabled} value={detail.committeenm} />
                 </Form.Item>
-                <Form.Item {...formItemLayout} className={styles.formItem} label="Хаяг">
-                  <Input disabled className={styles.disabled} value={detail.address} />
+                <Form.Item {...formItemLayout} label="Хаяг" style={{ margin: 0 }}>
+                  <Input size="small" disabled className={styles.disabled} value={detail.address} />
                 </Form.Item>
               </Form>
             </Col>
             <Col span={12}>
               <Form>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Хүргэх огноо">
-                  <Input disabled className={styles.disabled} value={detail.deliverydate} />
+                  <Input size="small" disabled className={styles.disabled} value={detail.deliverydate} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Хүргэсэн огноо">
-                  <Input disabled className={styles.disabled} value={detail.delivereddate} />
+                  <Input size="small" disabled className={styles.disabled} value={detail.delivereddate} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Захиалга гарах салбар">
-                  <Input disabled className={styles.disabled} value={detail.outofstore} />
+                  <Input size="small" disabled className={styles.disabled} value={detail.outofstore} />
                 </Form.Item>
               </Form>
             </Col>
@@ -242,47 +269,36 @@ class Content extends React.Component {
             <Col span={12}>
               <h4 className={styles.title}>Урьдчилсан захиалгын мэдээлэл</h4>
               <Form>
-                <Form.Item {...formItemLayout} className={styles.formItem} label="Захиалгын барааны дүн">
-                  <Input disabled className={styles.disabled} value={formatter.format(detail.orderamount)} />
+                <Form.Item {...formItemLayout} className={styles.formItem} label="Нийт дүн">
+                  <Input size="small" disabled className={styles.disabled} value={formatter.format(detail.totalamount)} />
                 </Form.Item>
-                <Form.Item {...formItemLayout} className={styles.formItem} label="Нийт хямдралын дүн">
-                  <Input disabled className={styles.disabled} value={formatter.format(detail.totaldiscount)} />
+                <Form.Item {...formItemLayout} className={styles.formItem} label="Хямдралын дүн">
+                  <Input size="small" disabled className={styles.disabled} value={formatter.format(detail.totaldiscount)} />
                 </Form.Item>
-                <Form.Item {...formItemLayout} className={styles.formItem} label="Захиалгын төлөх дүн">
-                  <Input disabled className={styles.disabled} value={formatter.format(detail.payamount)} />
+                <Form.Item {...formItemLayout} className={styles.formItem} label="Захиалгын дүн">
+                  <Input size="small" disabled className={styles.disabled} value={formatter.format(detail.orderamount)} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Хүргэлтийн төлбөр">
-                  <Input disabled className={styles.disabled} value={formatter.format(detail.deliveryamount)} />
-                </Form.Item>
-                <Form.Item {...formItemLayout} className={styles.formItem} label="НӨАТ">
-                  <Input disabled className={styles.disabled} value={formatter.format(detail.vatamount)} />
+                  <Input size="small" disabled className={styles.disabled} value={formatter.format(detail.deliveryamount)} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Оноогоор">
-                  <Input disabled className={styles.disabled} value={formatter.format(detail.outpoint)} />
+                  <Input size="small" disabled className={styles.disabled} value={formatter.format(detail.outpoint)} />
                 </Form.Item>
-                <Form.Item {...formItemLayout} className={styles.formItem} label="Нийт төлөх дүн">
-                  <Input disabled className={`${styles.disabled} ${styles.boldText}`} value={formatter.format(detail.totalamount)} />
+                <Form.Item {...formItemLayout} className={styles.formItem} label="Төлвөл зохих">
+                  <Input size="small" disabled className={`${styles.disabled} ${styles.boldText}`} value={formatter.format(detail.payamount)} />
                 </Form.Item>
-                <Form.Item {...formItemLayout} className={styles.formItem} label="Төлсөн">
+                <Form.Item {...formItemLayout} className={styles.formItem} label="Төлсөн дүн">
                   {// Төлбөрийн хэлбэр нь дансаар хийсэн тохиолдолд үнийэ дүнг нэмэх боломжтой байна.
                     detail.paymenttype === 2 ? (
                       <div>
                         <Input
+                          size="small"
                           disabled
                           className={`${styles.disabled} ${styles.boldText}`}
                           addonAfter={
                             <div className={styleMedia.disabled}>
-                              <Tooltip placement="top" title={'Төлсөн дүн оруулах'}>
-                                <Icon
-                                  type="plus"
-                                  onClick={this.handleAddAmount}
-                                  style={{
-                                    border: 'solid #d9d9d9', borderRightWidth: 1, borderLeftWidth: 0, borderTopWidth: 0, borderBottomWidth: 0, padding: 5, paddingRight: 10, paddingLeft: 0,
-                                  }}
-                                />
-                              </Tooltip>
                               <Tooltip placement="top" title="Төлөлтийн түүх" >
-                                <Icon type="ordered-list" style={{ padding: 5, marginLeft: 5, paddingRight: 0 }} onClick={this.handleAmountHistory} />
+                                <Icon type="ordered-list" style={{ padding: 5, paddingRight: 0 }} onClick={this.handleAmountHistory} />
                               </Tooltip>
                             </div>
                           }
@@ -291,15 +307,22 @@ class Content extends React.Component {
                       </div>
                     ) : (
                       <div>
-                        <Input disabled className={`${styles.disabled} ${styles.boldText}`} value={detail.paidamount} />
+                        <Input size="small" disabled className={`${styles.disabled} ${styles.boldText}`} value={detail.paidamount} />
                       </div>)
                   }
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Зөрүү дүн">
                   <Input
+                    size="small"
                     className={`${detail.varianceamount < 0 ? styles.negativeValue : ''}`}
                     value={formatter.format(detail.varianceamount)}
                   />
+                </Form.Item>
+                <Form.Item {...formItemLayout} className={styles.formItem} label="НӨАТ">
+                  <Input size="small" disabled className={styles.disabled} value={formatter.format(detail.vatamount)} />
+                </Form.Item>
+                <Form.Item {...formItemLayout} className={styles.formItem} label="НХАТ">
+                  <Input size="small" disabled className={styles.disabled} value={detail.citytaxamount} />
                 </Form.Item>
               </Form>
             </Col>
@@ -308,70 +331,54 @@ class Content extends React.Component {
             <Col span={12}>
               <h4 className={styles.title}>Бэлтгэгдсэн захиалгын мэдээлэл</h4>
               <Form>
-                <Form.Item {...formItemLayout} className={styles.formItem} label="Бэлтгэгдсэн нийт дүн">
-                  <Input disabled className={styles.disabled} />
+                <Form.Item {...formItemLayout} className={styles.formItem} label="Нийт дүн">
+                  <Input size="small" disabled className={styles.disabled} value={detail.ptotalamount} />
                 </Form.Item>
-                <Form.Item {...formItemLayout} className={styles.formItem} label="Нийт хямдралын дүн">
-                  <Input disabled className={styles.disabled} />
+                <Form.Item {...formItemLayout} className={styles.formItem} label="Хямдралын дүн">
+                  <Input size="small" disabled className={styles.disabled} value={detail.ptotaldiscount} />
                 </Form.Item>
-                <Form.Item {...formItemLayout} className={styles.formItem} label="Захиалгын төлөх дүн">
-                  <Input disabled className={styles.disabled} />
+                <Form.Item {...formItemLayout} className={styles.formItem} label="Захиалгын дүн">
+                  <Input size="small" disabled className={styles.disabled} value={detail.porderamount} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Хүргэлтийн төлбөр">
-                  <Input disabled className={styles.disabled} />
-                </Form.Item>
-                <Form.Item {...formItemLayout} className={styles.formItem} label="НӨАТ ">
-                  <Input disabled className={styles.disabled} />
+                  <Input size="small" disabled className={styles.disabled} value={detail.pdeliveryamount} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Оноогоор">
-                  <Input disabled className={styles.disabled} />
+                  <Input size="small" disabled className={styles.disabled} value={detail.poutpoint} />
                 </Form.Item>
-                <Form.Item {...formItemLayout} className={styles.formItem} label="Нийт төлөх дүн">
-                  <Input disabled className={styles.disabled} />
+                <Form.Item {...formItemLayout} className={styles.formItem} label="Төлвөл зохих">
+                  <Input size="small" disabled className={styles.disabled} value={detail.ppayamount} />
                 </Form.Item>
-                <Form.Item {...formItemLayout} className={styles.formItem} label="Төлсөн">
-                  <Input disabled className={styles.disabled} />
+                <Form.Item {...formItemLayout} className={styles.formItem} label="Төлсөн дүн">
+                  <Input size="small" disabled className={styles.disabled} value={detail.ppaidamount} />
                 </Form.Item>
                 <Form.Item {...formItemLayout} className={styles.formItem} label="Буцааж шилжүүлэх дүн">
-                  <Input disabled className={styles.disabled} />
+                  <Input size="small" disabled className={styles.disabled} value={detail.pvarianceamount} />
                 </Form.Item>
-                <Form.Item {...formItemLayout} className={styles.formItem} label="Санхүү шилжүүлсэн эсэх">
-                  <Input disabled className={styles.disabled} />
+                <Form.Item {...formItemLayout} className={styles.formItem} label="НӨАТ ">
+                  <Input size="small" disabled className={styles.disabled} value={detail.pvatamount} />
+                </Form.Item>
+                <Form.Item {...formItemLayout} className={styles.formItem} label="НХАТ ">
+                  <Input size="small" disabled className={styles.disabled} value={detail.pcitytaxamount} />
+                </Form.Item>
+                <Form.Item {...formItemLayout} style={{ margin: 0 }} label="Санхүү шилжүүлсэн огноо">
+                  <Input size="small" disabled className={styles.disabled} value={detail.transactiondate} />
                 </Form.Item>
               </Form>
             </Col>
           </Collapse.Panel>
           <Collapse.Panel header="Захиалсан барааны мэдээлэл">
-            <Table
-              bordered
-              size="small"
-              dataSource={data}
-              columns={columns}
-              footer={null}
-              pagination={false}
-              rowKey={record => record.skucd}
-            />
-
-            <div>
-              {
-                detail.paymenttype === 2 ? (
-                  <div style={{
-                    float: "right", marginTop: 10, padding: 10, paddingRight: 0,
-                    }}
-                  >
-                    {
-                      detail.orderstatus === 2 ? '' :
-                      <Button
-                        type="primary"
-                        onClick={this.handleApprove}
-                        disabled={!(detail.varianceamount <= 0)}
-                      ><Icon type="save" />Баталгаажуулах
-                      </Button>
-                    }
-
-                  </div>
-                ) : null
-              }
+            <div className={tableStyle.subTable}>
+              <Table
+                bordered
+                size="small"
+                dataSource={data}
+                columns={columns}
+                footer={this.renderFooter}
+                pagination={false}
+                rowKey={record => record.skucd}
+                style={{ marginTop: 10 }}
+              />
             </div>
           </Collapse.Panel>
         </Collapse>
@@ -437,8 +444,8 @@ class Content extends React.Component {
           visible={isStatusHistory}
           onCancel={this.handleStatusHistory}
           select={this.props.filter}
-          getAmountHistory={this.props.getAmountHistory}
-          data={this.props.amountHistory}
+          getData={this.props.statusHistory}
+          data={this.props.statusHis}
         />
       );
     } catch (error) {

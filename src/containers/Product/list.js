@@ -6,6 +6,7 @@ import styles from '../../components/List/style.less';
 import tableStyle from "./styles.less";
 import { UpdateModal, StatusModal, Excel } from "./components";
 import { SelectTreeWidget } from "../../components/Form/Widgets";
+import { Print } from "../../components";
 
 const formatter = new Intl.NumberFormat("en-US");
 
@@ -38,12 +39,14 @@ class Product extends React.Component {
   }
 
   componentWillMount() {
-    this.props.getDataSource({ body: {} }).then(res => this.setState({ mainLoading: false }));
+    this.props.getAll({ body: {} }).then((res) => {
+      this.setState({ mainLoading: false });
+    });
   }
 
   refreshList = () => {
     this.setState({ loading: true });
-    this.props.getDataSource({ body: {} }).then(res => this.setState({ loading: false }));
+    this.props.getAll({ body: {} }).then(res => this.setState({ loading: false }));
   }
 
   handleRowClick = (record) => {
@@ -55,7 +58,7 @@ class Product extends React.Component {
   renderFooter = () => (
     <div className={tableStyle.tableFooter}>
       <div className={tableStyle.footerInfo}>
-        Нийт: {this.props.dataSource.data === undefined ? 0 : this.props.dataSource.data.length}
+        Нийт: {this.props.data === undefined ? 0 : this.props.data.length}
       </div>
     </div>
   );
@@ -80,7 +83,7 @@ class Product extends React.Component {
   handleSearch = () => {
     this.setState({ loading: true });
     const { filtered } = this.state;
-    this.props.getDataSource({ body: filtered }).then(res => this.setState({ loading: false }));
+    this.props.getAll({ body: filtered }).then(res => this.setState({ loading: false }));
   }
 
   handleClearFilter = () => {
@@ -109,8 +112,7 @@ class Product extends React.Component {
 
   renderFilterFields = () => {
     try {
-      // console.log(this.props.dataSource.filter);
-      const { filter } = this.props.dataSource;
+      const { filter } = this.props;
       const { filtered } = this.state;
 
       return (
@@ -279,6 +281,37 @@ class Product extends React.Component {
                   </Form.Item>
                 </Col>
               </Row>
+              <Row>
+                <Col span={6}>
+                  <Form.Item label="Мэдээлэл бүрэн эсэх" className={tableStyle.formItem}>
+                    <Select
+                      mode="multiple"
+                      allowClear
+                      size={'small'}
+                      placeholder="Мэдээлэл бүрэн эсэхээр хайх"
+                      style={{ width: '96%' }}
+                      value={filtered.cstatus}
+                      onChange={(val) => { this.handleChange({ name: 'cstatus', value: val }); }}
+                    >
+                      {filter.cstatus.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>) }
+                    </Select>
+                  </Form.Item>
+                </Col>
+                <Col span={6}>
+                  <Form.Item label="Бэлгийн бараа эсэх" className={tableStyle.formItem}>
+                    <Select
+                      allowClear
+                      size={'small'}
+                      placeholder="Бэлгийн бараа эсэхээр хайх"
+                      style={{ width: '96%' }}
+                      value={filtered.isgift}
+                      onChange={(val) => { this.handleChange({ name: 'isgift', value: val }); }}
+                    >
+                      {filter.isgift.map(i => <Select.Option key={i.id}>{i.name}</Select.Option>) }
+                    </Select>
+                  </Form.Item>
+                </Col>
+              </Row>
               <div className="ant-modal-footer" style={{ marginBottom: 15 }}>
                 <Button size="small" type="button" onClick={this.handleClearFilter} >{'Цэвэрлэх'}</Button>
                 <Button size="small" htmlType="submit" loading={this.props.dataIsLoading} type="primary" onClick={this.handleSearch} >{'Хайх'}</Button>
@@ -294,10 +327,17 @@ class Product extends React.Component {
 
   renderEditButton = () => {
     try {
-      const { data, headers } = this.props.dataSource;
+      const { data, headers } = this.props;
       return (
         <div className={styles.tableListOperator} style={{ marginTop: 20 }}>
-          <Excel data={data} headers={headers} filename={'Барааны жагсаалт'} />
+          <div style={{ float: 'left' }}>
+            <Print
+              name="Барааны жагсаалт"
+              data={data.slice(0, 500)} // Барааны жагсаалтыг бүгдийг нь хэвлэх үед удаад бсан тул хамгийн ихдээ 200н барааны жагсаал хэвлэнэ
+              headers={headers}
+            />
+          </div>
+
           <Button
             icon="edit"
             size="small"
@@ -334,7 +374,7 @@ class Product extends React.Component {
   renderTable = () => {
     try {
       const { loading } = this.state;
-      const { headers } = this.state.dataSource;
+      const { headers, data } = this.props;
       headers.map((i) => {
         switch (i.dataIndex) {
           case 'titlenm':
@@ -394,6 +434,8 @@ class Product extends React.Component {
             );
           case 'isnew':
             return i.render = (text, record) => <Switch size="small" checked={!!record.isnew} disabled />;
+          case 'isgift':
+            return i.render = (text, record) => <Switch size="small" checked={!!record.isgift} disabled />;
           case 'rate':
             return (
               i.render = text => <span className={tableStyle.center}>{text === 0 ? '' : `${text}`}</span>,
@@ -410,8 +452,8 @@ class Product extends React.Component {
         <div className={tableStyle.standardTable}>
           <Table
             rowClassName={this.handleRowClass}
-            dataSource={this.state.dataSource.data}
-            columns={this.state.dataSource.headers}
+            dataSource={data}
+            columns={headers}
             size="small"
             loading={loading}
             bordered
@@ -440,10 +482,6 @@ class Product extends React.Component {
     try {
       const { mainLoading } = this.state;
 
-      if (this.state.dataSource !== this.props.dataSource) {
-        this.setState({ dataSource: this.props.dataSource });
-      }
-
       if (!mainLoading) {
         return (
           <PageHeaderLayout>
@@ -456,16 +494,16 @@ class Product extends React.Component {
                   visible={this.state.isupdate}
                   onCancel={this.handleUpdateModal}
                   dataSource={this.state.selectedRow} // selected roe step one data
-                  filter={this.props.dataSource.filter}
-                  detail={this.props.dataSource.detail}
-                  statusHistory={this.props.dataSource.statushistory}
+                  filter={this.props.filter}
+                  detail={this.props.detail}
+                  statusHistory={this.props.statushistory}
                   getDetail={this.props.getDetail}
                   updateProduct={this.props.updateProduct}
                   getAttribute={this.props.getAttribute}
-                  attribute={this.props.dataSource.attribute} // attribute step 2
+                  attribute={this.props.attribute} // attribute step 2
                   updateAttr={this.props.updateAttr}
-                  product={this.props.dataSource.data} // product list
-                  relational={this.props.dataSource.relational} // step-3 relational
+                  product={this.props.data} // product list
+                  relational={this.props.relational} // step-3 relational
                   getRelational={this.props.getRelational} // get getRelational={this.props.getRelational}
                   updateRelational={this.props.updateRelational}
                   getStatusHistory={this.props.getStatusHistory}
@@ -476,7 +514,7 @@ class Product extends React.Component {
                   visible={this.state.isstatus}
                   onCancel={this.handleStatusModal}
                   getStatusProduct={this.props.getStatusProduct}
-                  product={this.props.dataSource.status}
+                  product={this.props.status}
                   changeProductStatus={this.props.changeProductStatus}
                 />
               </div>

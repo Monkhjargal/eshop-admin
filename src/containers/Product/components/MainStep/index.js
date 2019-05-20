@@ -30,7 +30,7 @@ class Component extends React.Component {
         <div className={styles.stepContent}>
           <Icon
             type="eye"
-            style={{ position: 'fixed', marginLeft: '75%' }}
+            style={{ position: 'fixed', marginLeft: '75%', zIndex: 1000 }}
             onClick={() => window.open(`http://test.e-mart.mn/productdetail/${this.props.dataSource.skucd}`, "_blank")}
           />
           {

@@ -24,6 +24,7 @@ import ColorList from './Color';
 import Product from "./Product";
 import OrderList from "./OrderList";
 import EmergencyOrder from "./EmergencyOrder"; // Яаралт шийдвэрлэх захиалгын цонх
+import RestDelivery from "./RestDelivery"; // Хүргэлт хийхгүй өдрийг сонгож өгөх
 
 import Exception500 from './Exception/500';
 
@@ -53,4 +54,5 @@ export {
   Product,
   OrderList,
   EmergencyOrder,
+  RestDelivery,
 };

@@ -71,21 +71,9 @@ class Product extends React.Component {
   }
 
   render() {
-    // console.log('Product State', this.state);
-    const { dataSource } = this.state;
     return (
       <ProductList
-        dataSource={dataSource}
-        updateProduct={this.props.updateProduct}
-        getDetail={this.props.getDetail}
-        getDataSource={this.props.getAll}
-        getAttribute={this.props.getAttribute}
-        updateAttr={this.props.updateAttr}
-        getRelational={this.props.getRelational}
-        updateRelational={this.props.updateRelational}
-        getStatusProduct={this.props.getStatusProduct}
-        changeProductStatus={this.props.changeProductStatus}
-        getStatusHistory={this.props.getStatusHistory}
+        {...this.props}
       />
     );
   }

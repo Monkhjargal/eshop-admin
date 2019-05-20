@@ -14,6 +14,7 @@ import TimeTable from './TimeTable';
 import RoleBasedAccess from './RoleBasedAccess';
 import Sortable from './Sortable';
 import ProductTransfer from "./ProductTransfer";
+import Print from "./Print";
 
 export {
   StandardTable,
@@ -32,4 +33,5 @@ export {
   TimeTable,
   Sortable,
   ProductTransfer,
+  Print,
 };

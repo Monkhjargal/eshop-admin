@@ -128,7 +128,8 @@ class Package extends React.Component {
       );
     // eslint-disable-next-line no-unreachable
     } catch (err) {
-      return console.log('render filter');
+      // console.log('err: ', err);
+      return false;
     }
   }
 
@@ -273,7 +274,8 @@ class Package extends React.Component {
         </div>
       );
     } catch (error) {
-      return console.log('render table');
+      // console.log('error: ', error);
+      return false;
     }
   }
 
@@ -291,7 +293,8 @@ class Package extends React.Component {
         />
       );
     } catch (error) {
-      return console.log(error);
+      // console.log('error: ', error);
+      return null;
     }
   }
 
@@ -312,7 +315,8 @@ class Package extends React.Component {
         />
       );
     } catch (error) {
-      return console.log(error);
+      // console.log('error: ', error);
+      return false;
     }
   }
 

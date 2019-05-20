@@ -141,6 +141,11 @@ const Order = new OrderModel({
   model: 'order',
 });
 
+const RestDelivery = new CrudModel({
+  url: '/mn/api/restdelivery',
+  model: 'restDelivery',
+});
+
 export {
   Auth,
   Filter,
@@ -167,4 +172,5 @@ export {
   Package,
   Recipe,
   Order,
+  RestDelivery,
 };

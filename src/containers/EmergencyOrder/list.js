@@ -340,9 +340,7 @@ class Component extends React.Component {
         <Button className={tableStyle.UnSuccess} ><Icon style={{ fontSize: 22, color: "#008200" }} type="car" />Амжилтгүй хүргэлт: 2</Button>
       </div>
 
-      <div
-        className={`${tableStyle.column} ${tableStyle.number}`}
-      >
+      <div className={`${tableStyle.column} ${tableStyle.rigth}`}>
         <Button
           icon="edit"
           type="dashed"
@@ -380,9 +378,6 @@ class Component extends React.Component {
     try {
       const { headers, data, filter } = this.props.dataSource;
       const { loading } = this.state;
-
-      let footerData = data;
-      let columns = headers;
 
       // eslint-disable-next-line no-unused-expressions
       headers === undefined && filter === undefined ? null :

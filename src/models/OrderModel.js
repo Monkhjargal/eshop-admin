@@ -29,7 +29,11 @@ class PackageModel extends BaseModel {
         },
         amountApprove: {
           request: this.buildActionName("request", data.model, "amountApprove"),
-          response: this.buildActionName("response", data.model, "amountApprove"),
+          response: this.buildActionName(
+            "response",
+            data.model,
+            "amountApprove",
+          ),
           error: this.buildActionName("error", data.model, "amountApprove"),
         },
         amountHistory: {
@@ -40,6 +44,15 @@ class PackageModel extends BaseModel {
             "amountHistory",
           ),
           error: this.buildActionName("error", data.model, "amountHistory"),
+        },
+        statusHistory: {
+          request: this.buildActionName("request", data.model, "statusHistory"),
+          response: this.buildActionName(
+            "response",
+            data.model,
+            "statusHistory",
+          ),
+          error: this.buildActionName("error", data.model, "statusHistory"),
         },
       };
     }
@@ -67,6 +80,7 @@ class PackageModel extends BaseModel {
       isAdd: [],
       amountHistory: [],
       isApprove: [],
+      statusHis: [],
     };
   }
 
@@ -103,12 +117,18 @@ class PackageModel extends BaseModel {
       method: "GET",
       model: this.model.amountHistory,
     });
-    amountApprove = ({ id }) =>
-      asyncFn({
-        url: `/mn/api/paymentapprove/${id}`,
-        method: "POST",
-        model: this.model.amountApprove,
-      });
+  amountApprove = ({ id }) =>
+    asyncFn({
+      url: `/mn/api/paymentapprove/${id}`,
+      method: "POST",
+      model: this.model.amountApprove,
+    });
+  statusHistory = ({ id }) =>
+    asyncFn({
+      url: `/mn/api/orderstatus/${id}`,
+      method: "GET",
+      model: this.model.statusHistory,
+    });
 
   reducer = (state = this.initialState, action) => {
     switch (action.type) {
@@ -214,6 +234,23 @@ class PackageModel extends BaseModel {
         return {
           ...state,
           isApprove: action.payload.value,
+        };
+
+      // STATUS HISTORY
+      case this.model.statusHistory.request:
+        return {
+          ...state,
+          current: this.requestCase(state.current, action),
+        };
+      case this.model.statusHistory.error:
+        return {
+          ...state,
+          current: this.errorCase(state.current, action),
+        };
+      case this.model.statusHistory.response:
+        return {
+          ...state,
+          statusHis: action.payload.value,
         };
       // DEFUALT
       default:

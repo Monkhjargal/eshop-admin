@@ -84,6 +84,33 @@
   }
 }
 
+.tableFooter {
+  display: flex;
+  .footerInfo {
+    font-size: 14px;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    color: rgba(0, 0, 0, 0.85);
+    font-weight: 500;
+    display: inline-block;
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    line-height: 1;
+    padding: 5px;
+  }
+  :global {
+    .ant-pagination {
+      float: right;
+      text-align: right;
+      margin-left: auto;
+      transition: right .3s;
+    }
+  }
+}
+
 .selected td{
   // border-top: solid 2px #feb434 !important;
   // border-bottom: solid 2px #feb434 !important;
@@ -96,8 +123,23 @@
 }
 
 .formItem{
+  display: flex;
   padding: 0% !important;
-  margin-bottom: 0% !important;
+  margin: 0% !important;
+  max-height: 30px !important;
+  min-height: 30px !important;
+}
+
+.collapse{
+  :global{
+    .ant-collapse-item{
+      .ant-collapse-content{
+        .ant-collapse-content-box{
+          padding: 0% !important;
+        }        
+      }
+    }
+  }
 }
 
 .title{
@@ -106,34 +148,46 @@
 }
 
 .negativeValue{
-  color: rgb(255, 0, 0);
+  color: rgb(255, 0, 0) !important;
 }
 
 .boldText{
   font-weight: bold;
 
-  .ant-input-wrapper{
-    .ant-input-group{
-      input{
+  :global {
+    .ant-input-wrapper{
+      .ant-input{
         font-weight: bold;
       }
     }
   }
 }
 
-.number{
+.rigth{
   display: flex !important;
   justify-content: flex-end !important;
 }
 
-.text{
+.center{
   display: flex !important;
   justify-content: center !important;
 }
 
-.code{
+.left{
   display: flex !important;
   justify-content: flex-start !important;
+}
+
+.disabled{
+  color: rgba(0, 0, 0, 0.65) !important;
+
+  :global {
+    .ant-input-wrapper{
+      .ant-input{
+        color: rgba(0, 0, 0, 0.65) !important;
+      }
+    }
+  }
 }
 
 .parent{
@@ -144,7 +198,6 @@
 
 .column{
   flex: 1 1 0px;
-
 }
 
 .InComplete{

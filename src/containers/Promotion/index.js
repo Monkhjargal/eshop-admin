@@ -66,25 +66,15 @@ class Product extends React.Component {
   }
 
   refresh = () => {
-    this.props.getAll({ body: this.state.body });
     this.props.getFilter();
-    // this.props.getDetail({ id: 1 });
   }
 
   render() {
-    // console.log('Promotion State', this.state);
     const { dataSource } = this.state;
     return (
       <PromotionList
         dataSource={dataSource}
-        create={this.props.create}
-        refresh={this.props.getAll}
-        update={this.props.update}
-        delete={this.props.delete}
-        getProduct={this.props.getProduct}
-        updateProduct={this.props.updateProduct}
-        getDetail={this.props.getDetail}
-        filterList={this.filter}
+        {...this.props}
       />
     );
   }

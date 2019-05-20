@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import React from "react";
 import {
   Collapse,
@@ -14,6 +15,7 @@ import {
   Select,
   Button,
   Spin,
+  Tooltip,
 } from "antd";
 import Rate from "react-stars";
 import moment from "moment";
@@ -217,6 +219,7 @@ class Component extends React.Component {
   };
 
   handleChange = (e) => {
+    console.log('e: ', e);
     if (e.value !== undefined) {
       const { update } = this.state;
       update[e.name] =
@@ -329,6 +332,7 @@ class Component extends React.Component {
                     />
                   </Form.Item>
                   <Form.Item
+                    key="1"
                     hasFeedback
                     {...formItemLayout}
                     className={styles.formItem}
@@ -367,6 +371,7 @@ class Component extends React.Component {
                     />
                   </Form.Item>
                   <Form.Item
+                    key="2"
                     {...formItemLayout}
                     className={styles.formItem}
                     label="Хаалтанд дахь нэр"
@@ -442,16 +447,15 @@ class Component extends React.Component {
                       />
                     </Form.Item>
                   </Col>
-                  <div className={"testing"}>
-                    <Col span={12}>
-                      <Form.Item
-                        {...statusLayout}
-                        className={styles.formItem}
-                        label="Төлөв"
-                      >
-                        <Input
-                          disabled
-                          value={
+                  <Col span={12}>
+                    <Form.Item
+                      {...statusLayout}
+                      className={styles.formItem}
+                      label="Төлөв"
+                    >
+                      <Input
+                        disabled
+                        value={
                             filter.productstatus.find(
                               i => i.id === detail.status,
                             ) === undefined
@@ -460,30 +464,17 @@ class Component extends React.Component {
                                   i => i.id === detail.status,
                                 ).name
                           }
-                          className={
-                            `${detail.status === 1
-                              ? styles.statusOne
-                              : detail.status === 2
-                              ? styles.statusTwo
-                                : styles.statusThree}
-                              ${styles.disabled}`
-                          }
-                        />
-                      </Form.Item>
-                    </Col>
-                    <Col span={12}>
-                      <Form.Item
-                        {...historyLayout}
-                        className={styles.formItemhistory}
-                        label=""
-                      >
-                        {" "}
-                        <a onClick={this.handleHistoryModal}>
-                          Төлөв өөрчлөлтийн түүх
-                        </a>{" "}
-                      </Form.Item>
-                    </Col>
-                  </div>
+                        className={
+                          `${detail.status === 1
+                            ? styles.statusOneM
+                            : detail.status === 2
+                            ? styles.statusTwoM
+                              : styles.statusThreeM}`
+                        }
+                        addonAfter={<Tooltip placement="top" title="Төлөв өөрчлөлтийн түүх" ><Icon type="ordered-list" onClick={this.handleHistoryModal} /></Tooltip>}
+                      />
+                    </Form.Item>
+                  </Col>
                 </Col>
                 <Col span={12}>
                   <Form.Item
@@ -671,10 +662,11 @@ class Component extends React.Component {
                     label="Хамгийн багадаа хэдэн нэгжээр зарах"
                   >
                     <InputNumber
-                      min={0}
-                      defaultValue={detail.saleminqty}
+                      min={1}
+                      value={update.saleminqty}
                       onChange={(val) => {
-                        this.handleChange({ name: "saleminqty", value: val });
+                        console.log('val: ', val);
+                        typeof val === 'number' ? this.handleChange({ name: "saleminqty", value: val }) : '';
                       }}
                     />
                   </Form.Item>
@@ -737,7 +729,7 @@ class Component extends React.Component {
                         className={styles.disabled}
                         disabled={!update.issalekg}
                         min={1}
-                        defaultValue={detail.saleweight}
+                        defaultValue={update.saleweight}
                         onChange={(val) => {
                           this.handleChange({ name: "saleweight", value: val });
                         }}
