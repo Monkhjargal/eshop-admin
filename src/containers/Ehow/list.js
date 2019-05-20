@@ -7,8 +7,6 @@ import productSty from "../Product/styles.less";
 import tableStyle from "./styles.less";
 import { CreateModal, UpdateModal } from "./component";
 
-const picserver = 'http://202.55.180.199:8877/';
-
 class Recipe extends React.Component {
   state = {
     name: 'Жор',
@@ -21,6 +19,7 @@ class Recipe extends React.Component {
   componentWillMount() { this.refreshList(); }
 
   refreshList = () => {
+    console.log(process.env);
     this.setState({ tloading: true });
     this.props.getAll({ body: {} }).then(res => this.setState({ tloading: false }));
   }
@@ -219,7 +218,7 @@ class Recipe extends React.Component {
             return (
               i.render = img => (<div
                 style={{
-                  background: `url(${picserver + img})`,
+                  background: `url(${process.env.PIC_SERVER + img})`,
                   height: '20px',
                   backgroundSize: 'contain',
                   backgroundPosition: 'center',

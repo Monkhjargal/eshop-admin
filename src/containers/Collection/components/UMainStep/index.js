@@ -6,7 +6,6 @@ import { StepOne, StepTwo } from "../";
 
 // eslint-disable-next-line prefer-destructuring
 const Step = Steps.Step;
-const picserver = 'http://202.55.180.199:8877/';
 
 class Component extends React.Component {
   state = {

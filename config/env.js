@@ -1,4 +1,4 @@
-'use strict';
+
 
 const fs = require('fs');
 const path = require('path');
@@ -10,12 +10,12 @@ delete require.cache[require.resolve('./paths')];
 const NODE_ENV = process.env.NODE_ENV;
 if (!NODE_ENV) {
   throw new Error(
-    'The NODE_ENV environment variable is required but was not specified.'
+    'The NODE_ENV environment variable is required but was not specified.',
   );
 }
 
 // https://github.com/bkeepers/dotenv#what-other-env-files-can-i-use
-var dotenvFiles = [
+let dotenvFiles = [
   `${paths.dotenv}.${NODE_ENV}.local`,
   `${paths.dotenv}.${NODE_ENV}`,
   // Don't include `.env.local` for `test` environment
@@ -29,7 +29,7 @@ var dotenvFiles = [
 // if this file is missing. dotenv will never modify any environment variables
 // that have already been set.
 // https://github.com/motdotla/dotenv
-dotenvFiles.forEach(dotenvFile => {
+dotenvFiles.forEach((dotenvFile) => {
   if (fs.existsSync(dotenvFile)) {
     require('dotenv').config({
       path: dotenvFile,
@@ -74,7 +74,19 @@ function getClientEnvironment(publicUrl) {
         // This should only be used as an escape hatch. Normally you would put
         // images into the `src` and `import` them in code to get their paths.
         PUBLIC_URL: publicUrl,
-      }
+
+        PIC_SERVER: `http://10.0.0.55:81/`,
+        HOST_SERVER: `http://10.0.0.53:81`,
+
+
+        PIC_SERVER_REAL: `http://10.0.0.55:81/`,
+        PIC_SERVER_TEST: `http://202.55.180.199:8877/`,
+
+        HOST_SERVER_REAL: `http://10.0.0.53:81`,
+        HOST_SERVER_TEST: `http://202.55.180.199:8881`,
+
+        HOST_SERVER_LOCAL: `http://10.0.10.30:8881`,
+      },
     );
   // Stringify all values so we can feed into Webpack DefinePlugin
   const stringified = {

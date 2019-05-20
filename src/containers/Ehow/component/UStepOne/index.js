@@ -26,8 +26,6 @@ const ckeToolbar = [
   { name: 'about', items: ['About'] },
 ];
 
-const picserver = 'http://202.55.180.199:8877/';
-
 class Step extends React.Component {
   state = {
     fileList: [],
@@ -46,7 +44,7 @@ class Step extends React.Component {
         let fileList = [];
 
         // eslint-disable-next-line no-unused-expressions
-        files !== undefined ? files.map((file, index) => fileList.push({ url: picserver + file, name: file, uid: index })) : '';
+        files !== undefined ? files.map((file, index) => fileList.push({ url: process.env.PIC_SERVER + file, name: file, uid: index })) : '';
         this.setState({
           data: this.props.stepOneDetail.data, fileList, description, loading: false,
         });

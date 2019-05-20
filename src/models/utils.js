@@ -1,7 +1,7 @@
 import withQuery from 'with-query';
 import { message } from 'antd';
 
-const HOST = 'http://202.55.180.199:8881'; // TEST
+// const HOST = 'http://202.55.180.199:8881'; // TEST
 // const HOST = 'http://10.0.10.30:8881'; // BAAGII
 // const HOST = 'http://10.0.0.53:81'; // REAL
 
@@ -15,7 +15,7 @@ const request = ({
     bearerHeader += JSON.parse(localData.auth).data.value.access_token;
   }
   if (method === 'GET') {
-    return fetch(withQuery(HOST + url, body), {
+    return fetch(withQuery(process.env.HOST_SERVER + url, body), {
       credentials: 'include',
       method: 'GET',
       headers: {
@@ -39,7 +39,7 @@ const request = ({
   }
 
   if (isfiles) {
-    const request = new Request(HOST + url, {
+    const request = new Request(process.env.HOST_SERVER + url, {
       method,
       headers: new Headers({ Authorization: bearerHeader }),
       body,
@@ -50,7 +50,7 @@ const request = ({
     });
   }
 
-  return fetch(HOST + url, {
+  return fetch(process.env.HOST_SERVER + url, {
     credentials: 'include',
     method,
     headers: {

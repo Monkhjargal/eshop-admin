@@ -24,6 +24,7 @@ const divStyle = {
 class Home extends Component {
   componentDidMount() {
   }
+
   render() {
     return (
       <PageHeaderLayout title="Category information" style={divStyle}>

@@ -184,13 +184,7 @@ class Content extends React.Component {
                   detail.paymenttype === 1 ? (
                     <div>
                       <Form.Item {...formItemLayout} className={styles.formItem} label="Имерчант банк">{/** only Имерчант */}
-                        <Input size="small" disabled className={styles.disabled} value={''} />
-                      </Form.Item>
-                      <Form.Item {...formItemLayout} className={styles.formItem} label="Зөвшөөрлийн код">{/** only Имерчант */}
-                        <Input size="small" disabled className={styles.disabled} value={''} />
-                      </Form.Item>
-                      <Form.Item {...formItemLayout} className={styles.formItem} label="Холболт тайлбар">{/** only Имерчант */}
-                        <Input size="small" disabled className={styles.disabled} value={''} />
+                        <Input size="small" disabled className={styles.disabled} value={detail.banknm} />
                       </Form.Item>
                     </div>
                   ) : null

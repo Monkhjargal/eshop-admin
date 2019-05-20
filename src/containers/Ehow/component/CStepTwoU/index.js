@@ -4,7 +4,6 @@ import { Modal, Form, Input, Button, Icon, Upload, Row } from "antd";
 import styles from "../../../../components/List/style.less";
 
 const { TextArea } = Input;
-const picserver = 'http://202.55.180.199:8877/';
 
 const formItemLayout = {
   labelCol: { span: 6 },
@@ -35,7 +34,7 @@ class Component extends React.Component {
     if (Array.isArray(data.file)) {
       file.push(data.file[0]);
     } else {
-      file.push({ uid: 1, name: data.file, url: picserver + data.file });
+      file.push({ uid: 1, name: data.file, url: process.env.PIC_SERVER + data.file });
     }
 
     this.setState({ file });

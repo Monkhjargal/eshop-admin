@@ -17,7 +17,6 @@ const formItemLayout = {
   labelCol: { span: 6 },
   wrapperCol: { span: 17 },
 };
-const picserver = 'http://202.55.180.199:8877/';
 
 const ckeToolbar = [
   { name: 'document', items: ['Source', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates'] },
@@ -51,7 +50,7 @@ class Component extends React.Component {
     let files = [];
 
     // eslint-disable-next-line no-unused-expressions
-    this.props.defValue.files === undefined ? '' : this.props.defValue.files.map((i, index) => files.push({ url: picserver + i, name: i, uid: index }));
+    this.props.defValue.files === undefined ? '' : this.props.defValue.files.map((i, index) => files.push({ url: process.env.PIC_SERVER + i, name: i, uid: index }));
     // eslint-disable-next-line no-unused-expressions
     this.props.defValue.length === 0 ? '' : this.setState({ fileList: this.props.defValue.fileList === undefined ? files : this.props.defValue.fileList, description: this.props.defValue.description });
   }

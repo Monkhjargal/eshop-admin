@@ -186,19 +186,6 @@ class Recipe extends Component {
   }
 
   render() {
-    console.log('Recipe=>render', this.props);
-
-    // this.props.headers.forEach((entry, index) => {
-    //   if (entry.dataIndex === 'imgnm') {
-    //     const picserver = 'http://202.55.180.200:8877/';
-    //     entry.render = url => <img src={picserver + url} alt={url} width="100px" />;
-    //   }
-    //   if (entry.dataIndex === 'isenable' || entry.dataIndex === 'isemart') {
-    //     const { isenable } = this.state;
-    //     entry.render = isenable => <div>{ isenable ? <Switch defaultChecked disabled /> : <Switch disabled /> }</div>;
-    //   }
-    // });
-
     return (
       <Card bordered={false}>
         <div className={styles.tableList} style={{ overflow: 'hidden', overflowX: 'auto' }}>

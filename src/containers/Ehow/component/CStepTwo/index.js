@@ -4,8 +4,6 @@ import CreateModal from "../CStepTwoC"; // Create step Modal
 import UpdateModal from "../CStepTwoU"; // Update step Modal
 import tableStyle from "../../../../components/StandardTable/index.less";
 
-const picserver = 'http://202.55.180.199:8877/';
-
 class StepTwo extends React.Component {
   state = {
     loading: false,
@@ -280,7 +278,7 @@ const headers = [{
       :
       <div
         style={{
-      background: `url(${picserver + url})`,
+      background: `url(${process.env.PIC_SERVER + url})`,
       width: '100px',
       height: '40px',
       backgroundSize: 'contain',

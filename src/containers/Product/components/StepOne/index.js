@@ -30,7 +30,6 @@ const Panel = Collapse.Panel;
 const formatter = new Intl.NumberFormat("en-US");
 const { RangePicker } = DatePicker;
 const dateFormat = "YYYY-MM-DD";
-const picserver = "http://202.55.180.199:8877/";
 
 const formItemLayout = {
   labelCol: { span: 6 },
@@ -194,7 +193,7 @@ class Component extends React.Component {
     this.props.getDetail({ skucd: this.props.skucd }).then((res) => {
       const files = [];
       this.props.detail.files.map((i, index) =>
-        files.push({ url: picserver + i, name: i, uid: index }),
+        files.push({ url: process.env.PIC_SERVER + i, name: i, uid: index }),
       );
       this.setState({
         loading: false,

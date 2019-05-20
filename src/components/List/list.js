@@ -108,7 +108,6 @@ class List extends Component {
   render() {
     if (this.props.headers) {
       this.props.headers.forEach((entry, index) => {
-        const picserver = 'http://202.55.180.199:8877/';
         switch (entry.dataIndex) {
           case 'name':
             return entry.render = text => <span onClick={() => this.showModal(`${this.props.model}Update`)}>{text}</span>;
@@ -169,7 +168,7 @@ class List extends Component {
           case 'imgnm':
             return entry.render = url => (<div
               style={{
-                background: `url(${picserver + url})`,
+                background: `url(${process.env.PIC_SERVER + url})`,
                 height: '20px',
                 backgroundSize: 'contain',
                 backgroundPosition: 'center',
@@ -180,7 +179,7 @@ class List extends Component {
           case 'imgnmtwo':
             return entry.render = url => (<div
               style={{
-                background: `url(${picserver + url})`,
+                background: `url(${process.env.PIC_SERVER + url})`,
                 height: '20px',
                 backgroundSize: 'contain',
                 backgroundPosition: 'center',

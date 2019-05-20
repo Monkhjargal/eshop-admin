@@ -14,8 +14,6 @@ import style from "./styles.less";
 import { UpdateModal, CreateModal } from "./components";
 import productSty from "../Product/styles.less";
 
-const picserver = 'http://202.55.180.199:8877/';
-
 class Package extends React.Component {
   state = {
     name: 'Багцын',
@@ -235,7 +233,7 @@ class Package extends React.Component {
             return (
               i.render = img => (<div
                 style={{
-                  background: `url(${picserver + img})`,
+                  background: `url(${process.env.PIC_SERVER + img})`,
                   display: 'flex',
                   justifyContent: 'center',
                   width: '50px',
